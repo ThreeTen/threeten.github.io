@@ -14,11 +14,11 @@ It contains no representation of the time-of-day.
 The "local" part of the name refers to the local time-line.
 Specifically, a *LocalDate* has no reference to a time-zone or offset from UTC/Greewich.
 
-### Creating a LocalDate
+#### Creating a LocalDate
 
 There are a number of ways to create a *LocalDate*.
 
-#### Today's date
+##### Today's date
 
 The first way is to create the date "today" using the clock.
 This is achieved using one of the three `now` methods:
@@ -34,7 +34,7 @@ The first method (a) uses the Java default time-zone, as per `TimeZone.getDefaul
 The second method (b) allows the time-zone to be explcitly controlled.
 The third method (c) uses a `Clock` object, which provides further control over the current instant and time-zone.
 
-#### Using fields
+##### Using fields
 
 If you want to hard code the creation of a date, or have fields available, these factory
 methods can be used:
