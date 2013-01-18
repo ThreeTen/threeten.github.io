@@ -1,6 +1,9 @@
 ---
 layout: default
 title: Articles
+abstract: Articles aboute ThreeTen
+author_twitter: jodastephen
+author: Stephen Colebourne
 ---
 
 This section contains articles and guides for ThreeTen.
