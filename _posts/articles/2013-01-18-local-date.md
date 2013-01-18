@@ -20,8 +20,7 @@ There are a number of ways to create a *LocalDate*.
 
 ##### Today's date
 
-The first way is to create the date "today" using the clock.
-This is achieved using one of the three *now* methods:
+Creating the date "today" can be achieved using one of the three *now* methods:
 
 {% highlight java %}
 LocalDate a = LocalDate.now();
