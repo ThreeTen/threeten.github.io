@@ -2,8 +2,6 @@
 layout: article
 title: Instant
 subtitle: User guide for the Instant class
-author_twitter: jodastephen
-author: Stephen Colebourne
 categories:
 - articles
 ---

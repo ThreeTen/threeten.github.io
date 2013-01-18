@@ -2,7 +2,6 @@
 layout: default
 title: ThreeTen
 subtitle: The ThreeTen project
-abstract: The ThreeTen project
 ---
 
 The ThreeTen project is providing a new date and time API for JDK 1.8 as part of JSR-310.
@@ -30,3 +29,7 @@ The backport is used in projects such as [OpenGamma](https://github.com/OpenGamm
 This site holds [reference documentation](articles/index.html) for ThreeTen and JSR-310.
 This supplements the [Javadoc](http://threeten.github.com/threetenbp/apidocs), providing a broader user guide.
 The documentation is applicable to both the backport and JDK 1.8 - only the package name changes.
+
+#### History
+
+The [old home page](http://threeten.sourceforge.net) is still up at Sourceforge for the moment.

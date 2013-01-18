@@ -2,8 +2,6 @@
 layout: article
 title: LocalDate
 subtitle: User guide for the LocalDate class
-author_twitter: jodastephen
-author: Stephen Colebourne
 categories:
 - articles
 ---
