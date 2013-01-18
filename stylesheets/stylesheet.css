@@ -108,6 +108,7 @@ footer p {
 }
 
 a {
+  text-decoration: none;
   color: #007edf;
 }
 
@@ -330,7 +331,7 @@ Full-Width Styles
 #postfooter {
   background: #94D4B2;
   padding: 8px;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 #footer_wrap .inner {
