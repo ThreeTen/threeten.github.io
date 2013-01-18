@@ -12,15 +12,15 @@ The `LocalDate` class represents a date.
 It contains no representation of the time-of-day.
 
 The "local" part of the name refers to the local time-line.
-Specifically, a *LocalDate* has no reference to a time-zone or offset from UTC/Greewich.
+Specifically, a `LocalDate` has no reference to a time-zone or offset from UTC/Greewich.
 
 #### Creating a LocalDate
 
-There are a number of ways to create a *LocalDate*.
+There are a number of ways to create a `LocalDate`.
 
 ##### Today's date
 
-Creating the date "today" can be achieved using one of the three *now* methods:
+Creating the date "today" can be achieved using one of the three `now` methods:
 
 {% highlight java %}
 LocalDate a = LocalDate.now();

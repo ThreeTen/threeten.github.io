@@ -119,6 +119,10 @@ footer a:hover {
   color: #43adff;
 }
 
+em {
+  font-style: italic;
+}
+
 strong {
   font-weight: bold;
 }
@@ -157,6 +161,7 @@ pre {
 code {
   background-color: #f8f8f8;
   font-size: 14px;
+  padding: 0 2px;
 }
 
 pre code {
@@ -166,11 +171,6 @@ pre code {
   padding: 0;
   margin: 0;
   box-shadow: none;
-}
-
-em {
-  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  font-size: 14px;
 }
 
 blockquote {
