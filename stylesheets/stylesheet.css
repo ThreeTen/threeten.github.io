@@ -268,24 +268,28 @@ Full-Width Styles
   padding: 20px 10px 10px 10px;
 }
 
-#page_title {
+h1#page_title {
   margin: 0;
   color: #EEE;
   font-size: 36px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
-#page_subtitle {
+h2#page_subtitle {
   color: #CCC;
   font-size: 20px;
   font-weight: 300;
   background: none;
   text-shadow: #111 0px 0px 10px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 #downloads {

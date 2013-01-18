@@ -13,3 +13,34 @@ It contains no representation of the time-of-day.
 
 The "local" part of the name refers to the local time-line.
 Specifically, a `LocalDate` has no reference to a time-zone or offset from UTC/Greewich.
+
+### Creating a LocalDate
+
+There are a number of ways to create a `LocalDate`.
+
+#### Today's date
+
+The first way is to create the date "today" using the clock.
+This is achieved using one of the three `now` methods:
+
+{% highlight java %}
+LocalDate a = LocalDate.now();
+LocalDate b = LocalDate.now(ZoneId.of("Europe/Paris"));
+LocalDate c = LocalDate.now(aClock);
+{% endhighlight %}
+
+The key point is that determining today's date requires knowledge of the time-zone.
+The first method (a) uses the Java default time-zone, as per `TimeZone.getDefault()`.
+The second method (b) allows the time-zone to be explcitly controlled.
+The third method (c) uses a `Clock` object, which provides further control over the current instant and time-zone.
+
+#### Using fields
+
+If you want to hard code the creation of a date, or have fields available, methods are
+available to create a `LocalDate`:
+
+{% highlight java %}
+LocalDate a = LocalDate.of(2013, 1, 18);              // 18th January 2013
+LocalDate b = LocalDate.of(2013, Month.JANUARY, 18);  // 18th January 2013
+LocalDate c = LocalDate.ofYearDay(2013, 32);          // day-of-year 32 is the 1st February
+{% endhighlight %}
