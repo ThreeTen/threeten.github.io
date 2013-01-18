@@ -6,14 +6,22 @@
     <title>{{ page.title }}</title>
   </head>
   <body>
-    <header>
-      <h1><a href="/">{{ page.title }}</a></h1>
-    </header>
-    <section>
-      {{ content }}
-    </section>
-    <footer>
-      Source Code on <a href="https://github.com/ThreeTen/threeten.github.com">GitHub</a>
-    </footer>
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <h1>{{ page.title }}</h1>
+      </header>
+    </div>
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        {{ content }}
+      </section>
+    </div>
+
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Source Code on <a href="https://github.com/ThreeTen/threeten.github.com">GitHub</a></p>
+      </footer>
+    </div>
   </body>
 </html>
