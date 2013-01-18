@@ -119,10 +119,6 @@ footer a:hover {
   color: #43adff;
 }
 
-em {
-  font-style: italic;
-}
-
 strong {
   font-weight: bold;
 }
@@ -143,12 +139,8 @@ img {
 }
 
 pre, code {
-  width: 100%;
-  color: #222;
   background-color: #fff;
-
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -156,6 +148,7 @@ pre, code {
 
 pre {
   width: 100%;
+  max-width: 660px;
   font-size: 13px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
@@ -172,6 +165,10 @@ code {
 pre code {
   display: block;
   box-shadow: none;
+}
+
+em {
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
 }
 
 blockquote {
