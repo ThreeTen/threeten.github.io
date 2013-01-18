@@ -1,4 +1,5 @@
 /*******************************************************************************
+CSS much altered from
 Slate Theme for GitHub Pages
 by Jason Costello, @jsncostello
 *******************************************************************************/
@@ -67,7 +68,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
-  color:#CCCCCC;
+  color:#9496D4;
   font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
   letter-spacing: -1px;
 }
@@ -92,11 +93,11 @@ h4 {
 }
 
 h5 {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 h6 {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 p {
@@ -149,7 +150,7 @@ pre, code {
   background-color: #fff;
 
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  font-size: 12px;
+  font-size: 14px;
 
   border-radius: 2px;
   -moz-border-radius: 2px;

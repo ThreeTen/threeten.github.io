@@ -1,12 +1,10 @@
 ---
 layout: default
-title: Articles
-abstract: Articles about ThreeTen
+title: ThreeTen
+subtitle: The ThreeTen project
+abstract: The ThreeTen project
 ---
 
-This section contains articles and guides for ThreeTen.
-
-* Using the [Instant](instant.html) class
 The ThreeTen project is providing a new date and time API for JDK 1.8 as part of JSR-310.
 
 #### Main project
