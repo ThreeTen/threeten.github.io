@@ -148,7 +148,7 @@ pre, code {
 
 pre {
   width: 100%;
-  max-width: 660px;
+  max-width: 700px;
   font-size: 13px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
@@ -252,7 +252,8 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 680px;
+  width: 80%;
+  max-width: 720px;
   padding: 10px 10px;
   margin: 0 auto;
 }
