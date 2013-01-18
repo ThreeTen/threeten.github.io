@@ -8,3 +8,10 @@ layout: default
     {{ content }}
   </div>
 </div>
+<div id="author">
+  <p>Posted by <a href="http://twitter.com/{{page.author_twitter}}">{{page.author}}</a> 
+  on {{ page.date | date: "%B %d, %Y" }} </p>
+</div>
+<div id="homelink">
+  <p>View all <a href="../index.html">articles</a></p>
+</div>
