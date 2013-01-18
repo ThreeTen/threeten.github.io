@@ -59,7 +59,7 @@ Theme Styles
 body {
   box-sizing: border-box;
   background: #94B6D4;
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -148,7 +148,6 @@ pre, code {
   background-color: #fff;
 
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  font-size: 14px;
 
   border-radius: 2px;
   -moz-border-radius: 2px;
@@ -157,12 +156,14 @@ pre, code {
 
 pre {
   width: 100%;
+  font-size: 13px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
   overflow: auto;
 }
 
 code {
+  font-size: 14px;
   padding: 3px;
   margin: 0 3px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);

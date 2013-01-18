@@ -12,11 +12,11 @@ The `LocalDate` class represents a date.
 It contains no representation of the time-of-day.
 
 The "local" part of the name refers to the local time-line.
-Specifically, a `LocalDate` has no reference to a time-zone or offset from UTC/Greewich.
+Specifically, a *LocalDate* has no reference to a time-zone or offset from UTC/Greewich.
 
 ### Creating a LocalDate
 
-There are a number of ways to create a `LocalDate`.
+There are a number of ways to create a *LocalDate*.
 
 #### Today's date
 
@@ -36,11 +36,22 @@ The third method (c) uses a `Clock` object, which provides further control over 
 
 #### Using fields
 
-If you want to hard code the creation of a date, or have fields available, methods are
-available to create a `LocalDate`:
+If you want to hard code the creation of a date, or have fields available, these factory
+methods can be used:
 
 {% highlight java %}
 LocalDate a = LocalDate.of(2013, 1, 18);              // 18th January 2013
 LocalDate b = LocalDate.of(2013, Month.JANUARY, 18);  // 18th January 2013
 LocalDate c = LocalDate.ofYearDay(2013, 32);          // day-of-year 32 is the 1st February
 {% endhighlight %}
+
+The first two methods, (a) and (b), create a date from the year, month-of-year and day-of-month.
+The last method (c) creates a date from the year and day-of-year.
+
+The month accepts values from 1 to 12, as in common daily use.
+The enum `Month` can be used instead of the numeric value to make code more readable.
+The day-of-year value runs from 1 to 365, or to 366 in a leap year.
+If an invalid date is passed in, such as the 31st April or the 30th February, then an exception is thrown.
+
+
+
