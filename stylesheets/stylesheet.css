@@ -57,8 +57,7 @@ Theme Styles
 
 body {
   box-sizing: border-box;
-  color:#373737;
-  background: #212121;
+  background: #94B6D4;
   font-size: 16px;
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -68,7 +67,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
-  color:#222222;
+  color:#CCCCCC;
   font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
   letter-spacing: -1px;
 }
@@ -169,9 +168,6 @@ pre, code {
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-
-
-
 }
 
 pre {
@@ -360,17 +356,13 @@ Full-Width Styles
   background: url(../images/sprite_download.png) no-repeat top right;
 }
 
-#main_content_wrap {
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
-}
-
 #main_content_wrap .inner {
   background: #f2f2f2;
+  border: 1px solid #111;
 }
 
-#author, #homelink {
-  background: #5899D1;
+#postfooter {
+  background: #94D4B2;
 }
 
 #main_content {
