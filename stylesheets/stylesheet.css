@@ -149,7 +149,7 @@ pre, code {
 pre {
   width: 100%;
   max-width: 700px;
-  font-size: 13px;
+  font-size: 12px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,.1);
   overflow: auto;

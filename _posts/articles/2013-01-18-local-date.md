@@ -42,7 +42,7 @@ methods can be used:
 {% highlight java %}
 LocalDate a = LocalDate.of(2013, 1, 18);              // 18th January 2013
 LocalDate b = LocalDate.of(2013, Month.JANUARY, 18);  // 18th January 2013
-LocalDate c = LocalDate.ofYearDay(2013, 32);          // day-of-year 32 is the 1st February
+LocalDate c = LocalDate.ofYearDay(2013, 32);          // 1st February 2013 (day-of-year 32)
 {% endhighlight %}
 
 The first two methods, (a) and (b), create a date from the year, month-of-year and day-of-month.
