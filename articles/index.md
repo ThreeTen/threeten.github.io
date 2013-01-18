@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: articleindex
 title: Articles
 subtitle: Articles about ThreeTen
 abstract: Articles about ThreeTen

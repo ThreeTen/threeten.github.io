@@ -68,7 +68,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
-  color:#9496D4;
+  color:#8588E6;
   font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
   letter-spacing: -1px;
 }
@@ -276,6 +276,7 @@ Full-Width Styles
   font-size: 36px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
+  padding-bottom: 2px;
 }
 
 #page_subtitle {
@@ -284,6 +285,7 @@ Full-Width Styles
   font-weight: 300;
   background: none;
   text-shadow: #111 0px 0px 10px;
+  padding-bottom: 2px;
 }
 
 #downloads {
@@ -330,9 +332,9 @@ Full-Width Styles
 }
 
 #postfooter {
-  background: #94D4B2;
+  background: #CAE8D8;
   padding: 8px;
-  font-size: 11px;
+  font-size: 12px;
 }
 #postfooter p {
   margin: 2px 0 0 0;
