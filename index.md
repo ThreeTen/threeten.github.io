@@ -7,14 +7,14 @@ abstract: The ThreeTen project
 
 The ThreeTen project is providing a new date and time API for JDK 1.8 as part of JSR-310.
 
-#### Main project
+#### Main project for JDK 1.8
 
 The main strand of active development for JDK 1.8 is in [OpenJDK](http://openjdk.java.net/projects/threeten/).
 
 Source code was [originally located](https://github.com/ThreeTen/threeten) here at GitHub but is now in Mercurial at OpenJDK.
 The [issue tracker](https://github.com/ThreeTen/threeten/issues) is currently still located here at GitHub.
 
-#### Backport
+#### Backport for JDK 1.7
 
 A [backport](https://github.com/ThreeTen/threetenbp) has been provided for JDK 1.7 hosted here at GitHub.
 The aim of the backport is to allow developers on JDK 1.7 to access an API that is very similar to the one in JDK 1.8.

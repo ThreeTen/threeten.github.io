@@ -8,3 +8,4 @@ abstract: Articles about ThreeTen
 This section contains articles and guides for ThreeTen.
 
 * Using the [Instant](instant.html) class
+* Using the [LocalDate](local-date.html) class

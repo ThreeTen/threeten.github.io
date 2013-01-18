@@ -68,7 +68,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
-  color:#8588E6;
+  color:#4E509C;
   font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
   letter-spacing: -1px;
 }
@@ -79,9 +79,7 @@ h1 {
 }
 
 h2 {
-  padding-bottom: 10px;
   font-size: 28px;
-  background: url('../images/bg_hr.png') repeat-x bottom;
 }
 
 h3 {
@@ -276,6 +274,7 @@ Full-Width Styles
   font-size: 36px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
+  padding-top: 2px;
   padding-bottom: 2px;
 }
 
@@ -285,6 +284,7 @@ Full-Width Styles
   font-weight: 300;
   background: none;
   text-shadow: #111 0px 0px 10px;
+  padding-top: 2px;
   padding-bottom: 2px;
 }
 
@@ -333,11 +333,14 @@ Full-Width Styles
 
 #postfooter {
   background: #CAE8D8;
-  padding: 8px;
+  margin-top: 20px;
+  padding: 4px 8px 4px 8px;
   font-size: 12px;
 }
+
 #postfooter p {
-  margin: 2px 0 0 0;
+  margin: 0;
+  padding: 0;
 }
 
 #footer_wrap .inner {
