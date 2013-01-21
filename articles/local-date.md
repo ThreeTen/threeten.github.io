@@ -19,7 +19,7 @@ Specifically, a `LocalDate` has no reference to a time-zone or offset from UTC/G
 
 There are a number of ways to create a `LocalDate`.
 
-##### Today's date
+##### Today
 
 Creating the date "today" can be achieved using one of the three `now` methods:
 
