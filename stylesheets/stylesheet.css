@@ -348,6 +348,15 @@ h2#page_subtitle {
   padding: 0;
 }
 
+#postfooter img {
+  position: static;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border: 0 none;
+  box-shadow: none;
+}
+
 #footer_wrap .inner {
   background: #212121;
   background: -moz-linear-gradient(top, #373737, #212121);
