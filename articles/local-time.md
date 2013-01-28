@@ -89,5 +89,5 @@ LocalTime m = LocalTime.parse("14 30 40", aDateTimeFormatter);// 14:30:40
 
 {% endhighlight %}
 
-The first twelve methods, (a) to (l), creates a `LocalTime` from a text. Second and nanosecond fields are not mandatory and can be omitted as shown in examples (a) and (b).
+The first twelve methods, (a) to (l), creates a `LocalTime` from text of the format hh:mm:ss:SSSSSSSSS. Second and nanosecond fields are not mandatory and you can safely omit the trailing zeros of nanoseconds. For example 14:30:40.001 denotes 14:30:40.1000000
 The final method (m) uses an additional `DateTimeFormatter` which specifies the format of text used.
