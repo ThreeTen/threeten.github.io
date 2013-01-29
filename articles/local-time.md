@@ -22,7 +22,7 @@ There are a number of ways to create a `LocalTime`.
 
 ##### Current Time
 
-Creating the current time can be created using the following `now` methods:
+Creating the current time can be done using the following `now` methods:
 
 {% highlight java %}
 LocalTime a = LocalTime.now();
