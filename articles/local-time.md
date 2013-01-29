@@ -74,14 +74,14 @@ LocalTime a = LocalTime.parse("14:30");                      // 14:30
 LocalTime b = LocalTime.parse("14:30:40");                   // 14:30:40 
 LocalTime c = LocalTime.parse("14:30:40.999999999");         // 14:30:40.999999999
 LocalTime d = LocalTime.parse("14:30:40.100");               // 14:30:40.100000000
-LocalTime e = LocalTime.parse("14:30:40.010");               // 14:30:40.10000000
-LocalTime f = LocalTime.parse("14:30:40.001");               // 14:30:40.1000000
-LocalTime g = LocalTime.parse("14:30:40.000100");            // 14:30:40.100000
-LocalTime h = LocalTime.parse("14:30:40.000010");            // 14:30:40.10000
-LocalTime i = LocalTime.parse("14:30:40.000001");            // 14:30:40.1000
-LocalTime j = LocalTime.parse("14:30:40.000000100");         // 14:30:40.100
-LocalTime k = LocalTime.parse("14:30:40.000000010");         // 14:30:40.10
-LocalTime l = LocalTime.parse("14:30:40.000000001");         // 14:30:40.1
+LocalTime e = LocalTime.parse("14:30:40.010");               // 14:30:40.010000000
+LocalTime f = LocalTime.parse("14:30:40.001");               // 14:30:40.001000000
+LocalTime g = LocalTime.parse("14:30:40.000100");            // 14:30:40.000100000
+LocalTime h = LocalTime.parse("14:30:40.000010");            // 14:30:40.000010000
+LocalTime i = LocalTime.parse("14:30:40.000001");            // 14:30:40.000001000
+LocalTime j = LocalTime.parse("14:30:40.000000100");         // 14:30:40.000000100
+LocalTime k = LocalTime.parse("14:30:40.000000010");         // 14:30:40.000000010
+LocalTime l = LocalTime.parse("14:30:40.000000001");         // 14:30:40.000000001
  
 LocalTime m = LocalTime.parse("14 30 40", aDateTimeFormatter);// 14:30:40 
 
@@ -89,5 +89,8 @@ LocalTime m = LocalTime.parse("14 30 40", aDateTimeFormatter);// 14:30:40
 
 {% endhighlight %}
 
-The first twelve methods, (a) to (l), creates a `LocalTime` from text of the format hh:mm:ss:SSSSSSSSS. Second and nanosecond fields are not mandatory and you can safely omit the trailing zeros of nanoseconds. For example 14:30:40.001 denotes 14:30:40.1000000
+The first twelve methods, (a) to (l), creates a `LocalTime` from text of the format hh:mm:ss.SSSSSSSSS. Second and nano-of-second parts of text are optional and you can safely omit the trailing zeros of nano-of-second. For example 14:30:40.001 denotes 14:30:40.001000000 .
 The final method (m) uses an additional `DateTimeFormatter` which specifies the format of text used.
+
+### Note
+When using toString() method of `LocalTime`, remember that it prints either 0, 3, 6 or 9 digits for nano-of-second field, depending on the value. So for example 14:30:40.100000000 will be printed as 14:30:40.100 .
