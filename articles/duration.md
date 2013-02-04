@@ -23,6 +23,14 @@ Instant end = Instant.now().plusSeconds(5).plusNanos(2);
 Duration a = Duration.between(start, end);                // PT5.000000002S
 {% endhighlight %}
 
+When end-Instant is earlier than that of start-Instant, the duration will be negative 
+
+{% highlight java %}
+Instant start = Instant.now();                                                  
+Instant end = Instant.now().minusSeconds(5).minusNanos(2);                      
+Duration b = Duration.between(start, end);                // PT-5.000000002S
+{% endhighlight %}
+
 ##### Using factory methods
 
 Duration object can also be obtained using the following factory methods. 
