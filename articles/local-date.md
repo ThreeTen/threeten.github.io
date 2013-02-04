@@ -32,7 +32,7 @@ LocalDate c = LocalDate.now(aClock);
 The key point is that determining today's date requires knowledge of the time-zone.
 The first method (a) uses the Java default time-zone, as per `TimeZone.getDefault()`.
 The second method (b) allows the time-zone to be explcitly controlled.
-The third method (c) uses a `Clock` object, which provides further control over the current instant and time-zone.
+The third method (c) uses a [Clock](clock.html) object, which provides further control over the current instant and time-zone.
 
 ##### Using fields
 
