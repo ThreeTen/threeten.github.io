@@ -58,7 +58,7 @@ The third one, (c), creates time from hour, minutes, seconds and nanoseconds.
 
 The fourth one, (d), creates time from second of day which is calculated from midnight 00:00.
 
-The sixth one, (e), creates time from nanosecond of day which is calculated from midnight 00:00:00. Remember that nanosecond is billionth of a second. ie 1 second =  1000,000,000 nanoseconds.
+The fifth one, (e), creates time from nanosecond of day which is calculated from midnight 00:00:00. Remember that nanosecond is billionth of a second. ie 1 second =  1000,000,000 nanoseconds.
 
 
 Valid value for an hour is 0 - 23 and for minutes/seconds is 0 - 59. If an invalid value is passed in, say 25 as value of hour, 61 as value of minute/second etc, then an exception is thrown. 
