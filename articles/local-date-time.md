@@ -90,7 +90,7 @@ LocalDateTime l = LocalDateTime.parse("2013-12-18T14:30:40.000000001");         
                                         
 LocalDateTime m = LocalDateTime.parse("2010 12 18 14 30 40", aDateTimeFormatter); // 2010-12-18 14:30:40    
 
-// where DateTimeFormatter aDateTimeFormatter = DateTimeFormatters.pattern("y M d H m s");
+// where DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ofPattern("y M d H m s");
 
 {% endhighlight %}
 

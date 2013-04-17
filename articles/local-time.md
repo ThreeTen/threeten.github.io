@@ -46,8 +46,7 @@ LocalTime a = LocalTime.of(12,30);                            // 12:30:00
 LocalTime b = LocalTime.of(12,30,40);                         // 12:30:40 	
 LocalTime c = LocalTime.of(12, 30, 40, 987654321);            // 12:30:40.987654321	
 LocalTime d = LocalTime.ofSecondOfDay(2);                     // 00:00:02
-LocalTime e = LocalTime.ofSecondOfDay(2, 987654321);          // 00:00:02.987654321
-LocalTime f = LocalTime.ofNanoOfDay(2 * 1000000000L + 17);    // 00:00:02.000000017
+LocalTime e = LocalTime.ofNanoOfDay(2 * 1000000000L + 17);    // 00:00:02.000000017
 
 {% endhighlight %}
 
@@ -59,9 +58,7 @@ The third one, (c), creates time from hour, minutes, seconds and nanoseconds.
 
 The fourth one, (d), creates time from second of day which is calculated from midnight 00:00.
 
-The fifth one, (e), creates time from second of day and nanoseconds after that which is calculated from midnight 00:00.
-
-The sixth one, (f), creates time from nanosecond of day which is calculated from midnight 00:00:00. Remember that nanosecond is billionth of a second. ie 1 second =  1000,000,000 nanoseconds.
+The sixth one, (e), creates time from nanosecond of day which is calculated from midnight 00:00:00. Remember that nanosecond is billionth of a second. ie 1 second =  1000,000,000 nanoseconds.
 
 
 Valid value for an hour is 0 - 23 and for minutes/seconds is 0 - 59. If an invalid value is passed in, say 25 as value of hour, 61 as value of minute/second etc, then an exception is thrown. 
@@ -85,7 +82,7 @@ LocalTime l = LocalTime.parse("14:30:40.000000001");         // 14:30:40.0000000
  
 LocalTime m = LocalTime.parse("14 30 40", aDateTimeFormatter);// 14:30:40 
 
-// where DateTimeFormatter aDateTimeFormatter = DateTimeFormatters.pattern("H m s");
+// where DateTimeFormatter aDateTimeFormatter = DateTimeFormatter.ofPattern("H m s");
 
 {% endhighlight %}
 
