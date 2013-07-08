@@ -56,16 +56,17 @@ ZonedDateTime e = ZonedDateTime.ofStrict(aLocalDateTime, preferredZoneOffset, Zo
                                      
 {% endhighlight %}
 
-Remember that preferredZoneOffset can be applied only if is available in the valid offset from UTC/GMT of the localDateTime as defined by zoneRules of given Zone.
+Remember that preferredZoneOffset can be applied only if available in the valid offset from UTC/GMT of the localDateTime as defined by zoneRules of given Zone.
 If it is invalid then it is corrected to available offset and that value is used except for method (e) which throws an exception in this case.  
 
 Although the methods (d) and (e) has got similar arguments, there is a fundamental difference in the way offset is applied. 
 For localDateTime in Europe/London the valid offset with paris is one hour for this time. 
-For method (d) if we provide an invalid offset say 2 hours, it will provide correct the offset and use one hour as the offset while method (e) will throw an exception
+For method (d) if we provide an invalid offset say 2 hours, it will provide correct offset of one hour and use it while method (e) will throw an exception
 
+{% highlight java %}
 ZonedDateTime f = ZonedDateTime.ofLocal(aLocalDateTime, ZoneId.of("Europe/Paris"), ZoneOffset.ofHours(2));  // 2013-12-18T14:30+01:00[Europe/Paris]
 ZonedDateTime g = ZonedDateTime.ofStrict(aLocalDateTime, ZoneOffset.ofHours(2), ZoneId.of("Europe/Paris")); // throws DateTimeException
-
+{% endhighlight %}
 ##### By Parsing Text
 
 {% highlight java %}
