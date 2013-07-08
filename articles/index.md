@@ -14,3 +14,4 @@ The documentation is applicable to both the backport and JDK 1.8 - only the pack
 * Using the [LocalDate](local-date.html) class
 * Using the [LocalTime](local-time.html) class
 * Using the [LocalDateTime](local-date-time.html) class
+* Using the [ZonedDateTime](zoned-date-time.html) class
