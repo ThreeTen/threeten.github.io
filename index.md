@@ -32,4 +32,4 @@ The documentation is applicable to both the backport and JDK 1.8 - only the pack
 
 #### History
 
-The [old home page](http://threeten.sourceforge.net) is still up at Sourceforge for the moment.
+The [old home page](https://sourceforge.net/apps/mediawiki/threeten/index.php?title=Old_home_page) is still up at Sourceforge for the moment.
