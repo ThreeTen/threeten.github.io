@@ -1,5 +1,5 @@
 ---
-layout: article
+layout: nonarticle
 title: Links
 subtitle: Web articles, blogs and other links
 categories:
