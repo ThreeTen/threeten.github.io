@@ -1,7 +1,7 @@
 ---
 layout: articleindex
-title: Articles
-subtitle: Articles about ThreeTen
+title: Reference documentation
+subtitle: Documentation and Articles about ThreeTen
 ---
 
 This section holds reference documentation for ThreeTen and JSR-310.

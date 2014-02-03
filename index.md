@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ThreeTen
+title: ThreeTen - Home page and Documentation
 subtitle: The ThreeTen project
 ---
 
