@@ -30,6 +30,11 @@ This site holds [reference documentation](articles/index.html) for ThreeTen and 
 This supplements the [Javadoc](http://threeten.github.com/threetenbp/apidocs), providing a broader user guide.
 The documentation is applicable to both the backport and JDK 1.8 - only the package name changes.
 
+#### Links
+
+Many [articles and videos](links.html) have been published on the topic of JSR-310.
+If you'd like to add another one, please raise a [pull request](https://github.com/ThreeTen/threeten.github.com).
+
 #### History
 
 The [old home page](https://sourceforge.net/apps/mediawiki/threeten/index.php?title=Old_home_page) is still up at Sourceforge for the moment.
