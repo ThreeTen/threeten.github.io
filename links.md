@@ -37,7 +37,7 @@ Older:
 * [About JSR-310](http://londonjavacommunity.wordpress.com/2011/08/17/about-jsr-310-a-new-java-datetime-api/) - Jim Gough
 * [Java Date and Time API](http://www.wolkje.net/2010/01/06/java-date-and-time-api-and-jsr-310/) - Martin Sturm, also in [Dutch](http://blog.finalist.nl/2010/01/06/datum-en-tijd-in-java/)
 
-#### Other languagaes
+#### Other languages
 
 Taiwanese:
 * [Joda-Time and JSR310, part 1](http://www.codedata.com.tw/java/jodatime-jsr310-1-date-calendar/) [translated](http://translate.google.com/translate?hl=en&sl=auto&tl=en&u=http%3A%2F%2Fwww.codedata.com.tw%2Fjava%2Fjodatime-jsr310-4-jdk8-datetime-api%2F) - Justin Lin
