@@ -821,10 +821,9 @@
 <dd>
 <div class="block">Returns an instance with the amount negated.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/threeten/extra/WeekendRules.html#nextNonWeekendDay--">nextNonWeekendDay()</a></span> - Static method in class org.threeten.extra.<a href="org/threeten/extra/WeekendRules.html" title="class in org.threeten.extra">WeekendRules</a></dt>
+<dt><span class="memberNameLink"><a href="org/threeten/extra/Temporals.html#nextWorkingDay--">nextWorkingDay()</a></span> - Static method in class org.threeten.extra.<a href="org/threeten/extra/Temporals.html" title="class in org.threeten.extra">Temporals</a></dt>
 <dd>
-<div class="block">Returns the next non weekend day adjuster, which adjusts the date one day
- forward skipping Saturday and Sunday.</div>
+<div class="block">Returns an adjuster that returns the next working day, ignoring Saturday and Sunday.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/threeten/extra/chrono/CopticDate.html#now--">now()</a></span> - Static method in class org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticDate.html" title="class in org.threeten.extra.chrono">CopticDate</a></dt>
 <dd>
@@ -995,6 +994,11 @@
 <dd>
 <div class="block">Obtains an instance of <code>TaiInstant</code> from a text string.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/threeten/extra/scale/UtcInstant.html#parse-java.lang.CharSequence-">parse(CharSequence)</a></span> - Static method in class org.threeten.extra.scale.<a href="org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale">UtcInstant</a></dt>
+<dd>
+<div class="block">Obtains an instance of <code>UtcInstant</code> from a text string
+ <code>2007-12-03T10:15:30.00Z</code>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/threeten/extra/YearQuarter.html#parse-java.lang.CharSequence-">parse(CharSequence)</a></span> - Static method in class org.threeten.extra.<a href="org/threeten/extra/YearQuarter.html" title="class in org.threeten.extra">YearQuarter</a></dt>
 <dd>
 <div class="block">Obtains an instance of <code>YearQuarter</code> from a text string such as <code>2007-Q2</code>.</div>
@@ -1063,10 +1067,9 @@
 <dd>
 <div class="block">Returns a copy of this year-quarter with the specified period in years added.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/threeten/extra/WeekendRules.html#previousNonWeekendDay--">previousNonWeekendDay()</a></span> - Static method in class org.threeten.extra.<a href="org/threeten/extra/WeekendRules.html" title="class in org.threeten.extra">WeekendRules</a></dt>
+<dt><span class="memberNameLink"><a href="org/threeten/extra/Temporals.html#previousWorkingDay--">previousWorkingDay()</a></span> - Static method in class org.threeten.extra.<a href="org/threeten/extra/Temporals.html" title="class in org.threeten.extra">Temporals</a></dt>
 <dd>
-<div class="block">Returns the previous non weekend day adjuster, which adjusts the date one day
- backward skipping Saturday and Sunday.</div>
+<div class="block">Returns an adjuster that returns the previous working day, ignoring Saturday and Sunday.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/threeten/extra/chrono/CopticChronology.html#prolepticYear-java.time.chrono.Era-int-">prolepticYear(Era, int)</a></span> - Method in class org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticChronology.html" title="class in org.threeten.extra.chrono">CopticChronology</a></dt>
 <dd>&nbsp;</dd>
@@ -1171,6 +1174,10 @@
 <dt><span class="memberNameLink"><a href="org/threeten/extra/scale/TimeSource.html#taiInstant--">taiInstant()</a></span> - Method in interface org.threeten.extra.scale.<a href="org/threeten/extra/scale/TimeSource.html" title="interface in org.threeten.extra.scale">TimeSource</a></dt>
 <dd>
 <div class="block">Gets the current <code>TaiInstant</code>.</div>
+</dd>
+<dt><a href="org/threeten/extra/Temporals.html" title="class in org.threeten.extra"><span class="typeNameLink">Temporals</span></a> - Class in <a href="org/threeten/extra/package-summary.html">org.threeten.extra</a></dt>
+<dd>
+<div class="block">Additional utilities for working with temporal classes.</div>
 </dd>
 <dt><a href="org/threeten/extra/scale/TimeSource.html" title="interface in org.threeten.extra.scale"><span class="typeNameLink">TimeSource</span></a> - Interface in <a href="org/threeten/extra/scale/package-summary.html">org.threeten.extra.scale</a></dt>
 <dd>
@@ -1318,10 +1325,6 @@ the order they are declared.</div>
 </a>
 <h2 class="title">W</h2>
 <dl>
-<dt><a href="org/threeten/extra/WeekendRules.html" title="class in org.threeten.extra"><span class="typeNameLink">WeekendRules</span></a> - Class in <a href="org/threeten/extra/package-summary.html">org.threeten.extra</a></dt>
-<dd>
-<div class="block">Utilities to assist with handling weekends.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/threeten/extra/chrono/CopticDate.html#with-java.time.temporal.TemporalAdjuster-">with(TemporalAdjuster)</a></span> - Method in class org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticDate.html" title="class in org.threeten.extra.chrono">CopticDate</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/threeten/extra/chrono/CopticDate.html#with-java.time.temporal.TemporalField-long-">with(TemporalField, long)</a></span> - Method in class org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticDate.html" title="class in org.threeten.extra.chrono">CopticDate</a></dt>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":9,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":9,"i10":9,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -263,36 +263,43 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 </td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale">UtcInstant</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#parse-java.lang.CharSequence-">parse</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</code>
+<div class="block">Obtains an instance of <code>UtcInstant</code> from a text string
+ <code>2007-12-03T10:15:30.00Z</code>.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale">UtcInstant</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#plus-java.time.Duration-">plus</a></span>(java.time.Duration&nbsp;duration)</code>
 <div class="block">Returns a copy of this instant with the specified duration added.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.time.Instant</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#toInstant--">toInstant</a></span>()</code>
 <div class="block">Converts this instant to an <code>Instant</code>.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#toString--">toString</a></span>()</code>
 <div class="block">A string representation of this instant.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/extra/scale/TaiInstant.html" title="class in org.threeten.extra.scale">TaiInstant</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#toTaiInstant--">toTaiInstant</a></span>()</code>
 <div class="block">Converts this instant to a <code>TaiInstant</code>.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale">UtcInstant</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#withModifiedJulianDay-long-">withModifiedJulianDay</a></span>(long&nbsp;mjDay)</code>
 <div class="block">Returns a copy of this <code>UtcInstant</code> with the Modified Julian Day (MJD) altered.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale">UtcInstant</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/threeten/extra/scale/UtcInstant.html#withNanoOfDay-long-">withNanoOfDay</a></span>(long&nbsp;nanoOfDay)</code>
 <div class="block">Returns a copy of this <code>UtcInstant</code> with the nano-of-day altered.</div>
@@ -403,6 +410,29 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.time.DateTimeException</code> - if the range of <code>UtcInstant</code> is exceeded</dd>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd>
+</dl>
+</li>
+</ul>
+<a name="parse-java.lang.CharSequence-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parse</h4>
+<pre>public static&nbsp;<a href="../../../../org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale">UtcInstant</a>&nbsp;parse(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</pre>
+<div class="block">Obtains an instance of <code>UtcInstant</code> from a text string
+ <code>2007-12-03T10:15:30.00Z</code>.
+ <p>
+ The string must represent a valid instant in UTC and is parsed using
+ <code>DateTimeFormatter.ISO_INSTANT</code> with leap seconds handled.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>text</code> - the text to parse such as "12345.123456789s(TAI)", not null</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the parsed instant, not null</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.time.format.DateTimeParseException</code> - if the text cannot be parsed</dd>
+<dd><code>java.time.DateTimeException</code> - if parsed text represents an invalid leap second</dd>
 </dl>
 </li>
 </ul>
@@ -695,7 +725,9 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparabl
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 <div class="block">A string representation of this instant.
  <p>
- The string is formatted using ISO-8601.</div>
+ The string is formatted using ISO-8601.
+ The output includes seconds, 9 nanosecond digits and a trailing 'Z'.
+ The time-of-day will be 23:59:60 during a positive leap second.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>

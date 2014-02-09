@@ -215,7 +215,7 @@
 <a class="jxr_linenumber" name="205" href="#205">205</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/scale/TaiInstant.html">TaiInstant</a> convertToTai(<a href="../../../../org/threeten/extra/scale/UtcInstant.html">UtcInstant</a> utcInstant) {
 <a class="jxr_linenumber" name="206" href="#206">206</a>         <strong class="jxr_keyword">long</strong> mjd = utcInstant.getModifiedJulianDay();
 <a class="jxr_linenumber" name="207" href="#207">207</a>         <strong class="jxr_keyword">long</strong> nod = utcInstant.getNanoOfDay();
-<a class="jxr_linenumber" name="208" href="#208">208</a>         <strong class="jxr_keyword">long</strong> taiUtcDaySeconds = Math.multiplyExact(mjd - OFFSET_MJD_TAI, SECS_PER_DAY);
+<a class="jxr_linenumber" name="208" href="#208">208</a>         <strong class="jxr_keyword">long</strong> taiUtcDaySeconds = Math.multiplyExact(Math.subtractExact(mjd, OFFSET_MJD_TAI), SECS_PER_DAY);
 <a class="jxr_linenumber" name="209" href="#209">209</a>         <strong class="jxr_keyword">long</strong> taiSecs = Math.addExact(taiUtcDaySeconds, nod / NANOS_PER_SECOND + getTaiOffset(mjd));
 <a class="jxr_linenumber" name="210" href="#210">210</a>         <strong class="jxr_keyword">int</strong> nos = (<strong class="jxr_keyword">int</strong>) (nod % NANOS_PER_SECOND);
 <a class="jxr_linenumber" name="211" href="#211">211</a>         <strong class="jxr_keyword">return</strong> TaiInstant.ofTaiSeconds(taiSecs, nos);
