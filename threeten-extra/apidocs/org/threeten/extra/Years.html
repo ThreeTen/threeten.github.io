@@ -532,7 +532,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <div class="block">Returns a copy of this amount with the specified amount added.
  <p>
  The parameter is converted using <a href="../../../org/threeten/extra/Years.html#from-java.time.temporal.TemporalAmount-"><code>from(TemporalAmount)</code></a>
- and must only consist of years.</div>
+ and must only consist of years.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>amountToAdd</code> - the amount to add, not null</dd>
@@ -551,7 +553,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <li class="blockList">
 <h4>plus</h4>
 <pre>public&nbsp;<a href="../../../org/threeten/extra/Years.html" title="class in org.threeten.extra">Years</a>&nbsp;plus(int&nbsp;years)</pre>
-<div class="block">Returns a copy of this amount with the specified number of years added.</div>
+<div class="block">Returns a copy of this amount with the specified number of years added.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>years</code> - the amount of years to add, may be negative</dd>
@@ -572,7 +576,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <div class="block">Returns a copy of this amount with the specified amount subtracted.
  <p>
  The parameter is converted using <a href="../../../org/threeten/extra/Years.html#from-java.time.temporal.TemporalAmount-"><code>from(TemporalAmount)</code></a>
- and must only consist of years.</div>
+ and must only consist of years.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>amountToAdd</code> - the amount to add, not null</dd>
@@ -591,7 +597,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <li class="blockList">
 <h4>minus</h4>
 <pre>public&nbsp;<a href="../../../org/threeten/extra/Years.html" title="class in org.threeten.extra">Years</a>&nbsp;minus(int&nbsp;years)</pre>
-<div class="block">Returns a copy of this amount with the specified number of years subtracted.</div>
+<div class="block">Returns a copy of this amount with the specified number of years subtracted.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>years</code> - the amount of years to add, may be negative</dd>
@@ -609,7 +617,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <li class="blockList">
 <h4>multipliedBy</h4>
 <pre>public&nbsp;<a href="../../../org/threeten/extra/Years.html" title="class in org.threeten.extra">Years</a>&nbsp;multipliedBy(int&nbsp;scalar)</pre>
-<div class="block">Returns an instance with the amount multiplied by the specified scalar.</div>
+<div class="block">Returns an instance with the amount multiplied by the specified scalar.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>scalar</code> - the scalar to multiply by, not null</dd>
@@ -629,7 +639,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <pre>public&nbsp;<a href="../../../org/threeten/extra/Years.html" title="class in org.threeten.extra">Years</a>&nbsp;dividedBy(int&nbsp;divisor)</pre>
 <div class="block">Returns an instance with the amount divided by the specified divisor.
  <p>
- The calculation uses integer division, thus 3 divided by 2 is 1.</div>
+ The calculation uses integer division, thus 3 divided by 2 is 1.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>divisor</code> - the amount to divide by, may be negative</dd>
@@ -647,7 +659,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <li class="blockList">
 <h4>negated</h4>
 <pre>public&nbsp;<a href="../../../org/threeten/extra/Years.html" title="class in org.threeten.extra">Years</a>&nbsp;negated()</pre>
-<div class="block">Returns an instance with the amount negated.</div>
+<div class="block">Returns an instance with the amount negated.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the negated amount, not null</dd>
@@ -666,7 +680,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
 <pre>public&nbsp;<a href="../../../org/threeten/extra/Years.html" title="class in org.threeten.extra">Years</a>&nbsp;abs()</pre>
 <div class="block">Returns a copy of this duration with a positive length.
  <p>
- This method returns a positive duration by effectively removing the sign from any negative total length.</div>
+ This method returns a positive duration by effectively removing the sign from any negative total length.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the absolute amount, not null</dd>
@@ -712,7 +728,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
    dateTime = dateTime.plus(thisAmount);
  </pre>
  <p>
- Only non-zero amounts will be added.</div>
+ Only non-zero amounts will be added.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>addTo</code>&nbsp;in interface&nbsp;<code>java.time.temporal.TemporalAmount</code></dd>
@@ -747,7 +765,9 @@ implements java.time.temporal.TemporalAmount, <a href="http://docs.oracle.com/ja
    dateTime = dateTime.minus(thisAmount);
  </pre>
  <p>
- Only non-zero amounts will be subtracted.</div>
+ Only non-zero amounts will be subtracted.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>subtractFrom</code>&nbsp;in interface&nbsp;<code>java.time.temporal.TemporalAmount</code></dd>
