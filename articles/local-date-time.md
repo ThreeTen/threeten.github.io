@@ -68,7 +68,9 @@ The method (g) creates the `LocalDateTime` from a combination of [LocalDate](loc
 
 The method (h) creates the `LocalDateTime` from an [Instant](instant.html)
 
-In addition to these methods there is another factory method called LocalDateTime.ofEpochSecond which allows the epoch-second field to be converted to a local date-time. This is primarily intended for low-level conversions rather than general application usage. Eager users can look into [Javadoc](http://threeten.github.com/threetenbp/apidocs) for more details. 
+In addition to these methods there is another factory method called LocalDateTime.ofEpochSecond which allows the epoch-second field to be converted to a local date-time.
+This is primarily intended for low-level conversions rather than general application usage.
+Eager users can look into [Javadoc](http://download.java.net/jdk8/docs/api/java/time/package-summary.html) for more details. 
 
 ##### By Parsing Text
 

@@ -19,7 +19,7 @@ A [backport](https://github.com/ThreeTen/threetenbp) has been provided for JDK 1
 The aim of the backport is to allow developers on JDK 1.7 to access an API that is very similar to the one in JDK 1.8.
 The backport is NOT an official implementation of JSR-310, as that would involve many complex legal/procedural hoops.
 
-The backport [Javadoc](http://threeten.github.com/threetenbp/apidocs) is available for browsing.
+The backport [Javadoc](http://www.threeten.org/threetenbp/apidocs) is available for browsing.
 The jar file is available in the [Maven Central repository](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.threeten%22%20AND%20a%3A%22threetenbp%22).
 
 The backport is used in projects such as [OpenGamma](https://github.com/OpenGamma/OG-Platform).
@@ -27,13 +27,13 @@ The backport is used in projects such as [OpenGamma](https://github.com/OpenGamm
 #### Documentation
 
 This site holds [reference documentation](articles/index.html) for ThreeTen and JSR-310.
-This supplements the [Javadoc](http://threeten.github.com/threetenbp/apidocs), providing a broader user guide.
+This supplements the [Javadoc](http://www.threeten.org/threetenbp/apidocs), providing a broader user guide.
 The documentation is applicable to both the backport and JDK 1.8 - only the package name changes.
 
 #### Links
 
 Many [articles and videos](links.html) have been published on the topic of JSR-310.
-If you'd like to add another one, please raise a [pull request](https://github.com/ThreeTen/threeten.github.com).
+If you'd like to add another one, please raise a [pull request](https://github.com/ThreeTen/threeten.github.io).
 
 #### History
 
