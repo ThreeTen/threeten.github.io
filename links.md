@@ -19,7 +19,7 @@ Feeds:
 
 Articles/Blogs:
 * [Oracle JDK 8 tutorial](http://docs.oracle.com/javase/tutorial/datetime/)
-* [Oracle Java magazine](http://www.oraclejavamagazine-digital.com/javamagazine/jan_feb_2014?pg=57#pg57) - Ben Evans & Richard Warburton
+* [Oracle Tech Network](http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html) - Ben Evans & Richard Warburton
 * [Introduction to JSR 310, part 1](http://java.amitph.com/2013/03/introduction-to-new-java-date-and-time.html) - Amit Phaltankar
 * [Introduction to JSR 310, part 2](http://java.amitph.com/2013/04/introduction-to-jsr-310-part-2-overview.html) - Amit Phaltankar
 * [Introduction to JSR 310, part 3](http://java.amitph.com/2014/01/introduction-to-jsr-310-part-3-overview_25.html) - Amit Phaltankar
