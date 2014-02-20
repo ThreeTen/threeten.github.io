@@ -28,6 +28,7 @@ Articles/Blogs:
 * [It's about time](https://blog.codecentric.de/en/2014/01/time/) - Matthias Langer
 
 Videos:
+* [Date and Time at JAX 2013](http://vimeo.com/87157763) - Stephen Colebourne
 * [Java 8 Date and Time API](http://www.youtube.com/watch?v=OIg9lNpMJew&feature=youtube_gdata) - Jim Gough
 * [Parleys JSR-310 feed](http://www.parleys.com/search/JSR-310)
 
