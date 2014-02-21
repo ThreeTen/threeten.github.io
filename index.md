@@ -30,6 +30,11 @@ This site holds [reference documentation](articles/index.html) for ThreeTen and 
 This supplements the [Javadoc](http://www.threeten.org/threetenbp/apidocs), providing a broader user guide.
 The documentation is applicable to both the backport and JDK 1.8 - only the package name changes.
 
+#### Extras
+
+Not every piece of functionality in the date/time are ended up in OpenJDK and JDK 8.
+The "extras" have been combined into a new project - [ThreeTen-Extra](http://www.threeten.org/threeten-extra/) - which can be used as an additional date/time jar file on JDK 8.
+
 #### Links
 
 Many [articles and videos](links.html) have been published on the topic of JSR-310.
