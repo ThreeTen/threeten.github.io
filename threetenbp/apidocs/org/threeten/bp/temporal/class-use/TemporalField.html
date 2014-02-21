@@ -1,0 +1,942 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>Uses of Interface org.threeten.bp.temporal.TemporalField (ThreeTen backport 0.9-SNAPSHOT API)</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Uses of Interface org.threeten.bp.temporal.TemporalField (ThreeTen backport 0.9-SNAPSHOT API)";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../package-summary.html">Package</a></li>
+<li><a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">Class</a></li>
+<li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/threeten/bp/temporal/class-use/TemporalField.html" target="_top">Frames</a></li>
+<li><a href="TemporalField.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<div class="header">
+<h2 title="Uses of Interface org.threeten.bp.temporal.TemporalField" class="title">Uses of Interface<br>org.threeten.bp.temporal.TemporalField</h2>
+</div>
+<div class="classUseContainer">
+<ul class="blockList">
+<li class="blockList">
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
+<caption><span>Packages that use <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Package</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.threeten.bp">org.threeten.bp</a></td>
+<td class="colLast">
+<div class="block">
+        The main API for dates, times, instants, and durations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.threeten.bp.chrono">org.threeten.bp.chrono</a></td>
+<td class="colLast">
+<div class="block">
+Support for calendar systems other than the default ISO.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.threeten.bp.format">org.threeten.bp.format</a></td>
+<td class="colLast">
+<div class="block">
+Provides classes to print and parse dates and times.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.threeten.bp.jdk8">org.threeten.bp.jdk8</a></td>
+<td class="colLast">
+<div class="block">
+Simulates JDK 1.8 features on JDK 1.7.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
+<td class="colLast">
+<div class="block">
+Access to date and time using fields and units, plus additional value type classes.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<ul class="blockList">
+<li class="blockList"><a name="org.threeten.bp">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a> in <a href="../../../../../org/threeten/bp/package-summary.html">org.threeten.bp</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/package-summary.html">org.threeten.bp</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">ZoneOffset.</span><code><strong><a href="../../../../../org/threeten/bp/ZoneOffset.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this offset as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date-time as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this year-month as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this year as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this time as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date-time as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">MonthDay.</span><code><strong><a href="../../../../../org/threeten/bp/MonthDay.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this month-day as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">Month.</span><code><strong><a href="../../../../../org/threeten/bp/Month.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this month-of-year as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this time as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date-time as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this instant as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">DayOfWeek.</span><code><strong><a href="../../../../../org/threeten/bp/DayOfWeek.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this day-of-week as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">ZoneOffset.</span><code><strong><a href="../../../../../org/threeten/bp/ZoneOffset.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this offset as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date-time as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this year-month as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this year as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this time as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date-time as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">MonthDay.</span><code><strong><a href="../../../../../org/threeten/bp/MonthDay.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this month-day as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">Month.</span><code><strong><a href="../../../../../org/threeten/bp/Month.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this month-of-year as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this time as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date-time as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this date as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this instant as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">DayOfWeek.</span><code><strong><a href="../../../../../org/threeten/bp/DayOfWeek.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field from this day-of-week as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">ZoneOffset.</span><code><strong><a href="../../../../../org/threeten/bp/ZoneOffset.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">MonthDay.</span><code><strong><a href="../../../../../org/threeten/bp/MonthDay.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">Month.</span><code><strong><a href="../../../../../org/threeten/bp/Month.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">DayOfWeek.</span><code><strong><a href="../../../../../org/threeten/bp/DayOfWeek.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">ZoneOffset.</span><code><strong><a href="../../../../../org/threeten/bp/ZoneOffset.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">MonthDay.</span><code><strong><a href="../../../../../org/threeten/bp/MonthDay.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">Month.</span><code><strong><a href="../../../../../org/threeten/bp/Month.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">DayOfWeek.</span><code><strong><a href="../../../../../org/threeten/bp/DayOfWeek.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">ZonedDateTime</a></code></td>
+<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this date-time with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
+<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this year-month with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/Year.html" title="class in org.threeten.bp">Year</a></code></td>
+<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this year with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/OffsetTime.html" title="class in org.threeten.bp">OffsetTime</a></code></td>
+<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this time with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
+<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this date-time with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/LocalTime.html" title="class in org.threeten.bp">LocalTime</a></code></td>
+<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this time with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/LocalDateTime.html" title="class in org.threeten.bp">LocalDateTime</a></code></td>
+<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this date-time with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this date with the specified field set to a new value.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a></code></td>
+<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns a copy of this instant with the specified field set to a new value.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.threeten.bp.chrono">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a> in <a href="../../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">MinguoDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">HijrahDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">MinguoDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">HijrahDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></code></td>
+<td class="colLast"><span class="strong">MinguoDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></code></td>
+<td class="colLast"><span class="strong">HijrahDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colLast"><span class="strong">ChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="type parameter in ChronoLocalDateTime">D</a>&gt;</code></td>
+<td class="colLast"><span class="strong">ChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="type parameter in ChronoLocalDate">D</a>&gt;</code></td>
+<td class="colLast"><span class="strong">ChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.threeten.bp.format">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a> in <a href="../../../../../org/threeten/bp/format/package-summary.html">org.threeten.bp.format</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/format/package-summary.html">org.threeten.bp.format</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendFraction(org.threeten.bp.temporal.TemporalField, int, int, boolean)">appendFraction</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+              int&nbsp;minWidth,
+              int&nbsp;maxWidth,
+              boolean&nbsp;decimalPoint)</code>
+<div class="block">Appends the fractional value of a date-time field to the formatter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendText(org.threeten.bp.temporal.TemporalField)">appendText</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Appends the text of a date-time field to the formatter using the full
+ text style.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendText(org.threeten.bp.temporal.TemporalField, java.util.Map)">appendText</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;textLookup)</code>
+<div class="block">Appends the text of a date-time field to the formatter using the specified
+ map to supply the text.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendText(org.threeten.bp.temporal.TemporalField, org.threeten.bp.format.TextStyle)">appendText</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+          <a href="../../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;textStyle)</code>
+<div class="block">Appends the text of a date-time field to the formatter.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValue(org.threeten.bp.temporal.TemporalField)">appendValue</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Appends the value of a date-time field to the formatter using a normal
+ output style.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValue(org.threeten.bp.temporal.TemporalField, int)">appendValue</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+           int&nbsp;width)</code>
+<div class="block">Appends the value of a date-time field to the formatter using a fixed
+ width, zero-padded approach.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValue(org.threeten.bp.temporal.TemporalField, int, int, org.threeten.bp.format.SignStyle)">appendValue</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+           int&nbsp;minWidth,
+           int&nbsp;maxWidth,
+           <a href="../../../../../org/threeten/bp/format/SignStyle.html" title="enum in org.threeten.bp.format">SignStyle</a>&nbsp;signStyle)</code>
+<div class="block">Appends the value of a date-time field to the formatter providing full
+ control over printing.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValueReduced(org.threeten.bp.temporal.TemporalField, int, int)">appendValueReduced</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+                  int&nbsp;width,
+                  int&nbsp;baseValue)</code>
+<div class="block">Appends the reduced value of a date-time field to the formatter.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.threeten.bp.jdk8">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a> in <a href="../../../../../org/threeten/bp/jdk8/package-summary.html">org.threeten.bp.jdk8</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/jdk8/package-summary.html">org.threeten.bp.jdk8</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceTemporalAccessor.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceEra.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceEra.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceEra.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceTemporalAccessor.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">DefaultInterfaceChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.threeten.bp.temporal">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a> in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> that implement <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal">ChronoField</a></strong></code>
+<div class="block">A standard set of fields.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing fields, and an explanation">
+<caption><span>Fields in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> declared as <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">IsoFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/IsoFields.html#DAY_OF_QUARTER">DAY_OF_QUARTER</a></strong></code>
+<div class="block">The field that represents the day-of-quarter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">JulianFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/JulianFields.html#JULIAN_DAY">JULIAN_DAY</a></strong></code>
+<div class="block">Julian Day field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">JulianFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/JulianFields.html#MODIFIED_JULIAN_DAY">MODIFIED_JULIAN_DAY</a></strong></code>
+<div class="block">Modified Julian Day field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">IsoFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/IsoFields.html#QUARTER_OF_YEAR">QUARTER_OF_YEAR</a></strong></code>
+<div class="block">The field that represents the quarter-of-year.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">JulianFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/JulianFields.html#RATA_DIE">RATA_DIE</a></strong></code>
+<div class="block">Rata Die field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">IsoFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/IsoFields.html#WEEK_BASED_YEAR">WEEK_BASED_YEAR</a></strong></code>
+<div class="block">The field that represents the week-based-year.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">IsoFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/IsoFields.html#WEEK_OF_WEEK_BASED_YEAR">WEEK_OF_WEEK_BASED_YEAR</a></strong></code>
+<div class="block">The field that represents the week-of-week-based-year.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> that return <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">WeekFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/WeekFields.html#dayOfWeek()">dayOfWeek</a></strong>()</code>
+<div class="block">Returns a field to access the day of week,
+ computed based on this WeekFields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">WeekFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/WeekFields.html#weekOfMonth()">weekOfMonth</a></strong>()</code>
+<div class="block">Returns a field to access the week of month,
+ computed based on this WeekFields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><span class="strong">WeekFields.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/WeekFields.html#weekOfYear()">weekOfYear</a></strong>()</code>
+<div class="block">Returns a field to access the week of year,
+ computed based on this WeekFields.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> that return types with arguments of type <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;</code></td>
+<td class="colLast"><span class="strong">TemporalField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalField.html#resolve(org.threeten.bp.temporal.TemporalAccessor, long)">resolve</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal,
+       long&nbsp;value)</code>
+<div class="block">Resolves the date/time information in the builder</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;</code></td>
+<td class="colLast"><span class="strong">ChronoField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html#resolve(org.threeten.bp.temporal.TemporalAccessor, long)">resolve</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal,
+       long&nbsp;value)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">ValueRange.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ValueRange.html#checkValidIntValue(long, org.threeten.bp.temporal.TemporalField)">checkValidIntValue</a></strong>(long&nbsp;value,
+                  <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks that the specified value is valid and fits in an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">ValueRange.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ValueRange.html#checkValidValue(long, org.threeten.bp.temporal.TemporalField)">checkValidValue</a></strong>(long&nbsp;value,
+               <a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks that the specified value is valid.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="strong">TemporalAccessor.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">TemporalAccessor.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">TemporalAccessor.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><span class="strong">TemporalAccessor.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">Temporal.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+    long&nbsp;newValue)</code>
+<div class="block">Returns an object of the same type as this object with the specified field altered.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="../package-summary.html">Package</a></li>
+<li><a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">Class</a></li>
+<li class="navBarCell1Rev">Use</li>
+<li><a href="../package-tree.html">Tree</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/threeten/bp/temporal/class-use/TemporalField.html" target="_top">Frames</a></li>
+<li><a href="TemporalField.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+<p class="legalCopy"><small>Copyright &#169; 2007&#x2013;2014 <a href="http://www.threeten.org">ThreeTen.org</a>. All rights reserved.</small></p>
+</body>
+</html>
