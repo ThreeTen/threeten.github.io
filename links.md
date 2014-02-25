@@ -26,6 +26,7 @@ Articles/Blogs:
 * [Java 8 Date/Time library performance](http://java-performance.info/jsr-310-java-8-datetime-library-performance-well-joda-time-2-3-j-u-calendar/) - Mikhail Vorontsov
 * [Happy Martin Luther King day](http://javajimlondon.blogspot.co.uk/2014/01/java-8-date-time-happy-martin-luther.html) - Jim Gough
 * [It's about time](https://blog.codecentric.de/en/2014/01/time/) - Matthias Langer
+* [A deeper look into the Java 8 Date and Time API](http://www.mscharhag.com/2014/02/java-8-datetime-api.html) - Michael Scharhag
 
 Videos:
 * [Date and Time at JAX 2013](http://vimeo.com/87157763) - Stephen Colebourne
