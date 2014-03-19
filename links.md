@@ -53,6 +53,7 @@ Chinese:
 
 French:
 * [Java 8 – What’s new ? – 2/3 – Date and Time](http://blog.soat.fr/2013/06/java-8-whats-new-23-date-and-time/) - [translated](http://translate.google.com/translate?sl=auto&tl=en&js=n&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Fblog.soat.fr%2F2013%2F06%2Fjava-8-whats-new-23-date-and-time%2F&act=url) - Yohan Beschi
+* [Java 8 – Time management](http://blog.ippon.fr/2014/03/19/java-8-gestion-du-temps/) - [translated](http://translate.google.com/translate?sl=auto&tl=en&js=n&prev=_t&hl=fr&ie=UTF-8&u=http%3A%2F%2Fblog.ippon.fr%2F2014%2F03%2F19%2Fjava-8-gestion-du-temps%2F&act=url) - Pierre Templier 
 
 Portuguese (Brazilian)
 * [New 8 Java: JSR 310 - Date and Time API](http://rodrigouchoa.wordpress.com/2013/11/20/novidades-do-java-8-jsr-310-date-and-time-api/) - [translated](http://translate.google.com/translate?sl=auto&tl=en&js=n&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Frodrigouchoa.wordpress.com%2F2013%2F11%2F20%2Fnovidades-do-java-8-jsr-310-date-and-time-api%2F) - Rodrigo Uchôa
