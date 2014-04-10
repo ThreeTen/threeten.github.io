@@ -57,3 +57,5 @@ French:
 
 Portuguese (Brazilian)
 * [New 8 Java: JSR 310 - Date and Time API](http://rodrigouchoa.wordpress.com/2013/11/20/novidades-do-java-8-jsr-310-date-and-time-api/) - [translated](http://translate.google.com/translate?sl=auto&tl=en&js=n&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Frodrigouchoa.wordpress.com%2F2013%2F11%2F20%2Fnovidades-do-java-8-jsr-310-date-and-time-api%2F) - Rodrigo Uchôa
+* [Meet the new dates of the Java 8 API](http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/) -  Rodrigo Ferreira and Alexandre Aquiles
+
