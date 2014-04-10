@@ -2,6 +2,7 @@ auto: true
 server: true
 permalink: none
 baseurl: ""
+markdown: kramdown
 exclude:
 - .gitignore
 - README.md
