@@ -106,9 +106,21 @@
 <br>
 <pre>public enum <span class="strong">TextStyle</span>
 extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&gt;</pre>
-<div class="block">Enumeration of the style of text output to use.
+<div class="block">Enumeration of the style of text formatting and parsing.
  <p>
- This defines the "size" of the text to be output.
+ Text styles define three sizes for the formatted text - 'full', 'short' and 'narrow'.
+ Each of these three sizes is available in both 'standard' and 'stand-alone' variations.
+ <p>
+ The difference between the three sizes is obvious in most languages.
+ For example, in English the 'full' month is 'January', the 'short' month is 'Jan'
+ and the 'narrow' month is 'J'. Note that the narrow size is often not unique.
+ For example, 'January', 'June' and 'July' all have the 'narrow' text 'J'.
+ <p>
+ The difference between the 'standard' and 'stand-alone' forms is trickier to describe
+ as there is no difference in English. However, in other languages there is a difference
+ in the word used when the text is used alone, as opposed to in a complete date.
+ For example, the word used for a month when used alone in a date picker is different
+ to the word used for month in association with a day and year in a date.
 
  <h3>Specification for implementors</h3>
  This is immutable and thread-safe enum.</div>
@@ -135,13 +147,28 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html?is
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#FULL_STANDALONE">FULL_STANDALONE</a></strong></code>
+<div class="block">Full text for stand-alone use, typically the full description.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#NARROW">NARROW</a></strong></code>
 <div class="block">Narrow text, typically a single letter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#NARROW_STANDALONE">NARROW_STANDALONE</a></strong></code>
+<div class="block">Narrow text for stand-alone use, typically a single letter.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#SHORT">SHORT</a></strong></code>
 <div class="block">Short text, typically an abbreviation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#SHORT_STANDALONE">SHORT_STANDALONE</a></strong></code>
+<div class="block">Short text for stand-alone use, typically an abbreviation.</div>
 </td>
 </tr>
 </table>
@@ -160,12 +187,30 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html?is
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#asNormal()">asNormal</a></strong>()</code>
+<div class="block">Converts the style to the equivalent normal style.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#asStandalone()">asStandalone</a></strong>()</code>
+<div class="block">Converts the style to the equivalent stand-alone style.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#isStandalone()">isStandalone</a></strong>()</code>
+<div class="block">Checks if the style is stand-alone.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#valueOf(java.lang.String)">valueOf</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/TextStyle.html#values()">values</a></strong>()</code>
 <div class="block">Returns an array containing the constants of this enum type, in
@@ -212,6 +257,17 @@ the order they are declared.</div>
  For example, day-of-week Monday might output "Monday".</div>
 </li>
 </ul>
+<a name="FULL_STANDALONE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>FULL_STANDALONE</h4>
+<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a> FULL_STANDALONE</pre>
+<div class="block">Full text for stand-alone use, typically the full description.
+ For example, day-of-week Monday might output "Monday".</div>
+</li>
+</ul>
 <a name="SHORT">
 <!--   -->
 </a>
@@ -223,14 +279,36 @@ the order they are declared.</div>
  For example, day-of-week Monday might output "Mon".</div>
 </li>
 </ul>
+<a name="SHORT_STANDALONE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SHORT_STANDALONE</h4>
+<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a> SHORT_STANDALONE</pre>
+<div class="block">Short text for stand-alone use, typically an abbreviation.
+ For example, day-of-week Monday might output "Mon".</div>
+</li>
+</ul>
 <a name="NARROW">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>NARROW</h4>
 <pre>public static final&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a> NARROW</pre>
 <div class="block">Narrow text, typically a single letter.
+ For example, day-of-week Monday might output "M".</div>
+</li>
+</ul>
+<a name="NARROW_STANDALONE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>NARROW_STANDALONE</h4>
+<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a> NARROW_STANDALONE</pre>
+<div class="block">Narrow text for stand-alone use, typically a single letter.
  For example, day-of-week Monday might output "M".</div>
 </li>
 </ul>
@@ -263,7 +341,7 @@ the order they are declared</dd></dl>
 <a name="valueOf(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>valueOf</h4>
 <pre>public static&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;valueOf(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
@@ -277,6 +355,39 @@ not permitted.)</div>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if this enum type has no constant
 with the specified name</dd>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the argument is null</dd></dl>
+</li>
+</ul>
+<a name="isStandalone()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isStandalone</h4>
+<pre>public&nbsp;boolean&nbsp;isStandalone()</pre>
+<div class="block">Checks if the style is stand-alone.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if the style is stand-alone</dd></dl>
+</li>
+</ul>
+<a name="asStandalone()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>asStandalone</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;asStandalone()</pre>
+<div class="block">Converts the style to the equivalent stand-alone style.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the matching stand-alone style</dd></dl>
+</li>
+</ul>
+<a name="asNormal()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>asNormal</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;asNormal()</pre>
+<div class="block">Converts the style to the equivalent normal style.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the matching normal style</dd></dl>
 </li>
 </ul>
 </li>

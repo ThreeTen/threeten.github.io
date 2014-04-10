@@ -208,14 +208,13 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#dayOfWeek()">dayOfWeek</a></strong>()</code>
-<div class="block">Returns a field to access the day of week,
- computed based on this WeekFields.</div>
+<div class="block">Returns a field to access the day of week based on this <code>WeekFields</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#equals(java.lang.Object)">equals</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
-<div class="block">Checks if these rules are equal to the specified rules.</div>
+<div class="block">Checks if this <code>WeekFields</code> is equal to the specified object.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -233,7 +232,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#hashCode()">hashCode</a></strong>()</code>
-<div class="block">A hash code for these rules.</div>
+<div class="block">A hash code for this <code>WeekFields</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -252,21 +251,31 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#toString()">toString</a></strong>()</code>
-<div class="block">A string representation of this definition.</div>
+<div class="block">A string representation of this <code>WeekFields</code> instance.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#weekBasedYear()">weekBasedYear</a></strong>()</code>
+<div class="block">Returns a field to access the year of a week-based-year based on this <code>WeekFields</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#weekOfMonth()">weekOfMonth</a></strong>()</code>
-<div class="block">Returns a field to access the week of month,
- computed based on this WeekFields.</div>
+<div class="block">Returns a field to access the week of month based on this <code>WeekFields</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#weekOfWeekBasedYear()">weekOfWeekBasedYear</a></strong>()</code>
+<div class="block">Returns a field to access the week of a week-based-year based on this <code>WeekFields</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/WeekFields.html#weekOfYear()">weekOfYear</a></strong>()</code>
-<div class="block">Returns a field to access the week of year,
- computed based on this WeekFields.</div>
+<div class="block">Returns a field to access the week of year based on this <code>WeekFields</code>.</div>
 </td>
 </tr>
 </table>
@@ -410,12 +419,21 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>dayOfWeek</h4>
 <pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;dayOfWeek()</pre>
-<div class="block">Returns a field to access the day of week,
- computed based on this WeekFields.
+<div class="block">Returns a field to access the day of week based on this <code>WeekFields</code>.
  <p>
- The days of week are numbered from 1 to 7.
- Day number 1 is the <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getFirstDayOfWeek()"><code>first day-of-week</code></a>.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the field for day-of-week using this week definition, not null</dd></dl>
+ This is similar to <a href="../../../../org/threeten/bp/temporal/ChronoField.html#DAY_OF_WEEK"><code>ChronoField.DAY_OF_WEEK</code></a> but uses values for
+ the day-of-week based on this <code>WeekFields</code>.
+ The days are numbered from 1 to 7 where the
+ <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getFirstDayOfWeek()"><code>first day-of-week</code></a> is assigned the value 1.
+ <p>
+ For example, if the first day-of-week is Sunday, then that will have the
+ value 1, with other days ranging from Monday as 2 to Saturday as 7.
+ <p>
+ In the resolving phase of parsing, a localized day-of-week will be converted
+ to a standardized <code>ChronoField</code> day-of-week.
+ The day-of-week must be in the valid range 1 to 7.
+ Other fields in this class build dates using the standardized day-of-week.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a field providing access to the day-of-week with localized numbering, not null</dd></dl>
 </li>
 </ul>
 <a name="weekOfMonth()">
@@ -425,10 +443,9 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>weekOfMonth</h4>
 <pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;weekOfMonth()</pre>
-<div class="block">Returns a field to access the week of month,
- computed based on this WeekFields.
+<div class="block">Returns a field to access the week of month based on this <code>WeekFields</code>.
  <p>
- This represents concept of the count of weeks within the month where weeks
+ This represents the concept of the count of weeks within the month where weeks
  start on a fixed day-of-week, such as Monday.
  This field is typically used with <a href="../../../../org/threeten/bp/temporal/WeekFields.html#dayOfWeek()"><code>dayOfWeek()</code></a>.
  <p>
@@ -443,8 +460,28 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  - if the 4th day of the month is a Monday, week one starts on the 4th and the 1st to 3rd is in week zero<br>
  - if the 5th day of the month is a Monday, week two starts on the 5th and the 1st to 4th is in week one<br>
  <p>
- This field can be used with any calendar system.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>a TemporalField to access the WeekOfMonth, not null</dd></dl>
+ This field can be used with any calendar system.
+ <p>
+ In the resolving phase of parsing, a date can be created from a year,
+ week-of-month, month-of-year and day-of-week.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#STRICT">strict mode</a>, all four fields are
+ validated against their range of valid values. The week-of-month field
+ is validated to ensure that the resulting month is the month requested.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#SMART">smart mode</a>, all four fields are
+ validated against their range of valid values. The week-of-month field
+ is validated from 0 to 6, meaning that the resulting date can be in a
+ different month to that specified.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#LENIENT">lenient mode</a>, the year and day-of-week
+ are validated against the range of valid values. The resulting date is calculated
+ equivalent to the following four stage approach.
+ First, create a date on the first day of the first week of January in the requested year.
+ Then take the month-of-year, subtract one, and add the amount in months to the date.
+ Then take the week-of-month, subtract one, and add the amount in weeks to the date.
+ Finally, adjust to the correct day-of-week within the localized week.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a field providing access to the week-of-month, not null</dd></dl>
 </li>
 </ul>
 <a name="weekOfYear()">
@@ -454,15 +491,14 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>weekOfYear</h4>
 <pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;weekOfYear()</pre>
-<div class="block">Returns a field to access the week of year,
- computed based on this WeekFields.
+<div class="block">Returns a field to access the week of year based on this <code>WeekFields</code>.
  <p>
- This represents concept of the count of weeks within the year where weeks
+ This represents the concept of the count of weeks within the year where weeks
  start on a fixed day-of-week, such as Monday.
  This field is typically used with <a href="../../../../org/threeten/bp/temporal/WeekFields.html#dayOfWeek()"><code>dayOfWeek()</code></a>.
  <p>
  Week one(1) is the week starting on the <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getFirstDayOfWeek()"><code>getFirstDayOfWeek()</code></a>
- where there are at least <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getMinimalDaysInFirstWeek()"><code>getMinimalDaysInFirstWeek()</code></a> days in the month.
+ where there are at least <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getMinimalDaysInFirstWeek()"><code>getMinimalDaysInFirstWeek()</code></a> days in the year.
  Thus, week one may start up to <code>minDays</code> days before the start of the year.
  If the first week starts after the start of the year then the period before is week zero (0).
  <p>
@@ -472,8 +508,123 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  - if the 4th day of the year is a Monday, week one starts on the 4th and the 1st to 3rd is in week zero<br>
  - if the 5th day of the year is a Monday, week two starts on the 5th and the 1st to 4th is in week one<br>
  <p>
- This field can be used with any calendar system.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>a TemporalField to access the WeekOfYear, not null</dd></dl>
+ This field can be used with any calendar system.
+ <p>
+ In the resolving phase of parsing, a date can be created from a year,
+ week-of-year and day-of-week.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#STRICT">strict mode</a>, all three fields are
+ validated against their range of valid values. The week-of-year field
+ is validated to ensure that the resulting year is the year requested.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#SMART">smart mode</a>, all three fields are
+ validated against their range of valid values. The week-of-year field
+ is validated from 0 to 54, meaning that the resulting date can be in a
+ different year to that specified.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#LENIENT">lenient mode</a>, the year and day-of-week
+ are validated against the range of valid values. The resulting date is calculated
+ equivalent to the following three stage approach.
+ First, create a date on the first day of the first week in the requested year.
+ Then take the week-of-year, subtract one, and add the amount in weeks to the date.
+ Finally, adjust to the correct day-of-week within the localized week.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a field providing access to the week-of-year, not null</dd></dl>
+</li>
+</ul>
+<a name="weekOfWeekBasedYear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>weekOfWeekBasedYear</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;weekOfWeekBasedYear()</pre>
+<div class="block">Returns a field to access the week of a week-based-year based on this <code>WeekFields</code>.
+ <p>
+ This represents the concept of the count of weeks within the year where weeks
+ start on a fixed day-of-week, such as Monday and each week belongs to exactly one year.
+ This field is typically used with <a href="../../../../org/threeten/bp/temporal/WeekFields.html#dayOfWeek()"><code>dayOfWeek()</code></a> and
+ <a href="../../../../org/threeten/bp/temporal/WeekFields.html#weekBasedYear()"><code>weekBasedYear()</code></a>.
+ <p>
+ Week one(1) is the week starting on the <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getFirstDayOfWeek()"><code>getFirstDayOfWeek()</code></a>
+ where there are at least <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getMinimalDaysInFirstWeek()"><code>getMinimalDaysInFirstWeek()</code></a> days in the year.
+ If the first week starts after the start of the year then the period before
+ is in the last week of the previous year.
+ <p>
+ For example:<br>
+ - if the 1st day of the year is a Monday, week one starts on the 1st<br>
+ - if the 2nd day of the year is a Monday, week one starts on the 2nd and
+   the 1st is in the last week of the previous year<br>
+ - if the 4th day of the year is a Monday, week one starts on the 4th and
+   the 1st to 3rd is in the last week of the previous year<br>
+ - if the 5th day of the year is a Monday, week two starts on the 5th and
+   the 1st to 4th is in week one<br>
+ <p>
+ This field can be used with any calendar system.
+ <p>
+ In the resolving phase of parsing, a date can be created from a week-based-year,
+ week-of-year and day-of-week.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#STRICT">strict mode</a>, all three fields are
+ validated against their range of valid values. The week-of-year field
+ is validated to ensure that the resulting week-based-year is the
+ week-based-year requested.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#SMART">smart mode</a>, all three fields are
+ validated against their range of valid values. The week-of-week-based-year field
+ is validated from 1 to 53, meaning that the resulting date can be in the
+ following week-based-year to that specified.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#LENIENT">lenient mode</a>, the year and day-of-week
+ are validated against the range of valid values. The resulting date is calculated
+ equivalent to the following three stage approach.
+ First, create a date on the first day of the first week in the requested week-based-year.
+ Then take the week-of-week-based-year, subtract one, and add the amount in weeks to the date.
+ Finally, adjust to the correct day-of-week within the localized week.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a field providing access to the week-of-week-based-year, not null</dd></dl>
+</li>
+</ul>
+<a name="weekBasedYear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>weekBasedYear</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;weekBasedYear()</pre>
+<div class="block">Returns a field to access the year of a week-based-year based on this <code>WeekFields</code>.
+ <p>
+ This represents the concept of the year where weeks start on a fixed day-of-week,
+ such as Monday and each week belongs to exactly one year.
+ This field is typically used with <a href="../../../../org/threeten/bp/temporal/WeekFields.html#dayOfWeek()"><code>dayOfWeek()</code></a> and
+ <a href="../../../../org/threeten/bp/temporal/WeekFields.html#weekOfWeekBasedYear()"><code>weekOfWeekBasedYear()</code></a>.
+ <p>
+ Week one(1) is the week starting on the <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getFirstDayOfWeek()"><code>getFirstDayOfWeek()</code></a>
+ where there are at least <a href="../../../../org/threeten/bp/temporal/WeekFields.html#getMinimalDaysInFirstWeek()"><code>getMinimalDaysInFirstWeek()</code></a> days in the year.
+ Thus, week one may start before the start of the year.
+ If the first week starts after the start of the year then the period before
+ is in the last week of the previous year.
+ <p>
+ This field can be used with any calendar system.
+ <p>
+ In the resolving phase of parsing, a date can be created from a week-based-year,
+ week-of-year and day-of-week.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#STRICT">strict mode</a>, all three fields are
+ validated against their range of valid values. The week-of-year field
+ is validated to ensure that the resulting week-based-year is the
+ week-based-year requested.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#SMART">smart mode</a>, all three fields are
+ validated against their range of valid values. The week-of-week-based-year field
+ is validated from 1 to 53, meaning that the resulting date can be in the
+ following week-based-year to that specified.
+ <p>
+ In <a href="../../../../org/threeten/bp/format/ResolverStyle.html#LENIENT">lenient mode</a>, the year and day-of-week
+ are validated against the range of valid values. The resulting date is calculated
+ equivalent to the following three stage approach.
+ First, create a date on the first day of the first week in the requested week-based-year.
+ Then take the week-of-week-based-year, subtract one, and add the amount in weeks to the date.
+ Finally, adjust to the correct day-of-week within the localized week.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a field providing access to the week-based-year, not null</dd></dl>
 </li>
 </ul>
 <a name="equals(java.lang.Object)">
@@ -483,7 +634,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>equals</h4>
 <pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
-<div class="block">Checks if these rules are equal to the specified rules.
+<div class="block">Checks if this <code>WeekFields</code> is equal to the specified object.
  <p>
  The comparison is based on the entire state of the rules, which is
  the first day-of-week and minimal days.</div>
@@ -501,7 +652,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>hashCode</h4>
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
-<div class="block">A hash code for these rules.</div>
+<div class="block">A hash code for this <code>WeekFields</code>.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
@@ -515,7 +666,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <li class="blockList">
 <h4>toString</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
-<div class="block">A string representation of this definition.</div>
+<div class="block">A string representation of this <code>WeekFields</code> instance.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>

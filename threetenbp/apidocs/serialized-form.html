@@ -187,7 +187,7 @@
 <li class="blockList"><a name="org.threeten.bp.LocalDate">
 <!--   -->
 </a>
-<h3>Class <a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">org.threeten.bp.LocalDate</a> extends <a href="org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt; implements Serializable</h3>
+<h3>Class <a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">org.threeten.bp.LocalDate</a> extends <a href="org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a> implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>2942565459149668126L</dd>
@@ -244,7 +244,7 @@
 <li class="blockList"><a name="org.threeten.bp.LocalDateTime">
 <!--   -->
 </a>
-<h3>Class <a href="org/threeten/bp/LocalDateTime.html" title="class in org.threeten.bp">org.threeten.bp.LocalDateTime</a> extends <a href="org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDateTime</a>&lt;<a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt; implements Serializable</h3>
+<h3>Class <a href="org/threeten/bp/LocalDateTime.html" title="class in org.threeten.bp">org.threeten.bp.LocalDateTime</a> extends <a href="org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>6207766400415563566L</dd>
@@ -514,7 +514,7 @@
 <li class="blockList"><a name="org.threeten.bp.Period">
 <!--   -->
 </a>
-<h3>Class <a href="org/threeten/bp/Period.html" title="class in org.threeten.bp">org.threeten.bp.Period</a> extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a> implements Serializable</h3>
+<h3>Class <a href="org/threeten/bp/Period.html" title="class in org.threeten.bp">org.threeten.bp.Period</a> extends <a href="org/threeten/bp/chrono/ChronoPeriod.html" title="class in org.threeten.bp.chrono">ChronoPeriod</a> implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-8290556941213247973L</dd>
@@ -698,7 +698,7 @@
 <li class="blockList"><a name="org.threeten.bp.ZonedDateTime">
 <!--   -->
 </a>
-<h3>Class <a href="org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">org.threeten.bp.ZonedDateTime</a> extends <a href="org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoZonedDateTime</a>&lt;<a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt; implements Serializable</h3>
+<h3>Class <a href="org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">org.threeten.bp.ZonedDateTime</a> extends <a href="org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt; implements Serializable</h3>
 <dl class="nameValue">
 <dt>serialVersionUID:</dt>
 <dd>-6260982410461394882L</dd>
@@ -981,6 +981,54 @@
 </li>
 </ul>
 </li>
+<li class="blockList"><a name="org.threeten.bp.chrono.JapaneseEra">
+<!--   -->
+</a>
+<h3>Class <a href="org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">org.threeten.bp.chrono.JapaneseEra</a> extends <a href="org/threeten/bp/jdk8/DefaultInterfaceEra.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceEra</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>1466499369062886794L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList"><a name="serialized_methods">
+<!--   -->
+</a>
+<h3>Serialization Methods</h3>
+<ul class="blockList">
+<li class="blockList"><a name="readResolve()">
+<!--   -->
+</a>
+<h4>readResolve</h4>
+<pre>private&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;readResolve()
+                    throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectStreamException.html?is-external=true" title="class or interface in java.io">ObjectStreamException</a></pre>
+<div class="block">Returns the singleton <code>JapaneseEra</code> corresponding to this object.
+ It's possible that this version of <code>JapaneseEra</code> doesn't support the latest era value.
+ In that case, this method throws an <code>ObjectStreamException</code>.</div>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectStreamException.html?is-external=true" title="class or interface in java.io">ObjectStreamException</a></code> - if the deserialized object has any unknown numeric era value.</dd></dl>
+</li>
+<li class="blockListLast"><a name="writeReplace()">
+<!--   -->
+</a>
+<h4>writeReplace</h4>
+<pre>private&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;writeReplace()</pre>
+</li>
+</ul>
+</li>
+<li class="blockList"><a name="serializedForm">
+<!--   -->
+</a>
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>eraValue</h4>
+<pre>int eraValue</pre>
+<div class="block">The era value.</div>
+&nbsp;</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a name="org.threeten.bp.chrono.MinguoChronology">
 <!--   -->
 </a>
@@ -1181,6 +1229,15 @@
 <li class="blockList">
 <h2 title="Package">Package&nbsp;org.threeten.bp.temporal</h2>
 <ul class="blockList">
+<li class="blockList"><a name="org.threeten.bp.temporal.UnsupportedTemporalTypeException">
+<!--   -->
+</a>
+<h3>Class <a href="org/threeten/bp/temporal/UnsupportedTemporalTypeException.html" title="class in org.threeten.bp.temporal">org.threeten.bp.temporal.UnsupportedTemporalTypeException</a> extends <a href="org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>-189676278478L</dd>
+</dl>
+</li>
 <li class="blockList"><a name="org.threeten.bp.temporal.ValueRange">
 <!--   -->
 </a>

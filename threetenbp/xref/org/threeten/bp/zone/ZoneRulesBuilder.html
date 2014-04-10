@@ -9,7 +9,7 @@
 <div id="overview"><a href="../../../../../apidocs/org/threeten/bp/zone/ZoneRulesBuilder.html">View Javadoc</a></div><pre>
 
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-2013, Stephen Colebourne &amp; Michael Nascimento Santos</em>
+<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos</em>
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <em class="jxr_comment"> *</em>
@@ -419,345 +419,346 @@
 <a class="jxr_linenumber" name="409" href="#409">409</a> <em class="jxr_javadoccomment">     * @param object  the object to deduplicate</em>
 <a class="jxr_linenumber" name="410" href="#410">410</a> <em class="jxr_javadoccomment">     * @return the deduplicated object</em>
 <a class="jxr_linenumber" name="411" href="#411">411</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="412" href="#412">412</a>     &lt;T&gt; T deduplicate(T object) {
-<a class="jxr_linenumber" name="413" href="#413">413</a>         <strong class="jxr_keyword">if</strong> (deduplicateMap.containsKey(object) == false) {
-<a class="jxr_linenumber" name="414" href="#414">414</a>             deduplicateMap.put(object, object);
-<a class="jxr_linenumber" name="415" href="#415">415</a>         }
-<a class="jxr_linenumber" name="416" href="#416">416</a>         <strong class="jxr_keyword">return</strong> (T) deduplicateMap.get(object);
-<a class="jxr_linenumber" name="417" href="#417">417</a>     }
-<a class="jxr_linenumber" name="418" href="#418">418</a> 
-<a class="jxr_linenumber" name="419" href="#419">419</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="420" href="#420">420</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="421" href="#421">421</a> <em class="jxr_javadoccomment">     * A definition of a window in the time-line.</em>
-<a class="jxr_linenumber" name="422" href="#422">422</a> <em class="jxr_javadoccomment">     * The window will have one standard offset and will either have a</em>
-<a class="jxr_linenumber" name="423" href="#423">423</a> <em class="jxr_javadoccomment">     * fixed DST savings or a set of rules.</em>
-<a class="jxr_linenumber" name="424" href="#424">424</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="425" href="#425">425</a>     <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> {
-<a class="jxr_linenumber" name="426" href="#426">426</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The standard offset during the window, not null. */</em>
-<a class="jxr_linenumber" name="427" href="#427">427</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset;
-<a class="jxr_linenumber" name="428" href="#428">428</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The end local time, not null. */</em>
-<a class="jxr_linenumber" name="429" href="#429">429</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> windowEnd;
-<a class="jxr_linenumber" name="430" href="#430">430</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The type of the end time, not null. */</em>
-<a class="jxr_linenumber" name="431" href="#431">431</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition;
-<a class="jxr_linenumber" name="432" href="#432">432</a> 
-<a class="jxr_linenumber" name="433" href="#433">433</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The fixed amount of the saving to be applied during this window. */</em>
-<a class="jxr_linenumber" name="434" href="#434">434</a>         <strong class="jxr_keyword">private</strong> Integer fixedSavingAmountSecs;
-<a class="jxr_linenumber" name="435" href="#435">435</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The rules for the current window. */</em>
-<a class="jxr_linenumber" name="436" href="#436">436</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; ruleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="437" href="#437">437</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The latest year that the last year starts at. */</em>
-<a class="jxr_linenumber" name="438" href="#438">438</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> maxLastRuleStartYear = Year.MIN_VALUE;
-<a class="jxr_linenumber" name="439" href="#439">439</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The last rules. */</em>
-<a class="jxr_linenumber" name="440" href="#440">440</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; lastRuleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="441" href="#441">441</a> 
-<a class="jxr_linenumber" name="442" href="#442">442</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="443" href="#443">443</a> <em class="jxr_javadoccomment">         * Constructor.</em>
-<a class="jxr_linenumber" name="444" href="#444">444</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="445" href="#445">445</a> <em class="jxr_javadoccomment">         * @param standardOffset  the standard offset applicable during the window, not null</em>
-<a class="jxr_linenumber" name="446" href="#446">446</a> <em class="jxr_javadoccomment">         * @param windowEnd  the end of the window, relative to the time definition, null if forever</em>
-<a class="jxr_linenumber" name="447" href="#447">447</a> <em class="jxr_javadoccomment">         * @param timeDefinition  the time definition for calculating the true end, not null</em>
-<a class="jxr_linenumber" name="448" href="#448">448</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="449" href="#449">449</a>         <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a>(
-<a class="jxr_linenumber" name="450" href="#450">450</a>                 <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset,
-<a class="jxr_linenumber" name="451" href="#451">451</a>                 <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> windowEnd,
-<a class="jxr_linenumber" name="452" href="#452">452</a>                 <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition) {
-<a class="jxr_linenumber" name="453" href="#453">453</a>             <strong class="jxr_keyword">super</strong>();
-<a class="jxr_linenumber" name="454" href="#454">454</a>             <strong class="jxr_keyword">this</strong>.windowEnd = windowEnd;
-<a class="jxr_linenumber" name="455" href="#455">455</a>             <strong class="jxr_keyword">this</strong>.timeDefinition = timeDefinition;
-<a class="jxr_linenumber" name="456" href="#456">456</a>             <strong class="jxr_keyword">this</strong>.standardOffset = standardOffset;
-<a class="jxr_linenumber" name="457" href="#457">457</a>         }
-<a class="jxr_linenumber" name="458" href="#458">458</a> 
-<a class="jxr_linenumber" name="459" href="#459">459</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="460" href="#460">460</a> <em class="jxr_javadoccomment">         * Sets the fixed savings amount for the window.</em>
-<a class="jxr_linenumber" name="461" href="#461">461</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="462" href="#462">462</a> <em class="jxr_javadoccomment">         * @param fixedSavingAmount  the amount of daylight saving to apply throughout the window, may be null</em>
-<a class="jxr_linenumber" name="463" href="#463">463</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window already has rules</em>
-<a class="jxr_linenumber" name="464" href="#464">464</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="465" href="#465">465</a>         <strong class="jxr_keyword">void</strong> setFixedSavings(<strong class="jxr_keyword">int</strong> fixedSavingAmount) {
-<a class="jxr_linenumber" name="466" href="#466">466</a>             <strong class="jxr_keyword">if</strong> (ruleList.size() &gt; 0 || lastRuleList.size() &gt; 0) {
-<a class="jxr_linenumber" name="467" href="#467">467</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Window has DST rules, so cannot have fixed savings"</span>);
-<a class="jxr_linenumber" name="468" href="#468">468</a>             }
-<a class="jxr_linenumber" name="469" href="#469">469</a>             <strong class="jxr_keyword">this</strong>.fixedSavingAmountSecs = fixedSavingAmount;
-<a class="jxr_linenumber" name="470" href="#470">470</a>         }
-<a class="jxr_linenumber" name="471" href="#471">471</a> 
-<a class="jxr_linenumber" name="472" href="#472">472</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="473" href="#473">473</a> <em class="jxr_javadoccomment">         * Adds a rule to the current window.</em>
-<a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_javadoccomment">         * @param startYear  the start year of the rule, from MIN_VALUE to MAX_VALUE</em>
-<a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_javadoccomment">         * @param endYear  the end year of the rule, from MIN_VALUE to MAX_VALUE</em>
-<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_javadoccomment">         * @param month  the month of the transition, not null</em>
-<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_javadoccomment">         * @param dayOfMonthIndicator  the day-of-month of the transition, adjusted by dayOfWeek,</em>
-<a class="jxr_linenumber" name="479" href="#479">479</a> <em class="jxr_javadoccomment">         *   from 1 to 31 adjusted later, or -1 to -28 adjusted earlier from the last day of the month</em>
-<a class="jxr_linenumber" name="480" href="#480">480</a> <em class="jxr_javadoccomment">         * @param dayOfWeek  the day-of-week to adjust to, null if day-of-month should not be adjusted</em>
-<a class="jxr_linenumber" name="481" href="#481">481</a> <em class="jxr_javadoccomment">         * @param time  the time that the transition occurs as defined by timeDefintion, not null</em>
-<a class="jxr_linenumber" name="482" href="#482">482</a> <em class="jxr_javadoccomment">         * @param timeEndOfDay  whether midnight is at the end of day</em>
-<a class="jxr_linenumber" name="483" href="#483">483</a> <em class="jxr_javadoccomment">         * @param timeDefinition  the definition of how to convert local to actual time, not null</em>
-<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">         * @param savingAmountSecs  the amount of saving from the standard offset in seconds</em>
-<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window already has fixed savings</em>
-<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window has reached the maximum capacity of 2000 rules</em>
-<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="488" href="#488">488</a>         <strong class="jxr_keyword">void</strong> addRule(
-<a class="jxr_linenumber" name="489" href="#489">489</a>                 <strong class="jxr_keyword">int</strong> startYear,
-<a class="jxr_linenumber" name="490" href="#490">490</a>                 <strong class="jxr_keyword">int</strong> endYear,
-<a class="jxr_linenumber" name="491" href="#491">491</a>                 <a href="../../../../org/threeten/bp/Month.html">Month</a> month,
-<a class="jxr_linenumber" name="492" href="#492">492</a>                 <strong class="jxr_keyword">int</strong> dayOfMonthIndicator,
-<a class="jxr_linenumber" name="493" href="#493">493</a>                 <a href="../../../../org/threeten/bp/DayOfWeek.html">DayOfWeek</a> dayOfWeek,
-<a class="jxr_linenumber" name="494" href="#494">494</a>                 <a href="../../../../org/threeten/bp/LocalTime.html">LocalTime</a> time,
-<a class="jxr_linenumber" name="495" href="#495">495</a>                 <strong class="jxr_keyword">boolean</strong> timeEndOfDay,
-<a class="jxr_linenumber" name="496" href="#496">496</a>                 <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition,
-<a class="jxr_linenumber" name="497" href="#497">497</a>                 <strong class="jxr_keyword">int</strong> savingAmountSecs) {
-<a class="jxr_linenumber" name="498" href="#498">498</a> 
-<a class="jxr_linenumber" name="499" href="#499">499</a>             <strong class="jxr_keyword">if</strong> (fixedSavingAmountSecs != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="500" href="#500">500</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Window has a fixed DST saving, so cannot have DST rules"</span>);
-<a class="jxr_linenumber" name="501" href="#501">501</a>             }
-<a class="jxr_linenumber" name="502" href="#502">502</a>             <strong class="jxr_keyword">if</strong> (ruleList.size() &gt;= 2000) {
-<a class="jxr_linenumber" name="503" href="#503">503</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Window has reached the maximum number of allowed rules"</span>);
-<a class="jxr_linenumber" name="504" href="#504">504</a>             }
-<a class="jxr_linenumber" name="505" href="#505">505</a>             <strong class="jxr_keyword">boolean</strong> lastRule = false;
-<a class="jxr_linenumber" name="506" href="#506">506</a>             <strong class="jxr_keyword">if</strong> (endYear == Year.MAX_VALUE) {
-<a class="jxr_linenumber" name="507" href="#507">507</a>                 lastRule = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="508" href="#508">508</a>                 endYear = startYear;
-<a class="jxr_linenumber" name="509" href="#509">509</a>             }
-<a class="jxr_linenumber" name="510" href="#510">510</a>             <strong class="jxr_keyword">int</strong> year = startYear;
-<a class="jxr_linenumber" name="511" href="#511">511</a>             <strong class="jxr_keyword">while</strong> (year &lt;= endYear) {
-<a class="jxr_linenumber" name="512" href="#512">512</a>                 <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a> rule = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a>(year, month, dayOfMonthIndicator, dayOfWeek, time, timeEndOfDay, timeDefinition, savingAmountSecs);
-<a class="jxr_linenumber" name="513" href="#513">513</a>                 <strong class="jxr_keyword">if</strong> (lastRule) {
-<a class="jxr_linenumber" name="514" href="#514">514</a>                     lastRuleList.add(rule);
-<a class="jxr_linenumber" name="515" href="#515">515</a>                     maxLastRuleStartYear = Math.max(startYear, maxLastRuleStartYear);
-<a class="jxr_linenumber" name="516" href="#516">516</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="517" href="#517">517</a>                     ruleList.add(rule);
-<a class="jxr_linenumber" name="518" href="#518">518</a>                 }
-<a class="jxr_linenumber" name="519" href="#519">519</a>                 year++;
-<a class="jxr_linenumber" name="520" href="#520">520</a>             }
-<a class="jxr_linenumber" name="521" href="#521">521</a>         }
-<a class="jxr_linenumber" name="522" href="#522">522</a> 
-<a class="jxr_linenumber" name="523" href="#523">523</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="524" href="#524">524</a> <em class="jxr_javadoccomment">         * Validates that this window is after the previous one.</em>
-<a class="jxr_linenumber" name="525" href="#525">525</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="526" href="#526">526</a> <em class="jxr_javadoccomment">         * @param previous  the previous window, not null</em>
-<a class="jxr_linenumber" name="527" href="#527">527</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window order is invalid</em>
-<a class="jxr_linenumber" name="528" href="#528">528</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="529" href="#529">529</a>         <strong class="jxr_keyword">void</strong> validateWindowOrder(<a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> previous) {
-<a class="jxr_linenumber" name="530" href="#530">530</a>             <strong class="jxr_keyword">if</strong> (windowEnd.isBefore(previous.windowEnd)) {
-<a class="jxr_linenumber" name="531" href="#531">531</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Windows must be added in date-time order: "</span> +
-<a class="jxr_linenumber" name="532" href="#532">532</a>                         windowEnd + <span class="jxr_string">" &lt; "</span> + previous.windowEnd);
-<a class="jxr_linenumber" name="533" href="#533">533</a>             }
-<a class="jxr_linenumber" name="534" href="#534">534</a>         }
-<a class="jxr_linenumber" name="535" href="#535">535</a> 
-<a class="jxr_linenumber" name="536" href="#536">536</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="537" href="#537">537</a> <em class="jxr_javadoccomment">         * Adds rules to make the last rules all start from the same year.</em>
-<a class="jxr_linenumber" name="538" href="#538">538</a> <em class="jxr_javadoccomment">         * Also add one more year to avoid weird case where penultimate year has odd offset.</em>
-<a class="jxr_linenumber" name="539" href="#539">539</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="540" href="#540">540</a> <em class="jxr_javadoccomment">         * @param windowStartYear  the window start year</em>
-<a class="jxr_linenumber" name="541" href="#541">541</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if there is only one rule defined as being forever</em>
-<a class="jxr_linenumber" name="542" href="#542">542</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="543" href="#543">543</a>         <strong class="jxr_keyword">void</strong> tidy(<strong class="jxr_keyword">int</strong> windowStartYear) {
-<a class="jxr_linenumber" name="544" href="#544">544</a>             <strong class="jxr_keyword">if</strong> (lastRuleList.size() == 1) {
-<a class="jxr_linenumber" name="545" href="#545">545</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Cannot have only one rule defined as being forever"</span>);
-<a class="jxr_linenumber" name="546" href="#546">546</a>             }
-<a class="jxr_linenumber" name="547" href="#547">547</a> 
-<a class="jxr_linenumber" name="548" href="#548">548</a>             <em class="jxr_comment">// handle last rules</em>
-<a class="jxr_linenumber" name="549" href="#549">549</a>             <strong class="jxr_keyword">if</strong> (windowEnd.equals(LocalDateTime.MAX)) {
-<a class="jxr_linenumber" name="550" href="#550">550</a>                 <em class="jxr_comment">// setup at least one real rule, which closes off other windows nicely</em>
-<a class="jxr_linenumber" name="551" href="#551">551</a>                 maxLastRuleStartYear = Math.max(maxLastRuleStartYear, windowStartYear) + 1;
-<a class="jxr_linenumber" name="552" href="#552">552</a>                 <strong class="jxr_keyword">for</strong> (TZRule lastRule : lastRuleList) {
-<a class="jxr_linenumber" name="553" href="#553">553</a>                     addRule(lastRule.year, maxLastRuleStartYear, lastRule.month, lastRule.dayOfMonthIndicator,
-<a class="jxr_linenumber" name="554" href="#554">554</a>                         lastRule.dayOfWeek, lastRule.time, lastRule.timeEndOfDay, lastRule.timeDefinition, lastRule.savingAmountSecs);
-<a class="jxr_linenumber" name="555" href="#555">555</a>                     lastRule.year = maxLastRuleStartYear + 1;
-<a class="jxr_linenumber" name="556" href="#556">556</a>                 }
-<a class="jxr_linenumber" name="557" href="#557">557</a>                 <strong class="jxr_keyword">if</strong> (maxLastRuleStartYear == Year.MAX_VALUE) {
-<a class="jxr_linenumber" name="558" href="#558">558</a>                     lastRuleList.clear();
-<a class="jxr_linenumber" name="559" href="#559">559</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="560" href="#560">560</a>                     maxLastRuleStartYear++;
-<a class="jxr_linenumber" name="561" href="#561">561</a>                 }
-<a class="jxr_linenumber" name="562" href="#562">562</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="563" href="#563">563</a>                 <em class="jxr_comment">// convert all within the endYear limit</em>
-<a class="jxr_linenumber" name="564" href="#564">564</a>                 <strong class="jxr_keyword">int</strong> endYear = windowEnd.getYear();
-<a class="jxr_linenumber" name="565" href="#565">565</a>                 <strong class="jxr_keyword">for</strong> (TZRule lastRule : lastRuleList) {
-<a class="jxr_linenumber" name="566" href="#566">566</a>                     addRule(lastRule.year, endYear + 1, lastRule.month, lastRule.dayOfMonthIndicator,
-<a class="jxr_linenumber" name="567" href="#567">567</a>                         lastRule.dayOfWeek, lastRule.time, lastRule.timeEndOfDay, lastRule.timeDefinition, lastRule.savingAmountSecs);
-<a class="jxr_linenumber" name="568" href="#568">568</a>                 }
-<a class="jxr_linenumber" name="569" href="#569">569</a>                 lastRuleList.clear();
-<a class="jxr_linenumber" name="570" href="#570">570</a>                 maxLastRuleStartYear = Year.MAX_VALUE;
-<a class="jxr_linenumber" name="571" href="#571">571</a>             }
-<a class="jxr_linenumber" name="572" href="#572">572</a> 
-<a class="jxr_linenumber" name="573" href="#573">573</a>             <em class="jxr_comment">// ensure lists are sorted</em>
-<a class="jxr_linenumber" name="574" href="#574">574</a>             Collections.sort(ruleList);
-<a class="jxr_linenumber" name="575" href="#575">575</a>             Collections.sort(lastRuleList);
-<a class="jxr_linenumber" name="576" href="#576">576</a> 
-<a class="jxr_linenumber" name="577" href="#577">577</a>             <em class="jxr_comment">// default fixed savings to zero</em>
-<a class="jxr_linenumber" name="578" href="#578">578</a>             <strong class="jxr_keyword">if</strong> (ruleList.size() == 0 &amp;&amp; fixedSavingAmountSecs == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="579" href="#579">579</a>                 fixedSavingAmountSecs = 0;
-<a class="jxr_linenumber" name="580" href="#580">580</a>             }
-<a class="jxr_linenumber" name="581" href="#581">581</a>         }
-<a class="jxr_linenumber" name="582" href="#582">582</a> 
-<a class="jxr_linenumber" name="583" href="#583">583</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="584" href="#584">584</a> <em class="jxr_javadoccomment">         * Checks if the window is empty.</em>
-<a class="jxr_linenumber" name="585" href="#585">585</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="586" href="#586">586</a> <em class="jxr_javadoccomment">         * @return true if the window is only a standard offset</em>
-<a class="jxr_linenumber" name="587" href="#587">587</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="588" href="#588">588</a>         <strong class="jxr_keyword">boolean</strong> isSingleWindowStandardOffset() {
-<a class="jxr_linenumber" name="589" href="#589">589</a>             <strong class="jxr_keyword">return</strong> windowEnd.equals(LocalDateTime.MAX) &amp;&amp; timeDefinition == TimeDefinition.WALL &amp;&amp;
-<a class="jxr_linenumber" name="590" href="#590">590</a>                     fixedSavingAmountSecs == <strong class="jxr_keyword">null</strong> &amp;&amp; lastRuleList.isEmpty() &amp;&amp; ruleList.isEmpty();
-<a class="jxr_linenumber" name="591" href="#591">591</a>         }
-<a class="jxr_linenumber" name="592" href="#592">592</a> 
-<a class="jxr_linenumber" name="593" href="#593">593</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="594" href="#594">594</a> <em class="jxr_javadoccomment">         * Creates the wall offset for the local date-time at the end of the window.</em>
-<a class="jxr_linenumber" name="595" href="#595">595</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="596" href="#596">596</a> <em class="jxr_javadoccomment">         * @param savingsSecs  the amount of savings in use in seconds</em>
-<a class="jxr_linenumber" name="597" href="#597">597</a> <em class="jxr_javadoccomment">         * @return the created date-time epoch second in the wall offset, not null</em>
-<a class="jxr_linenumber" name="598" href="#598">598</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="599" href="#599">599</a>         <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> createWallOffset(<strong class="jxr_keyword">int</strong> savingsSecs) {
-<a class="jxr_linenumber" name="600" href="#600">600</a>             <strong class="jxr_keyword">return</strong> ZoneOffset.ofTotalSeconds(standardOffset.getTotalSeconds() + savingsSecs);
-<a class="jxr_linenumber" name="601" href="#601">601</a>         }
-<a class="jxr_linenumber" name="602" href="#602">602</a> 
-<a class="jxr_linenumber" name="603" href="#603">603</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="604" href="#604">604</a> <em class="jxr_javadoccomment">         * Creates the offset date-time for the local date-time at the end of the window.</em>
-<a class="jxr_linenumber" name="605" href="#605">605</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="606" href="#606">606</a> <em class="jxr_javadoccomment">         * @param savingsSecs  the amount of savings in use in seconds</em>
-<a class="jxr_linenumber" name="607" href="#607">607</a> <em class="jxr_javadoccomment">         * @return the created date-time epoch second in the wall offset, not null</em>
-<a class="jxr_linenumber" name="608" href="#608">608</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="609" href="#609">609</a>         <strong class="jxr_keyword">long</strong> createDateTimeEpochSecond(<strong class="jxr_keyword">int</strong> savingsSecs) {
-<a class="jxr_linenumber" name="610" href="#610">610</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> wallOffset = createWallOffset(savingsSecs);
-<a class="jxr_linenumber" name="611" href="#611">611</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> ldt = timeDefinition.createDateTime(windowEnd, standardOffset, wallOffset);
-<a class="jxr_linenumber" name="612" href="#612">612</a>             <strong class="jxr_keyword">return</strong> ldt.toEpochSecond(wallOffset);
-<a class="jxr_linenumber" name="613" href="#613">613</a>         }
-<a class="jxr_linenumber" name="614" href="#614">614</a>     }
-<a class="jxr_linenumber" name="615" href="#615">615</a> 
-<a class="jxr_linenumber" name="616" href="#616">616</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="617" href="#617">617</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="618" href="#618">618</a> <em class="jxr_javadoccomment">     * A definition of the way a local time can be converted to an offset time.</em>
-<a class="jxr_linenumber" name="619" href="#619">619</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="620" href="#620">620</a>     <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a> <strong class="jxr_keyword">implements</strong> Comparable&lt;TZRule&gt; {
-<a class="jxr_linenumber" name="621" href="#621">621</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The year. */</em>
-<a class="jxr_linenumber" name="622" href="#622">622</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> year;
-<a class="jxr_linenumber" name="623" href="#623">623</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The month. */</em>
-<a class="jxr_linenumber" name="624" href="#624">624</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/Month.html">Month</a> month;
-<a class="jxr_linenumber" name="625" href="#625">625</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The day-of-month. */</em>
-<a class="jxr_linenumber" name="626" href="#626">626</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> dayOfMonthIndicator;
-<a class="jxr_linenumber" name="627" href="#627">627</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The day-of-month. */</em>
-<a class="jxr_linenumber" name="628" href="#628">628</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/DayOfWeek.html">DayOfWeek</a> dayOfWeek;
-<a class="jxr_linenumber" name="629" href="#629">629</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The local time. */</em>
-<a class="jxr_linenumber" name="630" href="#630">630</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/LocalTime.html">LocalTime</a> time;
-<a class="jxr_linenumber" name="631" href="#631">631</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Whether the local time is end of day. */</em>
-<a class="jxr_linenumber" name="632" href="#632">632</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> timeEndOfDay;
-<a class="jxr_linenumber" name="633" href="#633">633</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The type of the time. */</em>
-<a class="jxr_linenumber" name="634" href="#634">634</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition;
-<a class="jxr_linenumber" name="635" href="#635">635</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The amount of the saving to be applied after this point. */</em>
-<a class="jxr_linenumber" name="636" href="#636">636</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> savingAmountSecs;
-<a class="jxr_linenumber" name="637" href="#637">637</a> 
-<a class="jxr_linenumber" name="638" href="#638">638</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="639" href="#639">639</a> <em class="jxr_javadoccomment">         * Constructor.</em>
-<a class="jxr_linenumber" name="640" href="#640">640</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="641" href="#641">641</a> <em class="jxr_javadoccomment">         * @param year  the year</em>
-<a class="jxr_linenumber" name="642" href="#642">642</a> <em class="jxr_javadoccomment">         * @param month  the month, not null</em>
-<a class="jxr_linenumber" name="643" href="#643">643</a> <em class="jxr_javadoccomment">         * @param dayOfMonthIndicator  the day-of-month of the transition, adjusted by dayOfWeek,</em>
-<a class="jxr_linenumber" name="644" href="#644">644</a> <em class="jxr_javadoccomment">         *   from 1 to 31 adjusted later, or -1 to -28 adjusted earlier from the last day of the month</em>
-<a class="jxr_linenumber" name="645" href="#645">645</a> <em class="jxr_javadoccomment">         * @param dayOfWeek  the day-of-week, null if day-of-month is exact</em>
-<a class="jxr_linenumber" name="646" href="#646">646</a> <em class="jxr_javadoccomment">         * @param time  the time, not null</em>
-<a class="jxr_linenumber" name="647" href="#647">647</a> <em class="jxr_javadoccomment">         * @param timeEndOfDay  whether midnight is at the end of day</em>
-<a class="jxr_linenumber" name="648" href="#648">648</a> <em class="jxr_javadoccomment">         * @param timeDefinition  the time definition, not null</em>
-<a class="jxr_linenumber" name="649" href="#649">649</a> <em class="jxr_javadoccomment">         * @param savingAfterSecs  the savings amount in seconds</em>
-<a class="jxr_linenumber" name="650" href="#650">650</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="651" href="#651">651</a>         <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a>(<strong class="jxr_keyword">int</strong> year, <a href="../../../../org/threeten/bp/Month.html">Month</a> month, <strong class="jxr_keyword">int</strong> dayOfMonthIndicator,
-<a class="jxr_linenumber" name="652" href="#652">652</a>                 <a href="../../../../org/threeten/bp/DayOfWeek.html">DayOfWeek</a> dayOfWeek, <a href="../../../../org/threeten/bp/LocalTime.html">LocalTime</a> time, <strong class="jxr_keyword">boolean</strong> timeEndOfDay,
-<a class="jxr_linenumber" name="653" href="#653">653</a>                 <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition, <strong class="jxr_keyword">int</strong> savingAfterSecs) {
-<a class="jxr_linenumber" name="654" href="#654">654</a>             <strong class="jxr_keyword">super</strong>();
-<a class="jxr_linenumber" name="655" href="#655">655</a>             <strong class="jxr_keyword">this</strong>.year = year;
-<a class="jxr_linenumber" name="656" href="#656">656</a>             <strong class="jxr_keyword">this</strong>.month = month;
-<a class="jxr_linenumber" name="657" href="#657">657</a>             <strong class="jxr_keyword">this</strong>.dayOfMonthIndicator = dayOfMonthIndicator;
-<a class="jxr_linenumber" name="658" href="#658">658</a>             <strong class="jxr_keyword">this</strong>.dayOfWeek = dayOfWeek;
-<a class="jxr_linenumber" name="659" href="#659">659</a>             <strong class="jxr_keyword">this</strong>.time = time;
-<a class="jxr_linenumber" name="660" href="#660">660</a>             <strong class="jxr_keyword">this</strong>.timeEndOfDay = timeEndOfDay;
-<a class="jxr_linenumber" name="661" href="#661">661</a>             <strong class="jxr_keyword">this</strong>.timeDefinition = timeDefinition;
-<a class="jxr_linenumber" name="662" href="#662">662</a>             <strong class="jxr_keyword">this</strong>.savingAmountSecs = savingAfterSecs;
-<a class="jxr_linenumber" name="663" href="#663">663</a>         }
-<a class="jxr_linenumber" name="664" href="#664">664</a> 
-<a class="jxr_linenumber" name="665" href="#665">665</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="666" href="#666">666</a> <em class="jxr_javadoccomment">         * Converts this to a transition.</em>
-<a class="jxr_linenumber" name="667" href="#667">667</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="668" href="#668">668</a> <em class="jxr_javadoccomment">         * @param standardOffset  the active standard offset, not null</em>
-<a class="jxr_linenumber" name="669" href="#669">669</a> <em class="jxr_javadoccomment">         * @param savingsBeforeSecs  the active savings in seconds</em>
-<a class="jxr_linenumber" name="670" href="#670">670</a> <em class="jxr_javadoccomment">         * @return the transition, not null</em>
-<a class="jxr_linenumber" name="671" href="#671">671</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="672" href="#672">672</a>         <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a> toTransition(<a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset, <strong class="jxr_keyword">int</strong> savingsBeforeSecs) {
-<a class="jxr_linenumber" name="673" href="#673">673</a>             <em class="jxr_comment">// copy of code in ZoneOffsetTransitionRule to avoid infinite loop</em>
-<a class="jxr_linenumber" name="674" href="#674">674</a>             <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date = toLocalDate();
-<a class="jxr_linenumber" name="675" href="#675">675</a>             date = deduplicate(date);
-<a class="jxr_linenumber" name="676" href="#676">676</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> ldt = deduplicate(LocalDateTime.of(date, time));
-<a class="jxr_linenumber" name="677" href="#677">677</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> wallOffset = deduplicate(ZoneOffset.ofTotalSeconds(standardOffset.getTotalSeconds() + savingsBeforeSecs));
-<a class="jxr_linenumber" name="678" href="#678">678</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> dt = deduplicate(timeDefinition.createDateTime(ldt, standardOffset, wallOffset));
-<a class="jxr_linenumber" name="679" href="#679">679</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offsetAfter = deduplicate(ZoneOffset.ofTotalSeconds(standardOffset.getTotalSeconds() + savingAmountSecs));
-<a class="jxr_linenumber" name="680" href="#680">680</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a>(dt, wallOffset, offsetAfter);
-<a class="jxr_linenumber" name="681" href="#681">681</a>         }
-<a class="jxr_linenumber" name="682" href="#682">682</a> 
-<a class="jxr_linenumber" name="683" href="#683">683</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="684" href="#684">684</a> <em class="jxr_javadoccomment">         * Converts this to a transition rule.</em>
-<a class="jxr_linenumber" name="685" href="#685">685</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="686" href="#686">686</a> <em class="jxr_javadoccomment">         * @param standardOffset  the active standard offset, not null</em>
-<a class="jxr_linenumber" name="687" href="#687">687</a> <em class="jxr_javadoccomment">         * @param savingsBeforeSecs  the active savings before the transition in seconds</em>
-<a class="jxr_linenumber" name="688" href="#688">688</a> <em class="jxr_javadoccomment">         * @return the transition, not null</em>
-<a class="jxr_linenumber" name="689" href="#689">689</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="690" href="#690">690</a>         <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">ZoneOffsetTransitionRule</a> toTransitionRule(<a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset, <strong class="jxr_keyword">int</strong> savingsBeforeSecs) {
-<a class="jxr_linenumber" name="691" href="#691">691</a>             <em class="jxr_comment">// optimize stored format</em>
-<a class="jxr_linenumber" name="692" href="#692">692</a>             <strong class="jxr_keyword">if</strong> (dayOfMonthIndicator &lt; 0) {
-<a class="jxr_linenumber" name="693" href="#693">693</a>                 <strong class="jxr_keyword">if</strong> (month != Month.FEBRUARY) {
-<a class="jxr_linenumber" name="694" href="#694">694</a>                     dayOfMonthIndicator = month.maxLength() - 6;
-<a class="jxr_linenumber" name="695" href="#695">695</a>                 }
-<a class="jxr_linenumber" name="696" href="#696">696</a>             }
-<a class="jxr_linenumber" name="697" href="#697">697</a>             <strong class="jxr_keyword">if</strong> (timeEndOfDay &amp;&amp; dayOfMonthIndicator &gt; 0 &amp;&amp; (dayOfMonthIndicator == 28 &amp;&amp; month == Month.FEBRUARY) == false) {
-<a class="jxr_linenumber" name="698" href="#698">698</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date = LocalDate.of(2004, month, dayOfMonthIndicator).plusDays(1);  <em class="jxr_comment">// leap-year</em>
-<a class="jxr_linenumber" name="699" href="#699">699</a>                 month = date.getMonth();
-<a class="jxr_linenumber" name="700" href="#700">700</a>                 dayOfMonthIndicator = date.getDayOfMonth();
-<a class="jxr_linenumber" name="701" href="#701">701</a>                 <strong class="jxr_keyword">if</strong> (dayOfWeek != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="702" href="#702">702</a>                     dayOfWeek = dayOfWeek.plus(1);
-<a class="jxr_linenumber" name="703" href="#703">703</a>                 }
-<a class="jxr_linenumber" name="704" href="#704">704</a>                 timeEndOfDay = false;
-<a class="jxr_linenumber" name="705" href="#705">705</a>             }
-<a class="jxr_linenumber" name="706" href="#706">706</a> 
-<a class="jxr_linenumber" name="707" href="#707">707</a>             <em class="jxr_comment">// build rule</em>
-<a class="jxr_linenumber" name="708" href="#708">708</a>             <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a> trans = toTransition(standardOffset, savingsBeforeSecs);
-<a class="jxr_linenumber" name="709" href="#709">709</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">ZoneOffsetTransitionRule</a>(
-<a class="jxr_linenumber" name="710" href="#710">710</a>                     month, dayOfMonthIndicator, dayOfWeek, time, timeEndOfDay, timeDefinition,
-<a class="jxr_linenumber" name="711" href="#711">711</a>                     standardOffset, trans.getOffsetBefore(), trans.getOffsetAfter());
-<a class="jxr_linenumber" name="712" href="#712">712</a>         }
-<a class="jxr_linenumber" name="713" href="#713">713</a> 
-<a class="jxr_linenumber" name="714" href="#714">714</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a> other) {
-<a class="jxr_linenumber" name="715" href="#715">715</a>             <strong class="jxr_keyword">int</strong> cmp = year - other.year;
-<a class="jxr_linenumber" name="716" href="#716">716</a>             cmp = (cmp == 0 ? month.compareTo(other.month) : cmp);
-<a class="jxr_linenumber" name="717" href="#717">717</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="718" href="#718">718</a>                 <em class="jxr_comment">// convert to date to handle dow/domIndicator/timeEndOfDay</em>
-<a class="jxr_linenumber" name="719" href="#719">719</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> thisDate = toLocalDate();
-<a class="jxr_linenumber" name="720" href="#720">720</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> otherDate = other.toLocalDate();
-<a class="jxr_linenumber" name="721" href="#721">721</a>                 cmp = thisDate.compareTo(otherDate);
-<a class="jxr_linenumber" name="722" href="#722">722</a>             }
-<a class="jxr_linenumber" name="723" href="#723">723</a>             cmp = (cmp == 0 ? time.compareTo(other.time) : cmp);
-<a class="jxr_linenumber" name="724" href="#724">724</a>             <strong class="jxr_keyword">return</strong> cmp;
-<a class="jxr_linenumber" name="725" href="#725">725</a>         }
-<a class="jxr_linenumber" name="726" href="#726">726</a> 
-<a class="jxr_linenumber" name="727" href="#727">727</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> toLocalDate() {
-<a class="jxr_linenumber" name="728" href="#728">728</a>             <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date;
-<a class="jxr_linenumber" name="729" href="#729">729</a>             <strong class="jxr_keyword">if</strong> (dayOfMonthIndicator &lt; 0) {
-<a class="jxr_linenumber" name="730" href="#730">730</a>                 <strong class="jxr_keyword">int</strong> monthLen = month.length(IsoChronology.INSTANCE.isLeapYear(year));
-<a class="jxr_linenumber" name="731" href="#731">731</a>                 date = LocalDate.of(year, month, monthLen + 1 + dayOfMonthIndicator);
-<a class="jxr_linenumber" name="732" href="#732">732</a>                 <strong class="jxr_keyword">if</strong> (dayOfWeek != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="733" href="#733">733</a>                     date = date.with(previousOrSame(dayOfWeek));
-<a class="jxr_linenumber" name="734" href="#734">734</a>                 }
-<a class="jxr_linenumber" name="735" href="#735">735</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="736" href="#736">736</a>                 date = LocalDate.of(year, month, dayOfMonthIndicator);
-<a class="jxr_linenumber" name="737" href="#737">737</a>                 <strong class="jxr_keyword">if</strong> (dayOfWeek != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="738" href="#738">738</a>                     date = date.with(nextOrSame(dayOfWeek));
-<a class="jxr_linenumber" name="739" href="#739">739</a>                 }
-<a class="jxr_linenumber" name="740" href="#740">740</a>             }
-<a class="jxr_linenumber" name="741" href="#741">741</a>             <strong class="jxr_keyword">if</strong> (timeEndOfDay) {
-<a class="jxr_linenumber" name="742" href="#742">742</a>                 date = date.plusDays(1);
-<a class="jxr_linenumber" name="743" href="#743">743</a>             }
-<a class="jxr_linenumber" name="744" href="#744">744</a>             <strong class="jxr_keyword">return</strong> date;
-<a class="jxr_linenumber" name="745" href="#745">745</a>         }
-<a class="jxr_linenumber" name="746" href="#746">746</a> 
-<a class="jxr_linenumber" name="747" href="#747">747</a>         <em class="jxr_comment">// no equals() or hashCode()</em>
-<a class="jxr_linenumber" name="748" href="#748">748</a>     }
-<a class="jxr_linenumber" name="749" href="#749">749</a> 
-<a class="jxr_linenumber" name="750" href="#750">750</a> }
+<a class="jxr_linenumber" name="412" href="#412">412</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="413" href="#413">413</a>     &lt;T&gt; T deduplicate(T object) {
+<a class="jxr_linenumber" name="414" href="#414">414</a>         <strong class="jxr_keyword">if</strong> (deduplicateMap.containsKey(object) == false) {
+<a class="jxr_linenumber" name="415" href="#415">415</a>             deduplicateMap.put(object, object);
+<a class="jxr_linenumber" name="416" href="#416">416</a>         }
+<a class="jxr_linenumber" name="417" href="#417">417</a>         <strong class="jxr_keyword">return</strong> (T) deduplicateMap.get(object);
+<a class="jxr_linenumber" name="418" href="#418">418</a>     }
+<a class="jxr_linenumber" name="419" href="#419">419</a> 
+<a class="jxr_linenumber" name="420" href="#420">420</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="421" href="#421">421</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="422" href="#422">422</a> <em class="jxr_javadoccomment">     * A definition of a window in the time-line.</em>
+<a class="jxr_linenumber" name="423" href="#423">423</a> <em class="jxr_javadoccomment">     * The window will have one standard offset and will either have a</em>
+<a class="jxr_linenumber" name="424" href="#424">424</a> <em class="jxr_javadoccomment">     * fixed DST savings or a set of rules.</em>
+<a class="jxr_linenumber" name="425" href="#425">425</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="426" href="#426">426</a>     <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> {
+<a class="jxr_linenumber" name="427" href="#427">427</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The standard offset during the window, not null. */</em>
+<a class="jxr_linenumber" name="428" href="#428">428</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset;
+<a class="jxr_linenumber" name="429" href="#429">429</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The end local time, not null. */</em>
+<a class="jxr_linenumber" name="430" href="#430">430</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> windowEnd;
+<a class="jxr_linenumber" name="431" href="#431">431</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The type of the end time, not null. */</em>
+<a class="jxr_linenumber" name="432" href="#432">432</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition;
+<a class="jxr_linenumber" name="433" href="#433">433</a> 
+<a class="jxr_linenumber" name="434" href="#434">434</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The fixed amount of the saving to be applied during this window. */</em>
+<a class="jxr_linenumber" name="435" href="#435">435</a>         <strong class="jxr_keyword">private</strong> Integer fixedSavingAmountSecs;
+<a class="jxr_linenumber" name="436" href="#436">436</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The rules for the current window. */</em>
+<a class="jxr_linenumber" name="437" href="#437">437</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; ruleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="438" href="#438">438</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The latest year that the last year starts at. */</em>
+<a class="jxr_linenumber" name="439" href="#439">439</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> maxLastRuleStartYear = Year.MIN_VALUE;
+<a class="jxr_linenumber" name="440" href="#440">440</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The last rules. */</em>
+<a class="jxr_linenumber" name="441" href="#441">441</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; lastRuleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="442" href="#442">442</a> 
+<a class="jxr_linenumber" name="443" href="#443">443</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="444" href="#444">444</a> <em class="jxr_javadoccomment">         * Constructor.</em>
+<a class="jxr_linenumber" name="445" href="#445">445</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="446" href="#446">446</a> <em class="jxr_javadoccomment">         * @param standardOffset  the standard offset applicable during the window, not null</em>
+<a class="jxr_linenumber" name="447" href="#447">447</a> <em class="jxr_javadoccomment">         * @param windowEnd  the end of the window, relative to the time definition, null if forever</em>
+<a class="jxr_linenumber" name="448" href="#448">448</a> <em class="jxr_javadoccomment">         * @param timeDefinition  the time definition for calculating the true end, not null</em>
+<a class="jxr_linenumber" name="449" href="#449">449</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="450" href="#450">450</a>         <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a>(
+<a class="jxr_linenumber" name="451" href="#451">451</a>                 <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset,
+<a class="jxr_linenumber" name="452" href="#452">452</a>                 <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> windowEnd,
+<a class="jxr_linenumber" name="453" href="#453">453</a>                 <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition) {
+<a class="jxr_linenumber" name="454" href="#454">454</a>             <strong class="jxr_keyword">super</strong>();
+<a class="jxr_linenumber" name="455" href="#455">455</a>             <strong class="jxr_keyword">this</strong>.windowEnd = windowEnd;
+<a class="jxr_linenumber" name="456" href="#456">456</a>             <strong class="jxr_keyword">this</strong>.timeDefinition = timeDefinition;
+<a class="jxr_linenumber" name="457" href="#457">457</a>             <strong class="jxr_keyword">this</strong>.standardOffset = standardOffset;
+<a class="jxr_linenumber" name="458" href="#458">458</a>         }
+<a class="jxr_linenumber" name="459" href="#459">459</a> 
+<a class="jxr_linenumber" name="460" href="#460">460</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="461" href="#461">461</a> <em class="jxr_javadoccomment">         * Sets the fixed savings amount for the window.</em>
+<a class="jxr_linenumber" name="462" href="#462">462</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="463" href="#463">463</a> <em class="jxr_javadoccomment">         * @param fixedSavingAmount  the amount of daylight saving to apply throughout the window, may be null</em>
+<a class="jxr_linenumber" name="464" href="#464">464</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window already has rules</em>
+<a class="jxr_linenumber" name="465" href="#465">465</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="466" href="#466">466</a>         <strong class="jxr_keyword">void</strong> setFixedSavings(<strong class="jxr_keyword">int</strong> fixedSavingAmount) {
+<a class="jxr_linenumber" name="467" href="#467">467</a>             <strong class="jxr_keyword">if</strong> (ruleList.size() &gt; 0 || lastRuleList.size() &gt; 0) {
+<a class="jxr_linenumber" name="468" href="#468">468</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Window has DST rules, so cannot have fixed savings"</span>);
+<a class="jxr_linenumber" name="469" href="#469">469</a>             }
+<a class="jxr_linenumber" name="470" href="#470">470</a>             <strong class="jxr_keyword">this</strong>.fixedSavingAmountSecs = fixedSavingAmount;
+<a class="jxr_linenumber" name="471" href="#471">471</a>         }
+<a class="jxr_linenumber" name="472" href="#472">472</a> 
+<a class="jxr_linenumber" name="473" href="#473">473</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_javadoccomment">         * Adds a rule to the current window.</em>
+<a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_javadoccomment">         * @param startYear  the start year of the rule, from MIN_VALUE to MAX_VALUE</em>
+<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_javadoccomment">         * @param endYear  the end year of the rule, from MIN_VALUE to MAX_VALUE</em>
+<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_javadoccomment">         * @param month  the month of the transition, not null</em>
+<a class="jxr_linenumber" name="479" href="#479">479</a> <em class="jxr_javadoccomment">         * @param dayOfMonthIndicator  the day-of-month of the transition, adjusted by dayOfWeek,</em>
+<a class="jxr_linenumber" name="480" href="#480">480</a> <em class="jxr_javadoccomment">         *   from 1 to 31 adjusted later, or -1 to -28 adjusted earlier from the last day of the month</em>
+<a class="jxr_linenumber" name="481" href="#481">481</a> <em class="jxr_javadoccomment">         * @param dayOfWeek  the day-of-week to adjust to, null if day-of-month should not be adjusted</em>
+<a class="jxr_linenumber" name="482" href="#482">482</a> <em class="jxr_javadoccomment">         * @param time  the time that the transition occurs as defined by timeDefintion, not null</em>
+<a class="jxr_linenumber" name="483" href="#483">483</a> <em class="jxr_javadoccomment">         * @param timeEndOfDay  whether midnight is at the end of day</em>
+<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">         * @param timeDefinition  the definition of how to convert local to actual time, not null</em>
+<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">         * @param savingAmountSecs  the amount of saving from the standard offset in seconds</em>
+<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window already has fixed savings</em>
+<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window has reached the maximum capacity of 2000 rules</em>
+<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="489" href="#489">489</a>         <strong class="jxr_keyword">void</strong> addRule(
+<a class="jxr_linenumber" name="490" href="#490">490</a>                 <strong class="jxr_keyword">int</strong> startYear,
+<a class="jxr_linenumber" name="491" href="#491">491</a>                 <strong class="jxr_keyword">int</strong> endYear,
+<a class="jxr_linenumber" name="492" href="#492">492</a>                 <a href="../../../../org/threeten/bp/Month.html">Month</a> month,
+<a class="jxr_linenumber" name="493" href="#493">493</a>                 <strong class="jxr_keyword">int</strong> dayOfMonthIndicator,
+<a class="jxr_linenumber" name="494" href="#494">494</a>                 <a href="../../../../org/threeten/bp/DayOfWeek.html">DayOfWeek</a> dayOfWeek,
+<a class="jxr_linenumber" name="495" href="#495">495</a>                 <a href="../../../../org/threeten/bp/LocalTime.html">LocalTime</a> time,
+<a class="jxr_linenumber" name="496" href="#496">496</a>                 <strong class="jxr_keyword">boolean</strong> timeEndOfDay,
+<a class="jxr_linenumber" name="497" href="#497">497</a>                 <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition,
+<a class="jxr_linenumber" name="498" href="#498">498</a>                 <strong class="jxr_keyword">int</strong> savingAmountSecs) {
+<a class="jxr_linenumber" name="499" href="#499">499</a> 
+<a class="jxr_linenumber" name="500" href="#500">500</a>             <strong class="jxr_keyword">if</strong> (fixedSavingAmountSecs != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="501" href="#501">501</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Window has a fixed DST saving, so cannot have DST rules"</span>);
+<a class="jxr_linenumber" name="502" href="#502">502</a>             }
+<a class="jxr_linenumber" name="503" href="#503">503</a>             <strong class="jxr_keyword">if</strong> (ruleList.size() &gt;= 2000) {
+<a class="jxr_linenumber" name="504" href="#504">504</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Window has reached the maximum number of allowed rules"</span>);
+<a class="jxr_linenumber" name="505" href="#505">505</a>             }
+<a class="jxr_linenumber" name="506" href="#506">506</a>             <strong class="jxr_keyword">boolean</strong> lastRule = false;
+<a class="jxr_linenumber" name="507" href="#507">507</a>             <strong class="jxr_keyword">if</strong> (endYear == Year.MAX_VALUE) {
+<a class="jxr_linenumber" name="508" href="#508">508</a>                 lastRule = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="509" href="#509">509</a>                 endYear = startYear;
+<a class="jxr_linenumber" name="510" href="#510">510</a>             }
+<a class="jxr_linenumber" name="511" href="#511">511</a>             <strong class="jxr_keyword">int</strong> year = startYear;
+<a class="jxr_linenumber" name="512" href="#512">512</a>             <strong class="jxr_keyword">while</strong> (year &lt;= endYear) {
+<a class="jxr_linenumber" name="513" href="#513">513</a>                 <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a> rule = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a>(year, month, dayOfMonthIndicator, dayOfWeek, time, timeEndOfDay, timeDefinition, savingAmountSecs);
+<a class="jxr_linenumber" name="514" href="#514">514</a>                 <strong class="jxr_keyword">if</strong> (lastRule) {
+<a class="jxr_linenumber" name="515" href="#515">515</a>                     lastRuleList.add(rule);
+<a class="jxr_linenumber" name="516" href="#516">516</a>                     maxLastRuleStartYear = Math.max(startYear, maxLastRuleStartYear);
+<a class="jxr_linenumber" name="517" href="#517">517</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="518" href="#518">518</a>                     ruleList.add(rule);
+<a class="jxr_linenumber" name="519" href="#519">519</a>                 }
+<a class="jxr_linenumber" name="520" href="#520">520</a>                 year++;
+<a class="jxr_linenumber" name="521" href="#521">521</a>             }
+<a class="jxr_linenumber" name="522" href="#522">522</a>         }
+<a class="jxr_linenumber" name="523" href="#523">523</a> 
+<a class="jxr_linenumber" name="524" href="#524">524</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="525" href="#525">525</a> <em class="jxr_javadoccomment">         * Validates that this window is after the previous one.</em>
+<a class="jxr_linenumber" name="526" href="#526">526</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="527" href="#527">527</a> <em class="jxr_javadoccomment">         * @param previous  the previous window, not null</em>
+<a class="jxr_linenumber" name="528" href="#528">528</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if the window order is invalid</em>
+<a class="jxr_linenumber" name="529" href="#529">529</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="530" href="#530">530</a>         <strong class="jxr_keyword">void</strong> validateWindowOrder(<a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> previous) {
+<a class="jxr_linenumber" name="531" href="#531">531</a>             <strong class="jxr_keyword">if</strong> (windowEnd.isBefore(previous.windowEnd)) {
+<a class="jxr_linenumber" name="532" href="#532">532</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Windows must be added in date-time order: "</span> +
+<a class="jxr_linenumber" name="533" href="#533">533</a>                         windowEnd + <span class="jxr_string">" &lt; "</span> + previous.windowEnd);
+<a class="jxr_linenumber" name="534" href="#534">534</a>             }
+<a class="jxr_linenumber" name="535" href="#535">535</a>         }
+<a class="jxr_linenumber" name="536" href="#536">536</a> 
+<a class="jxr_linenumber" name="537" href="#537">537</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="538" href="#538">538</a> <em class="jxr_javadoccomment">         * Adds rules to make the last rules all start from the same year.</em>
+<a class="jxr_linenumber" name="539" href="#539">539</a> <em class="jxr_javadoccomment">         * Also add one more year to avoid weird case where penultimate year has odd offset.</em>
+<a class="jxr_linenumber" name="540" href="#540">540</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="541" href="#541">541</a> <em class="jxr_javadoccomment">         * @param windowStartYear  the window start year</em>
+<a class="jxr_linenumber" name="542" href="#542">542</a> <em class="jxr_javadoccomment">         * @throws IllegalStateException if there is only one rule defined as being forever</em>
+<a class="jxr_linenumber" name="543" href="#543">543</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="544" href="#544">544</a>         <strong class="jxr_keyword">void</strong> tidy(<strong class="jxr_keyword">int</strong> windowStartYear) {
+<a class="jxr_linenumber" name="545" href="#545">545</a>             <strong class="jxr_keyword">if</strong> (lastRuleList.size() == 1) {
+<a class="jxr_linenumber" name="546" href="#546">546</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Cannot have only one rule defined as being forever"</span>);
+<a class="jxr_linenumber" name="547" href="#547">547</a>             }
+<a class="jxr_linenumber" name="548" href="#548">548</a> 
+<a class="jxr_linenumber" name="549" href="#549">549</a>             <em class="jxr_comment">// handle last rules</em>
+<a class="jxr_linenumber" name="550" href="#550">550</a>             <strong class="jxr_keyword">if</strong> (windowEnd.equals(LocalDateTime.MAX)) {
+<a class="jxr_linenumber" name="551" href="#551">551</a>                 <em class="jxr_comment">// setup at least one real rule, which closes off other windows nicely</em>
+<a class="jxr_linenumber" name="552" href="#552">552</a>                 maxLastRuleStartYear = Math.max(maxLastRuleStartYear, windowStartYear) + 1;
+<a class="jxr_linenumber" name="553" href="#553">553</a>                 <strong class="jxr_keyword">for</strong> (TZRule lastRule : lastRuleList) {
+<a class="jxr_linenumber" name="554" href="#554">554</a>                     addRule(lastRule.year, maxLastRuleStartYear, lastRule.month, lastRule.dayOfMonthIndicator,
+<a class="jxr_linenumber" name="555" href="#555">555</a>                         lastRule.dayOfWeek, lastRule.time, lastRule.timeEndOfDay, lastRule.timeDefinition, lastRule.savingAmountSecs);
+<a class="jxr_linenumber" name="556" href="#556">556</a>                     lastRule.year = maxLastRuleStartYear + 1;
+<a class="jxr_linenumber" name="557" href="#557">557</a>                 }
+<a class="jxr_linenumber" name="558" href="#558">558</a>                 <strong class="jxr_keyword">if</strong> (maxLastRuleStartYear == Year.MAX_VALUE) {
+<a class="jxr_linenumber" name="559" href="#559">559</a>                     lastRuleList.clear();
+<a class="jxr_linenumber" name="560" href="#560">560</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="561" href="#561">561</a>                     maxLastRuleStartYear++;
+<a class="jxr_linenumber" name="562" href="#562">562</a>                 }
+<a class="jxr_linenumber" name="563" href="#563">563</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="564" href="#564">564</a>                 <em class="jxr_comment">// convert all within the endYear limit</em>
+<a class="jxr_linenumber" name="565" href="#565">565</a>                 <strong class="jxr_keyword">int</strong> endYear = windowEnd.getYear();
+<a class="jxr_linenumber" name="566" href="#566">566</a>                 <strong class="jxr_keyword">for</strong> (TZRule lastRule : lastRuleList) {
+<a class="jxr_linenumber" name="567" href="#567">567</a>                     addRule(lastRule.year, endYear + 1, lastRule.month, lastRule.dayOfMonthIndicator,
+<a class="jxr_linenumber" name="568" href="#568">568</a>                         lastRule.dayOfWeek, lastRule.time, lastRule.timeEndOfDay, lastRule.timeDefinition, lastRule.savingAmountSecs);
+<a class="jxr_linenumber" name="569" href="#569">569</a>                 }
+<a class="jxr_linenumber" name="570" href="#570">570</a>                 lastRuleList.clear();
+<a class="jxr_linenumber" name="571" href="#571">571</a>                 maxLastRuleStartYear = Year.MAX_VALUE;
+<a class="jxr_linenumber" name="572" href="#572">572</a>             }
+<a class="jxr_linenumber" name="573" href="#573">573</a> 
+<a class="jxr_linenumber" name="574" href="#574">574</a>             <em class="jxr_comment">// ensure lists are sorted</em>
+<a class="jxr_linenumber" name="575" href="#575">575</a>             Collections.sort(ruleList);
+<a class="jxr_linenumber" name="576" href="#576">576</a>             Collections.sort(lastRuleList);
+<a class="jxr_linenumber" name="577" href="#577">577</a> 
+<a class="jxr_linenumber" name="578" href="#578">578</a>             <em class="jxr_comment">// default fixed savings to zero</em>
+<a class="jxr_linenumber" name="579" href="#579">579</a>             <strong class="jxr_keyword">if</strong> (ruleList.size() == 0 &amp;&amp; fixedSavingAmountSecs == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="580" href="#580">580</a>                 fixedSavingAmountSecs = 0;
+<a class="jxr_linenumber" name="581" href="#581">581</a>             }
+<a class="jxr_linenumber" name="582" href="#582">582</a>         }
+<a class="jxr_linenumber" name="583" href="#583">583</a> 
+<a class="jxr_linenumber" name="584" href="#584">584</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="585" href="#585">585</a> <em class="jxr_javadoccomment">         * Checks if the window is empty.</em>
+<a class="jxr_linenumber" name="586" href="#586">586</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="587" href="#587">587</a> <em class="jxr_javadoccomment">         * @return true if the window is only a standard offset</em>
+<a class="jxr_linenumber" name="588" href="#588">588</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="589" href="#589">589</a>         <strong class="jxr_keyword">boolean</strong> isSingleWindowStandardOffset() {
+<a class="jxr_linenumber" name="590" href="#590">590</a>             <strong class="jxr_keyword">return</strong> windowEnd.equals(LocalDateTime.MAX) &amp;&amp; timeDefinition == TimeDefinition.WALL &amp;&amp;
+<a class="jxr_linenumber" name="591" href="#591">591</a>                     fixedSavingAmountSecs == <strong class="jxr_keyword">null</strong> &amp;&amp; lastRuleList.isEmpty() &amp;&amp; ruleList.isEmpty();
+<a class="jxr_linenumber" name="592" href="#592">592</a>         }
+<a class="jxr_linenumber" name="593" href="#593">593</a> 
+<a class="jxr_linenumber" name="594" href="#594">594</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="595" href="#595">595</a> <em class="jxr_javadoccomment">         * Creates the wall offset for the local date-time at the end of the window.</em>
+<a class="jxr_linenumber" name="596" href="#596">596</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="597" href="#597">597</a> <em class="jxr_javadoccomment">         * @param savingsSecs  the amount of savings in use in seconds</em>
+<a class="jxr_linenumber" name="598" href="#598">598</a> <em class="jxr_javadoccomment">         * @return the created date-time epoch second in the wall offset, not null</em>
+<a class="jxr_linenumber" name="599" href="#599">599</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="600" href="#600">600</a>         <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> createWallOffset(<strong class="jxr_keyword">int</strong> savingsSecs) {
+<a class="jxr_linenumber" name="601" href="#601">601</a>             <strong class="jxr_keyword">return</strong> ZoneOffset.ofTotalSeconds(standardOffset.getTotalSeconds() + savingsSecs);
+<a class="jxr_linenumber" name="602" href="#602">602</a>         }
+<a class="jxr_linenumber" name="603" href="#603">603</a> 
+<a class="jxr_linenumber" name="604" href="#604">604</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="605" href="#605">605</a> <em class="jxr_javadoccomment">         * Creates the offset date-time for the local date-time at the end of the window.</em>
+<a class="jxr_linenumber" name="606" href="#606">606</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="607" href="#607">607</a> <em class="jxr_javadoccomment">         * @param savingsSecs  the amount of savings in use in seconds</em>
+<a class="jxr_linenumber" name="608" href="#608">608</a> <em class="jxr_javadoccomment">         * @return the created date-time epoch second in the wall offset, not null</em>
+<a class="jxr_linenumber" name="609" href="#609">609</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="610" href="#610">610</a>         <strong class="jxr_keyword">long</strong> createDateTimeEpochSecond(<strong class="jxr_keyword">int</strong> savingsSecs) {
+<a class="jxr_linenumber" name="611" href="#611">611</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> wallOffset = createWallOffset(savingsSecs);
+<a class="jxr_linenumber" name="612" href="#612">612</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> ldt = timeDefinition.createDateTime(windowEnd, standardOffset, wallOffset);
+<a class="jxr_linenumber" name="613" href="#613">613</a>             <strong class="jxr_keyword">return</strong> ldt.toEpochSecond(wallOffset);
+<a class="jxr_linenumber" name="614" href="#614">614</a>         }
+<a class="jxr_linenumber" name="615" href="#615">615</a>     }
+<a class="jxr_linenumber" name="616" href="#616">616</a> 
+<a class="jxr_linenumber" name="617" href="#617">617</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="618" href="#618">618</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="619" href="#619">619</a> <em class="jxr_javadoccomment">     * A definition of the way a local time can be converted to an offset time.</em>
+<a class="jxr_linenumber" name="620" href="#620">620</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="621" href="#621">621</a>     <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a> <strong class="jxr_keyword">implements</strong> Comparable&lt;TZRule&gt; {
+<a class="jxr_linenumber" name="622" href="#622">622</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The year. */</em>
+<a class="jxr_linenumber" name="623" href="#623">623</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> year;
+<a class="jxr_linenumber" name="624" href="#624">624</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The month. */</em>
+<a class="jxr_linenumber" name="625" href="#625">625</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/Month.html">Month</a> month;
+<a class="jxr_linenumber" name="626" href="#626">626</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The day-of-month. */</em>
+<a class="jxr_linenumber" name="627" href="#627">627</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> dayOfMonthIndicator;
+<a class="jxr_linenumber" name="628" href="#628">628</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The day-of-month. */</em>
+<a class="jxr_linenumber" name="629" href="#629">629</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/DayOfWeek.html">DayOfWeek</a> dayOfWeek;
+<a class="jxr_linenumber" name="630" href="#630">630</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The local time. */</em>
+<a class="jxr_linenumber" name="631" href="#631">631</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/LocalTime.html">LocalTime</a> time;
+<a class="jxr_linenumber" name="632" href="#632">632</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Whether the local time is end of day. */</em>
+<a class="jxr_linenumber" name="633" href="#633">633</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> timeEndOfDay;
+<a class="jxr_linenumber" name="634" href="#634">634</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The type of the time. */</em>
+<a class="jxr_linenumber" name="635" href="#635">635</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition;
+<a class="jxr_linenumber" name="636" href="#636">636</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The amount of the saving to be applied after this point. */</em>
+<a class="jxr_linenumber" name="637" href="#637">637</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> savingAmountSecs;
+<a class="jxr_linenumber" name="638" href="#638">638</a> 
+<a class="jxr_linenumber" name="639" href="#639">639</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="640" href="#640">640</a> <em class="jxr_javadoccomment">         * Constructor.</em>
+<a class="jxr_linenumber" name="641" href="#641">641</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="642" href="#642">642</a> <em class="jxr_javadoccomment">         * @param year  the year</em>
+<a class="jxr_linenumber" name="643" href="#643">643</a> <em class="jxr_javadoccomment">         * @param month  the month, not null</em>
+<a class="jxr_linenumber" name="644" href="#644">644</a> <em class="jxr_javadoccomment">         * @param dayOfMonthIndicator  the day-of-month of the transition, adjusted by dayOfWeek,</em>
+<a class="jxr_linenumber" name="645" href="#645">645</a> <em class="jxr_javadoccomment">         *   from 1 to 31 adjusted later, or -1 to -28 adjusted earlier from the last day of the month</em>
+<a class="jxr_linenumber" name="646" href="#646">646</a> <em class="jxr_javadoccomment">         * @param dayOfWeek  the day-of-week, null if day-of-month is exact</em>
+<a class="jxr_linenumber" name="647" href="#647">647</a> <em class="jxr_javadoccomment">         * @param time  the time, not null</em>
+<a class="jxr_linenumber" name="648" href="#648">648</a> <em class="jxr_javadoccomment">         * @param timeEndOfDay  whether midnight is at the end of day</em>
+<a class="jxr_linenumber" name="649" href="#649">649</a> <em class="jxr_javadoccomment">         * @param timeDefinition  the time definition, not null</em>
+<a class="jxr_linenumber" name="650" href="#650">650</a> <em class="jxr_javadoccomment">         * @param savingAfterSecs  the savings amount in seconds</em>
+<a class="jxr_linenumber" name="651" href="#651">651</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="652" href="#652">652</a>         <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a>(<strong class="jxr_keyword">int</strong> year, <a href="../../../../org/threeten/bp/Month.html">Month</a> month, <strong class="jxr_keyword">int</strong> dayOfMonthIndicator,
+<a class="jxr_linenumber" name="653" href="#653">653</a>                 <a href="../../../../org/threeten/bp/DayOfWeek.html">DayOfWeek</a> dayOfWeek, <a href="../../../../org/threeten/bp/LocalTime.html">LocalTime</a> time, <strong class="jxr_keyword">boolean</strong> timeEndOfDay,
+<a class="jxr_linenumber" name="654" href="#654">654</a>                 <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition, <strong class="jxr_keyword">int</strong> savingAfterSecs) {
+<a class="jxr_linenumber" name="655" href="#655">655</a>             <strong class="jxr_keyword">super</strong>();
+<a class="jxr_linenumber" name="656" href="#656">656</a>             <strong class="jxr_keyword">this</strong>.year = year;
+<a class="jxr_linenumber" name="657" href="#657">657</a>             <strong class="jxr_keyword">this</strong>.month = month;
+<a class="jxr_linenumber" name="658" href="#658">658</a>             <strong class="jxr_keyword">this</strong>.dayOfMonthIndicator = dayOfMonthIndicator;
+<a class="jxr_linenumber" name="659" href="#659">659</a>             <strong class="jxr_keyword">this</strong>.dayOfWeek = dayOfWeek;
+<a class="jxr_linenumber" name="660" href="#660">660</a>             <strong class="jxr_keyword">this</strong>.time = time;
+<a class="jxr_linenumber" name="661" href="#661">661</a>             <strong class="jxr_keyword">this</strong>.timeEndOfDay = timeEndOfDay;
+<a class="jxr_linenumber" name="662" href="#662">662</a>             <strong class="jxr_keyword">this</strong>.timeDefinition = timeDefinition;
+<a class="jxr_linenumber" name="663" href="#663">663</a>             <strong class="jxr_keyword">this</strong>.savingAmountSecs = savingAfterSecs;
+<a class="jxr_linenumber" name="664" href="#664">664</a>         }
+<a class="jxr_linenumber" name="665" href="#665">665</a> 
+<a class="jxr_linenumber" name="666" href="#666">666</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="667" href="#667">667</a> <em class="jxr_javadoccomment">         * Converts this to a transition.</em>
+<a class="jxr_linenumber" name="668" href="#668">668</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="669" href="#669">669</a> <em class="jxr_javadoccomment">         * @param standardOffset  the active standard offset, not null</em>
+<a class="jxr_linenumber" name="670" href="#670">670</a> <em class="jxr_javadoccomment">         * @param savingsBeforeSecs  the active savings in seconds</em>
+<a class="jxr_linenumber" name="671" href="#671">671</a> <em class="jxr_javadoccomment">         * @return the transition, not null</em>
+<a class="jxr_linenumber" name="672" href="#672">672</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="673" href="#673">673</a>         <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a> toTransition(<a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset, <strong class="jxr_keyword">int</strong> savingsBeforeSecs) {
+<a class="jxr_linenumber" name="674" href="#674">674</a>             <em class="jxr_comment">// copy of code in ZoneOffsetTransitionRule to avoid infinite loop</em>
+<a class="jxr_linenumber" name="675" href="#675">675</a>             <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date = toLocalDate();
+<a class="jxr_linenumber" name="676" href="#676">676</a>             date = deduplicate(date);
+<a class="jxr_linenumber" name="677" href="#677">677</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> ldt = deduplicate(LocalDateTime.of(date, time));
+<a class="jxr_linenumber" name="678" href="#678">678</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> wallOffset = deduplicate(ZoneOffset.ofTotalSeconds(standardOffset.getTotalSeconds() + savingsBeforeSecs));
+<a class="jxr_linenumber" name="679" href="#679">679</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> dt = deduplicate(timeDefinition.createDateTime(ldt, standardOffset, wallOffset));
+<a class="jxr_linenumber" name="680" href="#680">680</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offsetAfter = deduplicate(ZoneOffset.ofTotalSeconds(standardOffset.getTotalSeconds() + savingAmountSecs));
+<a class="jxr_linenumber" name="681" href="#681">681</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a>(dt, wallOffset, offsetAfter);
+<a class="jxr_linenumber" name="682" href="#682">682</a>         }
+<a class="jxr_linenumber" name="683" href="#683">683</a> 
+<a class="jxr_linenumber" name="684" href="#684">684</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="685" href="#685">685</a> <em class="jxr_javadoccomment">         * Converts this to a transition rule.</em>
+<a class="jxr_linenumber" name="686" href="#686">686</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="687" href="#687">687</a> <em class="jxr_javadoccomment">         * @param standardOffset  the active standard offset, not null</em>
+<a class="jxr_linenumber" name="688" href="#688">688</a> <em class="jxr_javadoccomment">         * @param savingsBeforeSecs  the active savings before the transition in seconds</em>
+<a class="jxr_linenumber" name="689" href="#689">689</a> <em class="jxr_javadoccomment">         * @return the transition, not null</em>
+<a class="jxr_linenumber" name="690" href="#690">690</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="691" href="#691">691</a>         <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">ZoneOffsetTransitionRule</a> toTransitionRule(<a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset, <strong class="jxr_keyword">int</strong> savingsBeforeSecs) {
+<a class="jxr_linenumber" name="692" href="#692">692</a>             <em class="jxr_comment">// optimize stored format</em>
+<a class="jxr_linenumber" name="693" href="#693">693</a>             <strong class="jxr_keyword">if</strong> (dayOfMonthIndicator &lt; 0) {
+<a class="jxr_linenumber" name="694" href="#694">694</a>                 <strong class="jxr_keyword">if</strong> (month != Month.FEBRUARY) {
+<a class="jxr_linenumber" name="695" href="#695">695</a>                     dayOfMonthIndicator = month.maxLength() - 6;
+<a class="jxr_linenumber" name="696" href="#696">696</a>                 }
+<a class="jxr_linenumber" name="697" href="#697">697</a>             }
+<a class="jxr_linenumber" name="698" href="#698">698</a>             <strong class="jxr_keyword">if</strong> (timeEndOfDay &amp;&amp; dayOfMonthIndicator &gt; 0 &amp;&amp; (dayOfMonthIndicator == 28 &amp;&amp; month == Month.FEBRUARY) == false) {
+<a class="jxr_linenumber" name="699" href="#699">699</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date = LocalDate.of(2004, month, dayOfMonthIndicator).plusDays(1);  <em class="jxr_comment">// leap-year</em>
+<a class="jxr_linenumber" name="700" href="#700">700</a>                 month = date.getMonth();
+<a class="jxr_linenumber" name="701" href="#701">701</a>                 dayOfMonthIndicator = date.getDayOfMonth();
+<a class="jxr_linenumber" name="702" href="#702">702</a>                 <strong class="jxr_keyword">if</strong> (dayOfWeek != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="703" href="#703">703</a>                     dayOfWeek = dayOfWeek.plus(1);
+<a class="jxr_linenumber" name="704" href="#704">704</a>                 }
+<a class="jxr_linenumber" name="705" href="#705">705</a>                 timeEndOfDay = false;
+<a class="jxr_linenumber" name="706" href="#706">706</a>             }
+<a class="jxr_linenumber" name="707" href="#707">707</a> 
+<a class="jxr_linenumber" name="708" href="#708">708</a>             <em class="jxr_comment">// build rule</em>
+<a class="jxr_linenumber" name="709" href="#709">709</a>             <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a> trans = toTransition(standardOffset, savingsBeforeSecs);
+<a class="jxr_linenumber" name="710" href="#710">710</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">ZoneOffsetTransitionRule</a>(
+<a class="jxr_linenumber" name="711" href="#711">711</a>                     month, dayOfMonthIndicator, dayOfWeek, time, timeEndOfDay, timeDefinition,
+<a class="jxr_linenumber" name="712" href="#712">712</a>                     standardOffset, trans.getOffsetBefore(), trans.getOffsetAfter());
+<a class="jxr_linenumber" name="713" href="#713">713</a>         }
+<a class="jxr_linenumber" name="714" href="#714">714</a> 
+<a class="jxr_linenumber" name="715" href="#715">715</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZRule</a> other) {
+<a class="jxr_linenumber" name="716" href="#716">716</a>             <strong class="jxr_keyword">int</strong> cmp = year - other.year;
+<a class="jxr_linenumber" name="717" href="#717">717</a>             cmp = (cmp == 0 ? month.compareTo(other.month) : cmp);
+<a class="jxr_linenumber" name="718" href="#718">718</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
+<a class="jxr_linenumber" name="719" href="#719">719</a>                 <em class="jxr_comment">// convert to date to handle dow/domIndicator/timeEndOfDay</em>
+<a class="jxr_linenumber" name="720" href="#720">720</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> thisDate = toLocalDate();
+<a class="jxr_linenumber" name="721" href="#721">721</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> otherDate = other.toLocalDate();
+<a class="jxr_linenumber" name="722" href="#722">722</a>                 cmp = thisDate.compareTo(otherDate);
+<a class="jxr_linenumber" name="723" href="#723">723</a>             }
+<a class="jxr_linenumber" name="724" href="#724">724</a>             cmp = (cmp == 0 ? time.compareTo(other.time) : cmp);
+<a class="jxr_linenumber" name="725" href="#725">725</a>             <strong class="jxr_keyword">return</strong> cmp;
+<a class="jxr_linenumber" name="726" href="#726">726</a>         }
+<a class="jxr_linenumber" name="727" href="#727">727</a> 
+<a class="jxr_linenumber" name="728" href="#728">728</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> toLocalDate() {
+<a class="jxr_linenumber" name="729" href="#729">729</a>             <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date;
+<a class="jxr_linenumber" name="730" href="#730">730</a>             <strong class="jxr_keyword">if</strong> (dayOfMonthIndicator &lt; 0) {
+<a class="jxr_linenumber" name="731" href="#731">731</a>                 <strong class="jxr_keyword">int</strong> monthLen = month.length(IsoChronology.INSTANCE.isLeapYear(year));
+<a class="jxr_linenumber" name="732" href="#732">732</a>                 date = LocalDate.of(year, month, monthLen + 1 + dayOfMonthIndicator);
+<a class="jxr_linenumber" name="733" href="#733">733</a>                 <strong class="jxr_keyword">if</strong> (dayOfWeek != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="734" href="#734">734</a>                     date = date.with(previousOrSame(dayOfWeek));
+<a class="jxr_linenumber" name="735" href="#735">735</a>                 }
+<a class="jxr_linenumber" name="736" href="#736">736</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="737" href="#737">737</a>                 date = LocalDate.of(year, month, dayOfMonthIndicator);
+<a class="jxr_linenumber" name="738" href="#738">738</a>                 <strong class="jxr_keyword">if</strong> (dayOfWeek != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="739" href="#739">739</a>                     date = date.with(nextOrSame(dayOfWeek));
+<a class="jxr_linenumber" name="740" href="#740">740</a>                 }
+<a class="jxr_linenumber" name="741" href="#741">741</a>             }
+<a class="jxr_linenumber" name="742" href="#742">742</a>             <strong class="jxr_keyword">if</strong> (timeEndOfDay) {
+<a class="jxr_linenumber" name="743" href="#743">743</a>                 date = date.plusDays(1);
+<a class="jxr_linenumber" name="744" href="#744">744</a>             }
+<a class="jxr_linenumber" name="745" href="#745">745</a>             <strong class="jxr_keyword">return</strong> date;
+<a class="jxr_linenumber" name="746" href="#746">746</a>         }
+<a class="jxr_linenumber" name="747" href="#747">747</a> 
+<a class="jxr_linenumber" name="748" href="#748">748</a>         <em class="jxr_comment">// no equals() or hashCode()</em>
+<a class="jxr_linenumber" name="749" href="#749">749</a>     }
+<a class="jxr_linenumber" name="750" href="#750">750</a> 
+<a class="jxr_linenumber" name="751" href="#751">751</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -86,17 +86,12 @@
 <ul class="blockList">
 <li class="blockList">
 <dl>
-<dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&gt;</dd>
-</dl>
-<dl>
 <dt>All Known Implementing Classes:</dt>
 <dd><a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal">ChronoField</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">TemporalField</span>
-extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&gt;</pre>
+<pre>public interface <span class="strong">TemporalField</span></pre>
 <div class="block">A field of date-time, such as month-of-year or hour-of-minute.
  <p>
  Date and time is expressed using fields which partition the time-line into something
@@ -142,16 +137,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#compare(org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.temporal.TemporalAccessor)">compare</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal1,
-       <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal2)</code>
-<div class="block">Compares the value of this field in two temporal objects.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#getBaseUnit()">getBaseUnit</a></strong>()</code>
 <div class="block">Gets the unit that the field is measured in.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#getDisplayName(java.util.Locale)">getDisplayName</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<div class="block">Gets the display name for the field in the requested locale.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -161,15 +155,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#getName()">getName</a></strong>()</code>
-<div class="block">Gets a descriptive name for the field.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#getRangeUnit()">getRangeUnit</a></strong>()</code>
 <div class="block">Gets the range that the field is bound by.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#isDateBased()">isDateBased</a></strong>()</code>
+<div class="block">Checks if this field is date-based.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -179,33 +173,33 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#isTimeBased()">isTimeBased</a></strong>()</code>
+<div class="block">Checks if this field is time-based.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#range()">range</a></strong>()</code>
 <div class="block">Gets the range of valid values for the field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#rangeRefinedBy(org.threeten.bp.temporal.TemporalAccessor)">rangeRefinedBy</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Get the range of valid values for this field using the temporal object to
  refine the result.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#resolve(org.threeten.bp.temporal.TemporalAccessor, long)">resolve</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal,
-       long&nbsp;value)</code>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalField.html#resolve(java.util.Map, org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.format.ResolverStyle)">resolve</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+       <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;partialTemporal,
+       <a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>
 <div class="block">Resolves the date/time information in the builder</div>
 </td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_java.util.Comparator">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a></h3>
-<code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</a></code></li>
-</ul>
 </li>
 </ul>
 </li>
@@ -220,21 +214,6 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getName()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getName</h4>
-<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getName()</pre>
-<div class="block">Gets a descriptive name for the field.
- <p>
- The should be of the format 'BaseOfRange', such as 'MonthOfYear',
- unless the field has a range of <code>FOREVER</code>, when only
- the base unit is mentioned, such as 'Year' or 'Era'.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the name, not null</dd></dl>
-</li>
-</ul>
 <a name="getBaseUnit()">
 <!--   -->
 </a>
@@ -268,28 +247,6 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 <dl><dt><span class="strong">Returns:</span></dt><dd>the period unit defining the range of the field, not null</dd></dl>
 </li>
 </ul>
-<a name="compare(org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.temporal.TemporalAccessor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>compare</h4>
-<pre>int&nbsp;compare(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal1,
-          <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal2)</pre>
-<div class="block">Compares the value of this field in two temporal objects.
- <p>
- All fields implement <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util"><code>Comparator</code></a> on <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal"><code>TemporalAccessor</code></a>.
- This allows a list of date-times to be compared using the value of a field.
- For example, you could sort a list of arbitrary temporal objects by the value of
- the month-of-year field - <code>Collections.sort(list, MONTH_OF_YEAR)</code></div>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true#compare(T, T)" title="class or interface in java.util">compare</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&gt;</code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>temporal1</code> - the first temporal object to compare, not null</dd><dd><code>temporal2</code> - the second temporal object to compare, not null</dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if unable to obtain the value for this field</dd></dl>
-</li>
-</ul>
 <a name="range()">
 <!--   -->
 </a>
@@ -307,6 +264,32 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
  and it is important not to read too much into them. For example, there
  could be values within the range that are invalid for the field.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the range of valid values for the field, not null</dd></dl>
+</li>
+</ul>
+<a name="isDateBased()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDateBased</h4>
+<pre>boolean&nbsp;isDateBased()</pre>
+<div class="block">Checks if this field is date-based.
+ <p>
+ A date-based field can be derived from epoch-day</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if date-based</dd></dl>
+</li>
+</ul>
+<a name="isTimeBased()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isTimeBased</h4>
+<pre>boolean&nbsp;isTimeBased()</pre>
+<div class="block">Checks if this field is time-based.
+ <p>
+ A time-based field can be derived from nano-of-day</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if time-based</dd></dl>
 </li>
 </ul>
 <a name="isSupportedBy(org.threeten.bp.temporal.TemporalAccessor)">
@@ -407,6 +390,23 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 <dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if a value for the field cannot be obtained</dd></dl>
 </li>
 </ul>
+<a name="getDisplayName(java.util.Locale)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDisplayName</h4>
+<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getDisplayName(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</pre>
+<div class="block">Gets the display name for the field in the requested locale.
+ <p>
+ If there is no display name for the locale then a suitable default must be returned.
+ <p>
+ The default implementation must check the locale is not null
+ and return <code>toString()</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>locale</code> - the locale to use, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the display name for the locale or a suitable default, not null</dd></dl>
+</li>
+</ul>
 <a name="adjustInto(org.threeten.bp.temporal.Temporal,long)">
 <!--   -->
 </a><a name="adjustInto(R, long)">
@@ -454,26 +454,28 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.h
 <dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if the field cannot be set</dd></dl>
 </li>
 </ul>
-<a name="resolve(org.threeten.bp.temporal.TemporalAccessor, long)">
+<a name="resolve(java.util.Map, org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.format.ResolverStyle)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>resolve</h4>
-<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;resolve(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal,
-                              long&nbsp;value)</pre>
+<pre><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;resolve(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+                       <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;partialTemporal,
+                       <a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</pre>
 <div class="block">Resolves the date/time information in the builder
  <p>
  This method is invoked during the resolve of the builder.
  Implementations should combine the associated field with others to form
  objects like <code>LocalDate</code>, <code>LocalTime</code> and <code>LocalDateTime</code></div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>temporal</code> - the temporal to resolve, not null</dd><dd><code>value</code> - the value of this field</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a map of fields to update in the temporal, with a mapping to null
-  indicating a deletion. The whole map must be null if no resolving occurred</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>fieldValues</code> - the map of fields to values, which can be updated, not null</dd><dd><code>partialTemporal</code> - the partially complete temporal to query for zone and
+  chronology; querying for other things is undefined and not recommended, not null</dd><dd><code>resolverStyle</code> - the requested type of resolve, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the resolved temporal object; null if resolving only
+  changed the map, or no resolve occurred</dd>
 <dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd>
 <dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if resolving results in an error. This must not be thrown
-  by querying a field on the temporal without first checking if it is supported</dd>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd></dl>
+  by querying a field on the temporal without first checking if it is supported</dd></dl>
 </li>
 </ul>
 </li>

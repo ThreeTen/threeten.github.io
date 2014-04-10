@@ -96,20 +96,13 @@ Provides classes to print and parse dates and times.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.threeten.bp.jdk8">org.threeten.bp.jdk8</a></td>
-<td class="colLast">
-<div class="block">
-Simulates JDK 8 features on JDK 7.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
 <td class="colLast">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.threeten.bp.zone">org.threeten.bp.zone</a></td>
 <td class="colLast">
 <div class="block">
@@ -260,22 +253,17 @@ Support for time-zones and their rules.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="../../../org/threeten/bp/class-use/Period.html#org.threeten.bp.chrono">Period</a>
-<div class="block">A date-based amount of time, such as '2 years, 3 months and 4 days'.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/ZonedDateTime.html#org.threeten.bp.chrono">ZonedDateTime</a>
 <div class="block">A date-time with a time-zone in the ISO-8601 calendar system,
  such as <code>2007-12-03T10:15:30+01:00 Europe/Paris</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/ZoneId.html#org.threeten.bp.chrono">ZoneId</a>
 <div class="block">A time-zone ID, such as <code>Europe/Paris</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/ZoneOffset.html#org.threeten.bp.chrono">ZoneOffset</a>
 <div class="block">A time-zone offset from Greenwich/UTC, such as <code>+02:00</code>.</div>
 </td>
@@ -298,36 +286,13 @@ Support for time-zones and their rules.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../org/threeten/bp/class-use/Period.html#org.threeten.bp.format">Period</a>
+<div class="block">A date-based amount of time, such as '2 years, 3 months and 4 days'.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/ZoneId.html#org.threeten.bp.format">ZoneId</a>
 <div class="block">A time-zone ID, such as <code>Europe/Paris</code>.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.threeten.bp.jdk8">
-<!--   -->
-</a>
-<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../org/threeten/bp/package-summary.html">org.threeten.bp</a> used by <a href="../../../org/threeten/bp/jdk8/package-summary.html">org.threeten.bp.jdk8</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../org/threeten/bp/class-use/Instant.html#org.threeten.bp.jdk8">Instant</a>
-<div class="block">An instantaneous point on the time-line.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../org/threeten/bp/class-use/LocalTime.html#org.threeten.bp.jdk8">LocalTime</a>
-<div class="block">A time without time-zone in the ISO-8601 calendar system,
- such as <code>10:15:30</code>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../org/threeten/bp/class-use/ZoneOffset.html#org.threeten.bp.jdk8">ZoneOffset</a>
-<div class="block">A time-zone offset from Greenwich/UTC, such as <code>+02:00</code>.</div>
 </td>
 </tr>
 </tbody>
@@ -343,33 +308,38 @@ Support for time-zones and their rules.</div>
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colOne"><a href="../../../org/threeten/bp/class-use/DateTimeException.html#org.threeten.bp.temporal">DateTimeException</a>
+<div class="block">Exception used to indicate a problem while calculating a date-time.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/DayOfWeek.html#org.threeten.bp.temporal">DayOfWeek</a>
 <div class="block">A day-of-week, such as 'Tuesday'.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/Duration.html#org.threeten.bp.temporal">Duration</a>
 <div class="block">A time-based amount of time, such as '34.5 seconds'.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/LocalDate.html#org.threeten.bp.temporal">LocalDate</a>
 <div class="block">A date without a time-zone in the ISO-8601 calendar system,
  such as <code>2007-12-03</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/LocalTime.html#org.threeten.bp.temporal">LocalTime</a>
 <div class="block">A time without time-zone in the ISO-8601 calendar system,
  such as <code>10:15:30</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/ZoneId.html#org.threeten.bp.temporal">ZoneId</a>
 <div class="block">A time-zone ID, such as <code>Europe/Paris</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../org/threeten/bp/class-use/ZoneOffset.html#org.threeten.bp.temporal">ZoneOffset</a>
 <div class="block">A time-zone offset from Greenwich/UTC, such as <code>+02:00</code>.</div>
 </td>

@@ -9,7 +9,7 @@
 <div id="overview"><a href="../../../../../apidocs/org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html">View Javadoc</a></div><pre>
 
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-2013, Stephen Colebourne &amp; Michael Nascimento Santos</em>
+<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos</em>
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <em class="jxr_comment"> *</em>
@@ -41,12 +41,12 @@
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>  <strong class="jxr_keyword">package</strong> org.threeten.bp.jdk8;
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
-<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
-<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
-<a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalField;
-<a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalQueries;
-<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalQuery;
+<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
+<a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
+<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalField;
+<a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalQueries;
+<a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalQuery;
+<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.UnsupportedTemporalTypeException;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ValueRange;
 <a class="jxr_linenumber" name="41" href="#41">41</a>  
 <a class="jxr_linenumber" name="42" href="#42">42</a>  <em class="jxr_javadoccomment">/**</em>
@@ -61,7 +61,7 @@
 <a class="jxr_linenumber" name="51" href="#51">51</a>              <strong class="jxr_keyword">if</strong> (isSupported(field)) {
 <a class="jxr_linenumber" name="52" href="#52">52</a>                  <strong class="jxr_keyword">return</strong> field.range();
 <a class="jxr_linenumber" name="53" href="#53">53</a>              }
-<a class="jxr_linenumber" name="54" href="#54">54</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Unsupported field: "</span> + field.getName());
+<a class="jxr_linenumber" name="54" href="#54">54</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/UnsupportedTemporalTypeException.html">UnsupportedTemporalTypeException</a>(<span class="jxr_string">"Unsupported field: "</span> + field);
 <a class="jxr_linenumber" name="55" href="#55">55</a>          }
 <a class="jxr_linenumber" name="56" href="#56">56</a>          <strong class="jxr_keyword">return</strong> field.rangeRefinedBy(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="57" href="#57">57</a>      }

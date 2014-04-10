@@ -99,7 +99,7 @@ Simulates JDK 8 features on JDK 7.</div>
 <td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
 <td class="colLast">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </td>
 </tr>
 </tbody>
@@ -274,20 +274,6 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></strong></code>
 <div class="block">An era of the time-line.</div>
 </td>
@@ -303,8 +289,34 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></strong></code>
+<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</strong></code>
+<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></strong></code>
 <div class="block">A date in the Hijrah calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahEra.html" title="enum in org.threeten.bp.chrono">HijrahEra</a></strong></code>
+<div class="block">An era in the Hijrah calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono">IsoEra</a></strong></code>
+<div class="block">An era in the ISO calendar system.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -315,14 +327,32 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">JapaneseEra</a></strong></code>
+<div class="block">An era in the Japanese Imperial calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></strong></code>
 <div class="block">A date in the Minguo calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoEra.html" title="enum in org.threeten.bp.chrono">MinguoEra</a></strong></code>
+<div class="block">An era in the Minguo calendar system.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></strong></code>
 <div class="block">A date in the Thai Buddhist calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistEra.html" title="enum in org.threeten.bp.chrono">ThaiBuddhistEra</a></strong></code>
+<div class="block">An era in the Thai Buddhist calendar system.</div>
 </td>
 </tr>
 </tbody>
@@ -335,15 +365,31 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></code></td>
+<td class="colLast"><span class="strong">MinguoDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></code></td>
+<td class="colLast"><span class="strong">HijrahDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="type parameter in ChronoLocalDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="type parameter in ChronoLocalDateTime">D</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="type parameter in ChronoLocalDate">D</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></td>
 <td class="colLast"><span class="strong">ChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -360,20 +406,6 @@ Access to date and time using fields and units, plus additional value type class
 <th class="colLast" scope="col">Class and Description</th>
 </tr>
 <tbody>
-<tr class="altColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceEra</a></strong></code>
@@ -393,18 +425,6 @@ Access to date and time using fields and units, plus additional value type class
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
 <td class="colLast"><span class="strong">DefaultInterfaceTemporal.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="type parameter in DefaultInterfaceChronoZonedDateTime">D</a>&gt;</code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html" title="type parameter in DefaultInterfaceChronoLocalDateTime">D</a>&gt;</code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="type parameter in DefaultInterfaceChronoLocalDate">D</a>&gt;</code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

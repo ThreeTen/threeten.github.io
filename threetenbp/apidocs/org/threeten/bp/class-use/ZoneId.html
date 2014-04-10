@@ -99,7 +99,7 @@ Provides classes to print and parse dates and times.</div>
 <td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
 <td class="colLast">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </td>
 </tr>
 </tbody>
@@ -122,6 +122,21 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></strong></code>
 <div class="block">A time-zone offset from Greenwich/UTC, such as <code>+02:00</code>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing fields, and an explanation">
+<caption><span>Fields in <a href="../../../../org/threeten/bp/package-summary.html">org.threeten.bp</a> with type parameters of type <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&gt;</code></td>
+<td class="colLast"><span class="strong">ZoneId.</span><code><strong><a href="../../../../org/threeten/bp/ZoneId.html#FROM">FROM</a></strong></code>
+<div class="block">Simulate JDK 8 method reference ZoneId::from.</div>
 </td>
 </tr>
 </tbody>
@@ -152,18 +167,31 @@ Access to date and time using fields and units, plus additional value type class
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
+<td class="colLast"><span class="strong">ZoneId.</span><code><strong><a href="../../../../org/threeten/bp/ZoneId.html#normalized()">normalized</a></strong>()</code>
+<div class="block">Normalizes the time-zone ID, returning a <code>ZoneOffset</code> where possible.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
 <td class="colLast"><span class="strong">ZoneId.</span><code><strong><a href="../../../../org/threeten/bp/ZoneId.html#of(java.lang.String)">of</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</code>
 <div class="block">Obtains an instance of <code>ZoneId</code> from an ID ensuring that the
  ID is valid and available for use.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
 <td class="colLast"><span class="strong">ZoneId.</span><code><strong><a href="../../../../org/threeten/bp/ZoneId.html#of(java.lang.String, java.util.Map)">of</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId,
   <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;aliasMap)</code>
 <div class="block">Obtains an instance of <code>ZoneId</code> using its ID using a map
  of aliases to supplement the standard zone IDs.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
+<td class="colLast"><span class="strong">ZoneId.</span><code><strong><a href="../../../../org/threeten/bp/ZoneId.html#ofOffset(java.lang.String, org.threeten.bp.ZoneOffset)">ofOffset</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;prefix,
+        <a href="../../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&nbsp;offset)</code>
+<div class="block">Obtains an instance of <code>ZoneId</code> wrapping an offset.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -415,7 +443,7 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
 <td class="colLast"><span class="strong">ChronoZonedDateTime.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getZone()">getZone</a></strong>()</code>
 <div class="block">Gets the zone ID, such as 'Europe/Paris'.</div>
 </td>
@@ -430,7 +458,7 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="type parameter in ChronoLocalDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="type parameter in ChronoLocalDateTime">D</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ChronoLocalDateTime.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html#atZone(org.threeten.bp.ZoneId)">atZone</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Combines this time with a time-zone to create a <code>ChronoZonedDateTime</code>.</div>
 </td>
@@ -458,37 +486,62 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colLast"><span class="strong">HijrahChronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/HijrahChronology.html#dateNow(org.threeten.bp.ZoneId)">dateNow</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></td>
 <td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/Chronology.html#dateNow(org.threeten.bp.ZoneId)">dateNow</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Obtains the current local date in this chronology from the system clock in the specified time-zone.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistDate.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html#now(org.threeten.bp.ZoneId)">now</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
+<div class="block">Obtains the current <code>ThaiBuddhistDate</code> from the system clock in the specified time-zone.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></code></td>
+<td class="colLast"><span class="strong">MinguoDate.</span><code><strong><a href="../../../../org/threeten/bp/chrono/MinguoDate.html#now(org.threeten.bp.ZoneId)">now</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
+<div class="block">Obtains the current <code>MinguoDate</code> from the system clock in the specified time-zone.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../org/threeten/bp/chrono/JapaneseDate.html#now(org.threeten.bp.ZoneId)">now</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
+<div class="block">Obtains the current <code>JapaneseDate</code> from the system clock in the specified time-zone.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></code></td>
+<td class="colLast"><span class="strong">HijrahDate.</span><code><strong><a href="../../../../org/threeten/bp/chrono/HijrahDate.html#now(org.threeten.bp.ZoneId)">now</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
+<div class="block">Obtains the current <code>HijrahDate</code> of the Islamic Umm Al-Qura calendar
+ in the specified time-zone.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ChronoZonedDateTime.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#withZoneSameInstant(org.threeten.bp.ZoneId)">withZoneSameInstant</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</code>
 <div class="block">Returns a copy of this date-time with a different time-zone,
  retaining the instant.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ChronoZonedDateTime.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#withZoneSameLocal(org.threeten.bp.ZoneId)">withZoneSameLocal</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</code>
 <div class="block">Returns a copy of this ZonedDateTime with a different time-zone,
  retaining the local date-time if possible.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ThaiBuddhistChronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html#zonedDateTime(org.threeten.bp.Instant, org.threeten.bp.ZoneId)">zonedDateTime</a></strong>(<a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;instant,
              <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">MinguoChronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/MinguoChronology.html#zonedDateTime(org.threeten.bp.Instant, org.threeten.bp.ZoneId)">zonedDateTime</a></strong>(<a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;instant,
              <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/JapaneseChronology.html#zonedDateTime(org.threeten.bp.Instant, org.threeten.bp.ZoneId)">zonedDateTime</a></strong>(<a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;instant,
              <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
@@ -500,12 +553,12 @@ Access to date and time using fields and units, plus additional value type class
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">HijrahChronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/HijrahChronology.html#zonedDateTime(org.threeten.bp.Instant, org.threeten.bp.ZoneId)">zonedDateTime</a></strong>(<a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;instant,
              <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;</code></td>
 <td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../org/threeten/bp/chrono/Chronology.html#zonedDateTime(org.threeten.bp.Instant, org.threeten.bp.ZoneId)">zonedDateTime</a></strong>(<a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;instant,
              <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Obtains a zoned date-time in this chronology from an <code>Instant</code>.</div>
@@ -544,6 +597,22 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatter.</span><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withZone(org.threeten.bp.ZoneId)">withZone</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Returns a copy of this formatter with a new override zone.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Method parameters in <a href="../../../../org/threeten/bp/format/package-summary.html">org.threeten.bp.format</a> with type arguments of type <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendZoneText(org.threeten.bp.format.TextStyle, java.util.Set)">appendZoneText</a></strong>(<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;textStyle,
+              <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&gt;&nbsp;preferredZones)</code>
+<div class="block">Appends the time-zone name, such as 'British Summer Time', to the formatter.</div>
 </td>
 </tr>
 </tbody>

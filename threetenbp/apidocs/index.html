@@ -8,9 +8,7 @@
     targetPage = "" + window.location.search;
     if (targetPage != "" && targetPage != "undefined")
         targetPage = targetPage.substring(1);
-    if (targetPage.indexOf(":") != -1)
-        targetPage = "undefined";
-    if (targetPage != "" && !validURL(targetPage))
+    if (targetPage.indexOf(":") != -1 || (targetPage != "" && !validURL(targetPage)))
         targetPage = "undefined";
     function validURL(url) {
         var pos = url.indexOf(".html");

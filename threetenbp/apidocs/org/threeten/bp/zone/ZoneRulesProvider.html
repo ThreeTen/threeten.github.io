@@ -171,7 +171,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#getRules(java.lang.String)">getRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#getRules(java.lang.String, boolean)">getRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId,
+        boolean&nbsp;forCaching)</code>
 <div class="block">Gets the rules for the zone ID.</div>
 </td>
 </tr>
@@ -182,42 +183,37 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html" title="class in org.threeten.bp.zone">ZoneRulesProvider</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideBind(java.lang.String)">provideBind</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</code>
-<div class="block">SPI method to bind to the specified zone ID.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideRefresh()">provideRefresh</a></strong>()</code>
 <div class="block">SPI method to refresh the rules from the underlying data provider.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected abstract <a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideRules(java.lang.String)">provideRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regionId)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideRules(java.lang.String, boolean)">provideRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regionId,
+            boolean&nbsp;forCaching)</code>
 <div class="block">SPI method to get the rules for the zone ID.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/util/NavigableMap.html?is-external=true" title="class or interface in java.util">NavigableMap</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideVersions(java.lang.String)">provideVersions</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</code>
 <div class="block">SPI method to get the history of rules for the zone ID.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideZoneIds()">provideZoneIds</a></strong>()</code>
 <div class="block">SPI method to get the available zone IDs.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#refresh()">refresh</a></strong>()</code>
 <div class="block">Refreshes the rules from the underlying data provider.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#registerProvider(org.threeten.bp.zone.ZoneRulesProvider)">registerProvider</a></strong>(<a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html" title="class in org.threeten.bp.zone">ZoneRulesProvider</a>&nbsp;provider)</code>
 <div class="block">Registers a zone rules provider.</div>
@@ -276,23 +272,34 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Returns:</span></dt><dd>a modifiable copy of the set of zone IDs, not null</dd></dl>
 </li>
 </ul>
-<a name="getRules(java.lang.String)">
+<a name="getRules(java.lang.String, boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRules</h4>
-<pre>public static&nbsp;<a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a>&nbsp;getRules(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</pre>
+<pre>public static&nbsp;<a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a>&nbsp;getRules(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId,
+                 boolean&nbsp;forCaching)</pre>
 <div class="block">Gets the rules for the zone ID.
  <p>
  This returns the latest available rules for the zone ID.
  <p>
  This method relies on time-zone data provider files that are configured.
- These are loaded using a <code>ServiceLoader</code>.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>zoneId</code> - the zone region ID as used by <code>ZoneId</code>, not null</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the rules for the ID, not null</dd>
+ These are loaded using a <code>ServiceLoader</code>.
+ <p>
+ The caching flag is designed to allow provider implementations to
+ prevent the rules being cached in <code>ZoneId</code>.
+ Under normal circumstances, the caching of zone rules is highly desirable
+ as it will provide greater performance. However, there is a use case where
+ the caching would not be desirable, see <a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideRules(java.lang.String, boolean)"><code>provideRules(java.lang.String, boolean)</code></a>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>zoneId</code> - the zone ID as defined by <code>ZoneId</code>, not null</dd><dd><code>forCaching</code> - whether the rules are being queried for caching,
+ true if the returned rules will be cached by <code>ZoneId</code>,
+ false if they will be returned to the user without being cached in <code>ZoneId</code></dd>
+<dt><span class="strong">Returns:</span></dt><dd>the rules, null if <code>forCaching</code> is true and this
+ is a dynamic provider that wants to prevent caching in <code>ZoneId</code>,
+ otherwise not null</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone ID is unknown</dd></dl>
+<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if rules cannot be obtained for the zone ID</dd></dl>
 </li>
 </ul>
 <a name="getVersions(java.lang.String)">
@@ -323,7 +330,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>a modifiable copy of the history of the rules for the ID, sorted
   from oldest to newest, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone ID is unknown</dd></dl>
+<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if history cannot be obtained for the zone ID</dd></dl>
 </li>
 </ul>
 <a name="registerProvider(org.threeten.bp.zone.ZoneRulesProvider)">
@@ -383,42 +390,19 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  <p>
  The returned regions remain available and valid for the lifetime of the application.
  A dynamic provider may increase the set of regions as more data becomes available.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the unmodifiable set of region IDs being provided, not null</dd></dl>
-</li>
-</ul>
-<a name="provideBind(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>provideBind</h4>
-<pre>protected&nbsp;<a href="../../../../org/threeten/bp/zone/ZoneRulesProvider.html" title="class in org.threeten.bp.zone">ZoneRulesProvider</a>&nbsp;provideBind(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</pre>
-<div class="block">SPI method to bind to the specified zone ID.
- <p>
- <code>ZoneRulesProvider</code> has a lookup from zone ID to provider.
- This method is used when building that lookup, allowing providers
- to insert a derived provider that is precisely tuned to the zone ID.
- This replaces two hash map lookups by one, enhancing performance.
- <p>
- This optimization is optional. Returning <code>this</code> is acceptable.
- <p>
- This implementation creates a bound provider that caches the
- rules from the underlying provider. The request to version history
- is forward on to the underlying. This is suitable for providers that
- cannot change their contents during the lifetime of the JVM.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>zoneId</code> - the zone region ID as used by <code>ZoneId</code>, not null</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the resolved provider for the ID, not null</dd>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the unmodifiable set of region IDs being provided, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if there is no provider for the specified group</dd></dl>
+<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if a problem occurs while providing the IDs</dd></dl>
 </li>
 </ul>
-<a name="provideRules(java.lang.String)">
+<a name="provideRules(java.lang.String, boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>provideRules</h4>
-<pre>protected abstract&nbsp;<a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a>&nbsp;provideRules(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regionId)</pre>
+<pre>protected abstract&nbsp;<a href="../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a>&nbsp;provideRules(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regionId,
+                     boolean&nbsp;forCaching)</pre>
 <div class="block">SPI method to get the rules for the zone ID.
  <p>
  This loads the rules for the region and version specified.
@@ -456,7 +440,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>a modifiable copy of the history of the rules for the ID, sorted
   from oldest to newest, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone ID is unknown</dd></dl>
+<dd><code><a href="../../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if history cannot be obtained for the zone ID</dd></dl>
 </li>
 </ul>
 <a name="provideRefresh()">

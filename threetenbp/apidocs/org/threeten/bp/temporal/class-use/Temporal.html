@@ -99,7 +99,7 @@ Simulates JDK 8 features on JDK 7.</div>
 <td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
 <td class="colLast">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </td>
 </tr>
 </tbody>
@@ -388,87 +388,87 @@ Access to date and time using fields and units, plus additional value type class
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../../org/threeten/bp/Period.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
+<div class="block">Subtracts this period from the specified temporal object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">Duration.</span><code><strong><a href="../../../../../org/threeten/bp/Duration.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
+<div class="block">Subtracts this duration from the specified temporal object.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDateTime,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">ZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/ZonedDateTime.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this date-time and another date-time in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endYearMonth,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">YearMonth.</span><code><strong><a href="../../../../../org/threeten/bp/YearMonth.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this year-month and another year-month in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endYear,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">Year.</span><code><strong><a href="../../../../../org/threeten/bp/Year.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this year and another year in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endTime,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">OffsetTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetTime.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this time and another time in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDateTime,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">OffsetDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/OffsetDateTime.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this date-time and another date-time in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endTime,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">LocalTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalTime.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this time and another time in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDateTime,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">LocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDateTime.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this date-time and another date-time in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDate,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/LocalDate.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this date and another date in
  terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endInstant,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<td class="colLast"><span class="strong">Instant.</span><code><strong><a href="../../../../../org/threeten/bp/Instant.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Calculates the period between this instant and another instant in
  terms of the specified unit.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
-<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../../org/threeten/bp/Period.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
-<div class="block">Subtracts this period from the specified temporal object.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
-<td class="colLast"><span class="strong">Duration.</span><code><strong><a href="../../../../../org/threeten/bp/Duration.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
-<div class="block">Subtracts this duration from the specified temporal object.</div>
 </td>
 </tr>
 </tbody>
@@ -478,36 +478,6 @@ Access to date and time using fields and units, plus additional value type class
 <!--   -->
 </a>
 <h3>Uses of <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a> in <a href="../../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a></h3>
-<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a> in <a href="../../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date-time with a time-zone in an arbitrary chronology,
- intended for advanced globalization use cases.</div>
-</td>
-</tr>
-</tbody>
-</table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
 <caption><span>Classes in <a href="../../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a> that implement <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
@@ -517,26 +487,92 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></strong></code>
+<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</strong></code>
+<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</strong></code>
+<div class="block">A date-time with a time-zone in an arbitrary chronology,
+ intended for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></strong></code>
 <div class="block">A date in the Hijrah calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></strong></code>
 <div class="block">A date in the Japanese Imperial calendar system.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></strong></code>
 <div class="block">A date in the Minguo calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></strong></code>
 <div class="block">A date in the Thai Buddhist calendar system.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a> that return <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoPeriod.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoPeriod.html#addTo(org.threeten.bp.temporal.Temporal)">addTo</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
+<div class="block">Adds this period to the specified temporal object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">MinguoEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">IsoEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/IsoEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">HijrahEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoPeriod.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoPeriod.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
+<div class="block">Subtracts this period from the specified temporal object.</div>
 </td>
 </tr>
 </tbody>
@@ -549,21 +585,39 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;&nbsp;<br><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;</code></td>
-<td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#ensureChronoLocalDate(org.threeten.bp.temporal.Temporal)">ensureChronoLocalDate</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
-<div class="block">Casts the <code>Temporal</code> to <code>ChronoLocalDate</code> with the same chronology.</div>
+<td class="colFirst"><code>abstract <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoPeriod.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoPeriod.html#addTo(org.threeten.bp.temporal.Temporal)">addTo</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
+<div class="block">Adds this period to the specified temporal object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;&nbsp;<br>org.threeten.bp.chrono.ChronoLocalDateTimeImpl&lt;D&gt;</code></td>
-<td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#ensureChronoLocalDateTime(org.threeten.bp.temporal.Temporal)">ensureChronoLocalDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
-<div class="block">Casts the <code>Temporal</code> to <code>ChronoLocalDateTime</code> with the same chronology.</div>
-</td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;&nbsp;<br>org.threeten.bp.chrono.ChronoZonedDateTimeImpl&lt;D&gt;</code></td>
-<td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#ensureChronoZonedDateTime(org.threeten.bp.temporal.Temporal)">ensureChronoZonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
-<div class="block">Casts the <code>Temporal</code> to <code>ChronoZonedDateTimeImpl</code> with the same chronology.</div>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">MinguoEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">IsoEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/IsoEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">HijrahEra.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
+<td class="colLast"><span class="strong">ChronoPeriod.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoPeriod.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
+<div class="block">Subtracts this period from the specified temporal object.</div>
 </td>
 </tr>
 </tbody>
@@ -582,27 +636,6 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoZonedDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a></strong></code>
 <div class="block">A temporary class providing implementations that will become default interface
  methods once integrated into JDK 8.</div>
@@ -620,14 +653,6 @@ Access to date and time using fields and units, plus additional value type class
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
 <td class="colLast"><span class="strong">DefaultInterfaceEra.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
@@ -658,14 +683,6 @@ Access to date and time using fields and units, plus additional value type class
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
 <td class="colLast"><span class="strong">DefaultInterfaceEra.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
-<td class="colLast"><span class="strong">DefaultInterfaceChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -815,17 +832,17 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colLast"><span class="strong">ChronoUnit.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoUnit.html#isSupportedBy(org.threeten.bp.temporal.Temporal)">isSupportedBy</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>long</code></td>
-<td class="colLast"><span class="strong">Temporal.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/Temporal.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endTemporal,
-           <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
-<div class="block">Calculates the period between this temporal and another temporal in
- terms of the specified unit.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
 <td class="colLast"><span class="strong">TemporalAmount.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalAmount.html#subtractFrom(org.threeten.bp.temporal.Temporal)">subtractFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
 <div class="block">Subtracts this object from the specified temporal object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><span class="strong">Temporal.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/Temporal.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endTemporal,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<div class="block">Calculates the period between this temporal and another temporal in
+ terms of the specified unit.</div>
 </td>
 </tr>
 </tbody>

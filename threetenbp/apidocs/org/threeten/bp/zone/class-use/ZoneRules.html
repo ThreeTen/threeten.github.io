@@ -132,7 +132,8 @@ Support for time-zones and their rules.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a></code></td>
-<td class="colLast"><span class="strong">ZoneRulesProvider.</span><code><strong><a href="../../../../../org/threeten/bp/zone/ZoneRulesProvider.html#getRules(java.lang.String)">getRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</code>
+<td class="colLast"><span class="strong">ZoneRulesProvider.</span><code><strong><a href="../../../../../org/threeten/bp/zone/ZoneRulesProvider.html#getRules(java.lang.String, boolean)">getRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId,
+        boolean&nbsp;forCaching)</code>
 <div class="block">Gets the rules for the zone ID.</div>
 </td>
 </tr>
@@ -154,13 +155,15 @@ Support for time-zones and their rules.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="../../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a></code></td>
-<td class="colLast"><span class="strong">ZoneRulesProvider.</span><code><strong><a href="../../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideRules(java.lang.String)">provideRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regionId)</code>
+<td class="colLast"><span class="strong">ZoneRulesProvider.</span><code><strong><a href="../../../../../org/threeten/bp/zone/ZoneRulesProvider.html#provideRules(java.lang.String, boolean)">provideRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regionId,
+            boolean&nbsp;forCaching)</code>
 <div class="block">SPI method to get the rules for the zone ID.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a></code></td>
-<td class="colLast"><span class="strong">TzdbZoneRulesProvider.</span><code><strong><a href="../../../../../org/threeten/bp/zone/TzdbZoneRulesProvider.html#provideRules(java.lang.String)">provideRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">TzdbZoneRulesProvider.</span><code><strong><a href="../../../../../org/threeten/bp/zone/TzdbZoneRulesProvider.html#provideRules(java.lang.String, boolean)">provideRules</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;zoneId,
+            boolean&nbsp;forCaching)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

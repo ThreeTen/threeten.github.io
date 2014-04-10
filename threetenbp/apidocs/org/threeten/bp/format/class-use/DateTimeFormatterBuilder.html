@@ -127,26 +127,40 @@ Provides classes to print and parse dates and times.</div>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendInstant()">appendInstant</a></strong>()</code>
-<div class="block">Appends an instant using ISO-8601 to the formatter.</div>
+<div class="block">Appends an instant using ISO-8601 to the formatter, formatting fractional
+ digits in groups of three.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendInstant(int)">appendInstant</a></strong>(int&nbsp;fractionalDigits)</code>
+<div class="block">Appends an instant using ISO-8601 to the formatter with control over
+ the number of fractional digits.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendLiteral(char)">appendLiteral</a></strong>(char&nbsp;literal)</code>
 <div class="block">Appends a character literal to the formatter.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendLiteral(java.lang.String)">appendLiteral</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;literal)</code>
 <div class="block">Appends a string literal to the formatter.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendLocalized(org.threeten.bp.format.FormatStyle, org.threeten.bp.format.FormatStyle)">appendLocalized</a></strong>(<a href="../../../../../org/threeten/bp/format/FormatStyle.html" title="enum in org.threeten.bp.format">FormatStyle</a>&nbsp;dateStyle,
                <a href="../../../../../org/threeten/bp/format/FormatStyle.html" title="enum in org.threeten.bp.format">FormatStyle</a>&nbsp;timeStyle)</code>
 <div class="block">Appends a localized date-time pattern to the formatter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendLocalizedOffset(org.threeten.bp.format.TextStyle)">appendLocalizedOffset</a></strong>(<a href="../../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;style)</code>
+<div class="block">Appends the localized zone offset, such as 'GMT+01:00', to the formatter.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -223,35 +237,52 @@ Provides classes to print and parse dates and times.</div>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
-<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValueReduced(org.threeten.bp.temporal.TemporalField, int, int)">appendValueReduced</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValueReduced(org.threeten.bp.temporal.TemporalField, int, int, org.threeten.bp.chrono.ChronoLocalDate)">appendValueReduced</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
                   int&nbsp;width,
-                  int&nbsp;baseValue)</code>
+                  int&nbsp;maxWidth,
+                  <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;baseDate)</code>
 <div class="block">Appends the reduced value of a date-time field to the formatter.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValueReduced(org.threeten.bp.temporal.TemporalField, int, int, int)">appendValueReduced</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+                  int&nbsp;width,
+                  int&nbsp;maxWidth,
+                  int&nbsp;baseValue)</code>
+<div class="block">Appends the reduced value of a date-time field to the formatter.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendZoneId()">appendZoneId</a></strong>()</code>
 <div class="block">Appends the time-zone ID, such as 'Europe/Paris' or '+02:00', to the formatter.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendZoneOrOffsetId()">appendZoneOrOffsetId</a></strong>()</code>
 <div class="block">Appends the time-zone ID, such as 'Europe/Paris' or '+02:00', to
  the formatter, using the best available zone ID.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendZoneRegionId()">appendZoneRegionId</a></strong>()</code>
 <div class="block">Appends the time-zone region ID, such as 'Europe/Paris', to the formatter,
  rejecting the zone ID if it is a <code>ZoneOffset</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendZoneText(org.threeten.bp.format.TextStyle)">appendZoneText</a></strong>(<a href="../../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;textStyle)</code>
+<div class="block">Appends the time-zone name, such as 'British Summer Time', to the formatter.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendZoneText(org.threeten.bp.format.TextStyle, java.util.Set)">appendZoneText</a></strong>(<a href="../../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;textStyle,
+              <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&gt;&nbsp;preferredZones)</code>
 <div class="block">Appends the time-zone name, such as 'British Summer Time', to the formatter.</div>
 </td>
 </tr>
@@ -294,11 +325,18 @@ Provides classes to print and parse dates and times.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
+<td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#parseDefaulting(org.threeten.bp.temporal.TemporalField, long)">parseDefaulting</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+               long&nbsp;value)</code>
+<div class="block">Appends a default value for a field to the formatter for use in parsing.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#parseLenient()">parseLenient</a></strong>()</code>
 <div class="block">Changes the parse style to be lenient for the remainder of the formatter.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></code></td>
 <td class="colLast"><span class="strong">DateTimeFormatterBuilder.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#parseStrict()">parseStrict</a></strong>()</code>
 <div class="block">Changes the parse style to be strict for the remainder of the formatter.</div>

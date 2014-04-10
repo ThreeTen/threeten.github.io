@@ -111,13 +111,15 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  A <code>ZoneId</code> is used to identify the rules used to convert between
  an <a href="../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp"><code>Instant</code></a> and a <a href="../../../org/threeten/bp/LocalDateTime.html" title="class in org.threeten.bp"><code>LocalDateTime</code></a>.
  There are two distinct types of ID:
- <p><ul>
+ <ul>
  <li>Fixed offsets - a fully resolved offset from UTC/Greenwich, that uses
   the same offset for all local date-times
  <li>Geographical regions - an area where a specific set of rules for finding
   the offset from UTC/Greenwich apply
- </ul><p>
+ </ul>
  Most fixed offsets are represented by <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp"><code>ZoneOffset</code></a>.
+ Calling <a href="../../../org/threeten/bp/ZoneId.html#normalized()"><code>normalized()</code></a> on any <code>ZoneId</code> will ensure that a
+ fixed offset ID will be represented as a <code>ZoneOffset</code>.
  <p>
  The actual rules, describing when and how the offset changes, are defined by <a href="../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone"><code>ZoneRules</code></a>.
  This class is simply an ID used to obtain the underlying rules.
@@ -128,45 +130,61 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  the ID, whereas serializing the rules sends the entire data set.
  Similarly, a comparison of two IDs only examines the ID, whereas
  a comparison of two rules examines the entire data set.
- <p>
- The code supports loading a <code>ZoneId</code> on a JVM which does not have available rules
- for that ID. This allows the date-time object, such as <a href="../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp"><code>ZonedDateTime</code></a>,
- to still be queried.
 
  <h3>Time-zone IDs</h3>
  The ID is unique within the system.
- The formats for offset and region IDs differ.
+ There are three types of ID.
  <p>
- An ID is parsed as an offset ID if it starts with 'UTC', 'GMT', '+' or '-', or
- is a single letter.
- For example, 'Z', '+02:00', '-05:00', 'UTC+05' and 'GMT-6' are all valid offset IDs.
- Note that some IDs, such as 'D' or '+ABC' meet the criteria, but are invalid.
+ The simplest type of ID is that from <code>ZoneOffset</code>.
+ This consists of 'Z' and IDs starting with '+' or '-'.
  <p>
- All other IDs are considered to be region IDs.
+ The next type of ID are offset-style IDs with some form of prefix,
+ such as 'GMT+2' or 'UTC+01:00'.
+ The recognised prefixes are 'UTC', 'GMT' and 'UT'.
+ The offset is the suffix and will be normalized during creation.
+ These IDs can be normalized to a <code>ZoneOffset</code> using <code>normalized()</code>.
  <p>
- Region IDs are defined by configuration, which can be thought of as a <code>Map</code>
- from region ID to <code>ZoneRules</code>, see <a href="../../../org/threeten/bp/zone/ZoneRulesProvider.html" title="class in org.threeten.bp.zone"><code>ZoneRulesProvider</code></a>.
+ The third type of ID are region-based IDs. A region-based ID must be of
+ two or more characters, and not start with 'UTC', 'GMT', 'UT' '+' or '-'.
+ Region-based IDs are defined by configuration, see <a href="../../../org/threeten/bp/zone/ZoneRulesProvider.html" title="class in org.threeten.bp.zone"><code>ZoneRulesProvider</code></a>.
+ The configuration focuses on providing the lookup from the ID to the
+ underlying <code>ZoneRules</code>.
  <p>
- Time-zones are defined by governments and change frequently. There are a number of
- organizations, known here as groups, that monitor time-zone changes and collate them.
+ Time-zone rules are defined by governments and change frequently.
+ There are a number of organizations, known here as groups, that monitor
+ time-zone changes and collate them.
  The default group is the IANA Time Zone Database (TZDB).
  Other organizations include IATA (the airline industry body) and Microsoft.
  <p>
- Each group defines its own format for region ID.
+ Each group defines its own format for the region ID it provides.
  The TZDB group defines IDs such as 'Europe/London' or 'America/New_York'.
  TZDB IDs take precedence over other groups.
  <p>
- It is strongly recommended that the group name is included in all Ids supplied by
+ It is strongly recommended that the group name is included in all IDs supplied by
  groups other than TZDB to avoid conflicts. For example, IATA airline time-zone
  region IDs are typically the same as the three letter airport code.
  However, the airport of Utrecht has the code 'UTC', which is obviously a conflict.
  The recommended format for region IDs from groups other than TZDB is 'group~region'.
  Thus if IATA data were defined, Utrecht airport would be 'IATA~UTC'.
 
+ <h3>Serialization</h3>
+ This class can be serialized and stores the string zone ID in the external form.
+ The <code>ZoneOffset</code> subclass uses a dedicated format that only stores the
+ offset from UTC/Greenwich.
+ <p>
+ A <code>ZoneId</code> can be deserialized in a Java Runtime where the ID is unknown.
+ For example, if a server-side Java Runtime has been updated with a new zone ID, but
+ the client-side Java Runtime has not been updated. In this case, the <code>ZoneId</code>
+ object will exist, and can be queried using <code>getId</code>, <code>equals</code>,
+ <code>hashCode</code>, <code>toString</code>, <code>getDisplayName</code> and <code>normalized</code>.
+ However, any call to <code>getRules</code> will fail with <code>ZoneRulesException</code>.
+ This approach is designed to allow a <a href="../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp"><code>ZonedDateTime</code></a> to be loaded and
+ queried, but not modified, on a Java Runtime with incomplete time-zone information.
+
  <h3>Specification for implementors</h3>
  This abstract class has two implementations, both of which are immutable and thread-safe.
  One implementation models region-based IDs, the other is <code>ZoneOffset</code> modelling
- offset-based IDs.</div>
+ offset-based IDs. This difference is visible in serialization.</div>
 <dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../serialized-form.html#org.threeten.bp.ZoneId">Serialized Form</a></dd></dl>
 </li>
 </ul>
@@ -187,15 +205,15 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#OLD_IDS_POST_2005">OLD_IDS_POST_2005</a></strong></code>
-<div class="block">A map of zone overrides to enable the older US time-zone names to be used.</div>
+<td class="colFirst"><code>static <a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#FROM">FROM</a></strong></code>
+<div class="block">Simulate JDK 8 method reference ZoneId::from.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#OLD_IDS_PRE_2005">OLD_IDS_PRE_2005</a></strong></code>
-<div class="block">A map of zone overrides to enable the older US time-zone names to be used.</div>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#SHORT_IDS">SHORT_IDS</a></strong></code>
+<div class="block">A map of zone overrides to enable the short time-zone names to be used.</div>
 </td>
 </tr>
 </table>
@@ -226,6 +244,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#getAvailableZoneIds()">getAvailableZoneIds</a></strong>()</code>
+<div class="block">Gets the set of available zone IDs.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">getDisplayName</a></strong>(<a href="../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;style,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
@@ -233,22 +257,28 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  '+02:00'.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#getId()">getId</a></strong>()</code>
 <div class="block">Gets the unique time-zone ID.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>abstract <a href="../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone">ZoneRules</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#getRules()">getRules</a></strong>()</code>
 <div class="block">Gets the time-zone rules for this ID allowing calculations to be performed.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">A hash code for this time-zone ID.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#normalized()">normalized</a></strong>()</code>
+<div class="block">Normalizes the time-zone ID, returning a <code>ZoneOffset</code> where possible.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -268,11 +298,18 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#ofOffset(java.lang.String, org.threeten.bp.ZoneOffset)">ofOffset</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;prefix,
+        <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&nbsp;offset)</code>
+<div class="block">Obtains an instance of <code>ZoneId</code> wrapping an offset.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#systemDefault()">systemDefault</a></strong>()</code>
 <div class="block">Gets the system default time-zone.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneId.html#toString()">toString</a></strong>()</code>
 <div class="block">Outputs this zone as a <code>String</code>, using the ID.</div>
@@ -300,57 +337,32 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="OLD_IDS_PRE_2005">
+<a name="FROM">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>OLD_IDS_PRE_2005</h4>
-<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt; OLD_IDS_PRE_2005</pre>
-<div class="block">A map of zone overrides to enable the older US time-zone names to be used.
- <p>
- This maps as follows:
- <p><ul>
- <li>EST - America/New_York</li>
- <li>MST - America/Denver</li>
- <li>HST - Pacific/Honolulu</li>
- <li>ACT - Australia/Darwin</li>
- <li>AET - Australia/Sydney</li>
- <li>AGT - America/Argentina/Buenos_Aires</li>
- <li>ART - Africa/Cairo</li>
- <li>AST - America/Anchorage</li>
- <li>BET - America/Sao_Paulo</li>
- <li>BST - Asia/Dhaka</li>
- <li>CAT - Africa/Harare</li>
- <li>CNT - America/St_Johns</li>
- <li>CST - America/Chicago</li>
- <li>CTT - Asia/Shanghai</li>
- <li>EAT - Africa/Addis_Ababa</li>
- <li>ECT - Europe/Paris</li>
- <li>IET - America/Indiana/Indianapolis</li>
- <li>IST - Asia/Kolkata</li>
- <li>JST - Asia/Tokyo</li>
- <li>MIT - Pacific/Apia</li>
- <li>NET - Asia/Yerevan</li>
- <li>NST - Pacific/Auckland</li>
- <li>PLT - Asia/Karachi</li>
- <li>PNT - America/Phoenix</li>
- <li>PRT - America/Puerto_Rico</li>
- <li>PST - America/Los_Angeles</li>
- <li>SST - Pacific/Guadalcanal</li>
- <li>VST - Asia/Ho_Chi_Minh</li>
- </ul><p>
- The map is unmodifiable.</div>
+<h4>FROM</h4>
+<pre>public static final&nbsp;<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&gt; FROM</pre>
+<div class="block">Simulate JDK 8 method reference ZoneId::from.</div>
 </li>
 </ul>
-<a name="OLD_IDS_POST_2005">
+<a name="SHORT_IDS">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>OLD_IDS_POST_2005</h4>
-<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt; OLD_IDS_POST_2005</pre>
-<div class="block">A map of zone overrides to enable the older US time-zone names to be used.
+<h4>SHORT_IDS</h4>
+<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt; SHORT_IDS</pre>
+<div class="block">A map of zone overrides to enable the short time-zone names to be used.
+ <p>
+ Use of short zone IDs has been deprecated in <code>java.util.TimeZone</code>.
+ This map allows the IDs to continue to be used via the
+ <a href="../../../org/threeten/bp/ZoneId.html#of(java.lang.String, java.util.Map)"><code>of(String, Map)</code></a> factory method.
+ <p>
+ This map contains a mapping of the IDs that is in line with TZDB 2005r and
+ later, where 'EST', 'MST' and 'HST' map to IDs which do not include daylight
+ savings.
  <p>
  This maps as follows:
  <p><ul>
@@ -412,6 +424,24 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <dd><code><a href="../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the converted zone region ID cannot be found</dd></dl>
 </li>
 </ul>
+<a name="getAvailableZoneIds()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAvailableZoneIds</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getAvailableZoneIds()</pre>
+<div class="block">Gets the set of available zone IDs.
+ <p>
+ This set includes the string form of all available region-based IDs.
+ Offset-based zone IDs are not included in the returned set.
+ The ID can be passed to <a href="../../../org/threeten/bp/ZoneId.html#of(java.lang.String)"><code>of(String)</code></a> to create a <code>ZoneId</code>.
+ <p>
+ The set of zone IDs can increase over time, although in a typical application
+ the set of IDs is fixed. Each call to this method is thread-safe.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a modifiable copy of the set of zone IDs, not null</dd></dl>
+</li>
+</ul>
 <a name="of(java.lang.String, java.util.Map)">
 <!--   -->
 </a>
@@ -432,7 +462,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <dt><span class="strong">Returns:</span></dt><dd>the zone ID, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if the zone ID has an invalid format</dd>
-<dd><code><a href="../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone region ID cannot be found</dd></dl>
+<dd><code><a href="../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone ID is a region ID that cannot be found</dd></dl>
 </li>
 </ul>
 <a name="of(java.lang.String)">
@@ -445,36 +475,61 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <div class="block">Obtains an instance of <code>ZoneId</code> from an ID ensuring that the
  ID is valid and available for use.
  <p>
- This method parses the ID, applies any appropriate normalization, and validates it
- against the known set of IDs for which rules are available.
+ This method parses the ID producing a <code>ZoneId</code> or <code>ZoneOffset</code>.
+ A <code>ZoneOffset</code> is returned if the ID is 'Z', or starts with '+' or '-'.
+ The result will always be a valid ID for which <a href="../../../org/threeten/bp/zone/ZoneRules.html" title="class in org.threeten.bp.zone"><code>ZoneRules</code></a> can be obtained.
  <p>
- An ID is parsed as though it is an offset ID if it starts with 'UTC', 'GMT', '+'
- or '-', or if it has less then two letters.
- The offset of <a href="../../../org/threeten/bp/ZoneOffset.html#UTC"><code>zero</code></a> may be represented in multiple ways,
- including 'Z', 'UTC', 'GMT', 'UTC0' 'GMT0', '+00:00', '-00:00' and 'UTC+00:00'.
- <p>
- Eight forms of ID are recognized, where '{offset}' means to parse using <a href="../../../org/threeten/bp/ZoneOffset.html#of(java.lang.String)"><code>ZoneOffset.of(String)</code></a>:
- <p><ul>
- <li><code>{offset}</code> - a <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp"><code>ZoneOffset</code></a> ID, such as 'Z' or '+02:00'
- <li><code>UTC</code> - alternate form of a <code>ZoneOffset</code> ID equal to 'Z'
- <li><code>UTC0</code> - alternate form of a <code>ZoneOffset</code> ID equal to 'Z'
- <li><code>UTC{offset}</code> - alternate form of a <code>ZoneOffset</code> ID equal to '{offset}'
- <li><code>GMT</code> - alternate form of a <code>ZoneOffset</code> ID equal to 'Z'
- <li><code>GMT0</code> - alternate form of a <code>ZoneOffset</code> ID equal to 'Z'
- <li><code>GMT{offset}</code> - alternate form of a <code>ZoneOffset</code> ID equal to '{offset}'r
- <li><code>{regionID}</code> - full region ID, loaded from configuration
- </ul><p>
- Region IDs must match the regular expression <code>[A-Za-z][A-Za-z0-9~/._+-]+</code>.
- <p>
- The detailed format of the region ID depends on the group supplying the data.
- The default set of data is supplied by the IANA Time Zone Database (TZDB)
- This has region IDs of the form '{area}/{city}', such as 'Europe/Paris' or 'America/New_York'.
- This is compatible with most IDs from <a href="http://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html?is-external=true" title="class or interface in java.util"><code>TimeZone</code></a>.</div>
+ Parsing matches the zone ID step by step as follows.
+ <ul>
+ <li>If the zone ID equals 'Z', the result is <code>ZoneOffset.UTC</code>.
+ <li>If the zone ID consists of a single letter, the zone ID is invalid
+  and <code>DateTimeException</code> is thrown.
+ <li>If the zone ID starts with '+' or '-', the ID is parsed as a
+  <code>ZoneOffset</code> using <a href="../../../org/threeten/bp/ZoneOffset.html#of(java.lang.String)"><code>ZoneOffset.of(String)</code></a>.
+ <li>If the zone ID equals 'GMT', 'UTC' or 'UT' then the result is a <code>ZoneId</code>
+  with the same ID and rules equivalent to <code>ZoneOffset.UTC</code>.
+ <li>If the zone ID starts with 'UTC+', 'UTC-', 'GMT+', 'GMT-', 'UT+' or 'UT-'
+  then the ID is a prefixed offset-based ID. The ID is split in two, with
+  a two or three letter prefix and a suffix starting with the sign.
+  The suffix is parsed as a <a href="../../../org/threeten/bp/ZoneOffset.html#of(java.lang.String)"><code>ZoneOffset</code></a>.
+  The result will be a <code>ZoneId</code> with the specified UTC/GMT/UT prefix
+  and the normalized offset ID as per <a href="../../../org/threeten/bp/ZoneOffset.html#getId()"><code>ZoneOffset.getId()</code></a>.
+  The rules of the returned <code>ZoneId</code> will be equivalent to the
+  parsed <code>ZoneOffset</code>.
+ <li>All other IDs are parsed as region-based zone IDs. Region IDs must
+  match the regular expression <code>[A-Za-z][A-Za-z0-9~/._+-]+</code>
+  otherwise a <code>DateTimeException</code> is thrown. If the zone ID is not
+  in the configured set of IDs, <code>ZoneRulesException</code> is thrown.
+  The detailed format of the region ID depends on the group supplying the data.
+  The default set of data is supplied by the IANA Time Zone Database (TZDB).
+  This has region IDs of the form '{area}/{city}', such as 'Europe/Paris' or 'America/New_York'.
+  This is compatible with most IDs from <a href="http://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html?is-external=true" title="class or interface in java.util"><code>TimeZone</code></a>.
+ </ul></div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>zoneId</code> - the time-zone ID, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the zone ID, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if the zone ID has an invalid format</dd>
-<dd><code><a href="../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone region ID cannot be found</dd></dl>
+<dd><code><a href="../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if the zone ID is a region ID that cannot be found</dd></dl>
+</li>
+</ul>
+<a name="ofOffset(java.lang.String, org.threeten.bp.ZoneOffset)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ofOffset</h4>
+<pre>public static&nbsp;<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;ofOffset(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;prefix,
+              <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&nbsp;offset)</pre>
+<div class="block">Obtains an instance of <code>ZoneId</code> wrapping an offset.
+ <p>
+ If the prefix is "GMT", "UTC", or "UT" a <code>ZoneId</code>
+ with the prefix and the non-zero offset is returned.
+ If the prefix is empty <code>""</code> the <code>ZoneOffset</code> is returned.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>prefix</code> - the time-zone ID, not null</dd><dd><code>offset</code> - the offset, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the zone ID, not null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the prefix is not one of
+     "GMT", "UTC", or "UT", or ""</dd></dl>
 </li>
 </ul>
 <a name="from(org.threeten.bp.temporal.TemporalAccessor)">
@@ -526,19 +581,19 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  The rules provide the functionality associated with a time-zone,
  such as finding the offset for a given instant or local date-time.
  <p>
- A time-zone can be invalid if it is deserialized in a JVM which does not
- have the same rules loaded as the JVM that stored it. In this case, calling
- this method will throw an exception.
+ A time-zone can be invalid if it is deserialized in a Java Runtime which
+ does not have the same rules loaded as the Java Runtime that stored it.
+ In this case, calling this method will throw a <code>ZoneRulesException</code>.
  <p>
  The rules are supplied by <a href="../../../org/threeten/bp/zone/ZoneRulesProvider.html" title="class in org.threeten.bp.zone"><code>ZoneRulesProvider</code></a>. An advanced provider may
- support dynamic updates to the rules without restarting the JVM.
+ support dynamic updates to the rules without restarting the Java Runtime.
  If so, then the result of this method may change over time.
  Each individual call will be still remain thread-safe.
  <p>
  <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp"><code>ZoneOffset</code></a> will always return a set of rules where the offset never changes.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the rules, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if no rules are available for this ID</dd></dl>
+<dd><code><a href="../../../org/threeten/bp/zone/ZoneRulesException.html" title="class in org.threeten.bp.zone">ZoneRulesException</a></code> - if no rules are available for this ID</dd></dl>
 </li>
 </ul>
 <a name="getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">
@@ -552,11 +607,32 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <div class="block">Gets the textual representation of the zone, such as 'British Time' or
  '+02:00'.
  <p>
- This returns a textual description for the time-zone ID.
+ This returns the textual name used to identify the time-zone ID,
+ suitable for presentation to the user.
+ The parameters control the style of the returned text and the locale.
  <p>
  If no textual mapping is found then the <a href="../../../org/threeten/bp/ZoneId.html#getId()"><code>full ID</code></a> is returned.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>style</code> - the length of the text required, not null</dd><dd><code>locale</code> - the locale to use, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the text value of the zone, not null</dd></dl>
+</li>
+</ul>
+<a name="normalized()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>normalized</h4>
+<pre>public&nbsp;<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;normalized()</pre>
+<div class="block">Normalizes the time-zone ID, returning a <code>ZoneOffset</code> where possible.
+ <p>
+ The returns a normalized <code>ZoneId</code> that can be used in place of this ID.
+ The result will have <code>ZoneRules</code> equivalent to those returned by this object,
+ however the ID returned by <code>getId()</code> may be different.
+ <p>
+ The normalization checks if the rules of this <code>ZoneId</code> have a fixed offset.
+ If they do, then the <code>ZoneOffset</code> equal to that offset is returned.
+ Otherwise <code>this</code> is returned.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the time-zone unique ID, not null</dd></dl>
 </li>
 </ul>
 <a name="equals(java.lang.Object)">

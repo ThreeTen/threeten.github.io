@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/ChronoPeriod.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -61,14 +61,14 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
 </div>
@@ -79,25 +79,44 @@
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">org.threeten.bp.chrono</div>
-<h2 title="Interface ChronoZonedDateTime" class="title">Interface ChronoZonedDateTime&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</h2>
+<h2 title="Class ChronoZonedDateTime" class="title">Class ChronoZonedDateTime&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</h2>
 </div>
 <div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html" title="class in org.threeten.bp.jdk8">org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">org.threeten.bp.jdk8.DefaultInterfaceTemporal</a></li>
+<li>
+<ul class="inheritance">
+<li>org.threeten.bp.chrono.ChronoZonedDateTime&lt;D&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
 <dl><dt><span class="strong">Type Parameters:</span></dt><dd><code>D</code> - the date type</dd></dl>
 <dl>
-<dt>All Superinterfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;, <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></dd>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;, <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></dd>
 </dl>
 <dl>
-<dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoZonedDateTime</a>, <a href="../../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">ZonedDateTime</a></dd>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">ZonedDateTime</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">ChronoZonedDateTime&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</span>
-extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;</pre>
+<pre>public abstract class <span class="strong">ChronoZonedDateTime&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</span>
+extends <a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a>
+implements <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;</pre>
 <div class="block">A date-time with a time-zone in an arbitrary chronology,
  intended for advanced globalization use cases.
  <p>
@@ -105,7 +124,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
  as <a href="../../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp"><code>ZonedDateTime</code></a>, not this interface.</b>
  <p>
  A <code>ChronoZonedDateTime</code> is the abstract representation of an offset date-time
- where the <code>Chrono chronology</code>, or calendar system, is pluggable.
+ where the <code>Chronology chronology</code>, or calendar system, is pluggable.
  The date-time is defined in terms of fields expressed by <a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal"><code>TemporalField</code></a>,
  where most common implementations are defined in <a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal"><code>ChronoField</code></a>.
  The chronology defines how the calendar system operates and the meaning of
@@ -114,7 +133,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
  <h4>When to use this interface</h4>
  The design of the API encourages the use of <code>ZonedDateTime</code> rather than this
  interface, even in the case where the application needs to deal with multiple
- calendar systems. The rationale for this is explored in detail in <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono"><code>ChronoLocalDate</code></a>.
+ calendar systems. The rationale for this is explored in detail in <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono"><code>ChronoLocalDate</code></a>.
  <p>
  Ensure that the discussion in <code>ChronoLocalDate</code> has been read and understood
  before using this interface.
@@ -122,30 +141,29 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
  <h3>Specification for implementors</h3>
  This interface must be implemented with care to ensure other classes operate correctly.
  All implementations that can be instantiated must be final, immutable and thread-safe.
- Subclasses should be Serializable wherever possible.</div>
+ Subclasses should be Serializable wherever possible.
+ <p>
+ In JDK 8, this is an interface with default methods.
+ Since there are no default methods in JDK 7, an abstract class is used.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_summary">
+<li class="blockList"><a name="constructor_summary">
 <!--   -->
 </a>
-<h3>Field Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
+<th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#INSTANT_COMPARATOR">INSTANT_COMPARATOR</a></strong></code>
-<div class="block">Comparator for two <code>ChronoZonedDateTime</code> instances ignoring the chronology.</div>
-</td>
+<td class="colOne"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#ChronoZonedDateTime()">ChronoZonedDateTime</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -164,7 +182,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)">compareTo</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)">compareTo</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
 <div class="block">Compares this date-time to another date-time, including the chronology.</div>
 </td>
 </tr>
@@ -175,65 +193,114 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></code></td>
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#format(org.threeten.bp.format.DateTimeFormatter)">format</a></strong>(<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
+<div class="block">Outputs this date-time as a <code>String</code> using the formatter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains an instance of <code>ChronoZonedDateTime</code> from a temporal object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field as an <code>int</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getChronology()">getChronology</a></strong>()</code>
+<div class="block">Gets the chronology of this date-time.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the value of the specified field as a <code>long</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getOffset()">getOffset</a></strong>()</code>
 <div class="block">Gets the zone offset, such as '+01:00'.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
+<tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getZone()">getZone</a></strong>()</code>
 <div class="block">Gets the zone ID, such as 'Europe/Paris'.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">A hash code for this date-time.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isAfter(org.threeten.bp.chrono.ChronoZonedDateTime)">isAfter</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isAfter(org.threeten.bp.chrono.ChronoZonedDateTime)">isAfter</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
 <div class="block">Checks if the instant of this date-time is after that of the specified date-time.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isBefore(org.threeten.bp.chrono.ChronoZonedDateTime)">isBefore</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isBefore(org.threeten.bp.chrono.ChronoZonedDateTime)">isBefore</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
 <div class="block">Checks if the instant of this date-time is before that of the specified date-time.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isEqual(org.threeten.bp.chrono.ChronoZonedDateTime)">isEqual</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isEqual(org.threeten.bp.chrono.ChronoZonedDateTime)">isEqual</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</code>
 <div class="block">Checks if the instant of this date-time is equal to that of the specified date-time.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></strong>(long&nbsp;amountToSubtract,
      <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns an object of the same type as this object with the specified period subtracted.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
 <div class="block">Returns an object of the same type as this object with an amount subtracted.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></strong>(long&nbsp;amountToAdd,
     <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns an object of the same type as this object with the specified period added.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
 <div class="block">Returns an object of the same type as this object with an amount added.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;R&gt;&nbsp;query)</code>
+<div class="block">Queries this date-time.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
+<div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#timeLineOrder()">timeLineOrder</a></strong>()</code>
+<div class="block">Gets a comparator that compares <code>ChronoZonedDateTime</code> in
+ time-line order ignoring the chronology.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -250,13 +317,13 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#toLocalDate()">toLocalDate</a></strong>()</code>
 <div class="block">Gets the local date part of this date-time.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#toLocalDateTime()">toLocalDateTime</a></strong>()</code>
 <div class="block">Gets the local date-time part of this date-time.</div>
 </td>
@@ -274,47 +341,41 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#toString(org.threeten.bp.format.DateTimeFormatter)">toString</a></strong>(<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
-<div class="block">Outputs this date-time as a <code>String</code> using the formatter.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>
 <div class="block">Returns an adjusted object of the same type as this object with the adjustment made.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
     long&nbsp;newValue)</code>
 <div class="block">Returns an object of the same type as this object with the specified field altered.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#withEarlierOffsetAtOverlap()">withEarlierOffsetAtOverlap</a></strong>()</code>
 <div class="block">Returns a copy of this date-time changing the zone offset to the
  earlier of the two valid offsets at a local time-line overlap.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#withLaterOffsetAtOverlap()">withLaterOffsetAtOverlap</a></strong>()</code>
 <div class="block">Returns a copy of this date-time changing the zone offset to the
  later of the two valid offsets at a local time-line overlap.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#withZoneSameInstant(org.threeten.bp.ZoneId)">withZoneSameInstant</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</code>
 <div class="block">Returns a copy of this date-time with a different time-zone,
  retaining the instant.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code>abstract <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#withZoneSameLocal(org.threeten.bp.ZoneId)">withZoneSameLocal</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</code>
 <div class="block">Returns a copy of this ZonedDateTime with a different time-zone,
  retaining the local date-time if possible.</div>
@@ -322,18 +383,25 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.threeten.bp.temporal.Temporal">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.threeten.bp.temporal.<a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></h3>
-<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></code></li>
+<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a>, <a href="../../../../org/threeten/bp/temporal/Temporal.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.threeten.bp.temporal.TemporalAccessor">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.threeten.bp.temporal.<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></h3>
-<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#get(org.threeten.bp.temporal.TemporalField)">get</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#range(org.threeten.bp.temporal.TemporalField)">range</a></code></li>
+<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code></li>
 </ul>
 </li>
 </ul>
@@ -343,28 +411,19 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_detail">
+<li class="blockList"><a name="constructor_detail">
 <!--   -->
 </a>
-<h3>Field Detail</h3>
-<a name="INSTANT_COMPARATOR">
+<h3>Constructor Detail</h3>
+<a name="ChronoZonedDateTime()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>INSTANT_COMPARATOR</h4>
-<pre>static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt; INSTANT_COMPARATOR</pre>
-<div class="block">Comparator for two <code>ChronoZonedDateTime</code> instances ignoring the chronology.
- <p>
- This method differs from the comparison in <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>compareTo(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a> in that it
- only compares the underlying date and not the chronology.
- This allows dates in different calendar systems to be compared based
- on the time-line position.</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isAfter(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>isAfter(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a>, 
-<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isBefore(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>isBefore(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a>, 
-<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isEqual(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>isEqual(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a></dd></dl>
+<h4>ChronoZonedDateTime</h4>
+<pre>public&nbsp;ChronoZonedDateTime()</pre>
 </li>
 </ul>
 </li>
@@ -375,13 +434,166 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="timeLineOrder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>timeLineOrder</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;&nbsp;timeLineOrder()</pre>
+<div class="block">Gets a comparator that compares <code>ChronoZonedDateTime</code> in
+ time-line order ignoring the chronology.
+ <p>
+ This comparator differs from the comparison in <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>compareTo(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a> in that it
+ only compares the underlying instant and not the chronology.
+ This allows dates in different calendar systems to be compared based
+ on the position of the date-time on the instant time-line.
+ The underlying comparison is equivalent to comparing the epoch-second and nano-of-second.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a comparator that compares in time-line order ignoring the chronology</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isAfter(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>isAfter(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a>, 
+<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isBefore(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>isBefore(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a>, 
+<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#isEqual(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>isEqual(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a></dd></dl>
+</li>
+</ul>
+<a name="from(org.threeten.bp.temporal.TemporalAccessor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>from</h4>
+<pre>public static&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;from(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</pre>
+<div class="block">Obtains an instance of <code>ChronoZonedDateTime</code> from a temporal object.
+ <p>
+ This creates a zoned date-time based on the specified temporal.
+ A <code>TemporalAccessor</code> represents an arbitrary set of date and time information,
+ which this factory converts to an instance of <code>ChronoZonedDateTime</code>.
+ <p>
+ The conversion extracts and combines the chronology, date, time and zone
+ from the temporal object. The behavior is equivalent to using
+ <a href="../../../../org/threeten/bp/chrono/Chronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)"><code>Chronology.zonedDateTime(TemporalAccessor)</code></a> with the extracted chronology.
+ Implementations are permitted to perform optimizations such as accessing
+ those fields that are equivalent to the relevant objects.
+ <p>
+ This method matches the signature of the functional interface <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal"><code>TemporalQuery</code></a>
+ allowing it to be used as a query via method reference, <code>ChronoZonedDateTime::from</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>temporal</code> - the temporal object to convert, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the date-time, not null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if unable to convert to a <code>ChronoZonedDateTime</code></dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/threeten/bp/chrono/Chronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)"><code>Chronology.zonedDateTime(TemporalAccessor)</code></a></dd></dl>
+</li>
+</ul>
+<a name="range(org.threeten.bp.temporal.TemporalField)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>range</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a>&nbsp;range(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#range(org.threeten.bp.temporal.TemporalField)">TemporalAccessor</a></code></strong></div>
+<div class="block">Gets the range of valid values for the specified field.
+ <p>
+ All fields can be expressed as a <code>long</code> integer.
+ This method returns an object that describes the valid range for that value.
+ The value of this temporal object is used to enhance the accuracy of the returned range.
+ If the date-time cannot return the range, because the field is unsupported or for
+ some other reason, an exception will be thrown.
+ <p>
+ Note that the result only describes the minimum and maximum valid values
+ and it is important not to read too much into them. For example, there
+ could be values within the range that are invalid for the field.
+
+ <h3>Specification for implementors</h3>
+ Implementations must check and handle all fields defined in <a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal"><code>ChronoField</code></a>.
+ If the field is supported, then the range of the field must be returned.
+ If unsupported, then a <code>DateTimeException</code> must be thrown.
+ <p>
+ If the field is not a <code>ChronoField</code>, then the result of this method
+ is obtained by invoking <code>TemporalField.rangeRefinedBy(TemporalAccessorl)</code>
+ passing <code>this</code> as the argument.
+ <p>
+ Implementations must not alter either this object.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#range(org.threeten.bp.temporal.TemporalField)">range</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html#range(org.threeten.bp.temporal.TemporalField)">range</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporalAccessor</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to query the range for, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the range of valid values for the field, not null</dd></dl>
+</li>
+</ul>
+<a name="get(org.threeten.bp.temporal.TemporalField)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public&nbsp;int&nbsp;get(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#get(org.threeten.bp.temporal.TemporalField)">TemporalAccessor</a></code></strong></div>
+<div class="block">Gets the value of the specified field as an <code>int</code>.
+ <p>
+ This queries the date-time for the value for the specified field.
+ The returned value will always be within the valid range of values for the field.
+ If the date-time cannot return the value, because the field is unsupported or for
+ some other reason, an exception will be thrown.
+
+ <h3>Specification for implementors</h3>
+ Implementations must check and handle all fields defined in <a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal"><code>ChronoField</code></a>.
+ If the field is supported and has an <code>int</code> range, then the value of
+ the field must be returned.
+ If unsupported, then a <code>DateTimeException</code> must be thrown.
+ <p>
+ If the field is not a <code>ChronoField</code>, then the result of this method
+ is obtained by invoking <code>TemporalField.getFrom(TemporalAccessor)</code>
+ passing <code>this</code> as the argument.
+ <p>
+ Implementations must not alter either this object.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#get(org.threeten.bp.temporal.TemporalField)">get</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html#get(org.threeten.bp.temporal.TemporalField)">get</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporalAccessor</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to get, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the value for the field, within the valid range of values</dd></dl>
+</li>
+</ul>
+<a name="getLong(org.threeten.bp.temporal.TemporalField)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLong</h4>
+<pre>public&nbsp;long&nbsp;getLong(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#getLong(org.threeten.bp.temporal.TemporalField)">TemporalAccessor</a></code></strong></div>
+<div class="block">Gets the value of the specified field as a <code>long</code>.
+ <p>
+ This queries the date-time for the value for the specified field.
+ The returned value may be outside the valid range of values for the field.
+ If the date-time cannot return the value, because the field is unsupported or for
+ some other reason, an exception will be thrown.
+
+ <h3>Specification for implementors</h3>
+ Implementations must check and handle all fields defined in <a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal"><code>ChronoField</code></a>.
+ If the field is supported, then the value of the field must be returned.
+ If unsupported, then a <code>DateTimeException</code> must be thrown.
+ <p>
+ If the field is not a <code>ChronoField</code>, then the result of this method
+ is obtained by invoking <code>TemporalField.getFrom(TemporalAccessor)</code>
+ passing <code>this</code> as the argument.
+ <p>
+ Implementations must not alter either this object.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to get, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the value for the field</dd></dl>
+</li>
+</ul>
 <a name="toLocalDate()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toLocalDate</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;toLocalDate()</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&nbsp;toLocalDate()</pre>
 <div class="block">Gets the local date part of this date-time.
  <p>
  This returns a local date with the same year, month and day
@@ -395,7 +607,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>toLocalTime</h4>
-<pre><a href="../../../../org/threeten/bp/LocalTime.html" title="class in org.threeten.bp">LocalTime</a>&nbsp;toLocalTime()</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/LocalTime.html" title="class in org.threeten.bp">LocalTime</a>&nbsp;toLocalTime()</pre>
 <div class="block">Gets the local time part of this date-time.
  <p>
  This returns a local time with the same hour, minute, second and
@@ -409,12 +621,26 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>toLocalDateTime</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;toLocalDateTime()</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;toLocalDateTime()</pre>
 <div class="block">Gets the local date-time part of this date-time.
  <p>
  This returns a local date with the same year, month and day
  as this date-time.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the local date-time part of this date-time, not null</dd></dl>
+</li>
+</ul>
+<a name="getChronology()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getChronology</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a>&nbsp;getChronology()</pre>
+<div class="block">Gets the chronology of this date-time.
+ <p>
+ The <code>Chronology</code> represents the calendar system in use.
+ The era and other fields in <a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal"><code>ChronoField</code></a> are defined by the chronology.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the chronology, not null</dd></dl>
 </li>
 </ul>
 <a name="getOffset()">
@@ -423,7 +649,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>getOffset</h4>
-<pre><a href="../../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&nbsp;getOffset()</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&nbsp;getOffset()</pre>
 <div class="block">Gets the zone offset, such as '+01:00'.
  <p>
  This is the offset of the local date-time from UTC/Greenwich.</div>
@@ -436,7 +662,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>getZone</h4>
-<pre><a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;getZone()</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;getZone()</pre>
 <div class="block">Gets the zone ID, such as 'Europe/Paris'.
  <p>
  This returns the stored time-zone id used to determine the time-zone rules.</div>
@@ -449,7 +675,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>withEarlierOffsetAtOverlap</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withEarlierOffsetAtOverlap()</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withEarlierOffsetAtOverlap()</pre>
 <div class="block">Returns a copy of this date-time changing the zone offset to the
  earlier of the two valid offsets at a local time-line overlap.
  <p>
@@ -474,7 +700,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>withLaterOffsetAtOverlap</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withLaterOffsetAtOverlap()</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withLaterOffsetAtOverlap()</pre>
 <div class="block">Returns a copy of this date-time changing the zone offset to the
  later of the two valid offsets at a local time-line overlap.
  <p>
@@ -499,7 +725,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>withZoneSameLocal</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withZoneSameLocal(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withZoneSameLocal(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</pre>
 <div class="block">Returns a copy of this ZonedDateTime with a different time-zone,
  retaining the local date-time if possible.
  <p>
@@ -520,7 +746,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>withZoneSameInstant</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withZoneSameInstant(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</pre>
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;withZoneSameInstant(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zoneId)</pre>
 <div class="block">Returns a copy of this date-time with a different time-zone,
  retaining the instant.
  <p>
@@ -544,7 +770,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>with</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;with(<a href="../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;with(<a href="../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalAdjuster)">Temporal</a></code></strong></div>
 <div class="block">Returns an adjusted object of the same type as this object with the adjustment made.
  <p>
@@ -570,6 +796,8 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>adjuster</code> - the adjuster to use, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>an object of the same type with the specified adjustment made, not null</dd></dl>
 </li>
@@ -580,7 +808,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>with</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;with(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;with(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
                           long&nbsp;newValue)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalField, long)">Temporal</a></code></strong></div>
 <div class="block">Returns an object of the same type as this object with the specified field altered.
@@ -619,7 +847,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>plus</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;plus(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;plus(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#plus(org.threeten.bp.temporal.TemporalAmount)">Temporal</a></code></strong></div>
 <div class="block">Returns an object of the same type as this object with an amount added.
  <p>
@@ -644,6 +872,8 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/threeten/bp/temporal/Temporal.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amount</code> - the amount to add, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>an object of the same type with the specified adjustment made, not null</dd></dl>
 </li>
@@ -654,7 +884,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>plus</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;plus(long&nbsp;amountToAdd,
+<pre>public abstract&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;plus(long&nbsp;amountToAdd,
                           <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">Temporal</a></code></strong></div>
 <div class="block">Returns an object of the same type as this object with the specified period added.
@@ -697,7 +927,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>minus</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;minus(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;minus(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#minus(org.threeten.bp.temporal.TemporalAmount)">Temporal</a></code></strong></div>
 <div class="block">Returns an object of the same type as this object with an amount subtracted.
  <p>
@@ -722,6 +952,8 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/threeten/bp/temporal/Temporal.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amount</code> - the amount to subtract, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>an object of the same type with the specified adjustment made, not null</dd></dl>
 </li>
@@ -732,7 +964,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>minus</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;minus(long&nbsp;amountToSubtract,
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="type parameter in ChronoZonedDateTime">D</a>&gt;&nbsp;minus(long&nbsp;amountToSubtract,
                            <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">Temporal</a></code></strong></div>
 <div class="block">Returns an object of the same type as this object with the specified period subtracted.
@@ -759,8 +991,68 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/threeten/bp/temporal/Temporal.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amountToSubtract</code> - the amount of the specified unit to subtract, may be negative</dd><dd><code>unit</code> - the unit of the period to subtract, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>an object of the same type with the specified period subtracted, not null</dd></dl>
+</li>
+</ul>
+<a name="query(org.threeten.bp.temporal.TemporalQuery)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>query</h4>
+<pre>public&nbsp;&lt;R&gt;&nbsp;R&nbsp;query(<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;R&gt;&nbsp;query)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#query(org.threeten.bp.temporal.TemporalQuery)">TemporalAccessor</a></code></strong></div>
+<div class="block">Queries this date-time.
+ <p>
+ This queries this date-time using the specified query strategy object.
+ <p>
+ Queries are a key tool for extracting information from date-times.
+ They exists to externalize the process of querying, permitting different
+ approaches, as per the strategy design pattern.
+ Examples might be a query that checks if the date is the day before February 29th
+ in a leap year, or calculates the number of days to your next birthday.
+ <p>
+ The most common query implementations are method references, such as
+ <code>LocalDate::from</code> and <code>ZoneId::from</code>.
+ Further implementations are on <a href="../../../../org/threeten/bp/temporal/TemporalQueries.html" title="class in org.threeten.bp.temporal"><code>TemporalQueries</code></a>.
+ Queries may also be defined by applications.
+
+ <h3>Specification for implementors</h3>
+ Implementations of this method must behave as follows:
+ <pre>
+   public &lt;R&gt; R query(TemporalQuery&lt;R&gt; type) {
+     // only include an if statement if the implementation can return it
+     if (query == TemporalQueries.zoneId())  return // the ZoneId
+     if (query == TemporalQueries.chronology())  return // the Chrono
+     if (query == TemporalQueries.precision())  return // the precision
+     // call default method
+     return super.query(query);
+   }
+ </pre></div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporalAccessor</a></code></dd>
+<dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - the type of the result</dd><dt><span class="strong">Parameters:</span></dt><dd><code>query</code> - the query to invoke, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the query result, null may be returned (defined by the query)</dd></dl>
+</li>
+</ul>
+<a name="format(org.threeten.bp.format.DateTimeFormatter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>format</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;format(<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
+<div class="block">Outputs this date-time as a <code>String</code> using the formatter.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>formatter</code> - the formatter to use, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the formatted date-time string, not null</dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if an error occurs during printing</dd></dl>
 </li>
 </ul>
 <a name="toInstant()">
@@ -769,12 +1061,12 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>toInstant</h4>
-<pre><a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;toInstant()</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;toInstant()</pre>
 <div class="block">Converts this date-time to an <code>Instant</code>.
  <p>
  This returns an <code>Instant</code> representing the same point on the
  time-line as this date-time. The calculation combines the
- local date-time and
+ <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#toLocalDateTime()">local date-time</a> and
  <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getOffset()">offset</a>.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>an <code>Instant</code> representing the same instant, not null</dd></dl>
 </li>
@@ -785,12 +1077,12 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>toEpochSecond</h4>
-<pre>long&nbsp;toEpochSecond()</pre>
+<pre>public&nbsp;long&nbsp;toEpochSecond()</pre>
 <div class="block">Converts this date-time to the number of seconds from the epoch
  of 1970-01-01T00:00:00Z.
  <p>
- This uses the <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#toLocalDateTime()"><code>local date-time</code></a> and
- <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getOffset()"><code>offset</code></a> to calculate the epoch-second value,
+ This uses the <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#toLocalDateTime()">local date-time</a> and
+ <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#getOffset()">offset</a> to calculate the epoch-second value,
  which is the number of elapsed seconds from 1970-01-01T00:00:00Z.
  Instants on the time-line after the epoch are positive, earlier are negative.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the number of seconds from the epoch of 1970-01-01T00:00:00Z</dd></dl>
@@ -802,7 +1094,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>compareTo</h4>
-<pre>int&nbsp;compareTo(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;int&nbsp;compareTo(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
 <div class="block">Compares this date-time to another date-time, including the chronology.
  <p>
  The comparison is based first on the instant, then on the local date-time,
@@ -813,25 +1105,9 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
  additional chronology stage is not required.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&gt;</code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date-time to compare to, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the comparator value, negative if less, positive if greater</dd></dl>
-</li>
-</ul>
-<a name="isBefore(org.threeten.bp.chrono.ChronoZonedDateTime)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isBefore</h4>
-<pre>boolean&nbsp;isBefore(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
-<div class="block">Checks if the instant of this date-time is before that of the specified date-time.
- <p>
- This method differs from the comparison in <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>compareTo(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a> in that it
- only compares the instant of the date-time. This is equivalent to using
- <code>dateTime1.toInstant().isBefore(dateTime2.toInstant());</code>.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date-time to compare to, not null</dd>
-<dt><span class="strong">Returns:</span></dt><dd>true if this point is before the specified date-time</dd></dl>
 </li>
 </ul>
 <a name="isAfter(org.threeten.bp.chrono.ChronoZonedDateTime)">
@@ -840,7 +1116,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>isAfter</h4>
-<pre>boolean&nbsp;isAfter(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;boolean&nbsp;isAfter(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
 <div class="block">Checks if the instant of this date-time is after that of the specified date-time.
  <p>
  This method differs from the comparison in <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>compareTo(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a> in that it
@@ -850,13 +1126,29 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><span class="strong">Returns:</span></dt><dd>true if this is after the specified date-time</dd></dl>
 </li>
 </ul>
+<a name="isBefore(org.threeten.bp.chrono.ChronoZonedDateTime)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isBefore</h4>
+<pre>public&nbsp;boolean&nbsp;isBefore(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
+<div class="block">Checks if the instant of this date-time is before that of the specified date-time.
+ <p>
+ This method differs from the comparison in <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>compareTo(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a> in that it
+ only compares the instant of the date-time. This is equivalent to using
+ <code>dateTime1.toInstant().isBefore(dateTime2.toInstant());</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date-time to compare to, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if this point is before the specified date-time</dd></dl>
+</li>
+</ul>
 <a name="isEqual(org.threeten.bp.chrono.ChronoZonedDateTime)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isEqual</h4>
-<pre>boolean&nbsp;isEqual(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;boolean&nbsp;isEqual(<a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;&nbsp;other)</pre>
 <div class="block">Checks if the instant of this date-time is equal to that of the specified date-time.
  <p>
  This method differs from the comparison in <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#compareTo(org.threeten.bp.chrono.ChronoZonedDateTime)"><code>compareTo(org.threeten.bp.chrono.ChronoZonedDateTime&lt;?&gt;)</code></a> and <a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#equals(java.lang.Object)"><code>equals(java.lang.Object)</code></a>
@@ -872,7 +1164,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre>boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj)</pre>
 <div class="block">Checks if this date-time is equal to another date-time.
  <p>
  The comparison is based on the offset date-time and the zone.
@@ -891,7 +1183,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>hashCode</h4>
-<pre>int&nbsp;hashCode()</pre>
+<pre>public&nbsp;int&nbsp;hashCode()</pre>
 <div class="block">A hash code for this date-time.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
@@ -902,10 +1194,10 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <a name="toString()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>toString</h4>
-<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 <div class="block">Outputs this date-time as a <code>String</code>.
  <p>
  The output will include the full zoned date-time and the chronology ID.</div>
@@ -913,20 +1205,6 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>a string representation of this date-time, not null</dd></dl>
-</li>
-</ul>
-<a name="toString(org.threeten.bp.format.DateTimeFormatter)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>toString</h4>
-<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
-<div class="block">Outputs this date-time as a <code>String</code> using the formatter.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>formatter</code> - the formatter to use, not null</dd>
-<dt><span class="strong">Returns:</span></dt><dd>the formatted date-time string, not null</dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if an error occurs during printing</dd></dl>
 </li>
 </ul>
 </li>
@@ -955,7 +1233,7 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/ChronoPeriod.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -981,14 +1259,14 @@ extends <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
 </div>

@@ -80,27 +80,6 @@ Support for calendar systems other than the default ISO.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</td>
-<td class="colLast">
-<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</td>
-<td class="colLast">
-<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</td>
-<td class="colLast">
-<div class="block">A date-time with a time-zone in an arbitrary chronology,
- intended for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></td>
 <td class="colLast">
 <div class="block">An era of the time-line.</div>
@@ -118,9 +97,37 @@ Support for calendar systems other than the default ISO.</div>
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></td>
+<td class="colLast">
+<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</td>
+<td class="colLast">
+<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></td>
 <td class="colLast">
 <div class="block">A calendar system, used to organize and identify dates.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoPeriod.html" title="class in org.threeten.bp.chrono">ChronoPeriod</a></td>
+<td class="colLast">
+<div class="block">A date-based amount of time, such as '3 years, 4 months and 5 days' in an
+ arbitrary chronology, intended for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;D extends <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</td>
+<td class="colLast">
+<div class="block">A date-time with a time-zone in an arbitrary chronology,
+ intended for advanced globalization use cases.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -154,27 +161,68 @@ Support for calendar systems other than the default ISO.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">JapaneseEra</a></td>
+<td class="colLast">
+<div class="block">An era in the Japanese Imperial calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/chrono/MinguoChronology.html" title="class in org.threeten.bp.chrono">MinguoChronology</a></td>
 <td class="colLast">
 <div class="block">The Minguo calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></td>
 <td class="colLast">
 <div class="block">A date in the Minguo calendar system.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html" title="class in org.threeten.bp.chrono">ThaiBuddhistChronology</a></td>
 <td class="colLast">
 <div class="block">The Thai Buddhist calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></td>
 <td class="colLast">
 <div class="block">A date in the Thai Buddhist calendar system.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/HijrahEra.html" title="enum in org.threeten.bp.chrono">HijrahEra</a></td>
+<td class="colLast">
+<div class="block">An era in the Hijrah calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono">IsoEra</a></td>
+<td class="colLast">
+<div class="block">An era in the ISO calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/MinguoEra.html" title="enum in org.threeten.bp.chrono">MinguoEra</a></td>
+<td class="colLast">
+<div class="block">An era in the Minguo calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistEra.html" title="enum in org.threeten.bp.chrono">ThaiBuddhistEra</a></td>
+<td class="colLast">
+<div class="block">An era in the Thai Buddhist calendar system.</div>
 </td>
 </tr>
 </tbody>
@@ -196,16 +244,16 @@ This package provides support for alternate systems.
 The supported calendar systems includes:
 </p>
 <ul>
-    <li><a href="../../../../org/threeten/bp/chrono/HijrahChronology.html" title="class in org.threeten.bp.chrono"><code>Hijrah calendar</code></a></li>
-    <li><a href="../../../../org/threeten/bp/chrono/JapaneseChronology.html" title="class in org.threeten.bp.chrono"><code>Japanese calendar</code></a></li>
-    <li><a href="../../../../org/threeten/bp/chrono/MinguoChronology.html" title="class in org.threeten.bp.chrono"><code>Minguo calendar</code></a></li>
-    <li><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html" title="class in org.threeten.bp.chrono"><code>Thai Buddhist calendar</code></a></li>
+    <li><a href="../../../../org/threeten/bp/chrono/HijrahChronology.html" title="class in org.threeten.bp.chrono">Hijrah calendar</a></li>
+    <li><a href="../../../../org/threeten/bp/chrono/JapaneseChronology.html" title="class in org.threeten.bp.chrono">Japanese calendar</a></li>
+    <li><a href="../../../../org/threeten/bp/chrono/MinguoChronology.html" title="class in org.threeten.bp.chrono">Minguo calendar</a></li>
+    <li><a href="../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html" title="class in org.threeten.bp.chrono">Thai Buddhist calendar</a></li>
 </ul>
 <p>
 It is intended that applications use the main API whenever possible, including code to read and write
 from a persistent data store, such as a database, and to send dates and times across a network.
 This package is then used at the user interface level to deal with localized input/output.
-See <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono"><code>ChronoLocalDate</code></a> for a full discussion of the issues.
+See <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono"><code>ChronoLocalDate</code></a> for a full discussion of the issues.
 </p>
 <h3>Example</h3>
 <p>
@@ -213,7 +261,7 @@ This example creates and uses a date in a non-ISO calendar system.
 </p>
 <pre>
         // Print the Thai Buddhist date
-        ChronoLocalDate&lt;ThaiBuddhistChronology&gt; now1 = ThaiBuddhistChronology.INSTANCE.now();
+        ChronoLocalDate now1 = ThaiBuddhistChronology.INSTANCE.now();
         int day = now1.get(ChronoField.DAY_OF_MONTH);
         int dow = now1.get(ChronoField.DAY_OF_WEEK);
         int month = now1.get(ChronoField.MONTH_OF_YEAR);
@@ -230,10 +278,10 @@ This example creates and uses a date in a non-ISO calendar system.
         }
 
         // Print today's date and the last day of the year for the Thai Buddhist Calendar.
-        ChronoLocalDate&lt;ThaiBuddhistChronology&gt; first = now1
+        ChronoLocalDate first = now1
                 .with(ChronoField.DAY_OF_MONTH, 1)
                 .with(ChronoField.MONTH_OF_YEAR, 1);
-        ChronoLocalDate&lt;ThaiBuddhistChronology&gt; last = first
+        ChronoLocalDate last = first
                 .plus(1, ChronoUnit.YEARS)
                 .minus(1, ChronoUnit.DAYS);
         System.out.printf("  %s: 1st of year: %s; end of year: %s%n", last.getChronology().getId(),

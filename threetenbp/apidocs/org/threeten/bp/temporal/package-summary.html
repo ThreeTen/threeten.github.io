@@ -65,7 +65,7 @@
 <h1 title="Package" class="title">Package&nbsp;org.threeten.bp.temporal</h1>
 <div class="docSummary">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </div>
 <p>See:&nbsp;<a href="#package_description">Description</a></p>
 </div>
@@ -198,13 +198,30 @@ Access to date and time using fields and units, plus additional value type class
 </tbody>
 </table>
 </li>
+<li class="blockList">
+<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Exception</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/temporal/UnsupportedTemporalTypeException.html" title="class in org.threeten.bp.temporal">UnsupportedTemporalTypeException</a></td>
+<td class="colLast">
+<div class="block">An exception that indicates a type is unsupported.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
 </ul>
 <a name="package_description">
 <!--   -->
 </a>
 <h2 title="Package org.threeten.bp.temporal Description">Package org.threeten.bp.temporal Description</h2>
 <div class="block"><p>
-Access to date and time using fields and units, plus additional value type classes.
+Access to date and time using fields and units.
 </p>
 <p>
 This package expands on the base package to provide additional functionality for
@@ -256,10 +273,10 @@ A key part of the date-time problem space is adjusting a date to a new, related 
 such as the "last day of the month", or "next Wednesday".
 These are modeled as functions that adjust a base date-time.
 The functions implement <a href="../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal"><code>TemporalAdjuster</code></a> and operate
-on <code>org.threeten.bp.temporal.DateTime</code>.
-A set of common functions are provided in <code>org.threeten.bp.temporal.DateTimeAdjusters</code>.
+on <a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal"><code>Temporal</code></a>.
+A set of common functions are provided in <a href="../../../../org/threeten/bp/temporal/TemporalAdjusters.html" title="class in org.threeten.bp.temporal"><code>TemporalAdjusters</code></a>.
 For example, to find the first occurrence of a day-of-week after a given date, use
-<code>org.threeten.bp.temporal.DateTimeAdjusters#next(DayOfWeek)</code>, such as
+<a href="../../../../org/threeten/bp/temporal/TemporalAdjusters.html#next(org.threeten.bp.DayOfWeek)"><code>TemporalAdjusters.next(DayOfWeek)</code></a>, such as
 <code>date.with(next(MONDAY))</code>.
 </p>
 
@@ -267,12 +284,12 @@ For example, to find the first occurrence of a day-of-week after a given date, u
 <p>
 Different locales have different definitions of the week.
 For example, in Europe the week typically starts on a Monday, while in the US it starts on a Sunday.
-The <code>org.threeten.bp.temporal.WeekDefinition</code> class models this distinction.
+The <a href="../../../../org/threeten/bp/temporal/WeekFields.html" title="class in org.threeten.bp.temporal"><code>WeekFields</code></a> class models this distinction.
 </p>
 <p>
 The ISO calendar system defines an additional week-based division of years.
 This defines a year based on whole Monday to Monday weeks.
-This is modeled in <code>org.threeten.bp.temporal.ISOWeeks</code>.
+This is modeled in <a href="../../../../org/threeten/bp/temporal/IsoFields.html" title="class in org.threeten.bp.temporal"><code>IsoFields</code></a>.
 </p></div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->

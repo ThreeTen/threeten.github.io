@@ -116,28 +116,108 @@ Support for calendar systems other than the default ISO.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
-<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateNow()">dateNow</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateEpochDay(long)">dateEpochDay</a></strong>(long&nbsp;epochDay)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateNow()">dateNow</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateNow(org.threeten.bp.Clock)">dateNow</a></strong>(<a href="../../../../../org/threeten/bp/Clock.html" title="class in org.threeten.bp">Clock</a>&nbsp;clock)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateNow(org.threeten.bp.ZoneId)">dateNow</a></strong>(<a href="../../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateYearDay(org.threeten.bp.chrono.Era, int, int)">dateYearDay</a></strong>(<a href="../../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a>&nbsp;era,
            int&nbsp;yearOfEra,
-           int&nbsp;dayOfYear)</code>&nbsp;</td>
+           int&nbsp;dayOfYear)</code>
+<div class="block">Obtains a local date in Japanese calendar system from the
+ era, year-of-era and day-of-year fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateYearDay(int, int)">dateYearDay</a></strong>(int&nbsp;prolepticYear,
+           int&nbsp;dayOfYear)</code>
+<div class="block">Obtains a local date in Japanese calendar system from the
+ proleptic-year and day-of-year fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains a <code>JapaneseDate</code> from a temporal object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></strong>(long&nbsp;amountToAdd,
+     <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
-<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#dateYearDay(int, int)">dateYearDay</a></strong>(int&nbsp;prolepticYear,
-           int&nbsp;dayOfYear)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#now()">now</a></strong>()</code>
+<div class="block">Obtains the current <code>JapaneseDate</code> from the system clock in the default time-zone.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#now(org.threeten.bp.Clock)">now</a></strong>(<a href="../../../../../org/threeten/bp/Clock.html" title="class in org.threeten.bp">Clock</a>&nbsp;clock)</code>
+<div class="block">Obtains the current <code>JapaneseDate</code> from the specified clock.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#now(org.threeten.bp.ZoneId)">now</a></strong>(<a href="../../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
+<div class="block">Obtains the current <code>JapaneseDate</code> from the system clock in the specified time-zone.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#of(int, int, int)">of</a></strong>(int&nbsp;prolepticYear,
+  int&nbsp;month,
+  int&nbsp;dayOfMonth)</code>
+<div class="block">Obtains a <code>JapaneseDate</code> representing a date in the Japanese calendar
+ system from the proleptic-year, month-of-year and day-of-month fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#of(org.threeten.bp.chrono.JapaneseEra, int, int, int)">of</a></strong>(<a href="../../../../../org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">JapaneseEra</a>&nbsp;era,
+  int&nbsp;yearOfEra,
+  int&nbsp;month,
+  int&nbsp;dayOfMonth)</code>
+<div class="block">Obtains a <code>JapaneseDate</code> representing a date in the Japanese calendar
+ system from the era, year-of-era, month-of-year and day-of-month fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></strong>(long&nbsp;amountToAdd,
+    <a href="../../../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#resolveDate(java.util.Map, org.threeten.bp.format.ResolverStyle)">resolveDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+           <a href="../../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
 <td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
     long&nbsp;newValue)</code>&nbsp;</td>
@@ -152,16 +232,20 @@ Support for calendar systems other than the default ISO.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
-<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#atTime(org.threeten.bp.LocalTime)">atTime</a></strong>(<a href="../../../../../org/threeten/bp/LocalTime.html" title="class in org.threeten.bp">LocalTime</a>&nbsp;localTime)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#zonedDateTime(org.threeten.bp.Instant, org.threeten.bp.ZoneId)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/Instant.html" title="class in org.threeten.bp">Instant</a>&nbsp;instant,
              <a href="../../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 </tbody>

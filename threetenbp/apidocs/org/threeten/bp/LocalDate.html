@@ -92,7 +92,7 @@
 <li><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">org.threeten.bp.jdk8.DefaultInterfaceTemporal</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">org.threeten.bp.jdk8.DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</li>
+<li><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">org.threeten.bp.chrono.ChronoLocalDate</a></li>
 <li>
 <ul class="inheritance">
 <li>org.threeten.bp.LocalDate</li>
@@ -110,13 +110,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&gt;, <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;, <a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>, <a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a></dd>
+<dd><a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;, <a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>, <a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public final class <span class="strong">LocalDate</span>
-extends <a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;
-implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>, <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;, <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+extends <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>
+implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>, <a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
 <div class="block">A date without a time-zone in the ISO-8601 calendar system,
  such as <code>2007-12-03</code>.
  <p>
@@ -159,25 +159,24 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#FROM">FROM</a></strong></code>
+<div class="block">Simulate JDK 8 method reference LocalDate::from.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#MAX">MAX</a></strong></code>
 <div class="block">The maximum supported <code>LocalDate</code>, '+999999999-12-31'.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#MIN">MIN</a></strong></code>
 <div class="block">The minimum supported <code>LocalDate</code>, '-999999999-01-01'.</div>
 </td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.threeten.bp.chrono.ChronoLocalDate">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;org.threeten.bp.chrono.<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a></h3>
-<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#DATE_COMPARATOR">DATE_COMPARATOR</a></code></li>
-</ul>
 </li>
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
@@ -250,7 +249,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)">compareTo</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)">compareTo</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</code>
 <div class="block">Compares this date to another date.</div>
 </td>
 </tr>
@@ -261,176 +260,182 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#format(org.threeten.bp.format.DateTimeFormatter)">format</a></strong>(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
+<div class="block">Outputs this date as a <code>String</code> using the formatter.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains an instance of <code>LocalDate</code> from a temporal object.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the value of the specified field from this date as an <code>int</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/chrono/IsoChronology.html" title="class in org.threeten.bp.chrono">IsoChronology</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getChronology()">getChronology</a></strong>()</code>
 <div class="block">Gets the chronology of this date, which is the ISO calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getDayOfMonth()">getDayOfMonth</a></strong>()</code>
 <div class="block">Gets the day-of-month field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/DayOfWeek.html" title="enum in org.threeten.bp">DayOfWeek</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getDayOfWeek()">getDayOfWeek</a></strong>()</code>
 <div class="block">Gets the day-of-week field, which is an enum <code>DayOfWeek</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getDayOfYear()">getDayOfYear</a></strong>()</code>
 <div class="block">Gets the day-of-year field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getEra()">getEra</a></strong>()</code>
 <div class="block">Gets the era applicable at this date.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the value of the specified field from this date as a <code>long</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/Month.html" title="enum in org.threeten.bp">Month</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getMonth()">getMonth</a></strong>()</code>
 <div class="block">Gets the month-of-year field using the <code>Month</code> enum.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getMonthValue()">getMonthValue</a></strong>()</code>
 <div class="block">Gets the month-of-year field from 1 to 12.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#getYear()">getYear</a></strong>()</code>
 <div class="block">Gets the year field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">A hash code for this date.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isAfter(org.threeten.bp.chrono.ChronoLocalDate)">isAfter</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isAfter(org.threeten.bp.chrono.ChronoLocalDate)">isAfter</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</code>
 <div class="block">Checks if this date is after the specified date.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isBefore(org.threeten.bp.chrono.ChronoLocalDate)">isBefore</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isBefore(org.threeten.bp.chrono.ChronoLocalDate)">isBefore</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</code>
 <div class="block">Checks if this date is before the specified date.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isEqual(org.threeten.bp.chrono.ChronoLocalDate)">isEqual</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</code>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isEqual(org.threeten.bp.chrono.ChronoLocalDate)">isEqual</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</code>
 <div class="block">Checks if this date is equal to the specified date.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isLeapYear()">isLeapYear</a></strong>()</code>
 <div class="block">Checks if the year is a leap year, according to the ISO proleptic
  calendar system rules.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Checks if the specified field is supported.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#lengthOfMonth()">lengthOfMonth</a></strong>()</code>
 <div class="block">Returns the length of the month represented by this date.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#lengthOfYear()">lengthOfYear</a></strong>()</code>
 <div class="block">Returns the length of the year represented by this date.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></strong>(long&nbsp;amountToSubtract,
      <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns a copy of this date with the specified period subtracted.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
 <div class="block">Returns a copy of this date with the specified period subtracted.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#minusDays(long)">minusDays</a></strong>(long&nbsp;daysToSubtract)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified number of days subtracted.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#minusMonths(long)">minusMonths</a></strong>(long&nbsp;monthsToSubtract)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified period in months subtracted.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#minusWeeks(long)">minusWeeks</a></strong>(long&nbsp;weeksToSubtract)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified period in weeks subtracted.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#minusYears(long)">minusYears</a></strong>(long&nbsp;yearsToSubtract)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified period in years subtracted.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#now()">now</a></strong>()</code>
 <div class="block">Obtains the current date from the system clock in the default time-zone.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#now(org.threeten.bp.Clock)">now</a></strong>(<a href="../../../org/threeten/bp/Clock.html" title="class in org.threeten.bp">Clock</a>&nbsp;clock)</code>
 <div class="block">Obtains the current date from the specified clock.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#now(org.threeten.bp.ZoneId)">now</a></strong>(<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Obtains the current date from the system clock in the specified time-zone.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#of(int, int, int)">of</a></strong>(int&nbsp;year,
   int&nbsp;month,
@@ -438,7 +443,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <div class="block">Obtains an instance of <code>LocalDate</code> from a year, month and day.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#of(int, org.threeten.bp.Month, int)">of</a></strong>(int&nbsp;year,
   <a href="../../../org/threeten/bp/Month.html" title="enum in org.threeten.bp">Month</a>&nbsp;month,
@@ -446,111 +451,105 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <div class="block">Obtains an instance of <code>LocalDate</code> from a year, month and day.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#ofEpochDay(long)">ofEpochDay</a></strong>(long&nbsp;epochDay)</code>
 <div class="block">Obtains an instance of <code>LocalDate</code> from the epoch day count.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#ofYearDay(int, int)">ofYearDay</a></strong>(int&nbsp;year,
          int&nbsp;dayOfYear)</code>
 <div class="block">Obtains an instance of <code>LocalDate</code> from a year and day-of-year.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#parse(java.lang.CharSequence)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</code>
 <div class="block">Obtains an instance of <code>LocalDate</code> from a text string such as <code>2007-12-03</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#parse(java.lang.CharSequence, org.threeten.bp.format.DateTimeFormatter)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
      <a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
 <div class="block">Obtains an instance of <code>LocalDate</code> from a text string using a specific formatter.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#periodUntil(org.threeten.bp.chrono.ChronoLocalDate)">periodUntil</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;endDate)</code>
-<div class="block">Calculates the period between this date and another date as a <code>Period</code>.</div>
-</td>
-</tr>
 <tr class="rowColor">
-<td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDate,
-           <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
-<div class="block">Calculates the period between this date and another date in
- terms of the specified unit.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></strong>(long&nbsp;amountToAdd,
     <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns a copy of this date with the specified period added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
 <div class="block">Returns a copy of this date with the specified period added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#plusDays(long)">plusDays</a></strong>(long&nbsp;daysToAdd)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified number of days added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#plusMonths(long)">plusMonths</a></strong>(long&nbsp;monthsToAdd)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified period in months added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#plusWeeks(long)">plusWeeks</a></strong>(long&nbsp;weeksToAdd)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified period in weeks added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#plusYears(long)">plusYears</a></strong>(long&nbsp;yearsToAdd)</code>
 <div class="block">Returns a copy of this <code>LocalDate</code> with the specified period in years added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;R&gt;&nbsp;query)</code>
 <div class="block">Queries this date using the specified query.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the range of valid values for the specified field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#toEpochDay()">toEpochDay</a></strong>()</code>
 <div class="block">Converts this date to the Epoch Day.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#toString()">toString</a></strong>()</code>
 <div class="block">Outputs this date as a <code>String</code>, such as <code>2007-12-03</code>.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#until(org.threeten.bp.chrono.ChronoLocalDate)">until</a></strong>(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;endDate)</code>
+<div class="block">Calculates the period between this date and another date as a <code>Period</code>.</div>
+</td>
+</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#toString(org.threeten.bp.format.DateTimeFormatter)">toString</a></strong>(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
-<div class="block">Outputs this date as a <code>String</code> using the formatter.</div>
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/LocalDate.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<div class="block">Calculates the period between this date and another date in
+ terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -592,11 +591,25 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.threeten.bp.chrono.ChronoLocalDate">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.threeten.bp.chrono.<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></h3>
+<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a>, <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#timeLineOrder()">timeLineOrder</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.threeten.bp.temporal.Temporal">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.threeten.bp.temporal.<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></h3>
+<code><a href="../../../org/threeten/bp/temporal/Temporal.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a></code></li>
 </ul>
 </li>
 </ul>
@@ -626,12 +639,22 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <a name="MAX">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>MAX</h4>
 <pre>public static final&nbsp;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a> MAX</pre>
 <div class="block">The maximum supported <code>LocalDate</code>, '+999999999-12-31'.
  This could be used by an application as a "far future" date.</div>
+</li>
+</ul>
+<a name="FROM">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>FROM</h4>
+<pre>public static final&nbsp;<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt; FROM</pre>
+<div class="block">Simulate JDK 8 method reference LocalDate::from.</div>
 </li>
 </ul>
 </li>
@@ -865,7 +888,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to check, null returns false</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the field is supported on this date, false if not</dd></dl>
 </li>
@@ -981,13 +1004,13 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <pre>public&nbsp;<a href="../../../org/threeten/bp/chrono/IsoChronology.html" title="class in org.threeten.bp.chrono">IsoChronology</a>&nbsp;getChronology()</pre>
 <div class="block">Gets the chronology of this date, which is the ISO calendar system.
  <p>
- The <code>Chrono</code> represents the calendar system in use.
+ The <code>Chronology</code> represents the calendar system in use.
  The ISO-8601 calendar system is the modern civil calendar system used today
  in most of the world. It is equivalent to the proleptic Gregorian calendar
  system, in which todays's rules for leap years are applied for all time.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#getChronology()">getChronology</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#getChronology()">getChronology</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>the ISO chronology, not null</dd></dl>
 </li>
 </ul>
@@ -1007,16 +1030,14 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  eras, often referred to using 'BC' and 'AD'.
  <p>
  Users of this class should typically ignore this method as it exists primarily
- to fulfill the <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono"><code>ChronoLocalDate</code></a> contract where it is necessary to support
+ to fulfill the <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono"><code>ChronoLocalDate</code></a> contract where it is necessary to support
  the Japanese calendar system.
  <p>
  The returned era will be a singleton capable of being compared with the constants
  in <a href="../../../org/threeten/bp/chrono/IsoChronology.html" title="class in org.threeten.bp.chrono"><code>IsoChronology</code></a> using the <code>==</code> operator.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#getEra()">getEra</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#getEra()">getEra</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#getEra()">getEra</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>the <code>IsoChronology</code> era constant applicable at this date, not null</dd></dl>
 </li>
 </ul>
@@ -1134,10 +1155,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  The calculation is proleptic - applying the same rules into the far future and far past.
  This is historically inaccurate, but is correct for the ISO-8601 standard.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isLeapYear()">isLeapYear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#isLeapYear()">isLeapYear</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isLeapYear()">isLeapYear</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the year is leap, false otherwise</dd></dl>
 </li>
 </ul>
@@ -1154,7 +1173,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  For example, a date in January would return 31.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#lengthOfMonth()">lengthOfMonth</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#lengthOfMonth()">lengthOfMonth</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>the length of the month in days</dd></dl>
 </li>
 </ul>
@@ -1169,10 +1188,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  <p>
  This returns the length of the year in days, either 365 or 366.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#lengthOfYear()">lengthOfYear</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#lengthOfYear()">lengthOfYear</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#lengthOfYear()">lengthOfYear</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>366 if the year is leap, 365 otherwise</dd></dl>
 </li>
 </ul>
@@ -1213,11 +1230,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>adjuster</code> - the adjuster to use, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a <code>LocalDate</code> based on <code>this</code> with the adjustment made, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1295,8 +1310,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
   The year will be unchanged. The day-of-month will also be unchanged,
   unless it would be invalid for the new month and year. In that case, the
   day-of-month is adjusted to the maximum valid value for the new month and year.
- <li><code>EPOCH_MONTH</code> -
-  Returns a <code>LocalDate</code> with the specified epoch-month.
+ <li><code>PROLEPTIC_MONTH</code> -
+  Returns a <code>LocalDate</code> with the specified proleptic-month.
   The day-of-month will be unchanged, unless it would be invalid for the new month
   and year. In that case, the day-of-month is adjusted to the maximum valid value
   for the new month and year.
@@ -1330,9 +1345,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to set in the result, not null</dd><dd><code>newValue</code> - the new value of the field in the result</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a <code>LocalDate</code> based on <code>this</code> with the specified field set, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1428,11 +1443,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amount</code> - the amount to add, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a <code>LocalDate</code> based on this date with the addition made, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1458,9 +1471,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amountToAdd</code> - the amount of the unit to add to the result, may be negative</dd><dd><code>unit</code> - the unit of the period to add, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a <code>LocalDate</code> based on this date with the specified period added, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1583,11 +1596,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amount</code> - the amount to subtract, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a <code>LocalDate</code> based on this date with the subtraction made, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1613,11 +1624,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#minus(long, org.threeten.bp.temporal.TemporalUnit)">minus</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>amountToSubtract</code> - the amount of the unit to subtract from the result, may be negative</dd><dd><code>unit</code> - the unit of the period to subtract, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a <code>LocalDate</code> based on this date with the specified period subtracted, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1743,7 +1752,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Type Parameters:</span></dt><dd><code>R</code> - the type of the result</dd><dt><span class="strong">Parameters:</span></dt><dd><code>query</code> - the query to invoke, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the query result, null may be returned (defined by the query)</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1779,7 +1788,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>temporal</code> - the target object to be adjusted, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the adjusted object, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1787,14 +1796,14 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd></dl>
 </li>
 </ul>
-<a name="periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">
+<a name="until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>periodUntil</h4>
-<pre>public&nbsp;long&nbsp;periodUntil(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDate,
-               <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
+<h4>until</h4>
+<pre>public&nbsp;long&nbsp;until(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+         <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
 <div class="block">Calculates the period between this date and another date in
  terms of the specified unit.
  <p>
@@ -1803,7 +1812,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  The result will be negative if the end is before the start.
  The <code>Temporal</code> passed to this method must be a <code>LocalDate</code>.
  For example, the period in days between two dates can be calculated
- using <code>startDate.periodUntil(endDate, DAYS)</code>.
+ using <code>startDate.until(endDate, DAYS)</code>.
  <p>
  The calculation returns a whole number, representing the number of
  complete units between the two dates.
@@ -1815,7 +1824,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  the specified unit. By contrast, the result of <code>between</code> is an
  object that can be used directly in addition/subtraction:
  <pre>
-   long period = start.periodUntil(end, MONTHS);   // this method
+   long period = start.until(end, MONTHS);   // this method
    dateTime.plus(MONTHS.between(start, end));      // use in plus/minus
  </pre>
  <p>
@@ -1832,21 +1841,21 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>endDate</code> - the end date, which must be a <code>LocalDate</code>, not null</dd><dd><code>unit</code> - the unit to measure the period in, not null</dd>
+<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>endExclusive</code> - the end date, which is converted to a <code>LocalDate</code>, not null</dd><dd><code>unit</code> - the unit to measure the period in, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the amount of the period between this date and the end date</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if the period cannot be calculated</dd>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd></dl>
 </li>
 </ul>
-<a name="periodUntil(org.threeten.bp.chrono.ChronoLocalDate)">
+<a name="until(org.threeten.bp.chrono.ChronoLocalDate)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>periodUntil</h4>
-<pre>public&nbsp;<a href="../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&nbsp;periodUntil(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;endDate)</pre>
+<h4>until</h4>
+<pre>public&nbsp;<a href="../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&nbsp;until(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;endDate)</pre>
 <div class="block">Calculates the period between this date and another date as a <code>Period</code>.
  <p>
  This calculates the period between two dates in terms of years, months and days.
@@ -1872,13 +1881,13 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  The second is to use <a href="../../../org/threeten/bp/Period.html#between(org.threeten.bp.LocalDate, org.threeten.bp.LocalDate)"><code>Period.between(LocalDate, LocalDate)</code></a>:
  <pre>
    // these two lines are equivalent
-   period = start.periodUntil(end);
+   period = start.until(end);
    period = Period.between(start, end);
  </pre>
  The choice should be made based on which makes the code more readable.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#periodUntil(org.threeten.bp.chrono.ChronoLocalDate)">periodUntil</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#until(org.threeten.bp.chrono.ChronoLocalDate)">until</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>endDate</code> - the end date, exclusive, which may be in any chronology, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the period between this date and the end date, not null</dd></dl>
 </li>
@@ -1895,10 +1904,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This returns a <code>LocalDateTime</code> formed from this date at the specified time.
  All possible combinations of date and time are valid.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#atTime(org.threeten.bp.LocalTime)">atTime</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#atTime(org.threeten.bp.LocalTime)">atTime</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#atTime(org.threeten.bp.LocalTime)">atTime</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>time</code> - the time to combine with, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the local date-time formed from this date and the specified time, not null</dd></dl>
 </li>
@@ -2035,17 +2042,15 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <li class="blockList">
 <h4>toEpochDay</h4>
 <pre>public&nbsp;long&nbsp;toEpochDay()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toEpochDay()">ChronoLocalDate</a></code></strong></div>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toEpochDay()">ChronoLocalDate</a></code></strong></div>
 <div class="block">Converts this date to the Epoch Day.
  <p>
  The <a href="../../../org/threeten/bp/temporal/ChronoField.html#EPOCH_DAY"><code>Epoch Day count</code></a> is a simple
  incrementing count of days where day 0 is 1970-01-01 (ISO).
  This definition is the same for all chronologies, enabling conversion.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toEpochDay()">toEpochDay</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#toEpochDay()">toEpochDay</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toEpochDay()">toEpochDay</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>the Epoch Day equivalent to this date</dd></dl>
 </li>
 </ul>
@@ -2055,7 +2060,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>compareTo</h4>
-<pre>public&nbsp;int&nbsp;compareTo(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;int&nbsp;compareTo(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</pre>
 <div class="block">Compares this date to another date.
  <p>
  The comparison is primarily based on the date, from earliest to latest.
@@ -2064,14 +2069,12 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  If all the dates being compared are instances of <code>LocalDate</code>,
  then the comparison will be entirely based on the date.
  If some dates being compared are in different chronologies, then the
- chronology is also considered, see <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)"><code>ChronoLocalDate.compareTo(org.threeten.bp.chrono.ChronoLocalDate&lt;?&gt;)</code></a>.</div>
+ chronology is also considered, see <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)"><code>ChronoLocalDate.compareTo(org.threeten.bp.chrono.ChronoLocalDate)</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&gt;</code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)">compareTo</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)">compareTo</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date to compare to, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the comparator value, negative if less, positive if greater</dd></dl>
 </li>
@@ -2082,7 +2085,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>isAfter</h4>
-<pre>public&nbsp;boolean&nbsp;isAfter(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;boolean&nbsp;isAfter(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</pre>
 <div class="block">Checks if this date is after the specified date.
  <p>
  This checks to see if this date represents a point on the
@@ -2100,10 +2103,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This is different from the comparison in <a href="../../../org/threeten/bp/LocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)"><code>compareTo(ChronoLocalDate)</code></a>,
  but is the same approach as <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#DATE_COMPARATOR"><code>ChronoLocalDate.DATE_COMPARATOR</code></a>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isAfter(org.threeten.bp.chrono.ChronoLocalDate)">isAfter</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#isAfter(org.threeten.bp.chrono.ChronoLocalDate)">isAfter</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isAfter(org.threeten.bp.chrono.ChronoLocalDate)">isAfter</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date to compare to, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if this date is after the specified date</dd></dl>
 </li>
@@ -2114,7 +2115,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>isBefore</h4>
-<pre>public&nbsp;boolean&nbsp;isBefore(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;boolean&nbsp;isBefore(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</pre>
 <div class="block">Checks if this date is before the specified date.
  <p>
  This checks to see if this date represents a point on the
@@ -2132,10 +2133,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This is different from the comparison in <a href="../../../org/threeten/bp/LocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)"><code>compareTo(ChronoLocalDate)</code></a>,
  but is the same approach as <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#DATE_COMPARATOR"><code>ChronoLocalDate.DATE_COMPARATOR</code></a>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isBefore(org.threeten.bp.chrono.ChronoLocalDate)">isBefore</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#isBefore(org.threeten.bp.chrono.ChronoLocalDate)">isBefore</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isBefore(org.threeten.bp.chrono.ChronoLocalDate)">isBefore</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date to compare to, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if this date is before the specified date</dd></dl>
 </li>
@@ -2146,7 +2145,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="blockList">
 <li class="blockList">
 <h4>isEqual</h4>
-<pre>public&nbsp;boolean&nbsp;isEqual(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;other)</pre>
+<pre>public&nbsp;boolean&nbsp;isEqual(<a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;other)</pre>
 <div class="block">Checks if this date is equal to the specified date.
  <p>
  This checks to see if this date represents the same point on the
@@ -2164,10 +2163,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This is different from the comparison in <a href="../../../org/threeten/bp/LocalDate.html#compareTo(org.threeten.bp.chrono.ChronoLocalDate)"><code>compareTo(ChronoLocalDate)</code></a>
  but is the same approach as <a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#DATE_COMPARATOR"><code>ChronoLocalDate.DATE_COMPARATOR</code></a>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isEqual(org.threeten.bp.chrono.ChronoLocalDate)">isEqual</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#isEqual(org.threeten.bp.chrono.ChronoLocalDate)">isEqual</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#isEqual(org.threeten.bp.chrono.ChronoLocalDate)">isEqual</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>other</code> - the other date to compare to, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if this date is equal to the specified date</dd></dl>
 </li>
@@ -2187,10 +2184,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  To compare the dates of two <code>TemporalAccessor</code> instances, including dates
  in two different chronologies, use <a href="../../../org/threeten/bp/temporal/ChronoField.html#EPOCH_DAY"><code>ChronoField.EPOCH_DAY</code></a> as a comparator.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#equals(java.lang.Object)">equals</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>obj</code> - the object to check, null returns false</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if this is equal to the other date</dd></dl>
 </li>
@@ -2204,10 +2199,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <pre>public&nbsp;int&nbsp;hashCode()</pre>
 <div class="block">A hash code for this date.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#hashCode()">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>a suitable hash code</dd></dl>
 </li>
 </ul>
@@ -2222,29 +2215,25 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  <p>
  The output will be in the ISO-8601 format <code>yyyy-MM-dd</code>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toString()">toString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>a string representation of this date, not null</dd></dl>
 </li>
 </ul>
-<a name="toString(org.threeten.bp.format.DateTimeFormatter)">
+<a name="format(org.threeten.bp.format.DateTimeFormatter)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
+<h4>format</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;format(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
 <div class="block">Outputs this date as a <code>String</code> using the formatter.
  <p>
  This date will be passed to the formatter
  <a href="../../../org/threeten/bp/format/DateTimeFormatter.html#format(org.threeten.bp.temporal.TemporalAccessor)"><code>print method</code></a>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#toString(org.threeten.bp.format.DateTimeFormatter)">toString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html#toString(org.threeten.bp.format.DateTimeFormatter)">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;<a href="../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&gt;</code></dd>
+<dd><code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html#format(org.threeten.bp.format.DateTimeFormatter)">format</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>formatter</code> - the formatter to use, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the formatted date string, not null</dd>
 <dt><span class="strong">Throws:</span></dt>

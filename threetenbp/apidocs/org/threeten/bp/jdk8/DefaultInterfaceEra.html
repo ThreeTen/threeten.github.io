@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="class in org.threeten.bp.jdk8"><span class="strong">Prev Class</span></a></li>
+<li>Prev Class</li>
 <li><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -102,6 +102,10 @@
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>, <a href="../../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a></dd>
 </dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">JapaneseEra</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public abstract class <span class="strong">DefaultInterfaceEra</span>
@@ -148,21 +152,6 @@ implements <a href="../../../../org/threeten/bp/chrono/Era.html" title="interfac
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#adjustInto(org.threeten.bp.temporal.Temporal)">adjustInto</a></strong>(<a href="../../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;temporal)</code>
 <div class="block">Adjusts the specified temporal object.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#date(int, int, int)">date</a></strong>(int&nbsp;year,
-    int&nbsp;month,
-    int&nbsp;day)</code>
-<div class="block">Obtains a date in this era given the year-of-era, month, and day.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html#dateYearDay(int, int)">dateYearDay</a></strong>(int&nbsp;year,
-           int&nbsp;dayOfYear)</code>
-<div class="block">Obtains a date in this era given year-of-era and day-of-year fields.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -216,7 +205,7 @@ implements <a href="../../../../org/threeten/bp/chrono/Era.html" title="interfac
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.threeten.bp.chrono.<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></h3>
-<code><a href="../../../../org/threeten/bp/chrono/Era.html#getChronology()">getChronology</a>, <a href="../../../../org/threeten/bp/chrono/Era.html#getValue()">getValue</a></code></li>
+<code><a href="../../../../org/threeten/bp/chrono/Era.html#getValue()">getValue</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.threeten.bp.temporal.TemporalAccessor">
@@ -256,51 +245,6 @@ implements <a href="../../../../org/threeten/bp/chrono/Era.html" title="interfac
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="date(int, int, int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>date</h4>
-<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;date(int&nbsp;year,
-                      int&nbsp;month,
-                      int&nbsp;day)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Era.html#date(int, int, int)">Era</a></code></strong></div>
-<div class="block">Obtains a date in this era given the year-of-era, month, and day.
- <p>
- This era is combined with the given date fields to form a date.
- The year specified must be the year-of-era.
- Methods to create a date from the proleptic-year are on <code>Chrono</code>.
- This always uses the standard form of the chronology.</div>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/threeten/bp/chrono/Era.html#date(int, int, int)">date</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>year</code> - the calendar system year-of-era</dd><dd><code>month</code> - the calendar system month-of-year</dd><dd><code>day</code> - the calendar system day-of-month</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a local date based on this era and the specified year-of-era, month and day</dd></dl>
-</li>
-</ul>
-<a name="dateYearDay(int, int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dateYearDay</h4>
-<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;dateYearDay(int&nbsp;year,
-                             int&nbsp;dayOfYear)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Era.html#dateYearDay(int, int)">Era</a></code></strong></div>
-<div class="block">Obtains a date in this era given year-of-era and day-of-year fields.
- <p>
- This era is combined with the given date fields to form a date.
- The year specified must be the year-of-era.
- Methods to create a date from the proleptic-year are on <code>Chrono</code>.
- This always uses the standard form of the chronology.</div>
-<dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/threeten/bp/chrono/Era.html#dateYearDay(int, int)">dateYearDay</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>year</code> - the calendar system year-of-era</dd><dd><code>dayOfYear</code> - the calendar system day-of-year</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a local date based on this era and the specified year-of-era and day-of-year</dd></dl>
-</li>
-</ul>
 <a name="isSupported(org.threeten.bp.temporal.TemporalField)">
 <!--   -->
 </a>
@@ -323,7 +267,7 @@ implements <a href="../../../../org/threeten/bp/chrono/Era.html" title="interfac
  is obtained by invoking <code>TemporalField.isSupportedBy(TemporalAccessor)</code>
  passing <code>this</code> as the argument.
  <p>
- Implementations must not alter either this object.</div>
+ Implementations must not alter this object.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
@@ -540,7 +484,7 @@ implements <a href="../../../../org/threeten/bp/chrono/Era.html" title="interfac
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="class in org.threeten.bp.jdk8"><span class="strong">Prev Class</span></a></li>
+<li>Prev Class</li>
 <li><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

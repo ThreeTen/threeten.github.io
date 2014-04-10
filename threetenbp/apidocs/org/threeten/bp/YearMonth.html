@@ -61,13 +61,13 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -132,6 +132,27 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#FROM">FROM</a></strong></code>
+<div class="block">Simulate JDK 8 method reference YearMonth::from.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -175,70 +196,82 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#format(org.threeten.bp.format.DateTimeFormatter)">format</a></strong>(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
+<div class="block">Outputs this year-month as a <code>String</code> using the formatter.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains an instance of <code>YearMonth</code> from a temporal object.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the value of the specified field from this year-month as an <code>int</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the value of the specified field from this year-month as a <code>long</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/Month.html" title="enum in org.threeten.bp">Month</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#getMonth()">getMonth</a></strong>()</code>
 <div class="block">Gets the month-of-year field using the <code>Month</code> enum.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#getMonthValue()">getMonthValue</a></strong>()</code>
 <div class="block">Gets the month-of-year field from 1 to 12.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#getYear()">getYear</a></strong>()</code>
 <div class="block">Gets the year field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">A hash code for this year-month.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#isAfter(org.threeten.bp.YearMonth)">isAfter</a></strong>(<a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a>&nbsp;other)</code>
 <div class="block">Is this year-month after the specified year-month.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#isBefore(org.threeten.bp.YearMonth)">isBefore</a></strong>(<a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a>&nbsp;other)</code>
 <div class="block">Is this year-month before the specified year-month.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#isLeapYear()">isLeapYear</a></strong>()</code>
 <div class="block">Checks if the year is a leap year, according to the ISO proleptic
  calendar system rules.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<div class="block">Checks if the specified unit is supported.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -330,82 +363,76 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endYearMonth,
-           <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
-<div class="block">Calculates the period between this year-month and another year-month in
- terms of the specified unit.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></strong>(long&nbsp;amountToAdd,
     <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns an object of the same type as this object with the specified period added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
 <div class="block">Returns a copy of this year-month with the specified period added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#plusMonths(long)">plusMonths</a></strong>(long&nbsp;monthsToAdd)</code>
 <div class="block">Returns a copy of this year-month with the specified period in months added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#plusYears(long)">plusYears</a></strong>(long&nbsp;yearsToAdd)</code>
 <div class="block">Returns a copy of this year-month with the specified period in years added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;R&gt;&nbsp;query)</code>
 <div class="block">Queries this year-month using the specified query.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the range of valid values for the specified field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#toString()">toString</a></strong>()</code>
 <div class="block">Outputs this year-month as a <code>String</code>, such as <code>2007-12</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#toString(org.threeten.bp.format.DateTimeFormatter)">toString</a></strong>(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
-<div class="block">Outputs this year-month as a <code>String</code> using the formatter.</div>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<div class="block">Calculates the period between this year-month and another year-month in
+ terms of the specified unit.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#with(org.threeten.bp.temporal.TemporalAdjuster)">with</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAdjuster.html" title="interface in org.threeten.bp.temporal">TemporalAdjuster</a>&nbsp;adjuster)</code>
 <div class="block">Returns an adjusted copy of this year-month.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#with(org.threeten.bp.temporal.TemporalField, long)">with</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field,
     long&nbsp;newValue)</code>
 <div class="block">Returns a copy of this year-month with the specified field set to a new value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#withMonth(int)">withMonth</a></strong>(int&nbsp;month)</code>
 <div class="block">Returns a copy of this <code>YearMonth</code> with the month-of-year altered.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/YearMonth.html#withYear(int)">withYear</a></strong>(int&nbsp;year)</code>
 <div class="block">Returns a copy of this <code>YearMonth</code> with the year altered.</div>
@@ -427,6 +454,24 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="FROM">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>FROM</h4>
+<pre>public static final&nbsp;<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/YearMonth.html" title="class in org.threeten.bp">YearMonth</a>&gt; FROM</pre>
+<div class="block">Simulate JDK 8 method reference YearMonth::from.</div>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_detail">
@@ -610,6 +655,36 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dd><code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to check, null returns false</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the field is supported on this year-month, false if not</dd></dl>
+</li>
+</ul>
+<a name="isSupported(org.threeten.bp.temporal.TemporalUnit)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupported</h4>
+<pre>public&nbsp;boolean&nbsp;isSupported(<a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">Temporal</a></code></strong></div>
+<div class="block">Checks if the specified unit is supported.
+ <p>
+ This checks if the date-time can be queried for the specified unit.
+ If false, then calling the <a href="../../../org/threeten/bp/temporal/Temporal.html#plus(org.threeten.bp.temporal.TemporalAmount)"><code>plus</code></a> and <a href="../../../org/threeten/bp/temporal/Temporal.html#minus(org.threeten.bp.temporal.TemporalAmount)"><code>minus</code></a>
+ methods will throw an exception.
+
+ <h3>Specification for implementors</h3>
+ Implementations must check and handle all fields defined in <a href="../../../org/threeten/bp/temporal/ChronoUnit.html" title="enum in org.threeten.bp.temporal"><code>ChronoUnit</code></a>.
+ If the field is supported, then true is returned, otherwise false
+ <p>
+ If the field is not a <code>ChronoUnit</code>, then the result of this method
+ is obtained by invoking <code>TemporalUnit.isSupportedBy(Temporal)</code>
+ passing <code>this</code> as the argument.
+ <p>
+ Implementations must not alter this object.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>unit</code> - the unit to check, null returns false</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if this date-time can be queried for the unit, false if not</dd></dl>
 </li>
 </ul>
 <a name="range(org.threeten.bp.temporal.TemporalField)">
@@ -880,8 +955,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  <li><code>MONTH_OF_YEAR</code> -
   Returns a <code>YearMonth</code> with the specified month-of-year.
   The year will be unchanged.
- <li><code>EPOCH_MONTH</code> -
-  Returns a <code>YearMonth</code> with the specified epoch-month.
+ <li><code>PROLEPTIC_MONTH</code> -
+  Returns a <code>YearMonth</code> with the specified proleptic-month.
   This completely replaces the year and month of this object.
  <li><code>YEAR_OF_ERA</code> -
   Returns a <code>YearMonth</code> with the specified year-of-era
@@ -1189,7 +1264,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  with the year and month changed to be the same as this.
  <p>
  The adjustment is equivalent to using <a href="../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalField, long)"><code>Temporal.with(TemporalField, long)</code></a>
- passing <a href="../../../org/threeten/bp/temporal/ChronoField.html#EPOCH_MONTH"><code>ChronoField.EPOCH_MONTH</code></a> as the field.
+ passing <a href="../../../org/threeten/bp/temporal/ChronoField.html#PROLEPTIC_MONTH"><code>ChronoField.PROLEPTIC_MONTH</code></a> as the field.
  If the specified temporal object does not use the ISO calendar system then
  a <code>DateTimeException</code> is thrown.
  <p>
@@ -1212,14 +1287,14 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd></dl>
 </li>
 </ul>
-<a name="periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">
+<a name="until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>periodUntil</h4>
-<pre>public&nbsp;long&nbsp;periodUntil(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endYearMonth,
-               <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
+<h4>until</h4>
+<pre>public&nbsp;long&nbsp;until(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+         <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
 <div class="block">Calculates the period between this year-month and another year-month in
  terms of the specified unit.
  <p>
@@ -1228,7 +1303,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  The result will be negative if the end is before the start.
  The <code>Temporal</code> passed to this method must be a <code>YearMonth</code>.
  For example, the period in years between two year-months can be calculated
- using <code>startYearMonth.periodUntil(endYearMonth, YEARS)</code>.
+ using <code>startYearMonth.until(endYearMonth, YEARS)</code>.
  <p>
  The calculation returns a whole number, representing the number of
  complete units between the two year-months.
@@ -1240,7 +1315,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  the specified unit. By contrast, the result of <code>between</code> is an
  object that can be used directly in addition/subtraction:
  <pre>
-   long period = start.periodUntil(end, YEARS);   // this method
+   long period = start.until(end, YEARS);   // this method
    dateTime.plus(YEARS.between(start, end));      // use in plus/minus
  </pre>
  <p>
@@ -1257,8 +1332,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>endYearMonth</code> - the end year-month, which must be a <code>YearMonth</code>, not null</dd><dd><code>unit</code> - the unit to measure the period in, not null</dd>
+<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>endExclusive</code> - the end year-month, which is converted to a <code>YearMonth</code>, not null</dd><dd><code>unit</code> - the unit to measure the period in, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the amount of the period between this year-month and the end year-month</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if the period cannot be calculated</dd>
@@ -1397,13 +1472,13 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><span class="strong">Returns:</span></dt><dd>a string representation of this year-month, not null</dd></dl>
 </li>
 </ul>
-<a name="toString(org.threeten.bp.format.DateTimeFormatter)">
+<a name="format(org.threeten.bp.format.DateTimeFormatter)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
+<h4>format</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;format(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
 <div class="block">Outputs this year-month as a <code>String</code> using the formatter.
  <p>
  This year-month will be passed to the formatter
@@ -1466,13 +1541,13 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>

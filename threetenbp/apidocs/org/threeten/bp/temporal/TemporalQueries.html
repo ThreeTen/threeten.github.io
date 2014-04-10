@@ -141,7 +141,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalQueries.html#chronology()">chronology</a></strong>()</code>
-<div class="block">A query for the <code>Chrono</code>.</div>
+<div class="block">A query for the <code>Chronology</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -214,8 +214,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  This queries a <code>TemporalAccessor</code> for the zone.
  The zone is only returned if the date-time conceptually contains a <code>ZoneId</code>.
  It will not be returned if the date-time only conceptually has an <code>ZoneOffset</code>.
- Thus a <code>ZonedDateTime</code> will return the result of
- <code>getZone()</code>, but an <code>OffsetDateTime</code> will
+ Thus a <a href="../../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp"><code>ZonedDateTime</code></a> will return the result of
+ <code>getZone()</code>, but an <a href="../../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp"><code>OffsetDateTime</code></a> will
  return null.
  <p>
  In most cases, applications should use <a href="../../../../org/threeten/bp/temporal/TemporalQueries.html#ZONE"><code>ZONE</code></a> as this query is too strict.
@@ -248,7 +248,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>chronology</h4>
 <pre>public static final&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a>&gt;&nbsp;chronology()</pre>
-<div class="block">A query for the <code>Chrono</code>.
+<div class="block">A query for the <code>Chronology</code>.
  <p>
  This queries a <code>TemporalAccessor</code> for the chronology.
  If the target <code>TemporalAccessor</code> represents a date, or part of a date,

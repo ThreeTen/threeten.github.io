@@ -106,7 +106,7 @@ Simulates JDK 8 features on JDK 7.</div>
 <td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
 <td class="colLast">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </td>
 </tr>
 </tbody>
@@ -131,6 +131,17 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoLocalDateTime.html#org.threeten.bp">ChronoLocalDateTime</a>
 <div class="block">A date-time without a time-zone in an arbitrary chronology, intended
  for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/Chronology.html#org.threeten.bp">Chronology</a>
+<div class="block">A calendar system, used to organize and identify dates.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoPeriod.html#org.threeten.bp">ChronoPeriod</a>
+<div class="block">A date-based amount of time, such as '3 years, 4 months and 5 days' in an
+ arbitrary chronology, intended for advanced globalization use cases.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -179,24 +190,35 @@ Access to date and time using fields and units, plus additional value type class
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoPeriod.html#org.threeten.bp.chrono">ChronoPeriod</a>
+<div class="block">A date-based amount of time, such as '3 years, 4 months and 5 days' in an
+ arbitrary chronology, intended for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoZonedDateTime.html#org.threeten.bp.chrono">ChronoZonedDateTime</a>
 <div class="block">A date-time with a time-zone in an arbitrary chronology,
  intended for advanced globalization use cases.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/Era.html#org.threeten.bp.chrono">Era</a>
 <div class="block">An era of the time-line.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/HijrahChronology.html#org.threeten.bp.chrono">HijrahChronology</a>
 <div class="block">The Hijrah calendar system.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/HijrahDate.html#org.threeten.bp.chrono">HijrahDate</a>
 <div class="block">A date in the Hijrah calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/HijrahEra.html#org.threeten.bp.chrono">HijrahEra</a>
+<div class="block">An era in the Hijrah calendar system.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -205,13 +227,23 @@ Access to date and time using fields and units, plus additional value type class
 </td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/IsoEra.html#org.threeten.bp.chrono">IsoEra</a>
+<div class="block">An era in the ISO calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/JapaneseChronology.html#org.threeten.bp.chrono">JapaneseChronology</a>
 <div class="block">The Japanese Imperial calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/JapaneseDate.html#org.threeten.bp.chrono">JapaneseDate</a>
 <div class="block">A date in the Japanese Imperial calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/JapaneseEra.html#org.threeten.bp.chrono">JapaneseEra</a>
+<div class="block">An era in the Japanese Imperial calendar system.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -225,13 +257,23 @@ Access to date and time using fields and units, plus additional value type class
 </td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/MinguoEra.html#org.threeten.bp.chrono">MinguoEra</a>
+<div class="block">An era in the Minguo calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ThaiBuddhistChronology.html#org.threeten.bp.chrono">ThaiBuddhistChronology</a>
 <div class="block">The Thai Buddhist calendar system.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ThaiBuddhistDate.html#org.threeten.bp.chrono">ThaiBuddhistDate</a>
 <div class="block">A date in the Thai Buddhist calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ThaiBuddhistEra.html#org.threeten.bp.chrono">ThaiBuddhistEra</a>
+<div class="block">An era in the Thai Buddhist calendar system.</div>
 </td>
 </tr>
 </tbody>
@@ -247,6 +289,12 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoLocalDate.html#org.threeten.bp.format">ChronoLocalDate</a>
+<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/Chronology.html#org.threeten.bp.format">Chronology</a>
 <div class="block">A calendar system, used to organize and identify dates.</div>
 </td>
@@ -264,24 +312,6 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoLocalDate.html#org.threeten.bp.jdk8">ChronoLocalDate</a>
-<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoLocalDateTime.html#org.threeten.bp.jdk8">ChronoLocalDateTime</a>
-<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/ChronoZonedDateTime.html#org.threeten.bp.jdk8">ChronoZonedDateTime</a>
-<div class="block">A date-time with a time-zone in an arbitrary chronology,
- intended for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/threeten/bp/chrono/class-use/Era.html#org.threeten.bp.jdk8">Era</a>
 <div class="block">An era of the time-line.</div>
 </td>

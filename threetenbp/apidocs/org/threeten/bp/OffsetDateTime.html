@@ -153,9 +153,9 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#INSTANT_COMPARATOR">INSTANT_COMPARATOR</a></strong></code>
-<div class="block">Comparator for two <code>OffsetDateTime</code> instances based solely on the instant.</div>
+<td class="colFirst"><code>static <a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#FROM">FROM</a></strong></code>
+<div class="block">Simulate JDK 8 method reference OffsetDateTime::from.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -219,117 +219,129 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#format(org.threeten.bp.format.DateTimeFormatter)">format</a></strong>(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
+<div class="block">Outputs this date-time as a <code>String</code> using the formatter.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains an instance of <code>OffsetDateTime</code> from a temporal object.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#get(org.threeten.bp.temporal.TemporalField)">get</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the value of the specified field from this date-time as an <code>int</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getDayOfMonth()">getDayOfMonth</a></strong>()</code>
 <div class="block">Gets the day-of-month field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/DayOfWeek.html" title="enum in org.threeten.bp">DayOfWeek</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getDayOfWeek()">getDayOfWeek</a></strong>()</code>
 <div class="block">Gets the day-of-week field, which is an enum <code>DayOfWeek</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getDayOfYear()">getDayOfYear</a></strong>()</code>
 <div class="block">Gets the day-of-year field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getHour()">getHour</a></strong>()</code>
 <div class="block">Gets the hour-of-day field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getLong(org.threeten.bp.temporal.TemporalField)">getLong</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the value of the specified field from this date-time as a <code>long</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getMinute()">getMinute</a></strong>()</code>
 <div class="block">Gets the minute-of-hour field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/Month.html" title="enum in org.threeten.bp">Month</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getMonth()">getMonth</a></strong>()</code>
 <div class="block">Gets the month-of-year field using the <code>Month</code> enum.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getMonthValue()">getMonthValue</a></strong>()</code>
 <div class="block">Gets the month-of-year field from 1 to 12.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getNano()">getNano</a></strong>()</code>
 <div class="block">Gets the nano-of-second field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getOffset()">getOffset</a></strong>()</code>
 <div class="block">Gets the zone offset, such as '+01:00'.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getSecond()">getSecond</a></strong>()</code>
 <div class="block">Gets the second-of-minute field.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#getYear()">getYear</a></strong>()</code>
 <div class="block">Gets the year field.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#hashCode()">hashCode</a></strong>()</code>
 <div class="block">A hash code for this date-time.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#isAfter(org.threeten.bp.OffsetDateTime)">isAfter</a></strong>(<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&nbsp;other)</code>
 <div class="block">Checks if the instant of this date-time is after that of the specified date-time.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#isBefore(org.threeten.bp.OffsetDateTime)">isBefore</a></strong>(<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&nbsp;other)</code>
 <div class="block">Checks if the instant of this date-time is before that of the specified date-time.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#isEqual(org.threeten.bp.OffsetDateTime)">isEqual</a></strong>(<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&nbsp;other)</code>
 <div class="block">Checks if the instant of this date-time is equal to that of the specified date-time.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Checks if the specified field is supported.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<div class="block">Checks if the specified unit is supported.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -462,84 +474,83 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></strong>(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDateTime,
-           <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
-<div class="block">Calculates the period between this date-time and another date-time in
- terms of the specified unit.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plus(long, org.threeten.bp.temporal.TemporalUnit)">plus</a></strong>(long&nbsp;amountToAdd,
     <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns a copy of this date-time with the specified period added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
 <div class="block">Returns a copy of this date-time with the specified period added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusDays(long)">plusDays</a></strong>(long&nbsp;days)</code>
 <div class="block">Returns a copy of this OffsetDateTime with the specified period in days added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusHours(long)">plusHours</a></strong>(long&nbsp;hours)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the specified period in hours added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusMinutes(long)">plusMinutes</a></strong>(long&nbsp;minutes)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the specified period in minutes added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusMonths(long)">plusMonths</a></strong>(long&nbsp;months)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the specified period in months added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusNanos(long)">plusNanos</a></strong>(long&nbsp;nanos)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the specified period in nanoseconds added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusSeconds(long)">plusSeconds</a></strong>(long&nbsp;seconds)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the specified period in seconds added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusWeeks(long)">plusWeeks</a></strong>(long&nbsp;weeks)</code>
 <div class="block">Returns a copy of this OffsetDateTime with the specified period in weeks added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#plusYears(long)">plusYears</a></strong>(long&nbsp;years)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the specified period in years added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>&lt;R&gt;&nbsp;R</code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#query(org.threeten.bp.temporal.TemporalQuery)">query</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;R&gt;&nbsp;query)</code>
 <div class="block">Queries this date-time using the specified query.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#range(org.threeten.bp.temporal.TemporalField)">range</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&nbsp;field)</code>
 <div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#timeLineOrder()">timeLineOrder</a></strong>()</code>
+<div class="block">Gets a comparator that compares two <code>OffsetDateTime</code> instances
+ based solely on the instant.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -585,21 +596,23 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#toString(org.threeten.bp.format.DateTimeFormatter)">toString</a></strong>(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</code>
-<div class="block">Outputs this date-time as a <code>String</code> using the formatter.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">ZonedDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#toZonedDateTime()">toZonedDateTime</a></strong>()</code>
 <div class="block">Converts this date-time to a <code>ZonedDateTime</code> using the offset as the zone ID.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#truncatedTo(org.threeten.bp.temporal.TemporalUnit)">truncatedTo</a></strong>(<a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
 <div class="block">Returns a copy of this <code>OffsetDateTime</code> with the time truncated.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/OffsetDateTime.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></strong>(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+     <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</code>
+<div class="block">Calculates the period between this date-time and another date-time in
+ terms of the specified unit.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -727,20 +740,14 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This could be used by an application as a "far future" date-time.</div>
 </li>
 </ul>
-<a name="INSTANT_COMPARATOR">
+<a name="FROM">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>INSTANT_COMPARATOR</h4>
-<pre>public static final&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&gt; INSTANT_COMPARATOR</pre>
-<div class="block">Comparator for two <code>OffsetDateTime</code> instances based solely on the instant.
- <p>
- This method differs from the comparison in <a href="../../../org/threeten/bp/OffsetDateTime.html#compareTo(org.threeten.bp.OffsetDateTime)"><code>compareTo(org.threeten.bp.OffsetDateTime)</code></a> in that it
- only compares the underlying instant.</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../org/threeten/bp/OffsetDateTime.html#isAfter(org.threeten.bp.OffsetDateTime)"><code>isAfter(org.threeten.bp.OffsetDateTime)</code></a>, 
-<a href="../../../org/threeten/bp/OffsetDateTime.html#isBefore(org.threeten.bp.OffsetDateTime)"><code>isBefore(org.threeten.bp.OffsetDateTime)</code></a>, 
-<a href="../../../org/threeten/bp/OffsetDateTime.html#isEqual(org.threeten.bp.OffsetDateTime)"><code>isEqual(org.threeten.bp.OffsetDateTime)</code></a></dd></dl>
+<h4>FROM</h4>
+<pre>public static final&nbsp;<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&gt; FROM</pre>
+<div class="block">Simulate JDK 8 method reference OffsetDateTime::from.</div>
 </li>
 </ul>
 </li>
@@ -751,6 +758,23 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="timeLineOrder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>timeLineOrder</h4>
+<pre>public static&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../org/threeten/bp/OffsetDateTime.html" title="class in org.threeten.bp">OffsetDateTime</a>&gt;&nbsp;timeLineOrder()</pre>
+<div class="block">Gets a comparator that compares two <code>OffsetDateTime</code> instances
+ based solely on the instant.
+ <p>
+ This method differs from the comparison in <a href="../../../org/threeten/bp/OffsetDateTime.html#compareTo(org.threeten.bp.OffsetDateTime)"><code>compareTo(org.threeten.bp.OffsetDateTime)</code></a> in that it
+ only compares the underlying instant.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a comparator that compares in time-line order</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../org/threeten/bp/OffsetDateTime.html#isAfter(org.threeten.bp.OffsetDateTime)"><code>isAfter(org.threeten.bp.OffsetDateTime)</code></a>, 
+<a href="../../../org/threeten/bp/OffsetDateTime.html#isBefore(org.threeten.bp.OffsetDateTime)"><code>isBefore(org.threeten.bp.OffsetDateTime)</code></a>, 
+<a href="../../../org/threeten/bp/OffsetDateTime.html#isEqual(org.threeten.bp.OffsetDateTime)"><code>isEqual(org.threeten.bp.OffsetDateTime)</code></a></dd></dl>
+</li>
+</ul>
 <a name="now()">
 <!--   -->
 </a>
@@ -1003,6 +1027,36 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dd><code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html#isSupported(org.threeten.bp.temporal.TemporalField)">isSupported</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to check, null returns false</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the field is supported on this date-time, false if not</dd></dl>
+</li>
+</ul>
+<a name="isSupported(org.threeten.bp.temporal.TemporalUnit)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupported</h4>
+<pre>public&nbsp;boolean&nbsp;isSupported(<a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">Temporal</a></code></strong></div>
+<div class="block">Checks if the specified unit is supported.
+ <p>
+ This checks if the date-time can be queried for the specified unit.
+ If false, then calling the <a href="../../../org/threeten/bp/temporal/Temporal.html#plus(org.threeten.bp.temporal.TemporalAmount)"><code>plus</code></a> and <a href="../../../org/threeten/bp/temporal/Temporal.html#minus(org.threeten.bp.temporal.TemporalAmount)"><code>minus</code></a>
+ methods will throw an exception.
+
+ <h3>Specification for implementors</h3>
+ Implementations must check and handle all fields defined in <a href="../../../org/threeten/bp/temporal/ChronoUnit.html" title="enum in org.threeten.bp.temporal"><code>ChronoUnit</code></a>.
+ If the field is supported, then true is returned, otherwise false
+ <p>
+ If the field is not a <code>ChronoUnit</code>, then the result of this method
+ is obtained by invoking <code>TemporalUnit.isSupportedBy(Temporal)</code>
+ passing <code>this</code> as the argument.
+ <p>
+ Implementations must not alter this object.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#isSupported(org.threeten.bp.temporal.TemporalUnit)">isSupported</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>unit</code> - the unit to check, null returns false</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if this date-time can be queried for the unit, false if not</dd></dl>
 </li>
 </ul>
 <a name="range(org.threeten.bp.temporal.TemporalField)">
@@ -2064,8 +2118,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  with the offset, date and time changed to be the same as this.
  <p>
  The adjustment is equivalent to using <a href="../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalField, long)"><code>Temporal.with(TemporalField, long)</code></a>
- three times, passing <a href="../../../org/threeten/bp/temporal/ChronoField.html#OFFSET_SECONDS"><code>ChronoField.OFFSET_SECONDS</code></a>,
- <a href="../../../org/threeten/bp/temporal/ChronoField.html#EPOCH_DAY"><code>ChronoField.EPOCH_DAY</code></a> and <a href="../../../org/threeten/bp/temporal/ChronoField.html#NANO_OF_DAY"><code>ChronoField.NANO_OF_DAY</code></a> as the fields.
+ three times, passing <a href="../../../org/threeten/bp/temporal/ChronoField.html#EPOCH_DAY"><code>ChronoField.EPOCH_DAY</code></a>,
+ <a href="../../../org/threeten/bp/temporal/ChronoField.html#NANO_OF_DAY"><code>ChronoField.NANO_OF_DAY</code></a> and <a href="../../../org/threeten/bp/temporal/ChronoField.html#OFFSET_SECONDS"><code>ChronoField.OFFSET_SECONDS</code></a> as the fields.
  <p>
  In most cases, it is clearer to reverse the calling pattern by using
  <a href="../../../org/threeten/bp/temporal/Temporal.html#with(org.threeten.bp.temporal.TemporalAdjuster)"><code>Temporal.with(TemporalAdjuster)</code></a>:
@@ -2086,14 +2140,14 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ArithmeticException.html?is-external=true" title="class or interface in java.lang">ArithmeticException</a></code> - if numeric overflow occurs</dd></dl>
 </li>
 </ul>
-<a name="periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">
+<a name="until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>periodUntil</h4>
-<pre>public&nbsp;long&nbsp;periodUntil(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endDateTime,
-               <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
+<h4>until</h4>
+<pre>public&nbsp;long&nbsp;until(<a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a>&nbsp;endExclusive,
+         <a href="../../../org/threeten/bp/temporal/TemporalUnit.html" title="interface in org.threeten.bp.temporal">TemporalUnit</a>&nbsp;unit)</pre>
 <div class="block">Calculates the period between this date-time and another date-time in
  terms of the specified unit.
  <p>
@@ -2101,7 +2155,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  The start and end points are <code>this</code> and the specified date-time.
  The result will be negative if the end is before the start.
  For example, the period in days between two date-times can be calculated
- using <code>startDateTime.periodUntil(endDateTime, DAYS)</code>.
+ using <code>startDateTime.until(endDateTime, DAYS)</code>.
  <p>
  The <code>Temporal</code> passed to this method must be an <code>OffsetDateTime</code>.
  If the offset differs between the two date-times, the specified
@@ -2117,7 +2171,7 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  the specified unit. By contrast, the result of <code>between</code> is an
  object that can be used directly in addition/subtraction:
  <pre>
-   long period = start.periodUntil(end, MONTHS);   // this method
+   long period = start.until(end, MONTHS);   // this method
    dateTime.plus(MONTHS.between(start, end));      // use in plus/minus
  </pre>
  <p>
@@ -2136,8 +2190,8 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
  This instance is immutable and unaffected by this method call.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">periodUntil</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>endDateTime</code> - the end date-time, which must be an <code>OffsetDateTime</code>, not null</dd><dd><code>unit</code> - the unit to measure the period in, not null</dd>
+<dd><code><a href="../../../org/threeten/bp/temporal/Temporal.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)">until</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/threeten/bp/temporal/Temporal.html" title="interface in org.threeten.bp.temporal">Temporal</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>endExclusive</code> - the end date-time, which is converted to an <code>OffsetDateTime</code>, not null</dd><dd><code>unit</code> - the unit to measure the period in, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the amount of the period between this date-time and the end date-time</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if the period cannot be calculated</dd>
@@ -2431,13 +2485,13 @@ implements <a href="../../../org/threeten/bp/temporal/Temporal.html" title="inte
 <dt><span class="strong">Returns:</span></dt><dd>a string representation of this date-time, not null</dd></dl>
 </li>
 </ul>
-<a name="toString(org.threeten.bp.format.DateTimeFormatter)">
+<a name="format(org.threeten.bp.format.DateTimeFormatter)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>toString</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
+<h4>format</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;format(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;formatter)</pre>
 <div class="block">Outputs this date-time as a <code>String</code> using the formatter.
  <p>
  This date-time will be passed to the formatter

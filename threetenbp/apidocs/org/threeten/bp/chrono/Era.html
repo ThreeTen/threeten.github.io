@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../org/threeten/bp/chrono/HijrahChronology.html" title="class in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -91,7 +91,7 @@
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceEra</a></dd>
+<dd><a href="../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceEra</a>, <a href="../../../../org/threeten/bp/chrono/HijrahEra.html" title="enum in org.threeten.bp.chrono">HijrahEra</a>, <a href="../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono">IsoEra</a>, <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">JapaneseEra</a>, <a href="../../../../org/threeten/bp/chrono/MinguoEra.html" title="enum in org.threeten.bp.chrono">MinguoEra</a>, <a href="../../../../org/threeten/bp/chrono/ThaiBuddhistEra.html" title="enum in org.threeten.bp.chrono">ThaiBuddhistEra</a></dd>
 </dl>
 <hr>
 <br>
@@ -135,34 +135,13 @@ extends <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/Era.html#date(int, int, int)">date</a></strong>(int&nbsp;yearOfEra,
-    int&nbsp;month,
-    int&nbsp;day)</code>
-<div class="block">Obtains a date in this era given the year-of-era, month, and day.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/Era.html#dateYearDay(int, int)">dateYearDay</a></strong>(int&nbsp;yearOfEra,
-           int&nbsp;dayOfYear)</code>
-<div class="block">Obtains a date in this era given year-of-era and day-of-year fields.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/Era.html#getChronology()">getChronology</a></strong>()</code>
-<div class="block">Gets the chronology of this era.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/Era.html#getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">getDisplayName</a></strong>(<a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a>&nbsp;style,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
 <div class="block">Gets the textual representation of this era.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/Era.html#getValue()">getValue</a></strong>()</code>
 <div class="block">Gets the numeric value associated with the era as defined by the chronology.</div>
@@ -219,57 +198,6 @@ extends <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 <dl><dt><span class="strong">Returns:</span></dt><dd>the numeric era value</dd></dl>
 </li>
 </ul>
-<a name="getChronology()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getChronology</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a>&nbsp;getChronology()</pre>
-<div class="block">Gets the chronology of this era.
- <p>
- The <code>Chronology</code> represents the calendar system in use.
- This always returns the standard form of the chronology.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the chronology, not null</dd></dl>
-</li>
-</ul>
-<a name="date(int, int, int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>date</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;date(int&nbsp;yearOfEra,
-                      int&nbsp;month,
-                      int&nbsp;day)</pre>
-<div class="block">Obtains a date in this era given the year-of-era, month, and day.
- <p>
- This era is combined with the given date fields to form a date.
- The year specified must be the year-of-era.
- Methods to create a date from the proleptic-year are on <code>Chrono</code>.
- This always uses the standard form of the chronology.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>yearOfEra</code> - the calendar system year-of-era</dd><dd><code>month</code> - the calendar system month-of-year</dd><dd><code>day</code> - the calendar system day-of-month</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a local date based on this era and the specified year-of-era, month and day</dd></dl>
-</li>
-</ul>
-<a name="dateYearDay(int, int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dateYearDay</h4>
-<pre><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;dateYearDay(int&nbsp;yearOfEra,
-                             int&nbsp;dayOfYear)</pre>
-<div class="block">Obtains a date in this era given year-of-era and day-of-year fields.
- <p>
- This era is combined with the given date fields to form a date.
- The year specified must be the year-of-era.
- Methods to create a date from the proleptic-year are on <code>Chrono</code>.
- This always uses the standard form of the chronology.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>yearOfEra</code> - the calendar system year-of-era</dd><dd><code>dayOfYear</code> - the calendar system day-of-year</dd>
-<dt><span class="strong">Returns:</span></dt><dd>a local date based on this era and the specified year-of-era and day-of-year</dd></dl>
-</li>
-</ul>
 <a name="getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">
 <!--   -->
 </a>
@@ -314,7 +242,7 @@ extends <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../org/threeten/bp/chrono/HijrahChronology.html" title="class in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

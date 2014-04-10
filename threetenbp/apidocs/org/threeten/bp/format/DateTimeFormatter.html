@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format"><span class="strong">Prev Class</span></a></li>
+<li>Prev Class</li>
 <li><a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -104,15 +104,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  <p><ul>
  <li>Using pattern letters, such as <code>yyyy-MMM-dd</code>
  <li>Using localized styles, such as <code>long</code> or <code>medium</code>
- <li>Using predefined constants, such as <code>isoLocalDate()</code>
+ <li>Using predefined constants, such as <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#ISO_LOCAL_DATE"><code>ISO_LOCAL_DATE</code></a>
  </ul><p>
  <p>
  For more complex formatters, a <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format"><code>builder</code></a> is provided.
  <p>
  In most cases, it is not necessary to use this class directly when formatting.
- The main date-time classes provide two methods - one for printing,
- <code>toString(DateTimeFormatter formatter)</code>, and one for parsing,
- <code>parse(CharSequence text, DateTimeFormatter formatter)</code>.
+ The main date-time classes provide two methods - one for formatting,
+ <code>format(DateTimeFormatter formatter)</code>, and one for parsing,
  For example:
  <pre>
   String text = date.toString(formatter);
@@ -170,7 +169,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#ISO_INSTANT">ISO_INSTANT</a></strong></code>
-<div class="block">Returns the ISO instant formatter that prints/parses an instant in UTC.</div>
+<div class="block">The ISO instant formatter that formats or parses an instant in UTC,
+ such as '2011-12-03T10:15:30Z'.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -284,15 +284,27 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DecimalStyle.html" title="class in org.threeten.bp.format">DecimalStyle</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#getDecimalStyle()">getDecimalStyle</a></strong>()</code>
+<div class="block">Gets the decimal style to be used during formatting.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#getLocale()">getLocale</a></strong>()</code>
 <div class="block">Gets the locale to be used during formatting.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#getResolverFields()">getResolverFields</a></strong>()</code>
+<div class="block">Gets the resolver fields to use during parsing.</div>
+</td>
+</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format">DateTimeFormatSymbols</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#getSymbols()">getSymbols</a></strong>()</code>
-<div class="block">Gets the set of symbols to be used during formatting.</div>
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#getResolverStyle()">getResolverStyle</a></strong>()</code>
+<div class="block">Gets the resolver style to use during parsing.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -346,24 +358,36 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parse(java.lang.CharSequence, java.lang.Class)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
-     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>
-<div class="block">Fully parses the text producing an object of the specified type.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parse(java.lang.CharSequence, java.text.ParsePosition)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
      <a href="http://docs.oracle.com/javase/7/docs/api/java/text/ParsePosition.html?is-external=true" title="class or interface in java.text">ParsePosition</a>&nbsp;position)</code>
 <div class="block">Parses the text using this formatter, providing control over the text position.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parse(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery)">parse</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
+     <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;T&gt;&nbsp;type)</code>
+<div class="block">Fully parses the text producing an object of the specified type.</div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)">parseBest</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
-         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;...&nbsp;types)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)">parseBest</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
+         <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;?&gt;...&nbsp;types)</code>
 <div class="block">Fully parses the text producing an object of one of the specified types.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parsedExcessDays()">parsedExcessDays</a></strong>()</code>
+<div class="block">A query that provides access to the excess days that were parsed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parsedLeapSecond()">parsedLeapSecond</a></strong>()</code>
+<div class="block">A query that provides access to whether a leap-second was parsed.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -382,7 +406,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/text/Format.html?is-external=true" title="class or interface in java.text">Format</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#toFormat(java.lang.Class)">toFormat</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;parseType)</code>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#toFormat(org.threeten.bp.temporal.TemporalQuery)">toFormat</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;?&gt;&nbsp;query)</code>
 <div class="block">Returns this formatter as a <code>java.text.Format</code> instance that will
  parse to the specified type.</div>
 </td>
@@ -401,17 +425,35 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withLocale(java.util.Locale)">withLocale</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
-<div class="block">Returns a copy of this formatter with a new locale.</div>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withDecimalStyle(org.threeten.bp.format.DecimalStyle)">withDecimalStyle</a></strong>(<a href="../../../../org/threeten/bp/format/DecimalStyle.html" title="class in org.threeten.bp.format">DecimalStyle</a>&nbsp;decimalStyle)</code>
+<div class="block">Returns a copy of this formatter with a new decimal style.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withSymbols(org.threeten.bp.format.DateTimeFormatSymbols)">withSymbols</a></strong>(<a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format">DateTimeFormatSymbols</a>&nbsp;symbols)</code>
-<div class="block">Returns a copy of this formatter with a new set of symbols.</div>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withLocale(java.util.Locale)">withLocale</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true" title="class or interface in java.util">Locale</a>&nbsp;locale)</code>
+<div class="block">Returns a copy of this formatter with a new locale.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withResolverFields(java.util.Set)">withResolverFields</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&gt;&nbsp;resolverFields)</code>
+<div class="block">Returns a copy of this formatter with a new set of resolver fields.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withResolverFields(org.threeten.bp.temporal.TemporalField...)">withResolverFields</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>...&nbsp;resolverFields)</code>
+<div class="block">Returns a copy of this formatter with a new set of resolver fields.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withResolverStyle(org.threeten.bp.format.ResolverStyle)">withResolverStyle</a></strong>(<a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>
+<div class="block">Returns a copy of this formatter with a new resolver style.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withZone(org.threeten.bp.ZoneId)">withZone</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Returns a copy of this formatter with a new override zone.</div>
@@ -507,7 +549,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   Parsing is case insensitive.
  </ul><p>
  As this formatter has an optional element, it may be necessary to parse using
- <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)"><code>parseBest(java.lang.CharSequence, java.lang.Class&lt;?&gt;...)</code></a>.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)"><code>parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery&lt;?&gt;...)</code></a>.</div>
 </li>
 </ul>
 <a name="ISO_LOCAL_TIME">
@@ -582,7 +624,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   Parsing is case insensitive.
  </ul><p>
  As this formatter has an optional element, it may be necessary to parse using
- <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)"><code>parseBest(java.lang.CharSequence, java.lang.Class&lt;?&gt;...)</code></a>.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)"><code>parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery&lt;?&gt;...)</code></a>.</div>
 </li>
 </ul>
 <a name="ISO_LOCAL_DATE_TIME">
@@ -676,7 +718,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  <li>A close square bracket ']'.
  </ul><p>
  As this formatter has an optional element, it may be necessary to parse using
- <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)"><code>parseBest(java.lang.CharSequence, java.lang.Class&lt;?&gt;...)</code></a>.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)"><code>parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery&lt;?&gt;...)</code></a>.</div>
 </li>
 </ul>
 <a name="ISO_ORDINAL_DATE">
@@ -705,7 +747,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   Parsing is case insensitive.
  </ul><p>
  As this formatter has an optional element, it may be necessary to parse using
- <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)"><code>parseBest(java.lang.CharSequence, java.lang.Class&lt;?&gt;...)</code></a>.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)"><code>parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery&lt;?&gt;...)</code></a>.</div>
 </li>
 </ul>
 <a name="ISO_WEEK_DATE">
@@ -738,7 +780,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   Parsing is case insensitive.
  </ul><p>
  As this formatter has an optional element, it may be necessary to parse using
- <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)"><code>parseBest(java.lang.CharSequence, java.lang.Class&lt;?&gt;...)</code></a>.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)"><code>parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery&lt;?&gt;...)</code></a>.</div>
 </li>
 </ul>
 <a name="ISO_INSTANT">
@@ -748,16 +790,34 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>ISO_INSTANT</h4>
 <pre>public static final&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a> ISO_INSTANT</pre>
-<div class="block">Returns the ISO instant formatter that prints/parses an instant in UTC.
+<div class="block">The ISO instant formatter that formats or parses an instant in UTC,
+ such as '2011-12-03T10:15:30Z'.
  <p>
- This returns an immutable formatter capable of printing and parsing
+ This returns an immutable formatter capable of formatting and parsing
  the ISO-8601 instant format.
+ When formatting, the second-of-minute is always output.
+ The nano-of-second outputs zero, three, six or nine digits digits as necessary.
+ When parsing, time to at least the seconds field is required.
+ Fractional seconds from zero to nine are parsed.
+ The localized decimal style is not used.
+ <p>
+ This is a special case formatter intended to allow a human readable form
+ of an <code>java.time.Instant</code>. The <code>Instant</code> class is designed to
+ only represent a point in time and internally stores a value in nanoseconds
+ from a fixed epoch of 1970-01-01Z. As such, an <code>Instant</code> cannot be
+ formatted as a date or time without providing some form of time-zone.
+ This formatter allows the <code>Instant</code> to be formatted, by providing
+ a suitable conversion using <code>ZoneOffset.UTC</code>.
+ <p>
  The format consists of:
- <p><ul>
- <li>The <code>#isoOffsetDateTime()</code> where the instant is converted from
+ <ul>
+ <li>The <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#ISO_OFFSET_DATE_TIME"><code>ISO_OFFSET_DATE_TIME</code></a> where the instant is converted from
   <a href="../../../../org/threeten/bp/temporal/ChronoField.html#INSTANT_SECONDS"><code>ChronoField.INSTANT_SECONDS</code></a> and <a href="../../../../org/threeten/bp/temporal/ChronoField.html#NANO_OF_SECOND"><code>ChronoField.NANO_OF_SECOND</code></a>
   using the <code>UTC</code> offset. Parsing is case insensitive.
- </ul><p></div>
+ </ul>
+ <p>
+ The returned formatter has no override chronology or zone.
+ It uses the <a href="../../../../org/threeten/bp/format/ResolverStyle.html#STRICT"><code>STRICT</code></a> resolver style.</div>
 </li>
 </ul>
 <a name="BASIC_ISO_DATE">
@@ -786,7 +846,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   Parsing is case insensitive.
  </ul><p>
  As this formatter has an optional element, it may be necessary to parse using
- <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)"><code>parseBest(java.lang.CharSequence, java.lang.Class&lt;?&gt;...)</code></a>.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)"><code>parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery&lt;?&gt;...)</code></a>.</div>
 </li>
 </ul>
 <a name="RFC_1123_DATE_TIME">
@@ -928,7 +988,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  letters, up to 9 digits.
  <p>
  <b>Year</b>: The count of letters determines the minimum field width below which padding is used.
- If the count of letters is two, then a <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValueReduced(org.threeten.bp.temporal.TemporalField, int, int)"><code>reduced</code></a>
+ If the count of letters is two, then a <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendValueReduced(org.threeten.bp.temporal.TemporalField, int, int, int)"><code>reduced</code></a>
  two digit form is used.
  For printing, this outputs the rightmost two digits. For parsing, this will parse using the
  base value of 2000, resulting in a year within the range 2000 to 2099 inclusive.
@@ -1100,6 +1160,90 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>the date, time or date-time formatter, not null</dd></dl>
 </li>
 </ul>
+<a name="parsedExcessDays()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parsedExcessDays</h4>
+<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&gt;&nbsp;parsedExcessDays()</pre>
+<div class="block">A query that provides access to the excess days that were parsed.
+ <p>
+ This returns a singleton <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">query</a> that provides
+ access to additional information from the parse. The query always returns
+ a non-null period, with a zero period returned instead of null.
+ <p>
+ There are two situations where this query may return a non-zero period.
+ <ul>
+ <li>If the <code>ResolverStyle</code> is <code>LENIENT</code> and a time is parsed
+  without a date, then the complete result of the parse consists of a
+  <code>LocalTime</code> and an excess <code>Period</code> in days.
+
+ <li>If the <code>ResolverStyle</code> is <code>SMART</code> and a time is parsed
+  without a date where the time is 24:00:00, then the complete result of
+  the parse consists of a <code>LocalTime</code> of 00:00:00 and an excess
+  <code>Period</code> of one day.
+ </ul>
+ <p>
+ In both cases, if a complete <code>ChronoLocalDateTime</code> or <code>Instant</code>
+ is parsed, then the excess days are added to the date part.
+ As a result, this query will return a zero period.
+ <p>
+ The <code>SMART</code> behaviour handles the common "end of day" 24:00 value.
+ Processing in <code>LENIENT</code> mode also produces the same result:
+ <pre>
+  Text to parse        Parsed object                         Excess days
+  "2012-12-03T00:00"   LocalDateTime.of(2012, 12, 3, 0, 0)   ZERO
+  "2012-12-03T24:00"   LocalDateTime.of(2012, 12, 4, 0, 0)   ZERO
+  "00:00"              LocalTime.of(0, 0)                    ZERO
+  "24:00"              LocalTime.of(0, 0)                    Period.ofDays(1)
+ </pre>
+ The query can be used as follows:
+ <pre>
+  TemporalAccessor parsed = formatter.parse(str);
+  LocalTime time = parsed.query(LocalTime.FROM);
+  Period extraDays = parsed.query(DateTimeFormatter.parsedExcessDays());
+ </pre></div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a query that provides access to the excess days that were parsed</dd></dl>
+</li>
+</ul>
+<a name="parsedLeapSecond()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parsedLeapSecond</h4>
+<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Boolean.html?is-external=true" title="class or interface in java.lang">Boolean</a>&gt;&nbsp;parsedLeapSecond()</pre>
+<div class="block">A query that provides access to whether a leap-second was parsed.
+ <p>
+ This returns a singleton <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">query</a> that provides
+ access to additional information from the parse. The query always returns
+ a non-null boolean, true if parsing saw a leap-second, false if not.
+ <p>
+ Instant parsing handles the special "leap second" time of '23:59:60'.
+ Leap seconds occur at '23:59:60' in the UTC time-zone, but at other
+ local times in different time-zones. To avoid this potential ambiguity,
+ the handling of leap-seconds is limited to
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html#appendInstant()"><code>DateTimeFormatterBuilder.appendInstant()</code></a>, as that method
+ always parses the instant with the UTC zone offset.
+ <p>
+ If the time '23:59:60' is received, then a simple conversion is applied,
+ replacing the second-of-minute of 60 with 59. This query can be used
+ on the parse result to determine if the leap-second adjustment was made.
+ The query will return one second of excess if it did adjust to remove
+ the leap-second, and zero if not. Note that applying a leap-second
+ smoothing mechanism, such as UTC-SLS, is the responsibility of the
+ application, as follows:
+ <pre>
+  TemporalAccessor parsed = formatter.parse(str);
+  Instant instant = parsed.query(Instant::from);
+  if (parsed.query(DateTimeFormatter.parsedLeapSecond())) {
+    // validate leap-second is correct and apply correct smoothing
+  }
+ </pre></div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>a query that provides access to whether a leap-second was parsed</dd></dl>
+</li>
+</ul>
 <a name="getLocale()">
 <!--   -->
 </a>
@@ -1131,28 +1275,28 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>a formatter based on this formatter with the requested locale, not null</dd></dl>
 </li>
 </ul>
-<a name="getSymbols()">
+<a name="getDecimalStyle()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getSymbols</h4>
-<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format">DateTimeFormatSymbols</a>&nbsp;getSymbols()</pre>
-<div class="block">Gets the set of symbols to be used during formatting.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the locale of this formatter, not null</dd></dl>
+<h4>getDecimalStyle</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DecimalStyle.html" title="class in org.threeten.bp.format">DecimalStyle</a>&nbsp;getDecimalStyle()</pre>
+<div class="block">Gets the decimal style to be used during formatting.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the decimal style of this formatter, not null</dd></dl>
 </li>
 </ul>
-<a name="withSymbols(org.threeten.bp.format.DateTimeFormatSymbols)">
+<a name="withDecimalStyle(org.threeten.bp.format.DecimalStyle)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>withSymbols</h4>
-<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;withSymbols(<a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format">DateTimeFormatSymbols</a>&nbsp;symbols)</pre>
-<div class="block">Returns a copy of this formatter with a new set of symbols.
+<h4>withDecimalStyle</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;withDecimalStyle(<a href="../../../../org/threeten/bp/format/DecimalStyle.html" title="class in org.threeten.bp.format">DecimalStyle</a>&nbsp;decimalStyle)</pre>
+<div class="block">Returns a copy of this formatter with a new decimal style.
  <p>
  This instance is immutable and unaffected by this method call.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>symbols</code> - the new symbols, not null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>decimalStyle</code> - the new decimal style, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a formatter based on this formatter with the requested symbols, not null</dd></dl>
 </li>
 </ul>
@@ -1248,6 +1392,153 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dt><span class="strong">Returns:</span></dt><dd>a formatter based on this formatter with the requested override zone, not null</dd></dl>
 </li>
 </ul>
+<a name="getResolverStyle()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getResolverStyle</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;getResolverStyle()</pre>
+<div class="block">Gets the resolver style to use during parsing.
+ <p>
+ This returns the resolver style, used during the second phase of parsing
+ when fields are resolved into dates and times.
+ By default, a formatter has the <a href="../../../../org/threeten/bp/format/ResolverStyle.html#SMART"><code>SMART</code></a> resolver style.
+ See <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withResolverStyle(org.threeten.bp.format.ResolverStyle)"><code>withResolverStyle(ResolverStyle)</code></a> for more details.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the resolver style of this formatter, not null</dd></dl>
+</li>
+</ul>
+<a name="withResolverStyle(org.threeten.bp.format.ResolverStyle)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withResolverStyle</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;withResolverStyle(<a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</pre>
+<div class="block">Returns a copy of this formatter with a new resolver style.
+ <p>
+ This returns a formatter with similar state to this formatter but
+ with the resolver style set. By default, a formatter has the
+ <a href="../../../../org/threeten/bp/format/ResolverStyle.html#SMART"><code>SMART</code></a> resolver style.
+ <p>
+ Changing the resolver style only has an effect during parsing.
+ Parsing a text string occurs in two phases.
+ Phase 1 is a basic text parse according to the fields added to the builder.
+ Phase 2 resolves the parsed field-value pairs into date and/or time objects.
+ The resolver style is used to control how phase 2, resolving, happens.
+ See <code>ResolverStyle</code> for more information on the options available.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>resolverStyle</code> - the new resolver style, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a formatter based on this formatter with the requested resolver style, not null</dd></dl>
+</li>
+</ul>
+<a name="getResolverFields()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getResolverFields</h4>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&gt;&nbsp;getResolverFields()</pre>
+<div class="block">Gets the resolver fields to use during parsing.
+ <p>
+ This returns the resolver fields, used during the second phase of parsing
+ when fields are resolved into dates and times.
+ By default, a formatter has no resolver fields, and thus returns null.
+ See <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withResolverFields(java.util.Set)"><code>withResolverFields(Set)</code></a> for more details.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the immutable set of resolver fields of this formatter, null if no fields</dd></dl>
+</li>
+</ul>
+<a name="withResolverFields(org.threeten.bp.temporal.TemporalField...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withResolverFields</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;withResolverFields(<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>...&nbsp;resolverFields)</pre>
+<div class="block">Returns a copy of this formatter with a new set of resolver fields.
+ <p>
+ This returns a formatter with similar state to this formatter but with
+ the resolver fields set. By default, a formatter has no resolver fields.
+ <p>
+ Changing the resolver fields only has an effect during parsing.
+ Parsing a text string occurs in two phases.
+ Phase 1 is a basic text parse according to the fields added to the builder.
+ Phase 2 resolves the parsed field-value pairs into date and/or time objects.
+ The resolver fields are used to filter the field-value pairs between phase 1 and 2.
+ <p>
+ This can be used to select between two or more ways that a date or time might
+ be resolved. For example, if the formatter consists of year, month, day-of-month
+ and day-of-year, then there are two ways to resolve a date.
+ Calling this method with the arguments <a href="../../../../org/threeten/bp/temporal/ChronoField.html#YEAR"><code>YEAR</code></a> and
+ <a href="../../../../org/threeten/bp/temporal/ChronoField.html#DAY_OF_YEAR"><code>DAY_OF_YEAR</code></a> will ensure that the date is
+ resolved using the year and day-of-year, effectively meaning that the month
+ and day-of-month are ignored during the resolving phase.
+ <p>
+ In a similar manner, this method can be used to ignore secondary fields that
+ would otherwise be cross-checked. For example, if the formatter consists of year,
+ month, day-of-month and day-of-week, then there is only one way to resolve a
+ date, but the parsed value for day-of-week will be cross-checked against the
+ resolved date. Calling this method with the arguments <a href="../../../../org/threeten/bp/temporal/ChronoField.html#YEAR"><code>YEAR</code></a>,
+ <a href="../../../../org/threeten/bp/temporal/ChronoField.html#MONTH_OF_YEAR"><code>MONTH_OF_YEAR</code></a> and
+ <a href="../../../../org/threeten/bp/temporal/ChronoField.html#DAY_OF_MONTH"><code>DAY_OF_MONTH</code></a> will ensure that the date is
+ resolved correctly, but without any cross-check for the day-of-week.
+ <p>
+ In implementation terms, this method behaves as follows. The result of the
+ parsing phase can be considered to be a map of field to value. The behavior
+ of this method is to cause that map to be filtered between phase 1 and 2,
+ removing all fields other than those specified as arguments to this method.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>resolverFields</code> - the new set of resolver fields, null if no fields</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a formatter based on this formatter with the requested resolver style, not null</dd></dl>
+</li>
+</ul>
+<a name="withResolverFields(java.util.Set)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withResolverFields</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a>&nbsp;withResolverFields(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>&gt;&nbsp;resolverFields)</pre>
+<div class="block">Returns a copy of this formatter with a new set of resolver fields.
+ <p>
+ This returns a formatter with similar state to this formatter but with
+ the resolver fields set. By default, a formatter has no resolver fields.
+ <p>
+ Changing the resolver fields only has an effect during parsing.
+ Parsing a text string occurs in two phases.
+ Phase 1 is a basic text parse according to the fields added to the builder.
+ Phase 2 resolves the parsed field-value pairs into date and/or time objects.
+ The resolver fields are used to filter the field-value pairs between phase 1 and 2.
+ <p>
+ This can be used to select between two or more ways that a date or time might
+ be resolved. For example, if the formatter consists of year, month, day-of-month
+ and day-of-year, then there are two ways to resolve a date.
+ Calling this method with the arguments <a href="../../../../org/threeten/bp/temporal/ChronoField.html#YEAR"><code>YEAR</code></a> and
+ <a href="../../../../org/threeten/bp/temporal/ChronoField.html#DAY_OF_YEAR"><code>DAY_OF_YEAR</code></a> will ensure that the date is
+ resolved using the year and day-of-year, effectively meaning that the month
+ and day-of-month are ignored during the resolving phase.
+ <p>
+ In a similar manner, this method can be used to ignore secondary fields that
+ would otherwise be cross-checked. For example, if the formatter consists of year,
+ month, day-of-month and day-of-week, then there is only one way to resolve a
+ date, but the parsed value for day-of-week will be cross-checked against the
+ resolved date. Calling this method with the arguments <a href="../../../../org/threeten/bp/temporal/ChronoField.html#YEAR"><code>YEAR</code></a>,
+ <a href="../../../../org/threeten/bp/temporal/ChronoField.html#MONTH_OF_YEAR"><code>MONTH_OF_YEAR</code></a> and
+ <a href="../../../../org/threeten/bp/temporal/ChronoField.html#DAY_OF_MONTH"><code>DAY_OF_MONTH</code></a> will ensure that the date is
+ resolved correctly, but without any cross-check for the day-of-week.
+ <p>
+ In implementation terms, this method behaves as follows. The result of the
+ parsing phase can be considered to be a map of field to value. The behavior
+ of this method is to cause that map to be filtered between phase 1 and 2,
+ removing all fields other than those specified as arguments to this method.
+ <p>
+ This instance is immutable and unaffected by this method call.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>resolverFields</code> - the new set of resolver fields, null if no fields</dd>
+<dt><span class="strong">Returns:</span></dt><dd>a formatter based on this formatter with the requested resolver style, not null</dd></dl>
+</li>
+</ul>
 <a name="format(org.threeten.bp.temporal.TemporalAccessor)">
 <!--   -->
 </a>
@@ -1296,7 +1587,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Fully parses the text producing a temporal object.
  <p>
  This parses the entire text producing a temporal object.
- It is typically more useful to use <code>#parse(CharSequence, TemporalQuery)</code>.
+ It is typically more useful to use <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parse(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery)"><code>parse(CharSequence, TemporalQuery)</code></a>.
  The result of this method is <code>TemporalAccessor</code> which has been resolved,
  applying basic validation checks to help ensure a valid date-time.
  <p>
@@ -1345,14 +1636,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IndexOutOfBoundsException.html?is-external=true" title="class or interface in java.lang">IndexOutOfBoundsException</a></code> - if the position is invalid</dd></dl>
 </li>
 </ul>
-<a name="parse(java.lang.CharSequence, java.lang.Class)">
+<a name="parse(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
 <pre>public&nbsp;&lt;T&gt;&nbsp;T&nbsp;parse(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
-          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
+          <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;T&gt;&nbsp;type)</pre>
 <div class="block">Fully parses the text producing an object of the specified type.
  <p>
  Most applications should use this method for parsing.
@@ -1369,14 +1660,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dd><code><a href="../../../../org/threeten/bp/format/DateTimeParseException.html" title="class in org.threeten.bp.format">DateTimeParseException</a></code> - if unable to parse the requested result</dd></dl>
 </li>
 </ul>
-<a name="parseBest(java.lang.CharSequence, java.lang.Class...)">
+<a name="parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>parseBest</h4>
 <pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;parseBest(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
-                         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;...&nbsp;types)</pre>
+                         <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;?&gt;...&nbsp;types)</pre>
 <div class="block">Fully parses the text producing an object of one of the specified types.
  <p>
  This parse method is convenient for use when the parser can handle optional elements.
@@ -1442,7 +1733,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  <p>
  This method is intended for advanced use cases that need access to the
  internal state during parsing. Typical application code should use
- <code>#parse(CharSequence, TemporalQuery)</code> or the parse method on the target type.</div>
+ <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parse(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery)"><code>parse(CharSequence, TemporalQuery)</code></a> or the parse method on the target type.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>text</code> - the text to parse, not null</dd><dd><code>position</code> - the position to parse from, updated with length parsed
   and the index of any error, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the parsed text, null if the parse results in an error</dd>
@@ -1461,7 +1752,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Returns this formatter as a <code>java.text.Format</code> instance.
  <p>
  The returned <a href="http://docs.oracle.com/javase/7/docs/api/java/text/Format.html?is-external=true" title="class or interface in java.text"><code>Format</code></a> instance will print any <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal"><code>TemporalAccessor</code></a>
- and parses to a resolved <code>DateTimeBuilder</code>.
+ and parses to a resolved <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal"><code>TemporalAccessor</code></a>.
  <p>
  Exceptions will follow the definitions of <code>Format</code>, see those methods
  for details about <code>IllegalArgumentException</code> during formatting and
@@ -1470,13 +1761,13 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dl><dt><span class="strong">Returns:</span></dt><dd>this formatter as a classic format instance, not null</dd></dl>
 </li>
 </ul>
-<a name="toFormat(java.lang.Class)">
+<a name="toFormat(org.threeten.bp.temporal.TemporalQuery)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>toFormat</h4>
-<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/text/Format.html?is-external=true" title="class or interface in java.text">Format</a>&nbsp;toFormat(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;parseType)</pre>
+<pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/text/Format.html?is-external=true" title="class or interface in java.text">Format</a>&nbsp;toFormat(<a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;?&gt;&nbsp;query)</pre>
 <div class="block">Returns this formatter as a <code>java.text.Format</code> instance that will
  parse to the specified type.
  <p>
@@ -1488,7 +1779,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  for details about <code>IllegalArgumentException</code> during formatting and
  <code>ParseException</code> or null during parsing.
  The format does not support attributing of the returned format string.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>parseType</code> - the type to parse to, not null</dd>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>query</code> - the query to parse to, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>this formatter as a classic format instance, not null</dd></dl>
 </li>
 </ul>
@@ -1532,7 +1823,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format"><span class="strong">Prev Class</span></a></li>
+<li>Prev Class</li>
 <li><a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">

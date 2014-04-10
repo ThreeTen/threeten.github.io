@@ -82,10 +82,10 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.threeten.bp.chrono">org.threeten.bp.chrono</a></td>
+<td class="colFirst"><a href="#org.threeten.bp.format">org.threeten.bp.format</a></td>
 <td class="colLast">
 <div class="block">
-Support for calendar systems other than the default ISO.</div>
+Provides classes to print and parse dates and times.</div>
 </td>
 </tr>
 </tbody>
@@ -128,50 +128,56 @@ Support for calendar systems other than the default ISO.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#minus(org.threeten.bp.Period)">minus</a></strong>(<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&nbsp;amountToSubtract)</code>
-<div class="block">Returns a copy of this period with the specified period subtracted.</div>
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
+<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#from(org.threeten.bp.temporal.TemporalAmount)">from</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amount)</code>
+<div class="block">Obtains an instance of <code>Period</code> from a temporal amount.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
+<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#minus(org.threeten.bp.temporal.TemporalAmount)">minus</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amountToSubtract)</code>
+<div class="block">Returns a copy of this period with the specified amount subtracted.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#minusDays(long)">minusDays</a></strong>(long&nbsp;daysToSubtract)</code>
 <div class="block">Returns a copy of this period with the specified days subtracted.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#minusMonths(long)">minusMonths</a></strong>(long&nbsp;monthsToSubtract)</code>
 <div class="block">Returns a copy of this period with the specified months subtracted.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#minusYears(long)">minusYears</a></strong>(long&nbsp;yearsToSubtract)</code>
 <div class="block">Returns a copy of this period with the specified years subtracted.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#multipliedBy(int)">multipliedBy</a></strong>(int&nbsp;scalar)</code>
 <div class="block">Returns a new instance with each element in this period multiplied
  by the specified scalar.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#negated()">negated</a></strong>()</code>
 <div class="block">Returns a new instance with each amount in this period negated.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#normalized()">normalized</a></strong>()</code>
 <div class="block">Returns a copy of this period with the years and months normalized
  using a 12 month year.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#of(int, int, int)">of</a></strong>(int&nbsp;years,
   int&nbsp;months,
@@ -179,16 +185,22 @@ Support for calendar systems other than the default ISO.</div>
 <div class="block">Obtains a <code>Period</code> representing a number of years, months and days.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#ofDays(int)">ofDays</a></strong>(int&nbsp;days)</code>
 <div class="block">Obtains a <code>Period</code> representing a number of days.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#ofMonths(int)">ofMonths</a></strong>(int&nbsp;months)</code>
 <div class="block">Obtains a <code>Period</code> representing a number of months.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
+<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#ofWeeks(int)">ofWeeks</a></strong>(int&nbsp;weeks)</code>
+<div class="block">Obtains a <code>Period</code> representing a number of weeks.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -205,32 +217,32 @@ Support for calendar systems other than the default ISO.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../org/threeten/bp/LocalDate.html#periodUntil(org.threeten.bp.chrono.ChronoLocalDate)">periodUntil</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;endDate)</code>
-<div class="block">Calculates the period between this date and another date as a <code>Period</code>.</div>
+<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#plus(org.threeten.bp.temporal.TemporalAmount)">plus</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAmount.html" title="interface in org.threeten.bp.temporal">TemporalAmount</a>&nbsp;amountToAdd)</code>
+<div class="block">Returns a copy of this period with the specified amount added.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#plus(org.threeten.bp.Period)">plus</a></strong>(<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&nbsp;amountToAdd)</code>
-<div class="block">Returns a copy of this period with the specified period added.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#plusDays(long)">plusDays</a></strong>(long&nbsp;daysToAdd)</code>
 <div class="block">Returns a copy of this period with the specified days added.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#plusMonths(long)">plusMonths</a></strong>(long&nbsp;monthsToAdd)</code>
 <div class="block">Returns a copy of this period with the specified months added.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
 <td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#plusYears(long)">plusYears</a></strong>(long&nbsp;yearsToAdd)</code>
 <div class="block">Returns a copy of this period with the specified years added.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
+<td class="colLast"><span class="strong">LocalDate.</span><code><strong><a href="../../../../org/threeten/bp/LocalDate.html#until(org.threeten.bp.chrono.ChronoLocalDate)">until</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&nbsp;endDate)</code>
+<div class="block">Calculates the period between this date and another date as a <code>Period</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -253,43 +265,22 @@ Support for calendar systems other than the default ISO.</div>
 </tr>
 </tbody>
 </table>
-<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../org/threeten/bp/package-summary.html">org.threeten.bp</a> with parameters of type <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#minus(org.threeten.bp.Period)">minus</a></strong>(<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&nbsp;amountToSubtract)</code>
-<div class="block">Returns a copy of this period with the specified period subtracted.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><span class="strong">Period.</span><code><strong><a href="../../../../org/threeten/bp/Period.html#plus(org.threeten.bp.Period)">plus</a></strong>(<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&nbsp;amountToAdd)</code>
-<div class="block">Returns a copy of this period with the specified period added.</div>
-</td>
-</tr>
-</tbody>
-</table>
 </li>
-<li class="blockList"><a name="org.threeten.bp.chrono">
+<li class="blockList"><a name="org.threeten.bp.format">
 <!--   -->
 </a>
-<h3>Uses of <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a> in <a href="../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a></h3>
+<h3>Uses of <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a> in <a href="../../../../org/threeten/bp/format/package-summary.html">org.threeten.bp.format</a></h3>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../org/threeten/bp/chrono/package-summary.html">org.threeten.bp.chrono</a> that return <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span>Methods in <a href="../../../../org/threeten/bp/format/package-summary.html">org.threeten.bp.format</a> that return types with arguments of type <a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a></code></td>
-<td class="colLast"><span class="strong">ChronoLocalDate.</span><code><strong><a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html#periodUntil(org.threeten.bp.chrono.ChronoLocalDate)">periodUntil</a></strong>(<a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;&nbsp;endDate)</code>
-<div class="block">Calculates the period between this date and another date as a <code>Period</code>.</div>
+<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../../org/threeten/bp/Period.html" title="class in org.threeten.bp">Period</a>&gt;</code></td>
+<td class="colLast"><span class="strong">DateTimeFormatter.</span><code><strong><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#parsedExcessDays()">parsedExcessDays</a></strong>()</code>
+<div class="block">A query that provides access to the excess days that were parsed.</div>
 </td>
 </tr>
 </tbody>

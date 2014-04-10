@@ -35,8 +35,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/threeten/bp/chrono/JapaneseChronology.html" title="class in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/HijrahEra.html" title="enum in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/threeten/bp/chrono/IsoChronology.html" target="_top">Frames</a></li>
@@ -151,24 +151,19 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#ERA_BCE">ERA_BCE</a></strong></code>
-<div class="block">The singleton instance for the era BCE - 'Before Current Era'.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#ERA_CE">ERA_CE</a></strong></code>
-<div class="block">The singleton instance for the era CE - 'Current Era'.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/threeten/bp/chrono/IsoChronology.html" title="class in org.threeten.bp.chrono">IsoChronology</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#INSTANCE">INSTANCE</a></strong></code>
 <div class="block">Singleton instance of the ISO chronology.</div>
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.threeten.bp.chrono.Chronology">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;org.threeten.bp.chrono.<a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></h3>
+<code><a href="../../../../org/threeten/bp/chrono/Chronology.html#FROM">FROM</a></code></li>
+</ul>
 </li>
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
@@ -210,23 +205,29 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#dateEpochDay(long)">dateEpochDay</a></strong>(long&nbsp;epochDay)</code>
+<div class="block">Obtains a local date in this chronology from the epoch-day.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#dateNow()">dateNow</a></strong>()</code>
 <div class="block">Obtains the current ISO local date from the system clock in the default time-zone.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#dateNow(org.threeten.bp.Clock)">dateNow</a></strong>(<a href="../../../../org/threeten/bp/Clock.html" title="class in org.threeten.bp">Clock</a>&nbsp;clock)</code>
 <div class="block">Obtains the current ISO local date from the specified clock.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#dateNow(org.threeten.bp.ZoneId)">dateNow</a></strong>(<a href="../../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a>&nbsp;zone)</code>
 <div class="block">Obtains the current ISO local date from the system clock in the specified time-zone.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#dateYearDay(org.threeten.bp.chrono.Era, int, int)">dateYearDay</a></strong>(<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a>&nbsp;era,
            int&nbsp;yearOfEra,
@@ -234,61 +235,68 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <div class="block">Obtains an ISO local date from the era, year-of-era and day-of-year fields.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#dateYearDay(int, int)">dateYearDay</a></strong>(int&nbsp;prolepticYear,
            int&nbsp;dayOfYear)</code>
 <div class="block">Obtains an ISO local date from the proleptic-year and day-of-year fields.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></code></td>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono">IsoEra</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#eraOf(int)">eraOf</a></strong>(int&nbsp;eraValue)</code>
 <div class="block">Creates the chronology era object from the numeric value.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#eras()">eras</a></strong>()</code>
 <div class="block">Gets the list of eras for the chronology.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#getCalendarType()">getCalendarType</a></strong>()</code>
 <div class="block">Gets the calendar type of the underlying calendar system - 'iso8601'.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#getId()">getId</a></strong>()</code>
 <div class="block">Gets the ID of the chronology - 'ISO'.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#isLeapYear(long)">isLeapYear</a></strong>(long&nbsp;prolepticYear)</code>
 <div class="block">Checks if the year is a leap year, according to the ISO proleptic
  calendar system rules.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDateTime.html" title="class in org.threeten.bp">LocalDateTime</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains an ISO local date-time from another date-time object.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#prolepticYear(org.threeten.bp.chrono.Era, int)">prolepticYear</a></strong>(<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a>&nbsp;era,
              int&nbsp;yearOfEra)</code>
 <div class="block">Calculates the proleptic-year given the era and year-of-era.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#range(org.threeten.bp.temporal.ChronoField)">range</a></strong>(<a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal">ChronoField</a>&nbsp;field)</code>
 <div class="block">Gets the range of valid values for the specified field.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/chrono/IsoChronology.html#resolveDate(java.util.Map, org.threeten.bp.format.ResolverStyle)">resolveDate</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+           <a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>
+<div class="block">Resolves parsed <code>ChronoField</code> values into a date during parsing.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -310,7 +318,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.threeten.bp.chrono.<a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></h3>
-<code><a href="../../../../org/threeten/bp/chrono/Chronology.html#compareTo(org.threeten.bp.chrono.Chronology)">compareTo</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#dateTime(org.threeten.bp.chrono.ChronoLocalDate, org.threeten.bp.LocalTime)">dateTime</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#ensureChronoLocalDate(org.threeten.bp.temporal.Temporal)">ensureChronoLocalDate</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#ensureChronoLocalDateTime(org.threeten.bp.temporal.Temporal)">ensureChronoLocalDateTime</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#ensureChronoZonedDateTime(org.threeten.bp.temporal.Temporal)">ensureChronoZonedDateTime</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#equals(java.lang.Object)">equals</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#getAvailableChronologies()">getAvailableChronologies</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">getDisplayName</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#hashCode()">hashCode</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#of(java.lang.String)">of</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#ofLocale(java.util.Locale)">ofLocale</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#toString()">toString</a></code></li>
+<code><a href="../../../../org/threeten/bp/chrono/Chronology.html#compareTo(org.threeten.bp.chrono.Chronology)">compareTo</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#equals(java.lang.Object)">equals</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#getAvailableChronologies()">getAvailableChronologies</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">getDisplayName</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#hashCode()">hashCode</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#of(java.lang.String)">of</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#ofLocale(java.util.Locale)">ofLocale</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#period(int, int, int)">period</a>, <a href="../../../../org/threeten/bp/chrono/Chronology.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
@@ -336,37 +344,11 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <a name="INSTANCE">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>INSTANCE</h4>
 <pre>public static final&nbsp;<a href="../../../../org/threeten/bp/chrono/IsoChronology.html" title="class in org.threeten.bp.chrono">IsoChronology</a> INSTANCE</pre>
 <div class="block">Singleton instance of the ISO chronology.</div>
-</li>
-</ul>
-<a name="ERA_BCE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ERA_BCE</h4>
-<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a> ERA_BCE</pre>
-<div class="block">The singleton instance for the era BCE - 'Before Current Era'.
- The 'ISO' part of the name emphasizes that this differs from the BCE
- era in the Gregorian calendar system.
- This has the numeric value of <code>0</code>.</div>
-</li>
-</ul>
-<a name="ERA_CE">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>ERA_CE</h4>
-<pre>public static final&nbsp;<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a> ERA_CE</pre>
-<div class="block">The singleton instance for the era CE - 'Current Era'.
- The 'ISO' part of the name emphasizes that this differs from the CE
- era in the Gregorian calendar system.
- This has the numeric value of <code>1</code>.</div>
 </li>
 </ul>
 </li>
@@ -386,8 +368,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getId()</pre>
 <div class="block">Gets the ID of the chronology - 'ISO'.
  <p>
- The ID uniquely identifies the <code>Chrono</code>.
- It can be used to lookup the <code>Chrono</code> using <a href="../../../../org/threeten/bp/chrono/Chronology.html#of(java.lang.String)"><code>Chronology.of(String)</code></a>.</div>
+ The ID uniquely identifies the <code>Chronology</code>.
+ It can be used to lookup the <code>Chronology</code> using <a href="../../../../org/threeten/bp/chrono/Chronology.html#of(java.lang.String)"><code>Chronology.of(String)</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/threeten/bp/chrono/Chronology.html#getId()">getId</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></dd>
@@ -405,7 +387,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
  <p>
  The calendar type is an identifier defined by the
  <em>Unicode Locale Data Markup Language (LDML)</em> specification.
- It can be used to lookup the <code>Chrono</code> using <a href="../../../../org/threeten/bp/chrono/Chronology.html#of(java.lang.String)"><code>Chronology.of(String)</code></a>.
+ It can be used to lookup the <code>Chronology</code> using <a href="../../../../org/threeten/bp/chrono/Chronology.html#of(java.lang.String)"><code>Chronology.of(String)</code></a>.
  It can also be used as part of a locale, accessible via
  <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Locale.html?is-external=true#getUnicodeLocaleType(java.lang.String)" title="class or interface in java.util"><code>Locale.getUnicodeLocaleType(String)</code></a> with the key 'ca'.</div>
 <dl>
@@ -494,6 +476,25 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <dt><span class="strong">Returns:</span></dt><dd>the ISO local date, not null</dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../../org/threeten/bp/DateTimeException.html" title="class in org.threeten.bp">DateTimeException</a></code> - if unable to create the date</dd></dl>
+</li>
+</ul>
+<a name="dateEpochDay(long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dateEpochDay</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&nbsp;dateEpochDay(long&nbsp;epochDay)</pre>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html#dateEpochDay(long)">Chronology</a></code></strong></div>
+<div class="block">Obtains a local date in this chronology from the epoch-day.
+ <p>
+ The definition of <a href="../../../../org/threeten/bp/temporal/ChronoField.html#EPOCH_DAY"><code>EPOCH_DAY</code></a> is the same
+ for all calendar systems, thus it can be used for conversion.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/chrono/Chronology.html#dateEpochDay(long)">dateEpochDay</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>epochDay</code> - the epoch day</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the local date in this chronology, not null</dd></dl>
 </li>
 </ul>
 <a name="date(org.threeten.bp.temporal.TemporalAccessor)">
@@ -692,7 +693,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <ul class="blockList">
 <li class="blockList">
 <h4>eraOf</h4>
-<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a>&nbsp;eraOf(int&nbsp;eraValue)</pre>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono">IsoEra</a>&nbsp;eraOf(int&nbsp;eraValue)</pre>
 <div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html#eraOf(int)">Chronology</a></code></strong></div>
 <div class="block">Creates the chronology era object from the numeric value.
  <p>
@@ -736,7 +737,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <a name="range(org.threeten.bp.temporal.ChronoField)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>range</h4>
 <pre>public&nbsp;<a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal">ValueRange</a>&nbsp;range(<a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal">ChronoField</a>&nbsp;field)</pre>
@@ -756,6 +757,32 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 <dd><code><a href="../../../../org/threeten/bp/chrono/Chronology.html#range(org.threeten.bp.temporal.ChronoField)">range</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>field</code> - the field to get the range for, not null</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the range of valid values for the field, not null</dd></dl>
+</li>
+</ul>
+<a name="resolveDate(java.util.Map, org.threeten.bp.format.ResolverStyle)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>resolveDate</h4>
+<pre>public&nbsp;<a href="../../../../org/threeten/bp/LocalDate.html" title="class in org.threeten.bp">LocalDate</a>&nbsp;resolveDate(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+                    <a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</pre>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html#resolveDate(java.util.Map, org.threeten.bp.format.ResolverStyle)">Chronology</a></code></strong></div>
+<div class="block">Resolves parsed <code>ChronoField</code> values into a date during parsing.
+ <p>
+ Most <code>TemporalField</code> implementations are resolved using the
+ resolve method on the field. By contrast, the <code>ChronoField</code> class
+ defines fields that only have meaning relative to the chronology.
+ As such, <code>ChronoField</code> date fields are resolved here in the
+ context of a specific chronology.
+ <p>
+ The default implementation, which explains typical resolve behaviour,
+ is provided in <code>AbstractChronology</code>.</div>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/threeten/bp/chrono/Chronology.html#resolveDate(java.util.Map, org.threeten.bp.format.ResolverStyle)">resolveDate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></dd>
+<dt><span class="strong">Parameters:</span></dt><dd><code>fieldValues</code> - the map of fields to values, which can be updated, not null</dd><dd><code>resolverStyle</code> - the requested type of resolve, not null</dd>
+<dt><span class="strong">Returns:</span></dt><dd>the resolved date, null if insufficient information to create a date</dd></dl>
 </li>
 </ul>
 </li>
@@ -784,8 +811,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializabl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/threeten/bp/chrono/JapaneseChronology.html" title="class in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/HijrahEra.html" title="enum in org.threeten.bp.chrono"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/threeten/bp/chrono/IsoChronology.html" target="_top">Frames</a></li>

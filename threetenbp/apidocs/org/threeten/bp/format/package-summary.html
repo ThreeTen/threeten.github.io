@@ -80,21 +80,21 @@ Provides classes to print and parse dates and times.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format">DateTimeFormatSymbols</a></td>
-<td class="colLast">
-<div class="block">Localized symbols used in date and time formatting.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format">DateTimeFormatter</a></td>
 <td class="colLast">
 <div class="block">Formatter for printing and parsing date-time objects.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format">DateTimeFormatterBuilder</a></td>
 <td class="colLast">
 <div class="block">Builder to create date-time formatters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/format/DecimalStyle.html" title="class in org.threeten.bp.format">DecimalStyle</a></td>
+<td class="colLast">
+<div class="block">Localized symbols used in date and time formatting.</div>
 </td>
 </tr>
 </tbody>
@@ -115,15 +115,21 @@ Provides classes to print and parse dates and times.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a></td>
+<td class="colLast">
+<div class="block">Enumeration of different ways to resolve dates and times.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/format/SignStyle.html" title="enum in org.threeten.bp.format">SignStyle</a></td>
 <td class="colLast">
 <div class="block">Enumeration of ways to handle the positive/negative sign.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/threeten/bp/format/TextStyle.html" title="enum in org.threeten.bp.format">TextStyle</a></td>
 <td class="colLast">
-<div class="block">Enumeration of the style of text output to use.</div>
+<div class="block">Enumeration of the style of text formatting and parsing.</div>
 </td>
 </tr>
 </tbody>
@@ -156,14 +162,14 @@ Provides classes to print and parse dates and times.
 </p>
 <p>
 Printing and parsing is based around the <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html" title="class in org.threeten.bp.format"><code>DateTimeFormatter</code></a> class.
-Instances are generally obtained from <code>DateTimeFormatters</code>,
-however <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format"><code>DateTimeFormatterBuilder</code></a> can be used
-if more power is needed.
+That class contains common formatters and factory methods.
+The <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html" title="class in org.threeten.bp.format"><code>DateTimeFormatterBuilder</code></a> class is available
+for advanced and complex use cases.
 </p>
 <p>
 Localization occurs by calling <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html#withLocale(java.util.Locale)"><code>withLocale(Locale)</code></a>
 on the formatter. Further customization is possible using
-<a href="../../../../org/threeten/bp/format/DateTimeFormatSymbols.html" title="class in org.threeten.bp.format"><code>DateTimeFormatSymbols</code></a>.
+<a href="../../../../org/threeten/bp/format/DecimalStyle.html" title="class in org.threeten.bp.format"><code>DecimalStyle</code></a>.
 </p></div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->

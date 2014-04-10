@@ -157,18 +157,24 @@ implements <a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneOffset.html#FROM">FROM</a></strong></code>
+<div class="block">Simulate JDK 8 method reference ZoneOffset::from.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneOffset.html#MAX">MAX</a></strong></code>
 <div class="block">Constant for the maximum supported offset.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneOffset.html#MIN">MIN</a></strong></code>
 <div class="block">Constant for the maximum supported offset.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a></code></td>
 <td class="colLast"><code><strong><a href="../../../org/threeten/bp/ZoneOffset.html#UTC">UTC</a></strong></code>
 <div class="block">The time-zone offset for UTC, with an ID of 'Z'.</div>
@@ -180,7 +186,7 @@ implements <a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;org.threeten.bp.<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></h3>
-<code><a href="../../../org/threeten/bp/ZoneId.html#OLD_IDS_POST_2005">OLD_IDS_POST_2005</a>, <a href="../../../org/threeten/bp/ZoneId.html#OLD_IDS_PRE_2005">OLD_IDS_PRE_2005</a></code></li>
+<code><a href="../../../org/threeten/bp/ZoneId.html#SHORT_IDS">SHORT_IDS</a></code></li>
 </ul>
 </li>
 </ul>
@@ -321,7 +327,7 @@ implements <a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.threeten.bp.<a href="../../../org/threeten/bp/ZoneId.html" title="class in org.threeten.bp">ZoneId</a></h3>
-<code><a href="../../../org/threeten/bp/ZoneId.html#getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">getDisplayName</a>, <a href="../../../org/threeten/bp/ZoneId.html#of(java.lang.String, java.util.Map)">of</a>, <a href="../../../org/threeten/bp/ZoneId.html#systemDefault()">systemDefault</a></code></li>
+<code><a href="../../../org/threeten/bp/ZoneId.html#getAvailableZoneIds()">getAvailableZoneIds</a>, <a href="../../../org/threeten/bp/ZoneId.html#getDisplayName(org.threeten.bp.format.TextStyle, java.util.Locale)">getDisplayName</a>, <a href="../../../org/threeten/bp/ZoneId.html#normalized()">normalized</a>, <a href="../../../org/threeten/bp/ZoneId.html#of(java.lang.String, java.util.Map)">of</a>, <a href="../../../org/threeten/bp/ZoneId.html#ofOffset(java.lang.String, org.threeten.bp.ZoneOffset)">ofOffset</a>, <a href="../../../org/threeten/bp/ZoneId.html#systemDefault()">systemDefault</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
@@ -344,6 +350,16 @@ implements <a href="../../../org/threeten/bp/temporal/TemporalAccessor.html" tit
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="FROM">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>FROM</h4>
+<pre>public static final&nbsp;<a href="../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;<a href="../../../org/threeten/bp/ZoneOffset.html" title="class in org.threeten.bp">ZoneOffset</a>&gt; FROM</pre>
+<div class="block">Simulate JDK 8 method reference ZoneOffset::from.</div>
+</li>
+</ul>
 <a name="UTC">
 <!--   -->
 </a>

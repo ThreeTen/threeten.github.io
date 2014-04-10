@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/temporal/UnsupportedTemporalTypeException.html" title="class in org.threeten.bp.temporal"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/threeten/bp/temporal/TemporalUnit.html" target="_top">Frames</a></li>
@@ -152,9 +152,9 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalUnit.html#getName()">getName</a></strong>()</code>
-<div class="block">Gets a descriptive name for the unit.</div>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalUnit.html#isDateBased()">isDateBased</a></strong>()</code>
+<div class="block">Checks if this unit is date-based.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -170,6 +170,12 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalUnit.html#isTimeBased()">isTimeBased</a></strong>()</code>
+<div class="block">Checks if this unit is time-based.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/threeten/bp/temporal/TemporalUnit.html#toString()">toString</a></strong>()</code>
 <div class="block">Outputs this unit as a <code>String</code> using the name.</div>
@@ -190,19 +196,6 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getName()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getName</h4>
-<pre><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getName()</pre>
-<div class="block">Gets a descriptive name for the unit.
- <p>
- This should be in the plural and upper-first camel case, such as 'Days' or 'Minutes'.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>the name, not null</dd></dl>
-</li>
-</ul>
 <a name="getDuration()">
 <!--   -->
 </a>
@@ -238,6 +231,28 @@
  This method returns true if the duration is an estimate and false if it is
  accurate. Note that accurate/estimated ignores leap seconds.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>true if the duration is estimated, false if accurate</dd></dl>
+</li>
+</ul>
+<a name="isDateBased()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDateBased</h4>
+<pre>boolean&nbsp;isDateBased()</pre>
+<div class="block">Checks if this unit is date-based.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if date-based</dd></dl>
+</li>
+</ul>
+<a name="isTimeBased()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isTimeBased</h4>
+<pre>boolean&nbsp;isTimeBased()</pre>
+<div class="block">Checks if this unit is time-based.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>true if time-based</dd></dl>
 </li>
 </ul>
 <a name="isSupportedBy(org.threeten.bp.temporal.Temporal)">
@@ -318,11 +333,11 @@
  <p>
  There are two equivalent ways of using this method.
  The first is to invoke this method directly.
- The second is to use <a href="../../../../org/threeten/bp/temporal/Temporal.html#periodUntil(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)"><code>Temporal.periodUntil(Temporal, TemporalUnit)</code></a>:
+ The second is to use <a href="../../../../org/threeten/bp/temporal/Temporal.html#until(org.threeten.bp.temporal.Temporal, org.threeten.bp.temporal.TemporalUnit)"><code>Temporal.until(Temporal, TemporalUnit)</code></a>:
  <pre>
    // these two lines are equivalent
    between = thisUnit.between(start, end);
-   between = start.periodUntil(end, thisUnit);
+   between = start.until(end, thisUnit);
  </pre>
  The choice should be made based on which makes the code more readable. 
  <p>
@@ -330,7 +345,7 @@
  <pre>
    long daysBetween = DAYS.between(start, end);
    // or alternatively
-   long daysBetween = start.periodUntil(end, DAYS);
+   long daysBetween = start.until(end, DAYS);
  </pre>
  Implementations should perform any queries or calculations using the units available in
  <a href="../../../../org/threeten/bp/temporal/ChronoUnit.html" title="enum in org.threeten.bp.temporal"><code>ChronoUnit</code></a> or the fields available in <a href="../../../../org/threeten/bp/temporal/ChronoField.html" title="enum in org.threeten.bp.temporal"><code>ChronoField</code></a>.
@@ -385,7 +400,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/threeten/bp/temporal/ValueRange.html" title="class in org.threeten.bp.temporal"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/threeten/bp/temporal/UnsupportedTemporalTypeException.html" title="class in org.threeten.bp.temporal"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/threeten/bp/temporal/TemporalUnit.html" target="_top">Frames</a></li>

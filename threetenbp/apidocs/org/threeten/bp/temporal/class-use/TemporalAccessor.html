@@ -106,7 +106,7 @@ Simulates JDK 8 features on JDK 7.</div>
 <td class="colFirst"><a href="#org.threeten.bp.temporal">org.threeten.bp.temporal</a></td>
 <td class="colLast">
 <div class="block">
-Access to date and time using fields and units, plus additional value type classes.</div>
+Access to date and time using fields and units.</div>
 </td>
 </tr>
 </tbody>
@@ -318,27 +318,6 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
- for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A date-time with a time-zone in an arbitrary chronology,
- intended for advanced globalization use cases.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/Era.html" title="interface in org.threeten.bp.chrono">Era</a></strong></code>
 <div class="block">An era of the time-line.</div>
 </td>
@@ -354,14 +333,53 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></strong></code>
-<div class="block">A date in the Hijrah calendar system.</div>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></strong></code>
+<div class="block">A date without time-of-day or time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</strong></code>
+<div class="block">A date-time without a time-zone in an arbitrary chronology, intended
+ for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a>&gt;</strong></code>
+<div class="block">A date-time with a time-zone in an arbitrary chronology,
+ intended for advanced globalization use cases.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></strong></code>
+<div class="block">A date in the Hijrah calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahEra.html" title="enum in org.threeten.bp.chrono">HijrahEra</a></strong></code>
+<div class="block">An era in the Hijrah calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/IsoEra.html" title="enum in org.threeten.bp.chrono">IsoEra</a></strong></code>
+<div class="block">An era in the ISO calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></strong></code>
 <div class="block">A date in the Japanese Imperial calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseEra.html" title="class in org.threeten.bp.chrono">JapaneseEra</a></strong></code>
+<div class="block">An era in the Japanese Imperial calendar system.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -372,8 +390,20 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoEra.html" title="enum in org.threeten.bp.chrono">MinguoEra</a></strong></code>
+<div class="block">An era in the Minguo calendar system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></strong></code>
 <div class="block">A date in the Thai Buddhist calendar system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistEra.html" title="enum in org.threeten.bp.chrono">ThaiBuddhistEra</a></strong></code>
+<div class="block">An era in the Thai Buddhist calendar system.</div>
 </td>
 </tr>
 </tbody>
@@ -408,69 +438,111 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colLast"><span class="strong">HijrahChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahChronology.html#date(org.threeten.bp.temporal.TemporalAccessor)">date</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>abstract <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;?&gt;</code></td>
+<td class="colFirst"><code>abstract <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></td>
 <td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#date(org.threeten.bp.temporal.TemporalAccessor)">date</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains a local date in this chronology from another temporal object.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></td>
-<td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
-<div class="block">Obtains an instance of <code>Chrono</code> from a temporal object.</div>
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a></code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains a <code>ThaiBuddhistDate</code> from a temporal object.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a>&gt;</code></td>
-<td class="colLast"><span class="strong">ThaiBuddhistChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a></code></td>
+<td class="colLast"><span class="strong">MinguoDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains a <code>MinguoDate</code> from a temporal object.</div>
+</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a>&gt;</code></td>
-<td class="colLast"><span class="strong">MinguoChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a></code></td>
+<td class="colLast"><span class="strong">JapaneseDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains a <code>JapaneseDate</code> from a temporal object.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
-<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a></code></td>
+<td class="colLast"><span class="strong">HijrahDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains a <code>HijrahDate</code> of the Islamic Umm Al-Qura calendar from a temporal object.</div>
+</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">ChronoZonedDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains an instance of <code>ChronoZonedDateTime</code> from a temporal object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/Chronology.html" title="class in org.threeten.bp.chrono">Chronology</a></code></td>
+<td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains an instance of <code>Chronology</code> from a temporal object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="strong">ChronoLocalDateTime.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains an instance of <code>ChronoLocalDateTime</code> from a temporal object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="class in org.threeten.bp.chrono">ChronoLocalDate</a></code></td>
+<td class="colLast"><span class="strong">ChronoLocalDate.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html#from(org.threeten.bp.temporal.TemporalAccessor)">from</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
+<div class="block">Obtains an instance of <code>ChronoLocalDate</code> from a temporal object.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a>&gt;</code></td>
+<td class="colLast"><span class="strong">ThaiBuddhistChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a>&gt;</code></td>
+<td class="colLast"><span class="strong">MinguoChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/LocalDateTime.html" title="class in org.threeten.bp">LocalDateTime</a></code></td>
 <td class="colLast"><span class="strong">IsoChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/IsoChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains an ISO local date-time from another date-time object.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">HijrahChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahChronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="interface in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;?&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoLocalDateTime.html" title="class in org.threeten.bp.chrono">ChronoLocalDateTime</a>&lt;?&gt;</code></td>
 <td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#localDateTime(org.threeten.bp.temporal.TemporalAccessor)">localDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains a local date-time in this chronology from another temporal object.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistDate.html" title="class in org.threeten.bp.chrono">ThaiBuddhistDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ThaiBuddhistChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/ThaiBuddhistChronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a>&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/MinguoDate.html" title="class in org.threeten.bp.chrono">MinguoDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">MinguoChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/MinguoChronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/JapaneseDate.html" title="class in org.threeten.bp.chrono">JapaneseDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">JapaneseChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/JapaneseChronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/ZonedDateTime.html" title="class in org.threeten.bp">ZonedDateTime</a></code></td>
 <td class="colLast"><span class="strong">IsoChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/IsoChronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains an ISO zoned date-time from another date-time object.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a>&gt;</code></td>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;<a href="../../../../../org/threeten/bp/chrono/HijrahDate.html" title="class in org.threeten.bp.chrono">HijrahDate</a>&gt;</code></td>
 <td class="colLast"><span class="strong">HijrahChronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/HijrahChronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="interface in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;</code></td>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/chrono/ChronoZonedDateTime.html" title="class in org.threeten.bp.chrono">ChronoZonedDateTime</a>&lt;?&gt;</code></td>
 <td class="colLast"><span class="strong">Chronology.</span><code><strong><a href="../../../../../org/threeten/bp/chrono/Chronology.html#zonedDateTime(org.threeten.bp.temporal.TemporalAccessor)">zonedDateTime</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
 <div class="block">Obtains a zoned date-time in this chronology from another temporal object.</div>
 </td>
@@ -504,8 +576,8 @@ Access to date and time using fields and units, plus additional value type class
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
-<td class="colLast"><span class="strong">DateTimeFormatter.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, java.lang.Class...)">parseBest</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
-         <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;...&nbsp;types)</code>
+<td class="colLast"><span class="strong">DateTimeFormatter.</span><code><strong><a href="../../../../../org/threeten/bp/format/DateTimeFormatter.html#parseBest(java.lang.CharSequence, org.threeten.bp.temporal.TemporalQuery...)">parseBest</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text,
+         <a href="../../../../../org/threeten/bp/temporal/TemporalQuery.html" title="interface in org.threeten.bp.temporal">TemporalQuery</a>&lt;?&gt;...&nbsp;types)</code>
 <div class="block">Fully parses the text producing an object of one of the specified types.</div>
 </td>
 </tr>
@@ -555,40 +627,19 @@ Access to date and time using fields and units, plus additional value type class
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDate.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDate</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoLocalDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoLocalDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceChronoZonedDateTime.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceChronoZonedDateTime</a>&lt;D extends <a href="../../../../../org/threeten/bp/chrono/ChronoLocalDate.html" title="interface in org.threeten.bp.chrono">ChronoLocalDate</a>&lt;D&gt;&gt;</strong></code>
-<div class="block">A temporary class providing implementations that will become default interface
- methods once integrated into JDK 8.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceEra.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceEra</a></strong></code>
 <div class="block">A temporary class providing implementations that will become default interface
  methods once integrated into JDK 8.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporal.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporal</a></strong></code>
 <div class="block">A temporary class providing implementations that will become default interface
  methods once integrated into JDK 8.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/threeten/bp/jdk8/DefaultInterfaceTemporalAccessor.html" title="class in org.threeten.bp.jdk8">DefaultInterfaceTemporalAccessor</a></strong></code>
 <div class="block">A temporary class providing implementations that will become default interface
@@ -619,24 +670,35 @@ Access to date and time using fields and units, plus additional value type class
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> that return <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="strong">TemporalField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalField.html#compare(org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.temporal.TemporalAccessor)">compare</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal1,
-       <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal2)</code>
-<div class="block">Compares the value of this field in two temporal objects.</div>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
+<td class="colLast"><span class="strong">TemporalField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalField.html#resolve(java.util.Map, org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.format.ResolverStyle)">resolve</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+       <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;partialTemporal,
+       <a href="../../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>
+<div class="block">Resolves the date/time information in the builder</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><span class="strong">ChronoField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html#compare(org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.temporal.TemporalAccessor)">compare</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal1,
-       <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal2)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
+<td class="colLast"><span class="strong">ChronoField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html#resolve(java.util.Map, org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.format.ResolverStyle)">resolve</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+       <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;partialTemporal,
+       <a href="../../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>&nbsp;</td>
 </tr>
+</tbody>
+</table>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/threeten/bp/temporal/package-summary.html">org.threeten.bp.temporal</a> with parameters of type <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
 <tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><span class="strong">TemporalField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalField.html#getFrom(org.threeten.bp.temporal.TemporalAccessor)">getFrom</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>
@@ -675,16 +737,18 @@ Access to date and time using fields and units, plus additional value type class
 <td class="colLast"><span class="strong">ChronoField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html#rangeRefinedBy(org.threeten.bp.temporal.TemporalAccessor)">rangeRefinedBy</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;</code></td>
-<td class="colLast"><span class="strong">TemporalField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalField.html#resolve(org.threeten.bp.temporal.TemporalAccessor, long)">resolve</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal,
-       long&nbsp;value)</code>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
+<td class="colLast"><span class="strong">TemporalField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/TemporalField.html#resolve(java.util.Map, org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.format.ResolverStyle)">resolve</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+       <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;partialTemporal,
+       <a href="../../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>
 <div class="block">Resolves the date/time information in the builder</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;</code></td>
-<td class="colLast"><span class="strong">ChronoField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html#resolve(org.threeten.bp.temporal.TemporalAccessor, long)">resolve</a></strong>(<a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;temporal,
-       long&nbsp;value)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a></code></td>
+<td class="colLast"><span class="strong">ChronoField.</span><code><strong><a href="../../../../../org/threeten/bp/temporal/ChronoField.html#resolve(java.util.Map, org.threeten.bp.temporal.TemporalAccessor, org.threeten.bp.format.ResolverStyle)">resolve</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/threeten/bp/temporal/TemporalField.html" title="interface in org.threeten.bp.temporal">TemporalField</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</a>&gt;&nbsp;fieldValues,
+       <a href="../../../../../org/threeten/bp/temporal/TemporalAccessor.html" title="interface in org.threeten.bp.temporal">TemporalAccessor</a>&nbsp;partialTemporal,
+       <a href="../../../../../org/threeten/bp/format/ResolverStyle.html" title="enum in org.threeten.bp.format">ResolverStyle</a>&nbsp;resolverStyle)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

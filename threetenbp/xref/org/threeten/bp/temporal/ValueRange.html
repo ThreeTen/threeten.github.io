@@ -9,7 +9,7 @@
 <div id="overview"><a href="../../../../../apidocs/org/threeten/bp/temporal/ValueRange.html">View Javadoc</a></div><pre>
 
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-2013, Stephen Colebourne &amp; Michael Nascimento Santos</em>
+<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos</em>
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <em class="jxr_comment"> *</em>
@@ -285,7 +285,7 @@
 <a class="jxr_linenumber" name="275" href="#275">275</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> checkValidValue(<strong class="jxr_keyword">long</strong> value, <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field) {
 <a class="jxr_linenumber" name="276" href="#276">276</a>         <strong class="jxr_keyword">if</strong> (isValidValue(value) == false) {
 <a class="jxr_linenumber" name="277" href="#277">277</a>             <strong class="jxr_keyword">if</strong> (field != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="278" href="#278">278</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid value for "</span> + field.getName() + <span class="jxr_string">" (valid values "</span> + <strong class="jxr_keyword">this</strong> + <span class="jxr_string">"): "</span> + value);
+<a class="jxr_linenumber" name="278" href="#278">278</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid value for "</span> + field + <span class="jxr_string">" (valid values "</span> + <strong class="jxr_keyword">this</strong> + <span class="jxr_string">"): "</span> + value);
 <a class="jxr_linenumber" name="279" href="#279">279</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="280" href="#280">280</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid value (valid values "</span> + <strong class="jxr_keyword">this</strong> + <span class="jxr_string">"): "</span> + value);
 <a class="jxr_linenumber" name="281" href="#281">281</a>             }
@@ -307,7 +307,7 @@
 <a class="jxr_linenumber" name="297" href="#297">297</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="298" href="#298">298</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> checkValidIntValue(<strong class="jxr_keyword">long</strong> value, <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field) {
 <a class="jxr_linenumber" name="299" href="#299">299</a>         <strong class="jxr_keyword">if</strong> (isValidIntValue(value) == false) {
-<a class="jxr_linenumber" name="300" href="#300">300</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid int value for "</span> + field.getName() + <span class="jxr_string">": "</span> + value);
+<a class="jxr_linenumber" name="300" href="#300">300</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid int value for "</span> + field + <span class="jxr_string">": "</span> + value);
 <a class="jxr_linenumber" name="301" href="#301">301</a>         }
 <a class="jxr_linenumber" name="302" href="#302">302</a>         <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) value;
 <a class="jxr_linenumber" name="303" href="#303">303</a>     }

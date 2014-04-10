@@ -9,7 +9,7 @@
 <div id="overview"><a href="../../../../../apidocs/org/threeten/bp/temporal/TemporalField.html">View Javadoc</a></div><pre>
 
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-2013, Stephen Colebourne &amp; Michael Nascimento Santos</em>
+<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos</em>
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <em class="jxr_comment"> *</em>
@@ -41,244 +41,257 @@
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>  <strong class="jxr_keyword">package</strong> org.threeten.bp.temporal;
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
-<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
+<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
 <a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="36" href="#36">36</a>  
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="38" href="#38">38</a>  
-<a class="jxr_linenumber" name="39" href="#39">39</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="40" href="#40">40</a>  <em class="jxr_javadoccomment"> * A field of date-time, such as month-of-year or hour-of-minute.</em>
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <em class="jxr_javadoccomment"> * Date and time is expressed using fields which partition the time-line into something</em>
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * meaningful for humans. Implementations of this interface represent those fields.</em>
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <em class="jxr_javadoccomment"> * The most commonly used units are defined in {@link ChronoField}.</em>
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> * Further fields are supplied in {@link IsoFields}, {@link WeekFields} and {@link JulianFields}.</em>
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <em class="jxr_javadoccomment"> * Fields can also be written by application code by implementing this interface.</em>
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <em class="jxr_javadoccomment"> * The field works using double dispatch. Client code calls methods on a date-time like</em>
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <em class="jxr_javadoccomment"> * {@code LocalDateTime} which check if the field is a {@code ChronoField}.</em>
-<a class="jxr_linenumber" name="51" href="#51">51</a>  <em class="jxr_javadoccomment"> * If it is, then the date-time must handle it.</em>
-<a class="jxr_linenumber" name="52" href="#52">52</a>  <em class="jxr_javadoccomment"> * Otherwise, the method call is re-dispatched to the matching method in this interface.</em>
-<a class="jxr_linenumber" name="53" href="#53">53</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="54" href="#54">54</a>  <em class="jxr_javadoccomment"> * &lt;h3&gt;Specification for implementors&lt;/h3&gt;</em>
-<a class="jxr_linenumber" name="55" href="#55">55</a>  <em class="jxr_javadoccomment"> * This interface must be implemented with care to ensure other classes operate correctly.</em>
-<a class="jxr_linenumber" name="56" href="#56">56</a>  <em class="jxr_javadoccomment"> * All implementations that can be instantiated must be final, immutable and thread-safe.</em>
-<a class="jxr_linenumber" name="57" href="#57">57</a>  <em class="jxr_javadoccomment"> * Implementations should be {@code Serializable} where possible.</em>
-<a class="jxr_linenumber" name="58" href="#58">58</a>  <em class="jxr_javadoccomment"> * An enum is as effective implementation choice.</em>
-<a class="jxr_linenumber" name="59" href="#59">59</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="60" href="#60">60</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> <strong class="jxr_keyword">extends</strong> Comparator&lt;TemporalAccessor&gt; {
-<a class="jxr_linenumber" name="61" href="#61">61</a>  
-<a class="jxr_linenumber" name="62" href="#62">62</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="63" href="#63">63</a>  <em class="jxr_javadoccomment">     * Gets a descriptive name for the field.</em>
-<a class="jxr_linenumber" name="64" href="#64">64</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="65" href="#65">65</a>  <em class="jxr_javadoccomment">     * The should be of the format 'BaseOfRange', such as 'MonthOfYear',</em>
-<a class="jxr_linenumber" name="66" href="#66">66</a>  <em class="jxr_javadoccomment">     * unless the field has a range of {@code FOREVER}, when only</em>
-<a class="jxr_linenumber" name="67" href="#67">67</a>  <em class="jxr_javadoccomment">     * the base unit is mentioned, such as 'Year' or 'Era'.</em>
-<a class="jxr_linenumber" name="68" href="#68">68</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="69" href="#69">69</a>  <em class="jxr_javadoccomment">     * @return the name, not null</em>
-<a class="jxr_linenumber" name="70" href="#70">70</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="71" href="#71">71</a>      String getName();
-<a class="jxr_linenumber" name="72" href="#72">72</a>  
-<a class="jxr_linenumber" name="73" href="#73">73</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="74" href="#74">74</a>  <em class="jxr_javadoccomment">     * Gets the unit that the field is measured in.</em>
-<a class="jxr_linenumber" name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     * The unit of the field is the period that varies within the range.</em>
-<a class="jxr_linenumber" name="77" href="#77">77</a>  <em class="jxr_javadoccomment">     * For example, in the field 'MonthOfYear', the unit is 'Months'.</em>
-<a class="jxr_linenumber" name="78" href="#78">78</a>  <em class="jxr_javadoccomment">     * See also {@link #getRangeUnit()}.</em>
-<a class="jxr_linenumber" name="79" href="#79">79</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="80" href="#80">80</a>  <em class="jxr_javadoccomment">     * @return the period unit defining the base unit of the field, not null</em>
-<a class="jxr_linenumber" name="81" href="#81">81</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="82" href="#82">82</a>      <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getBaseUnit();
-<a class="jxr_linenumber" name="83" href="#83">83</a>  
-<a class="jxr_linenumber" name="84" href="#84">84</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     * Gets the range that the field is bound by.</em>
-<a class="jxr_linenumber" name="86" href="#86">86</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="87" href="#87">87</a>  <em class="jxr_javadoccomment">     * The range of the field is the period that the field varies within.</em>
-<a class="jxr_linenumber" name="88" href="#88">88</a>  <em class="jxr_javadoccomment">     * For example, in the field 'MonthOfYear', the range is 'Years'.</em>
-<a class="jxr_linenumber" name="89" href="#89">89</a>  <em class="jxr_javadoccomment">     * See also {@link #getBaseUnit()}.</em>
-<a class="jxr_linenumber" name="90" href="#90">90</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="91" href="#91">91</a>  <em class="jxr_javadoccomment">     * The range is never null. For example, the 'Year' field is shorthand for</em>
-<a class="jxr_linenumber" name="92" href="#92">92</a>  <em class="jxr_javadoccomment">     * 'YearOfForever'. It therefore has a unit of 'Years' and a range of 'Forever'.</em>
-<a class="jxr_linenumber" name="93" href="#93">93</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     * @return the period unit defining the range of the field, not null</em>
-<a class="jxr_linenumber" name="95" href="#95">95</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="96" href="#96">96</a>      <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getRangeUnit();
-<a class="jxr_linenumber" name="97" href="#97">97</a>  
-<a class="jxr_linenumber" name="98" href="#98">98</a>      <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="99" href="#99">99</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * Compares the value of this field in two temporal objects.</em>
-<a class="jxr_linenumber" name="101" href="#101">101</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="102" href="#102">102</a> <em class="jxr_javadoccomment">     * All fields implement {@link Comparator} on {@link TemporalAccessor}.</em>
-<a class="jxr_linenumber" name="103" href="#103">103</a> <em class="jxr_javadoccomment">     * This allows a list of date-times to be compared using the value of a field.</em>
-<a class="jxr_linenumber" name="104" href="#104">104</a> <em class="jxr_javadoccomment">     * For example, you could sort a list of arbitrary temporal objects by the value of</em>
-<a class="jxr_linenumber" name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * the month-of-year field - {@code Collections.sort(list, MONTH_OF_YEAR)}</em>
-<a class="jxr_linenumber" name="106" href="#106">106</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="107" href="#107">107</a> <em class="jxr_javadoccomment">     * @param temporal1  the first temporal object to compare, not null</em>
-<a class="jxr_linenumber" name="108" href="#108">108</a> <em class="jxr_javadoccomment">     * @param temporal2  the second temporal object to compare, not null</em>
-<a class="jxr_linenumber" name="109" href="#109">109</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if unable to obtain the value for this field</em>
-<a class="jxr_linenumber" name="110" href="#110">110</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="111" href="#111">111</a>     <strong class="jxr_keyword">int</strong> compare(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal1, <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal2);
-<a class="jxr_linenumber" name="112" href="#112">112</a> 
-<a class="jxr_linenumber" name="113" href="#113">113</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="114" href="#114">114</a> <em class="jxr_javadoccomment">     * Gets the range of valid values for the field.</em>
-<a class="jxr_linenumber" name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * All fields can be expressed as a {@code long} integer.</em>
-<a class="jxr_linenumber" name="117" href="#117">117</a> <em class="jxr_javadoccomment">     * This method returns an object that describes the valid range for that value.</em>
-<a class="jxr_linenumber" name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * This method is generally only applicable to the ISO-8601 calendar system.</em>
-<a class="jxr_linenumber" name="119" href="#119">119</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * Note that the result only describes the minimum and maximum valid values</em>
-<a class="jxr_linenumber" name="121" href="#121">121</a> <em class="jxr_javadoccomment">     * and it is important not to read too much into them. For example, there</em>
-<a class="jxr_linenumber" name="122" href="#122">122</a> <em class="jxr_javadoccomment">     * could be values within the range that are invalid for the field.</em>
-<a class="jxr_linenumber" name="123" href="#123">123</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="124" href="#124">124</a> <em class="jxr_javadoccomment">     * @return the range of valid values for the field, not null</em>
-<a class="jxr_linenumber" name="125" href="#125">125</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="126" href="#126">126</a>     <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range();
-<a class="jxr_linenumber" name="127" href="#127">127</a> 
-<a class="jxr_linenumber" name="128" href="#128">128</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="129" href="#129">129</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="130" href="#130">130</a> <em class="jxr_javadoccomment">     * Checks if this field is supported by the temporal object.</em>
-<a class="jxr_linenumber" name="131" href="#131">131</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="132" href="#132">132</a> <em class="jxr_javadoccomment">     * This determines whether the temporal accessor supports this field.</em>
-<a class="jxr_linenumber" name="133" href="#133">133</a> <em class="jxr_javadoccomment">     * If this returns false, the the temporal cannot be queried for this field.</em>
-<a class="jxr_linenumber" name="134" href="#134">134</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="135" href="#135">135</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
-<a class="jxr_linenumber" name="136" href="#136">136</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
-<a class="jxr_linenumber" name="137" href="#137">137</a> <em class="jxr_javadoccomment">     * The second is to use {@link TemporalAccessor#isSupported(TemporalField)}:</em>
-<a class="jxr_linenumber" name="138" href="#138">138</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="139" href="#139">139</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
-<a class="jxr_linenumber" name="140" href="#140">140</a> <em class="jxr_javadoccomment">     *   temporal = thisField.isSupportedBy(temporal);</em>
-<a class="jxr_linenumber" name="141" href="#141">141</a> <em class="jxr_javadoccomment">     *   temporal = temporal.isSupported(thisField);</em>
-<a class="jxr_linenumber" name="142" href="#142">142</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="143" href="#143">143</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code isSupported(TemporalField)},</em>
-<a class="jxr_linenumber" name="144" href="#144">144</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
-<a class="jxr_linenumber" name="145" href="#145">145</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="146" href="#146">146</a> <em class="jxr_javadoccomment">     * Implementations should determine whether they are supported using the fields</em>
-<a class="jxr_linenumber" name="147" href="#147">147</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
-<a class="jxr_linenumber" name="148" href="#148">148</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="149" href="#149">149</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal object to query, not null</em>
-<a class="jxr_linenumber" name="150" href="#150">150</a> <em class="jxr_javadoccomment">     * @return true if the date-time can be queried for this field, false if not</em>
-<a class="jxr_linenumber" name="151" href="#151">151</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="152" href="#152">152</a>     <strong class="jxr_keyword">boolean</strong> isSupportedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal);
-<a class="jxr_linenumber" name="153" href="#153">153</a> 
-<a class="jxr_linenumber" name="154" href="#154">154</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="155" href="#155">155</a> <em class="jxr_javadoccomment">     * Get the range of valid values for this field using the temporal object to</em>
-<a class="jxr_linenumber" name="156" href="#156">156</a> <em class="jxr_javadoccomment">     * refine the result.</em>
-<a class="jxr_linenumber" name="157" href="#157">157</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="158" href="#158">158</a> <em class="jxr_javadoccomment">     * This uses the temporal object to find the range of valid values for the field.</em>
-<a class="jxr_linenumber" name="159" href="#159">159</a> <em class="jxr_javadoccomment">     * This is similar to {@link #range()}, however this method refines the result</em>
-<a class="jxr_linenumber" name="160" href="#160">160</a> <em class="jxr_javadoccomment">     * using the temporal. For example, if the field is {@code DAY_OF_MONTH} the</em>
-<a class="jxr_linenumber" name="161" href="#161">161</a> <em class="jxr_javadoccomment">     * {@code range} method is not accurate as there are four possible month lengths,</em>
-<a class="jxr_linenumber" name="162" href="#162">162</a> <em class="jxr_javadoccomment">     * 28, 29, 30 and 31 days. Using this method with a date allows the range to be</em>
-<a class="jxr_linenumber" name="163" href="#163">163</a> <em class="jxr_javadoccomment">     * accurate, returning just one of those four options.</em>
-<a class="jxr_linenumber" name="164" href="#164">164</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="165" href="#165">165</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
-<a class="jxr_linenumber" name="166" href="#166">166</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
-<a class="jxr_linenumber" name="167" href="#167">167</a> <em class="jxr_javadoccomment">     * The second is to use {@link TemporalAccessor#range(TemporalField)}:</em>
-<a class="jxr_linenumber" name="168" href="#168">168</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="169" href="#169">169</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
-<a class="jxr_linenumber" name="170" href="#170">170</a> <em class="jxr_javadoccomment">     *   temporal = thisField.rangeRefinedBy(temporal);</em>
-<a class="jxr_linenumber" name="171" href="#171">171</a> <em class="jxr_javadoccomment">     *   temporal = temporal.range(thisField);</em>
-<a class="jxr_linenumber" name="172" href="#172">172</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="173" href="#173">173</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code range(TemporalField)},</em>
-<a class="jxr_linenumber" name="174" href="#174">174</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
-<a class="jxr_linenumber" name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     * Implementations should perform any queries or calculations using the fields</em>
-<a class="jxr_linenumber" name="177" href="#177">177</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
-<a class="jxr_linenumber" name="178" href="#178">178</a> <em class="jxr_javadoccomment">     * If the field is not supported a {@code DateTimeException} must be thrown.</em>
-<a class="jxr_linenumber" name="179" href="#179">179</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="180" href="#180">180</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal object used to refine the result, not null</em>
-<a class="jxr_linenumber" name="181" href="#181">181</a> <em class="jxr_javadoccomment">     * @return the range of valid values for this field, not null</em>
-<a class="jxr_linenumber" name="182" href="#182">182</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the range for the field cannot be obtained</em>
-<a class="jxr_linenumber" name="183" href="#183">183</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="184" href="#184">184</a>     <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> rangeRefinedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal);
-<a class="jxr_linenumber" name="185" href="#185">185</a> 
-<a class="jxr_linenumber" name="186" href="#186">186</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * Gets the value of this field from the specified temporal object.</em>
-<a class="jxr_linenumber" name="188" href="#188">188</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * This queries the temporal object for the value of this field.</em>
-<a class="jxr_linenumber" name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="191" href="#191">191</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
-<a class="jxr_linenumber" name="192" href="#192">192</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
-<a class="jxr_linenumber" name="193" href="#193">193</a> <em class="jxr_javadoccomment">     * The second is to use {@link TemporalAccessor#getLong(TemporalField)}</em>
-<a class="jxr_linenumber" name="194" href="#194">194</a> <em class="jxr_javadoccomment">     * (or {@link TemporalAccessor#get(TemporalField)}):</em>
-<a class="jxr_linenumber" name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="196" href="#196">196</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
-<a class="jxr_linenumber" name="197" href="#197">197</a> <em class="jxr_javadoccomment">     *   temporal = thisField.getFrom(temporal);</em>
-<a class="jxr_linenumber" name="198" href="#198">198</a> <em class="jxr_javadoccomment">     *   temporal = temporal.getLong(thisField);</em>
-<a class="jxr_linenumber" name="199" href="#199">199</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code getLong(TemporalField)},</em>
-<a class="jxr_linenumber" name="201" href="#201">201</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
-<a class="jxr_linenumber" name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="203" href="#203">203</a> <em class="jxr_javadoccomment">     * Implementations should perform any queries or calculations using the fields</em>
-<a class="jxr_linenumber" name="204" href="#204">204</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
-<a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_javadoccomment">     * If the field is not supported a {@code DateTimeException} must be thrown.</em>
-<a class="jxr_linenumber" name="206" href="#206">206</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="207" href="#207">207</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal object to query, not null</em>
-<a class="jxr_linenumber" name="208" href="#208">208</a> <em class="jxr_javadoccomment">     * @return the value of this field, not null</em>
-<a class="jxr_linenumber" name="209" href="#209">209</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if a value for the field cannot be obtained</em>
-<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="211" href="#211">211</a>     <strong class="jxr_keyword">long</strong> getFrom(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal);
-<a class="jxr_linenumber" name="212" href="#212">212</a> 
-<a class="jxr_linenumber" name="213" href="#213">213</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * Returns a copy of the specified temporal object with the value of this field set.</em>
-<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="216" href="#216">216</a> <em class="jxr_javadoccomment">     * This returns a new temporal object based on the specified one with the value for</em>
-<a class="jxr_linenumber" name="217" href="#217">217</a> <em class="jxr_javadoccomment">     * this field changed. For example, on a {@code LocalDate}, this could be used to</em>
-<a class="jxr_linenumber" name="218" href="#218">218</a> <em class="jxr_javadoccomment">     * set the year, month or day-of-month.</em>
-<a class="jxr_linenumber" name="219" href="#219">219</a> <em class="jxr_javadoccomment">     * The returned object has the same observable type as the specified object.</em>
-<a class="jxr_linenumber" name="220" href="#220">220</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="221" href="#221">221</a> <em class="jxr_javadoccomment">     * In some cases, changing a field is not fully defined. For example, if the target object is</em>
-<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_javadoccomment">     * a date representing the 31st January, then changing the month to February would be unclear.</em>
-<a class="jxr_linenumber" name="223" href="#223">223</a> <em class="jxr_javadoccomment">     * In cases like this, the implementation is responsible for resolving the result.</em>
-<a class="jxr_linenumber" name="224" href="#224">224</a> <em class="jxr_javadoccomment">     * Typically it will choose the previous valid date, which would be the last valid</em>
-<a class="jxr_linenumber" name="225" href="#225">225</a> <em class="jxr_javadoccomment">     * day of February in this example.</em>
-<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
-<a class="jxr_linenumber" name="228" href="#228">228</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
-<a class="jxr_linenumber" name="229" href="#229">229</a> <em class="jxr_javadoccomment">     * The second is to use {@link Temporal#with(TemporalField, long)}:</em>
-<a class="jxr_linenumber" name="230" href="#230">230</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="231" href="#231">231</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
-<a class="jxr_linenumber" name="232" href="#232">232</a> <em class="jxr_javadoccomment">     *   temporal = thisField.adjustInto(temporal);</em>
-<a class="jxr_linenumber" name="233" href="#233">233</a> <em class="jxr_javadoccomment">     *   temporal = temporal.with(thisField);</em>
-<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="235" href="#235">235</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code with(TemporalField)},</em>
-<a class="jxr_linenumber" name="236" href="#236">236</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
-<a class="jxr_linenumber" name="237" href="#237">237</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="238" href="#238">238</a> <em class="jxr_javadoccomment">     * Implementations should perform any queries or calculations using the fields</em>
-<a class="jxr_linenumber" name="239" href="#239">239</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
-<a class="jxr_linenumber" name="240" href="#240">240</a> <em class="jxr_javadoccomment">     * If the field is not supported a {@code DateTimeException} must be thrown.</em>
-<a class="jxr_linenumber" name="241" href="#241">241</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="242" href="#242">242</a> <em class="jxr_javadoccomment">     * Implementations must not alter the specified temporal object.</em>
-<a class="jxr_linenumber" name="243" href="#243">243</a> <em class="jxr_javadoccomment">     * Instead, an adjusted copy of the original must be returned.</em>
-<a class="jxr_linenumber" name="244" href="#244">244</a> <em class="jxr_javadoccomment">     * This provides equivalent, safe behavior for immutable and mutable implementations.</em>
-<a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="246" href="#246">246</a> <em class="jxr_javadoccomment">     * @param &lt;R&gt;  the type of the Temporal object</em>
-<a class="jxr_linenumber" name="247" href="#247">247</a> <em class="jxr_javadoccomment">     * @param temporal the temporal object to adjust, not null</em>
-<a class="jxr_linenumber" name="248" href="#248">248</a> <em class="jxr_javadoccomment">     * @param newValue the new value of the field</em>
-<a class="jxr_linenumber" name="249" href="#249">249</a> <em class="jxr_javadoccomment">     * @return the adjusted temporal object, not null</em>
-<a class="jxr_linenumber" name="250" href="#250">250</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the field cannot be set</em>
-<a class="jxr_linenumber" name="251" href="#251">251</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="252" href="#252">252</a>     &lt;R <strong class="jxr_keyword">extends</strong> Temporal&gt; R adjustInto(R temporal, <strong class="jxr_keyword">long</strong> newValue);
-<a class="jxr_linenumber" name="253" href="#253">253</a> 
-<a class="jxr_linenumber" name="254" href="#254">254</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="255" href="#255">255</a> <em class="jxr_javadoccomment">     * Resolves the date/time information in the builder</em>
-<a class="jxr_linenumber" name="256" href="#256">256</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="257" href="#257">257</a> <em class="jxr_javadoccomment">     * This method is invoked during the resolve of the builder.</em>
-<a class="jxr_linenumber" name="258" href="#258">258</a> <em class="jxr_javadoccomment">     * Implementations should combine the associated field with others to form</em>
-<a class="jxr_linenumber" name="259" href="#259">259</a> <em class="jxr_javadoccomment">     * objects like {@code LocalDate}, {@code LocalTime} and {@code LocalDateTime}</em>
-<a class="jxr_linenumber" name="260" href="#260">260</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="261" href="#261">261</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal to resolve, not null</em>
-<a class="jxr_linenumber" name="262" href="#262">262</a> <em class="jxr_javadoccomment">     * @param value  the value of this field</em>
-<a class="jxr_linenumber" name="263" href="#263">263</a> <em class="jxr_javadoccomment">     * @return a map of fields to update in the temporal, with a mapping to null</em>
-<a class="jxr_linenumber" name="264" href="#264">264</a> <em class="jxr_javadoccomment">     *  indicating a deletion. The whole map must be null if no resolving occurred</em>
-<a class="jxr_linenumber" name="265" href="#265">265</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if resolving results in an error. This must not be thrown</em>
-<a class="jxr_linenumber" name="266" href="#266">266</a> <em class="jxr_javadoccomment">     *  by querying a field on the temporal without first checking if it is supported</em>
-<a class="jxr_linenumber" name="267" href="#267">267</a> <em class="jxr_javadoccomment">     * @throws ArithmeticException if numeric overflow occurs</em>
-<a class="jxr_linenumber" name="268" href="#268">268</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="269" href="#269">269</a>     Map&lt;TemporalField, Long&gt; resolve(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">long</strong> value);
-<a class="jxr_linenumber" name="270" href="#270">270</a> 
-<a class="jxr_linenumber" name="271" href="#271">271</a> }
+<a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.ResolverStyle;
+<a class="jxr_linenumber" name="39" href="#39">39</a>  
+<a class="jxr_linenumber" name="40" href="#40">40</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="41" href="#41">41</a>  <em class="jxr_javadoccomment"> * A field of date-time, such as month-of-year or hour-of-minute.</em>
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * Date and time is expressed using fields which partition the time-line into something</em>
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> * meaningful for humans. Implementations of this interface represent those fields.</em>
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> * The most commonly used units are defined in {@link ChronoField}.</em>
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <em class="jxr_javadoccomment"> * Further fields are supplied in {@link IsoFields}, {@link WeekFields} and {@link JulianFields}.</em>
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <em class="jxr_javadoccomment"> * Fields can also be written by application code by implementing this interface.</em>
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <em class="jxr_javadoccomment"> * The field works using double dispatch. Client code calls methods on a date-time like</em>
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <em class="jxr_javadoccomment"> * {@code LocalDateTime} which check if the field is a {@code ChronoField}.</em>
+<a class="jxr_linenumber" name="52" href="#52">52</a>  <em class="jxr_javadoccomment"> * If it is, then the date-time must handle it.</em>
+<a class="jxr_linenumber" name="53" href="#53">53</a>  <em class="jxr_javadoccomment"> * Otherwise, the method call is re-dispatched to the matching method in this interface.</em>
+<a class="jxr_linenumber" name="54" href="#54">54</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="55" href="#55">55</a>  <em class="jxr_javadoccomment"> * &lt;h3&gt;Specification for implementors&lt;/h3&gt;</em>
+<a class="jxr_linenumber" name="56" href="#56">56</a>  <em class="jxr_javadoccomment"> * This interface must be implemented with care to ensure other classes operate correctly.</em>
+<a class="jxr_linenumber" name="57" href="#57">57</a>  <em class="jxr_javadoccomment"> * All implementations that can be instantiated must be final, immutable and thread-safe.</em>
+<a class="jxr_linenumber" name="58" href="#58">58</a>  <em class="jxr_javadoccomment"> * Implementations should be {@code Serializable} where possible.</em>
+<a class="jxr_linenumber" name="59" href="#59">59</a>  <em class="jxr_javadoccomment"> * An enum is as effective implementation choice.</em>
+<a class="jxr_linenumber" name="60" href="#60">60</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="61" href="#61">61</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> {
+<a class="jxr_linenumber" name="62" href="#62">62</a>  
+<a class="jxr_linenumber" name="63" href="#63">63</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="64" href="#64">64</a>  <em class="jxr_javadoccomment">     * Gets the unit that the field is measured in.</em>
+<a class="jxr_linenumber" name="65" href="#65">65</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="66" href="#66">66</a>  <em class="jxr_javadoccomment">     * The unit of the field is the period that varies within the range.</em>
+<a class="jxr_linenumber" name="67" href="#67">67</a>  <em class="jxr_javadoccomment">     * For example, in the field 'MonthOfYear', the unit is 'Months'.</em>
+<a class="jxr_linenumber" name="68" href="#68">68</a>  <em class="jxr_javadoccomment">     * See also {@link #getRangeUnit()}.</em>
+<a class="jxr_linenumber" name="69" href="#69">69</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="70" href="#70">70</a>  <em class="jxr_javadoccomment">     * @return the period unit defining the base unit of the field, not null</em>
+<a class="jxr_linenumber" name="71" href="#71">71</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="72" href="#72">72</a>      <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getBaseUnit();
+<a class="jxr_linenumber" name="73" href="#73">73</a>  
+<a class="jxr_linenumber" name="74" href="#74">74</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     * Gets the range that the field is bound by.</em>
+<a class="jxr_linenumber" name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="77" href="#77">77</a>  <em class="jxr_javadoccomment">     * The range of the field is the period that the field varies within.</em>
+<a class="jxr_linenumber" name="78" href="#78">78</a>  <em class="jxr_javadoccomment">     * For example, in the field 'MonthOfYear', the range is 'Years'.</em>
+<a class="jxr_linenumber" name="79" href="#79">79</a>  <em class="jxr_javadoccomment">     * See also {@link #getBaseUnit()}.</em>
+<a class="jxr_linenumber" name="80" href="#80">80</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="81" href="#81">81</a>  <em class="jxr_javadoccomment">     * The range is never null. For example, the 'Year' field is shorthand for</em>
+<a class="jxr_linenumber" name="82" href="#82">82</a>  <em class="jxr_javadoccomment">     * 'YearOfForever'. It therefore has a unit of 'Years' and a range of 'Forever'.</em>
+<a class="jxr_linenumber" name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     * @return the period unit defining the range of the field, not null</em>
+<a class="jxr_linenumber" name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="86" href="#86">86</a>      <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getRangeUnit();
+<a class="jxr_linenumber" name="87" href="#87">87</a>  
+<a class="jxr_linenumber" name="88" href="#88">88</a>      <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="89" href="#89">89</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="90" href="#90">90</a>  <em class="jxr_javadoccomment">     * Gets the range of valid values for the field.</em>
+<a class="jxr_linenumber" name="91" href="#91">91</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="92" href="#92">92</a>  <em class="jxr_javadoccomment">     * All fields can be expressed as a {@code long} integer.</em>
+<a class="jxr_linenumber" name="93" href="#93">93</a>  <em class="jxr_javadoccomment">     * This method returns an object that describes the valid range for that value.</em>
+<a class="jxr_linenumber" name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     * This method is generally only applicable to the ISO-8601 calendar system.</em>
+<a class="jxr_linenumber" name="95" href="#95">95</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="96" href="#96">96</a>  <em class="jxr_javadoccomment">     * Note that the result only describes the minimum and maximum valid values</em>
+<a class="jxr_linenumber" name="97" href="#97">97</a>  <em class="jxr_javadoccomment">     * and it is important not to read too much into them. For example, there</em>
+<a class="jxr_linenumber" name="98" href="#98">98</a>  <em class="jxr_javadoccomment">     * could be values within the range that are invalid for the field.</em>
+<a class="jxr_linenumber" name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * @return the range of valid values for the field, not null</em>
+<a class="jxr_linenumber" name="101" href="#101">101</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="102" href="#102">102</a>     <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range();
+<a class="jxr_linenumber" name="103" href="#103">103</a> 
+<a class="jxr_linenumber" name="104" href="#104">104</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="105" href="#105">105</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="106" href="#106">106</a> <em class="jxr_javadoccomment">     * Checks if this field is date-based.</em>
+<a class="jxr_linenumber" name="107" href="#107">107</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="108" href="#108">108</a> <em class="jxr_javadoccomment">     * A date-based field can be derived from epoch-day</em>
+<a class="jxr_linenumber" name="109" href="#109">109</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="110" href="#110">110</a> <em class="jxr_javadoccomment">     * @return true if date-based</em>
+<a class="jxr_linenumber" name="111" href="#111">111</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="112" href="#112">112</a>     <strong class="jxr_keyword">boolean</strong> isDateBased();
+<a class="jxr_linenumber" name="113" href="#113">113</a> 
+<a class="jxr_linenumber" name="114" href="#114">114</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * Checks if this field is time-based.</em>
+<a class="jxr_linenumber" name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="117" href="#117">117</a> <em class="jxr_javadoccomment">     * A time-based field can be derived from nano-of-day</em>
+<a class="jxr_linenumber" name="118" href="#118">118</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="119" href="#119">119</a> <em class="jxr_javadoccomment">     * @return true if time-based</em>
+<a class="jxr_linenumber" name="120" href="#120">120</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="121" href="#121">121</a>     <strong class="jxr_keyword">boolean</strong> isTimeBased();
+<a class="jxr_linenumber" name="122" href="#122">122</a> 
+<a class="jxr_linenumber" name="123" href="#123">123</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="124" href="#124">124</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="125" href="#125">125</a> <em class="jxr_javadoccomment">     * Checks if this field is supported by the temporal object.</em>
+<a class="jxr_linenumber" name="126" href="#126">126</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="127" href="#127">127</a> <em class="jxr_javadoccomment">     * This determines whether the temporal accessor supports this field.</em>
+<a class="jxr_linenumber" name="128" href="#128">128</a> <em class="jxr_javadoccomment">     * If this returns false, the the temporal cannot be queried for this field.</em>
+<a class="jxr_linenumber" name="129" href="#129">129</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="130" href="#130">130</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
+<a class="jxr_linenumber" name="131" href="#131">131</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
+<a class="jxr_linenumber" name="132" href="#132">132</a> <em class="jxr_javadoccomment">     * The second is to use {@link TemporalAccessor#isSupported(TemporalField)}:</em>
+<a class="jxr_linenumber" name="133" href="#133">133</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="134" href="#134">134</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
+<a class="jxr_linenumber" name="135" href="#135">135</a> <em class="jxr_javadoccomment">     *   temporal = thisField.isSupportedBy(temporal);</em>
+<a class="jxr_linenumber" name="136" href="#136">136</a> <em class="jxr_javadoccomment">     *   temporal = temporal.isSupported(thisField);</em>
+<a class="jxr_linenumber" name="137" href="#137">137</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="138" href="#138">138</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code isSupported(TemporalField)},</em>
+<a class="jxr_linenumber" name="139" href="#139">139</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
+<a class="jxr_linenumber" name="140" href="#140">140</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="141" href="#141">141</a> <em class="jxr_javadoccomment">     * Implementations should determine whether they are supported using the fields</em>
+<a class="jxr_linenumber" name="142" href="#142">142</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
+<a class="jxr_linenumber" name="143" href="#143">143</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="144" href="#144">144</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal object to query, not null</em>
+<a class="jxr_linenumber" name="145" href="#145">145</a> <em class="jxr_javadoccomment">     * @return true if the date-time can be queried for this field, false if not</em>
+<a class="jxr_linenumber" name="146" href="#146">146</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="147" href="#147">147</a>     <strong class="jxr_keyword">boolean</strong> isSupportedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal);
+<a class="jxr_linenumber" name="148" href="#148">148</a> 
+<a class="jxr_linenumber" name="149" href="#149">149</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="150" href="#150">150</a> <em class="jxr_javadoccomment">     * Get the range of valid values for this field using the temporal object to</em>
+<a class="jxr_linenumber" name="151" href="#151">151</a> <em class="jxr_javadoccomment">     * refine the result.</em>
+<a class="jxr_linenumber" name="152" href="#152">152</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="153" href="#153">153</a> <em class="jxr_javadoccomment">     * This uses the temporal object to find the range of valid values for the field.</em>
+<a class="jxr_linenumber" name="154" href="#154">154</a> <em class="jxr_javadoccomment">     * This is similar to {@link #range()}, however this method refines the result</em>
+<a class="jxr_linenumber" name="155" href="#155">155</a> <em class="jxr_javadoccomment">     * using the temporal. For example, if the field is {@code DAY_OF_MONTH} the</em>
+<a class="jxr_linenumber" name="156" href="#156">156</a> <em class="jxr_javadoccomment">     * {@code range} method is not accurate as there are four possible month lengths,</em>
+<a class="jxr_linenumber" name="157" href="#157">157</a> <em class="jxr_javadoccomment">     * 28, 29, 30 and 31 days. Using this method with a date allows the range to be</em>
+<a class="jxr_linenumber" name="158" href="#158">158</a> <em class="jxr_javadoccomment">     * accurate, returning just one of those four options.</em>
+<a class="jxr_linenumber" name="159" href="#159">159</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="160" href="#160">160</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
+<a class="jxr_linenumber" name="161" href="#161">161</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
+<a class="jxr_linenumber" name="162" href="#162">162</a> <em class="jxr_javadoccomment">     * The second is to use {@link TemporalAccessor#range(TemporalField)}:</em>
+<a class="jxr_linenumber" name="163" href="#163">163</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="164" href="#164">164</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
+<a class="jxr_linenumber" name="165" href="#165">165</a> <em class="jxr_javadoccomment">     *   temporal = thisField.rangeRefinedBy(temporal);</em>
+<a class="jxr_linenumber" name="166" href="#166">166</a> <em class="jxr_javadoccomment">     *   temporal = temporal.range(thisField);</em>
+<a class="jxr_linenumber" name="167" href="#167">167</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="168" href="#168">168</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code range(TemporalField)},</em>
+<a class="jxr_linenumber" name="169" href="#169">169</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
+<a class="jxr_linenumber" name="170" href="#170">170</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="171" href="#171">171</a> <em class="jxr_javadoccomment">     * Implementations should perform any queries or calculations using the fields</em>
+<a class="jxr_linenumber" name="172" href="#172">172</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
+<a class="jxr_linenumber" name="173" href="#173">173</a> <em class="jxr_javadoccomment">     * If the field is not supported a {@code DateTimeException} must be thrown.</em>
+<a class="jxr_linenumber" name="174" href="#174">174</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal object used to refine the result, not null</em>
+<a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     * @return the range of valid values for this field, not null</em>
+<a class="jxr_linenumber" name="177" href="#177">177</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the range for the field cannot be obtained</em>
+<a class="jxr_linenumber" name="178" href="#178">178</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="179" href="#179">179</a>     <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> rangeRefinedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal);
+<a class="jxr_linenumber" name="180" href="#180">180</a> 
+<a class="jxr_linenumber" name="181" href="#181">181</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="182" href="#182">182</a> <em class="jxr_javadoccomment">     * Gets the value of this field from the specified temporal object.</em>
+<a class="jxr_linenumber" name="183" href="#183">183</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="184" href="#184">184</a> <em class="jxr_javadoccomment">     * This queries the temporal object for the value of this field.</em>
+<a class="jxr_linenumber" name="185" href="#185">185</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="186" href="#186">186</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
+<a class="jxr_linenumber" name="187" href="#187">187</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
+<a class="jxr_linenumber" name="188" href="#188">188</a> <em class="jxr_javadoccomment">     * The second is to use {@link TemporalAccessor#getLong(TemporalField)}</em>
+<a class="jxr_linenumber" name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * (or {@link TemporalAccessor#get(TemporalField)}):</em>
+<a class="jxr_linenumber" name="190" href="#190">190</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="191" href="#191">191</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
+<a class="jxr_linenumber" name="192" href="#192">192</a> <em class="jxr_javadoccomment">     *   temporal = thisField.getFrom(temporal);</em>
+<a class="jxr_linenumber" name="193" href="#193">193</a> <em class="jxr_javadoccomment">     *   temporal = temporal.getLong(thisField);</em>
+<a class="jxr_linenumber" name="194" href="#194">194</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code getLong(TemporalField)},</em>
+<a class="jxr_linenumber" name="196" href="#196">196</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
+<a class="jxr_linenumber" name="197" href="#197">197</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="198" href="#198">198</a> <em class="jxr_javadoccomment">     * Implementations should perform any queries or calculations using the fields</em>
+<a class="jxr_linenumber" name="199" href="#199">199</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
+<a class="jxr_linenumber" name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * If the field is not supported a {@code DateTimeException} must be thrown.</em>
+<a class="jxr_linenumber" name="201" href="#201">201</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * @param temporal  the temporal object to query, not null</em>
+<a class="jxr_linenumber" name="203" href="#203">203</a> <em class="jxr_javadoccomment">     * @return the value of this field, not null</em>
+<a class="jxr_linenumber" name="204" href="#204">204</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if a value for the field cannot be obtained</em>
+<a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="206" href="#206">206</a>     <strong class="jxr_keyword">long</strong> getFrom(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal);
+<a class="jxr_linenumber" name="207" href="#207">207</a> 
+<a class="jxr_linenumber" name="208" href="#208">208</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="209" href="#209">209</a> <em class="jxr_javadoccomment">     * Gets the display name for the field in the requested locale.</em>
+<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">     * If there is no display name for the locale then a suitable default must be returned.</em>
+<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="213" href="#213">213</a> <em class="jxr_javadoccomment">     * The default implementation must check the locale is not null</em>
+<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * and return {@code toString()}.</em>
+<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="216" href="#216">216</a> <em class="jxr_javadoccomment">     * @param locale  the locale to use, not null</em>
+<a class="jxr_linenumber" name="217" href="#217">217</a> <em class="jxr_javadoccomment">     * @return the display name for the locale or a suitable default, not null</em>
+<a class="jxr_linenumber" name="218" href="#218">218</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="219" href="#219">219</a>     String getDisplayName(Locale locale);
+<a class="jxr_linenumber" name="220" href="#220">220</a> 
+<a class="jxr_linenumber" name="221" href="#221">221</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_javadoccomment">     * Returns a copy of the specified temporal object with the value of this field set.</em>
+<a class="jxr_linenumber" name="223" href="#223">223</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="224" href="#224">224</a> <em class="jxr_javadoccomment">     * This returns a new temporal object based on the specified one with the value for</em>
+<a class="jxr_linenumber" name="225" href="#225">225</a> <em class="jxr_javadoccomment">     * this field changed. For example, on a {@code LocalDate}, this could be used to</em>
+<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_javadoccomment">     * set the year, month or day-of-month.</em>
+<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_javadoccomment">     * The returned object has the same observable type as the specified object.</em>
+<a class="jxr_linenumber" name="228" href="#228">228</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="229" href="#229">229</a> <em class="jxr_javadoccomment">     * In some cases, changing a field is not fully defined. For example, if the target object is</em>
+<a class="jxr_linenumber" name="230" href="#230">230</a> <em class="jxr_javadoccomment">     * a date representing the 31st January, then changing the month to February would be unclear.</em>
+<a class="jxr_linenumber" name="231" href="#231">231</a> <em class="jxr_javadoccomment">     * In cases like this, the implementation is responsible for resolving the result.</em>
+<a class="jxr_linenumber" name="232" href="#232">232</a> <em class="jxr_javadoccomment">     * Typically it will choose the previous valid date, which would be the last valid</em>
+<a class="jxr_linenumber" name="233" href="#233">233</a> <em class="jxr_javadoccomment">     * day of February in this example.</em>
+<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="235" href="#235">235</a> <em class="jxr_javadoccomment">     * There are two equivalent ways of using this method.</em>
+<a class="jxr_linenumber" name="236" href="#236">236</a> <em class="jxr_javadoccomment">     * The first is to invoke this method directly.</em>
+<a class="jxr_linenumber" name="237" href="#237">237</a> <em class="jxr_javadoccomment">     * The second is to use {@link Temporal#with(TemporalField, long)}:</em>
+<a class="jxr_linenumber" name="238" href="#238">238</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="239" href="#239">239</a> <em class="jxr_javadoccomment">     *   // these two lines are equivalent, but the second approach is recommended</em>
+<a class="jxr_linenumber" name="240" href="#240">240</a> <em class="jxr_javadoccomment">     *   temporal = thisField.adjustInto(temporal);</em>
+<a class="jxr_linenumber" name="241" href="#241">241</a> <em class="jxr_javadoccomment">     *   temporal = temporal.with(thisField);</em>
+<a class="jxr_linenumber" name="242" href="#242">242</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="243" href="#243">243</a> <em class="jxr_javadoccomment">     * It is recommended to use the second approach, {@code with(TemporalField)},</em>
+<a class="jxr_linenumber" name="244" href="#244">244</a> <em class="jxr_javadoccomment">     * as it is a lot clearer to read in code.</em>
+<a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="246" href="#246">246</a> <em class="jxr_javadoccomment">     * Implementations should perform any queries or calculations using the fields</em>
+<a class="jxr_linenumber" name="247" href="#247">247</a> <em class="jxr_javadoccomment">     * available in {@link ChronoField}.</em>
+<a class="jxr_linenumber" name="248" href="#248">248</a> <em class="jxr_javadoccomment">     * If the field is not supported a {@code DateTimeException} must be thrown.</em>
+<a class="jxr_linenumber" name="249" href="#249">249</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="250" href="#250">250</a> <em class="jxr_javadoccomment">     * Implementations must not alter the specified temporal object.</em>
+<a class="jxr_linenumber" name="251" href="#251">251</a> <em class="jxr_javadoccomment">     * Instead, an adjusted copy of the original must be returned.</em>
+<a class="jxr_linenumber" name="252" href="#252">252</a> <em class="jxr_javadoccomment">     * This provides equivalent, safe behavior for immutable and mutable implementations.</em>
+<a class="jxr_linenumber" name="253" href="#253">253</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="254" href="#254">254</a> <em class="jxr_javadoccomment">     * @param &lt;R&gt;  the type of the Temporal object</em>
+<a class="jxr_linenumber" name="255" href="#255">255</a> <em class="jxr_javadoccomment">     * @param temporal the temporal object to adjust, not null</em>
+<a class="jxr_linenumber" name="256" href="#256">256</a> <em class="jxr_javadoccomment">     * @param newValue the new value of the field</em>
+<a class="jxr_linenumber" name="257" href="#257">257</a> <em class="jxr_javadoccomment">     * @return the adjusted temporal object, not null</em>
+<a class="jxr_linenumber" name="258" href="#258">258</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the field cannot be set</em>
+<a class="jxr_linenumber" name="259" href="#259">259</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="260" href="#260">260</a>     &lt;R <strong class="jxr_keyword">extends</strong> Temporal&gt; R adjustInto(R temporal, <strong class="jxr_keyword">long</strong> newValue);
+<a class="jxr_linenumber" name="261" href="#261">261</a> 
+<a class="jxr_linenumber" name="262" href="#262">262</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="263" href="#263">263</a> <em class="jxr_javadoccomment">     * Resolves the date/time information in the builder</em>
+<a class="jxr_linenumber" name="264" href="#264">264</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="265" href="#265">265</a> <em class="jxr_javadoccomment">     * This method is invoked during the resolve of the builder.</em>
+<a class="jxr_linenumber" name="266" href="#266">266</a> <em class="jxr_javadoccomment">     * Implementations should combine the associated field with others to form</em>
+<a class="jxr_linenumber" name="267" href="#267">267</a> <em class="jxr_javadoccomment">     * objects like {@code LocalDate}, {@code LocalTime} and {@code LocalDateTime}</em>
+<a class="jxr_linenumber" name="268" href="#268">268</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="269" href="#269">269</a> <em class="jxr_javadoccomment">     * @param fieldValues  the map of fields to values, which can be updated, not null</em>
+<a class="jxr_linenumber" name="270" href="#270">270</a> <em class="jxr_javadoccomment">     * @param partialTemporal  the partially complete temporal to query for zone and</em>
+<a class="jxr_linenumber" name="271" href="#271">271</a> <em class="jxr_javadoccomment">     *  chronology; querying for other things is undefined and not recommended, not null</em>
+<a class="jxr_linenumber" name="272" href="#272">272</a> <em class="jxr_javadoccomment">     * @param resolverStyle  the requested type of resolve, not null</em>
+<a class="jxr_linenumber" name="273" href="#273">273</a> <em class="jxr_javadoccomment">     * @return the resolved temporal object; null if resolving only</em>
+<a class="jxr_linenumber" name="274" href="#274">274</a> <em class="jxr_javadoccomment">     *  changed the map, or no resolve occurred</em>
+<a class="jxr_linenumber" name="275" href="#275">275</a> <em class="jxr_javadoccomment">     * @throws ArithmeticException if numeric overflow occurs</em>
+<a class="jxr_linenumber" name="276" href="#276">276</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if resolving results in an error. This must not be thrown</em>
+<a class="jxr_linenumber" name="277" href="#277">277</a> <em class="jxr_javadoccomment">     *  by querying a field on the temporal without first checking if it is supported</em>
+<a class="jxr_linenumber" name="278" href="#278">278</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="279" href="#279">279</a>     <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> resolve(
+<a class="jxr_linenumber" name="280" href="#280">280</a>                     Map&lt;TemporalField, Long&gt; fieldValues,
+<a class="jxr_linenumber" name="281" href="#281">281</a>                     <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> partialTemporal,
+<a class="jxr_linenumber" name="282" href="#282">282</a>                     <a href="../../../../org/threeten/bp/format/ResolverStyle.html">ResolverStyle</a> resolverStyle);
+<a class="jxr_linenumber" name="283" href="#283">283</a> 
+<a class="jxr_linenumber" name="284" href="#284">284</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
