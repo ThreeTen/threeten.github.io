@@ -8,10 +8,11 @@ The ThreeTen project is providing a new date and time API for JDK 1.8 as part of
 
 #### Main project for JDK 1.8
 
-The main strand of active development for JDK 1.8 is in [OpenJDK](http://openjdk.java.net/projects/threeten/).
+The main strand of active development for JDK 1.8 is in [OpenJDK](http://openjdk.java.net/projects/jdk8u/).
 
 Source code was [originally located](https://github.com/ThreeTen/threeten) here at GitHub but is now in Mercurial at OpenJDK.
-The [issue tracker](https://github.com/ThreeTen/threeten/issues) is currently still located here at GitHub.
+Issues should be logged in the OpenJDK [bug database](https://bugs.openjdk.java.net/secure/Dashboard.jspa).
+Older issues are still visible at the GItHub [issue tracker](https://github.com/ThreeTen/threeten/issues).
 
 #### Backport for JDK 1.7
 
@@ -32,7 +33,7 @@ The documentation is applicable to both the backport and JDK 1.8 - only the pack
 
 #### Extras
 
-Not every piece of functionality in the date/time are ended up in OpenJDK and JDK 8.
+Not every piece of functionality in the domain of date/time ended up in OpenJDK and JDK 8.
 The "extras" have been combined into a new project - [ThreeTen-Extra](http://www.threeten.org/threeten-extra/) - which can be used as an additional date/time jar file on JDK 8.
 
 #### Links
