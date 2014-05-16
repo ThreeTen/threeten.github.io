@@ -581,30 +581,33 @@
 <a class="jxr_linenumber" name="571" href="#571">571</a>                     Arrays.equals(wallOffsets, other.wallOffsets) &amp;&amp;
 <a class="jxr_linenumber" name="572" href="#572">572</a>                     Arrays.equals(lastRules, other.lastRules);
 <a class="jxr_linenumber" name="573" href="#573">573</a>         }
-<a class="jxr_linenumber" name="574" href="#574">574</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="575" href="#575">575</a>     }
-<a class="jxr_linenumber" name="576" href="#576">576</a> 
-<a class="jxr_linenumber" name="577" href="#577">577</a>     @Override
-<a class="jxr_linenumber" name="578" href="#578">578</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
-<a class="jxr_linenumber" name="579" href="#579">579</a>         <strong class="jxr_keyword">return</strong> Arrays.hashCode(standardTransitions) ^
-<a class="jxr_linenumber" name="580" href="#580">580</a>                 Arrays.hashCode(standardOffsets) ^
-<a class="jxr_linenumber" name="581" href="#581">581</a>                 Arrays.hashCode(savingsInstantTransitions) ^
-<a class="jxr_linenumber" name="582" href="#582">582</a>                 Arrays.hashCode(wallOffsets) ^
-<a class="jxr_linenumber" name="583" href="#583">583</a>                 Arrays.hashCode(lastRules);
-<a class="jxr_linenumber" name="584" href="#584">584</a>     }
-<a class="jxr_linenumber" name="585" href="#585">585</a> 
-<a class="jxr_linenumber" name="586" href="#586">586</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="587" href="#587">587</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="588" href="#588">588</a> <em class="jxr_javadoccomment">     * Returns a string describing this object.</em>
-<a class="jxr_linenumber" name="589" href="#589">589</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="590" href="#590">590</a> <em class="jxr_javadoccomment">     * @return a string for debugging, not null</em>
-<a class="jxr_linenumber" name="591" href="#591">591</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="592" href="#592">592</a>     @Override
-<a class="jxr_linenumber" name="593" href="#593">593</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="594" href="#594">594</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"StandardZoneRules[currentStandardOffset="</span> + standardOffsets[standardOffsets.length - 1] + <span class="jxr_string">"]"</span>;
-<a class="jxr_linenumber" name="595" href="#595">595</a>     }
-<a class="jxr_linenumber" name="596" href="#596">596</a> 
-<a class="jxr_linenumber" name="597" href="#597">597</a> }
+<a class="jxr_linenumber" name="574" href="#574">574</a>         <strong class="jxr_keyword">if</strong> (obj instanceof Fixed) {
+<a class="jxr_linenumber" name="575" href="#575">575</a>             <strong class="jxr_keyword">return</strong> isFixedOffset() &amp;&amp; getOffset(Instant.EPOCH).equals(((Fixed) obj).getOffset(Instant.EPOCH));
+<a class="jxr_linenumber" name="576" href="#576">576</a>         }
+<a class="jxr_linenumber" name="577" href="#577">577</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="578" href="#578">578</a>     }
+<a class="jxr_linenumber" name="579" href="#579">579</a> 
+<a class="jxr_linenumber" name="580" href="#580">580</a>     @Override
+<a class="jxr_linenumber" name="581" href="#581">581</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
+<a class="jxr_linenumber" name="582" href="#582">582</a>         <strong class="jxr_keyword">return</strong> Arrays.hashCode(standardTransitions) ^
+<a class="jxr_linenumber" name="583" href="#583">583</a>                 Arrays.hashCode(standardOffsets) ^
+<a class="jxr_linenumber" name="584" href="#584">584</a>                 Arrays.hashCode(savingsInstantTransitions) ^
+<a class="jxr_linenumber" name="585" href="#585">585</a>                 Arrays.hashCode(wallOffsets) ^
+<a class="jxr_linenumber" name="586" href="#586">586</a>                 Arrays.hashCode(lastRules);
+<a class="jxr_linenumber" name="587" href="#587">587</a>     }
+<a class="jxr_linenumber" name="588" href="#588">588</a> 
+<a class="jxr_linenumber" name="589" href="#589">589</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="590" href="#590">590</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="591" href="#591">591</a> <em class="jxr_javadoccomment">     * Returns a string describing this object.</em>
+<a class="jxr_linenumber" name="592" href="#592">592</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="593" href="#593">593</a> <em class="jxr_javadoccomment">     * @return a string for debugging, not null</em>
+<a class="jxr_linenumber" name="594" href="#594">594</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="595" href="#595">595</a>     @Override
+<a class="jxr_linenumber" name="596" href="#596">596</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="597" href="#597">597</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"StandardZoneRules[currentStandardOffset="</span> + standardOffsets[standardOffsets.length - 1] + <span class="jxr_string">"]"</span>;
+<a class="jxr_linenumber" name="598" href="#598">598</a>     }
+<a class="jxr_linenumber" name="599" href="#599">599</a> 
+<a class="jxr_linenumber" name="600" href="#600">600</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

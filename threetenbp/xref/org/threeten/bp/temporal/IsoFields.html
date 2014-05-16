@@ -471,167 +471,177 @@
 <a class="jxr_linenumber" name="461" href="#461">461</a>                 <strong class="jxr_keyword">if</strong> (isSupportedBy(temporal) == false) {
 <a class="jxr_linenumber" name="462" href="#462">462</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/UnsupportedTemporalTypeException.html">UnsupportedTemporalTypeException</a>(<span class="jxr_string">"Unsupported field: WeekBasedYear"</span>);
 <a class="jxr_linenumber" name="463" href="#463">463</a>                 }
-<a class="jxr_linenumber" name="464" href="#464">464</a>                 <strong class="jxr_keyword">int</strong> newVal = range().checkValidIntValue(newValue, WEEK_BASED_YEAR);
+<a class="jxr_linenumber" name="464" href="#464">464</a>                 <strong class="jxr_keyword">int</strong> newWby = range().checkValidIntValue(newValue, WEEK_BASED_YEAR);  <em class="jxr_comment">// strict check</em>
 <a class="jxr_linenumber" name="465" href="#465">465</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date = LocalDate.from(temporal);
-<a class="jxr_linenumber" name="466" href="#466">466</a>                 <strong class="jxr_keyword">int</strong> week = getWeek(date);
-<a class="jxr_linenumber" name="467" href="#467">467</a>                 date = date.withDayOfYear(180).withYear(newVal).with(WEEK_OF_WEEK_BASED_YEAR, week);
-<a class="jxr_linenumber" name="468" href="#468">468</a>                 <strong class="jxr_keyword">return</strong> (R) date.with(date);
-<a class="jxr_linenumber" name="469" href="#469">469</a>             }
-<a class="jxr_linenumber" name="470" href="#470">470</a>         };
-<a class="jxr_linenumber" name="471" href="#471">471</a> 
-<a class="jxr_linenumber" name="472" href="#472">472</a>         @Override
-<a class="jxr_linenumber" name="473" href="#473">473</a>         <strong class="jxr_keyword">public</strong> String getDisplayName(Locale locale) {
-<a class="jxr_linenumber" name="474" href="#474">474</a>             Objects.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
-<a class="jxr_linenumber" name="475" href="#475">475</a>             <strong class="jxr_keyword">return</strong> toString();
-<a class="jxr_linenumber" name="476" href="#476">476</a>         }
+<a class="jxr_linenumber" name="466" href="#466">466</a>                 <strong class="jxr_keyword">int</strong> dow = date.get(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="467" href="#467">467</a>                 <strong class="jxr_keyword">int</strong> week = getWeek(date);
+<a class="jxr_linenumber" name="468" href="#468">468</a>                 <strong class="jxr_keyword">if</strong> (week == 53 &amp;&amp; getWeekRange(newWby) == 52) {
+<a class="jxr_linenumber" name="469" href="#469">469</a>                     week = 52;
+<a class="jxr_linenumber" name="470" href="#470">470</a>                 }
+<a class="jxr_linenumber" name="471" href="#471">471</a>                 <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> resolved = LocalDate.of(newWby, 1, 4);  <em class="jxr_comment">// 4th is guaranteed to be in week one</em>
+<a class="jxr_linenumber" name="472" href="#472">472</a>                 <strong class="jxr_keyword">int</strong> days = (dow - resolved.get(DAY_OF_WEEK)) + ((week - 1) * 7);
+<a class="jxr_linenumber" name="473" href="#473">473</a>                 resolved = resolved.plusDays(days);
+<a class="jxr_linenumber" name="474" href="#474">474</a>                 <strong class="jxr_keyword">return</strong> (R) temporal.with(resolved);
+<a class="jxr_linenumber" name="475" href="#475">475</a>             }
+<a class="jxr_linenumber" name="476" href="#476">476</a>         };
 <a class="jxr_linenumber" name="477" href="#477">477</a> 
 <a class="jxr_linenumber" name="478" href="#478">478</a>         @Override
-<a class="jxr_linenumber" name="479" href="#479">479</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> resolve(Map&lt;TemporalField, Long&gt; fieldValues,
-<a class="jxr_linenumber" name="480" href="#480">480</a>                         <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> partialTemporal, <a href="../../../../org/threeten/bp/format/ResolverStyle.html">ResolverStyle</a> resolverStyle) {
-<a class="jxr_linenumber" name="481" href="#481">481</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="479" href="#479">479</a>         <strong class="jxr_keyword">public</strong> String getDisplayName(Locale locale) {
+<a class="jxr_linenumber" name="480" href="#480">480</a>             Objects.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
+<a class="jxr_linenumber" name="481" href="#481">481</a>             <strong class="jxr_keyword">return</strong> toString();
 <a class="jxr_linenumber" name="482" href="#482">482</a>         }
 <a class="jxr_linenumber" name="483" href="#483">483</a> 
-<a class="jxr_linenumber" name="484" href="#484">484</a>         <em class="jxr_comment">//-------------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="485" href="#485">485</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] QUARTER_DAYS = {0, 90, 181, 273, 0, 91, 182, 274};
-<a class="jxr_linenumber" name="486" href="#486">486</a> 
-<a class="jxr_linenumber" name="487" href="#487">487</a>         @Override
-<a class="jxr_linenumber" name="488" href="#488">488</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDateBased() {
-<a class="jxr_linenumber" name="489" href="#489">489</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="490" href="#490">490</a>         }
-<a class="jxr_linenumber" name="491" href="#491">491</a>         @Override
-<a class="jxr_linenumber" name="492" href="#492">492</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTimeBased() {
-<a class="jxr_linenumber" name="493" href="#493">493</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="494" href="#494">494</a>         }
-<a class="jxr_linenumber" name="495" href="#495">495</a> 
-<a class="jxr_linenumber" name="496" href="#496">496</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isIso(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="497" href="#497">497</a>             <strong class="jxr_keyword">return</strong> Chronology.from(temporal).equals(IsoChronology.INSTANCE);
-<a class="jxr_linenumber" name="498" href="#498">498</a>         }
-<a class="jxr_linenumber" name="499" href="#499">499</a> 
-<a class="jxr_linenumber" name="500" href="#500">500</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> getWeekRange(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
-<a class="jxr_linenumber" name="501" href="#501">501</a>             <strong class="jxr_keyword">int</strong> wby = getWeekBasedYear(date);
-<a class="jxr_linenumber" name="502" href="#502">502</a>             date = date.withDayOfYear(1).withYear(wby);
-<a class="jxr_linenumber" name="503" href="#503">503</a>             <em class="jxr_comment">// 53 weeks if standard year starts on Thursday, or Wed in a leap year</em>
-<a class="jxr_linenumber" name="504" href="#504">504</a>             <strong class="jxr_keyword">if</strong> (date.getDayOfWeek() == THURSDAY || (date.getDayOfWeek() == WEDNESDAY &amp;&amp; date.isLeapYear())) {
-<a class="jxr_linenumber" name="505" href="#505">505</a>                 <strong class="jxr_keyword">return</strong> ValueRange.of(1, 53);
-<a class="jxr_linenumber" name="506" href="#506">506</a>             }
-<a class="jxr_linenumber" name="507" href="#507">507</a>             <strong class="jxr_keyword">return</strong> ValueRange.of(1, 52);
-<a class="jxr_linenumber" name="508" href="#508">508</a>         }
-<a class="jxr_linenumber" name="509" href="#509">509</a> 
-<a class="jxr_linenumber" name="510" href="#510">510</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getWeek(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
-<a class="jxr_linenumber" name="511" href="#511">511</a>             <strong class="jxr_keyword">int</strong> dow0 = date.getDayOfWeek().ordinal();
-<a class="jxr_linenumber" name="512" href="#512">512</a>             <strong class="jxr_keyword">int</strong> doy0 = date.getDayOfYear() - 1;
-<a class="jxr_linenumber" name="513" href="#513">513</a>             <strong class="jxr_keyword">int</strong> doyThu0 = doy0 + (3 - dow0);  <em class="jxr_comment">// adjust to mid-week Thursday (which is 3 indexed from zero)</em>
-<a class="jxr_linenumber" name="514" href="#514">514</a>             <strong class="jxr_keyword">int</strong> alignedWeek = doyThu0 / 7;
-<a class="jxr_linenumber" name="515" href="#515">515</a>             <strong class="jxr_keyword">int</strong> firstThuDoy0 = doyThu0 - (alignedWeek * 7);
-<a class="jxr_linenumber" name="516" href="#516">516</a>             <strong class="jxr_keyword">int</strong> firstMonDoy0 = firstThuDoy0 - 3;
-<a class="jxr_linenumber" name="517" href="#517">517</a>             <strong class="jxr_keyword">if</strong> (firstMonDoy0 &lt; -3) {
-<a class="jxr_linenumber" name="518" href="#518">518</a>                 firstMonDoy0 += 7;
-<a class="jxr_linenumber" name="519" href="#519">519</a>             }
-<a class="jxr_linenumber" name="520" href="#520">520</a>             <strong class="jxr_keyword">if</strong> (doy0 &lt; firstMonDoy0) {
-<a class="jxr_linenumber" name="521" href="#521">521</a>                 <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) getWeekRange(date.withDayOfYear(180).minusYears(1)).getMaximum();
-<a class="jxr_linenumber" name="522" href="#522">522</a>             }
-<a class="jxr_linenumber" name="523" href="#523">523</a>             <strong class="jxr_keyword">int</strong> week = ((doy0 - firstMonDoy0) / 7) + 1;
-<a class="jxr_linenumber" name="524" href="#524">524</a>             <strong class="jxr_keyword">if</strong> (week == 53) {
-<a class="jxr_linenumber" name="525" href="#525">525</a>                 <strong class="jxr_keyword">if</strong> ((firstMonDoy0 == -3 || (firstMonDoy0 == -2 &amp;&amp; date.isLeapYear())) == false) {
-<a class="jxr_linenumber" name="526" href="#526">526</a>                     week = 1;
-<a class="jxr_linenumber" name="527" href="#527">527</a>                 }
-<a class="jxr_linenumber" name="528" href="#528">528</a>             }
-<a class="jxr_linenumber" name="529" href="#529">529</a>             <strong class="jxr_keyword">return</strong> week;
-<a class="jxr_linenumber" name="530" href="#530">530</a>         }
-<a class="jxr_linenumber" name="531" href="#531">531</a> 
-<a class="jxr_linenumber" name="532" href="#532">532</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getWeekBasedYear(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
-<a class="jxr_linenumber" name="533" href="#533">533</a>             <strong class="jxr_keyword">int</strong> year = date.getYear();
-<a class="jxr_linenumber" name="534" href="#534">534</a>             <strong class="jxr_keyword">int</strong> doy = date.getDayOfYear();
-<a class="jxr_linenumber" name="535" href="#535">535</a>             <strong class="jxr_keyword">if</strong> (doy &lt;= 3) {
-<a class="jxr_linenumber" name="536" href="#536">536</a>                 <strong class="jxr_keyword">int</strong> dow = date.getDayOfWeek().ordinal();
-<a class="jxr_linenumber" name="537" href="#537">537</a>                 <strong class="jxr_keyword">if</strong> (doy - dow &lt; -2) {
-<a class="jxr_linenumber" name="538" href="#538">538</a>                     year--;
-<a class="jxr_linenumber" name="539" href="#539">539</a>                 }
-<a class="jxr_linenumber" name="540" href="#540">540</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (doy &gt;= 363) {
-<a class="jxr_linenumber" name="541" href="#541">541</a>                 <strong class="jxr_keyword">int</strong> dow = date.getDayOfWeek().ordinal();
-<a class="jxr_linenumber" name="542" href="#542">542</a>                 doy = doy - 363 - (date.isLeapYear() ? 1 : 0);
-<a class="jxr_linenumber" name="543" href="#543">543</a>                 <strong class="jxr_keyword">if</strong> (doy - dow &gt;= 0) {
-<a class="jxr_linenumber" name="544" href="#544">544</a>                     year++;
-<a class="jxr_linenumber" name="545" href="#545">545</a>                 }
-<a class="jxr_linenumber" name="546" href="#546">546</a>             }
-<a class="jxr_linenumber" name="547" href="#547">547</a>             <strong class="jxr_keyword">return</strong> year;
-<a class="jxr_linenumber" name="548" href="#548">548</a>         }
-<a class="jxr_linenumber" name="549" href="#549">549</a>     }
-<a class="jxr_linenumber" name="550" href="#550">550</a> 
-<a class="jxr_linenumber" name="551" href="#551">551</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="552" href="#552">552</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="553" href="#553">553</a> <em class="jxr_javadoccomment">     * Implementation of the period unit.</em>
-<a class="jxr_linenumber" name="554" href="#554">554</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="555" href="#555">555</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> enum <a href="../../../../org/threeten/bp/temporal/IsoFields.html">Unit</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> {
-<a class="jxr_linenumber" name="556" href="#556">556</a>         WEEK_BASED_YEARS(<span class="jxr_string">"WeekBasedYears"</span>, Duration.ofSeconds(31556952L)),
-<a class="jxr_linenumber" name="557" href="#557">557</a>         QUARTER_YEARS(<span class="jxr_string">"QuarterYears"</span>, Duration.ofSeconds(31556952L / 4));
-<a class="jxr_linenumber" name="558" href="#558">558</a> 
-<a class="jxr_linenumber" name="559" href="#559">559</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String name;
-<a class="jxr_linenumber" name="560" href="#560">560</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/Duration.html">Duration</a> duration;
-<a class="jxr_linenumber" name="561" href="#561">561</a> 
-<a class="jxr_linenumber" name="562" href="#562">562</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/temporal/IsoFields.html">Unit</a>(String name, <a href="../../../../org/threeten/bp/Duration.html">Duration</a> estimatedDuration) {
-<a class="jxr_linenumber" name="563" href="#563">563</a>             <strong class="jxr_keyword">this</strong>.name = name;
-<a class="jxr_linenumber" name="564" href="#564">564</a>             <strong class="jxr_keyword">this</strong>.duration = estimatedDuration;
-<a class="jxr_linenumber" name="565" href="#565">565</a>         }
-<a class="jxr_linenumber" name="566" href="#566">566</a> 
-<a class="jxr_linenumber" name="567" href="#567">567</a>         @Override
-<a class="jxr_linenumber" name="568" href="#568">568</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/Duration.html">Duration</a> getDuration() {
-<a class="jxr_linenumber" name="569" href="#569">569</a>             <strong class="jxr_keyword">return</strong> duration;
-<a class="jxr_linenumber" name="570" href="#570">570</a>         }
+<a class="jxr_linenumber" name="484" href="#484">484</a>         @Override
+<a class="jxr_linenumber" name="485" href="#485">485</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> resolve(Map&lt;TemporalField, Long&gt; fieldValues,
+<a class="jxr_linenumber" name="486" href="#486">486</a>                         <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> partialTemporal, <a href="../../../../org/threeten/bp/format/ResolverStyle.html">ResolverStyle</a> resolverStyle) {
+<a class="jxr_linenumber" name="487" href="#487">487</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="488" href="#488">488</a>         }
+<a class="jxr_linenumber" name="489" href="#489">489</a> 
+<a class="jxr_linenumber" name="490" href="#490">490</a>         <em class="jxr_comment">//-------------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="491" href="#491">491</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] QUARTER_DAYS = {0, 90, 181, 273, 0, 91, 182, 274};
+<a class="jxr_linenumber" name="492" href="#492">492</a> 
+<a class="jxr_linenumber" name="493" href="#493">493</a>         @Override
+<a class="jxr_linenumber" name="494" href="#494">494</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDateBased() {
+<a class="jxr_linenumber" name="495" href="#495">495</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="496" href="#496">496</a>         }
+<a class="jxr_linenumber" name="497" href="#497">497</a>         @Override
+<a class="jxr_linenumber" name="498" href="#498">498</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTimeBased() {
+<a class="jxr_linenumber" name="499" href="#499">499</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="500" href="#500">500</a>         }
+<a class="jxr_linenumber" name="501" href="#501">501</a> 
+<a class="jxr_linenumber" name="502" href="#502">502</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isIso(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="503" href="#503">503</a>             <strong class="jxr_keyword">return</strong> Chronology.from(temporal).equals(IsoChronology.INSTANCE);
+<a class="jxr_linenumber" name="504" href="#504">504</a>         }
+<a class="jxr_linenumber" name="505" href="#505">505</a> 
+<a class="jxr_linenumber" name="506" href="#506">506</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> getWeekRange(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
+<a class="jxr_linenumber" name="507" href="#507">507</a>             <strong class="jxr_keyword">int</strong> wby = getWeekBasedYear(date);
+<a class="jxr_linenumber" name="508" href="#508">508</a>             <strong class="jxr_keyword">return</strong> ValueRange.of(1, getWeekRange(wby));
+<a class="jxr_linenumber" name="509" href="#509">509</a>         }
+<a class="jxr_linenumber" name="510" href="#510">510</a> 
+<a class="jxr_linenumber" name="511" href="#511">511</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getWeekRange(<strong class="jxr_keyword">int</strong> wby) {
+<a class="jxr_linenumber" name="512" href="#512">512</a>             <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date = LocalDate.of(wby, 1, 1);
+<a class="jxr_linenumber" name="513" href="#513">513</a>             <em class="jxr_comment">// 53 weeks if standard year starts on Thursday, or Wed in a leap year</em>
+<a class="jxr_linenumber" name="514" href="#514">514</a>             <strong class="jxr_keyword">if</strong> (date.getDayOfWeek() == THURSDAY || (date.getDayOfWeek() == WEDNESDAY &amp;&amp; date.isLeapYear())) {
+<a class="jxr_linenumber" name="515" href="#515">515</a>                 <strong class="jxr_keyword">return</strong> 53;
+<a class="jxr_linenumber" name="516" href="#516">516</a>             }
+<a class="jxr_linenumber" name="517" href="#517">517</a>             <strong class="jxr_keyword">return</strong> 52;
+<a class="jxr_linenumber" name="518" href="#518">518</a>         }
+<a class="jxr_linenumber" name="519" href="#519">519</a> 
+<a class="jxr_linenumber" name="520" href="#520">520</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getWeek(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
+<a class="jxr_linenumber" name="521" href="#521">521</a>             <strong class="jxr_keyword">int</strong> dow0 = date.getDayOfWeek().ordinal();
+<a class="jxr_linenumber" name="522" href="#522">522</a>             <strong class="jxr_keyword">int</strong> doy0 = date.getDayOfYear() - 1;
+<a class="jxr_linenumber" name="523" href="#523">523</a>             <strong class="jxr_keyword">int</strong> doyThu0 = doy0 + (3 - dow0);  <em class="jxr_comment">// adjust to mid-week Thursday (which is 3 indexed from zero)</em>
+<a class="jxr_linenumber" name="524" href="#524">524</a>             <strong class="jxr_keyword">int</strong> alignedWeek = doyThu0 / 7;
+<a class="jxr_linenumber" name="525" href="#525">525</a>             <strong class="jxr_keyword">int</strong> firstThuDoy0 = doyThu0 - (alignedWeek * 7);
+<a class="jxr_linenumber" name="526" href="#526">526</a>             <strong class="jxr_keyword">int</strong> firstMonDoy0 = firstThuDoy0 - 3;
+<a class="jxr_linenumber" name="527" href="#527">527</a>             <strong class="jxr_keyword">if</strong> (firstMonDoy0 &lt; -3) {
+<a class="jxr_linenumber" name="528" href="#528">528</a>                 firstMonDoy0 += 7;
+<a class="jxr_linenumber" name="529" href="#529">529</a>             }
+<a class="jxr_linenumber" name="530" href="#530">530</a>             <strong class="jxr_keyword">if</strong> (doy0 &lt; firstMonDoy0) {
+<a class="jxr_linenumber" name="531" href="#531">531</a>                 <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) getWeekRange(date.withDayOfYear(180).minusYears(1)).getMaximum();
+<a class="jxr_linenumber" name="532" href="#532">532</a>             }
+<a class="jxr_linenumber" name="533" href="#533">533</a>             <strong class="jxr_keyword">int</strong> week = ((doy0 - firstMonDoy0) / 7) + 1;
+<a class="jxr_linenumber" name="534" href="#534">534</a>             <strong class="jxr_keyword">if</strong> (week == 53) {
+<a class="jxr_linenumber" name="535" href="#535">535</a>                 <strong class="jxr_keyword">if</strong> ((firstMonDoy0 == -3 || (firstMonDoy0 == -2 &amp;&amp; date.isLeapYear())) == false) {
+<a class="jxr_linenumber" name="536" href="#536">536</a>                     week = 1;
+<a class="jxr_linenumber" name="537" href="#537">537</a>                 }
+<a class="jxr_linenumber" name="538" href="#538">538</a>             }
+<a class="jxr_linenumber" name="539" href="#539">539</a>             <strong class="jxr_keyword">return</strong> week;
+<a class="jxr_linenumber" name="540" href="#540">540</a>         }
+<a class="jxr_linenumber" name="541" href="#541">541</a> 
+<a class="jxr_linenumber" name="542" href="#542">542</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getWeekBasedYear(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
+<a class="jxr_linenumber" name="543" href="#543">543</a>             <strong class="jxr_keyword">int</strong> year = date.getYear();
+<a class="jxr_linenumber" name="544" href="#544">544</a>             <strong class="jxr_keyword">int</strong> doy = date.getDayOfYear();
+<a class="jxr_linenumber" name="545" href="#545">545</a>             <strong class="jxr_keyword">if</strong> (doy &lt;= 3) {
+<a class="jxr_linenumber" name="546" href="#546">546</a>                 <strong class="jxr_keyword">int</strong> dow = date.getDayOfWeek().ordinal();
+<a class="jxr_linenumber" name="547" href="#547">547</a>                 <strong class="jxr_keyword">if</strong> (doy - dow &lt; -2) {
+<a class="jxr_linenumber" name="548" href="#548">548</a>                     year--;
+<a class="jxr_linenumber" name="549" href="#549">549</a>                 }
+<a class="jxr_linenumber" name="550" href="#550">550</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (doy &gt;= 363) {
+<a class="jxr_linenumber" name="551" href="#551">551</a>                 <strong class="jxr_keyword">int</strong> dow = date.getDayOfWeek().ordinal();
+<a class="jxr_linenumber" name="552" href="#552">552</a>                 doy = doy - 363 - (date.isLeapYear() ? 1 : 0);
+<a class="jxr_linenumber" name="553" href="#553">553</a>                 <strong class="jxr_keyword">if</strong> (doy - dow &gt;= 0) {
+<a class="jxr_linenumber" name="554" href="#554">554</a>                     year++;
+<a class="jxr_linenumber" name="555" href="#555">555</a>                 }
+<a class="jxr_linenumber" name="556" href="#556">556</a>             }
+<a class="jxr_linenumber" name="557" href="#557">557</a>             <strong class="jxr_keyword">return</strong> year;
+<a class="jxr_linenumber" name="558" href="#558">558</a>         }
+<a class="jxr_linenumber" name="559" href="#559">559</a>     }
+<a class="jxr_linenumber" name="560" href="#560">560</a> 
+<a class="jxr_linenumber" name="561" href="#561">561</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="562" href="#562">562</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="563" href="#563">563</a> <em class="jxr_javadoccomment">     * Implementation of the period unit.</em>
+<a class="jxr_linenumber" name="564" href="#564">564</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="565" href="#565">565</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> enum <a href="../../../../org/threeten/bp/temporal/IsoFields.html">Unit</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> {
+<a class="jxr_linenumber" name="566" href="#566">566</a>         WEEK_BASED_YEARS(<span class="jxr_string">"WeekBasedYears"</span>, Duration.ofSeconds(31556952L)),
+<a class="jxr_linenumber" name="567" href="#567">567</a>         QUARTER_YEARS(<span class="jxr_string">"QuarterYears"</span>, Duration.ofSeconds(31556952L / 4));
+<a class="jxr_linenumber" name="568" href="#568">568</a> 
+<a class="jxr_linenumber" name="569" href="#569">569</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String name;
+<a class="jxr_linenumber" name="570" href="#570">570</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/Duration.html">Duration</a> duration;
 <a class="jxr_linenumber" name="571" href="#571">571</a> 
-<a class="jxr_linenumber" name="572" href="#572">572</a>         @Override
-<a class="jxr_linenumber" name="573" href="#573">573</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDurationEstimated() {
-<a class="jxr_linenumber" name="574" href="#574">574</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="572" href="#572">572</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/temporal/IsoFields.html">Unit</a>(String name, <a href="../../../../org/threeten/bp/Duration.html">Duration</a> estimatedDuration) {
+<a class="jxr_linenumber" name="573" href="#573">573</a>             <strong class="jxr_keyword">this</strong>.name = name;
+<a class="jxr_linenumber" name="574" href="#574">574</a>             <strong class="jxr_keyword">this</strong>.duration = estimatedDuration;
 <a class="jxr_linenumber" name="575" href="#575">575</a>         }
 <a class="jxr_linenumber" name="576" href="#576">576</a> 
 <a class="jxr_linenumber" name="577" href="#577">577</a>         @Override
-<a class="jxr_linenumber" name="578" href="#578">578</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDateBased() {
-<a class="jxr_linenumber" name="579" href="#579">579</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="578" href="#578">578</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/Duration.html">Duration</a> getDuration() {
+<a class="jxr_linenumber" name="579" href="#579">579</a>             <strong class="jxr_keyword">return</strong> duration;
 <a class="jxr_linenumber" name="580" href="#580">580</a>         }
 <a class="jxr_linenumber" name="581" href="#581">581</a> 
 <a class="jxr_linenumber" name="582" href="#582">582</a>         @Override
-<a class="jxr_linenumber" name="583" href="#583">583</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTimeBased() {
-<a class="jxr_linenumber" name="584" href="#584">584</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="583" href="#583">583</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDurationEstimated() {
+<a class="jxr_linenumber" name="584" href="#584">584</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="585" href="#585">585</a>         }
 <a class="jxr_linenumber" name="586" href="#586">586</a> 
 <a class="jxr_linenumber" name="587" href="#587">587</a>         @Override
-<a class="jxr_linenumber" name="588" href="#588">588</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSupportedBy(<a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> temporal) {
-<a class="jxr_linenumber" name="589" href="#589">589</a>             <strong class="jxr_keyword">return</strong> temporal.isSupported(EPOCH_DAY);
+<a class="jxr_linenumber" name="588" href="#588">588</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDateBased() {
+<a class="jxr_linenumber" name="589" href="#589">589</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="590" href="#590">590</a>         }
 <a class="jxr_linenumber" name="591" href="#591">591</a> 
-<a class="jxr_linenumber" name="592" href="#592">592</a>         @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="593" href="#593">593</a>         @Override
-<a class="jxr_linenumber" name="594" href="#594">594</a>         <strong class="jxr_keyword">public</strong> &lt;R <strong class="jxr_keyword">extends</strong> Temporal&gt; R addTo(R temporal, <strong class="jxr_keyword">long</strong> periodToAdd) {
-<a class="jxr_linenumber" name="595" href="#595">595</a>             <strong class="jxr_keyword">switch</strong>(<strong class="jxr_keyword">this</strong>) {
-<a class="jxr_linenumber" name="596" href="#596">596</a>                 <strong class="jxr_keyword">case</strong> WEEK_BASED_YEARS:
-<a class="jxr_linenumber" name="597" href="#597">597</a>                     <strong class="jxr_keyword">long</strong> added = Jdk8Methods.safeAdd(temporal.get(WEEK_BASED_YEAR), periodToAdd);
-<a class="jxr_linenumber" name="598" href="#598">598</a>                     <strong class="jxr_keyword">return</strong> (R) temporal.with(WEEK_BASED_YEAR, added);
-<a class="jxr_linenumber" name="599" href="#599">599</a>                 <strong class="jxr_keyword">case</strong> QUARTER_YEARS:
-<a class="jxr_linenumber" name="600" href="#600">600</a>                     <em class="jxr_comment">// no overflow (256 is multiple of 4)</em>
-<a class="jxr_linenumber" name="601" href="#601">601</a>                     <strong class="jxr_keyword">return</strong> (R) temporal.plus(periodToAdd / 256, YEARS).plus((periodToAdd % 256) * 3, MONTHS);
-<a class="jxr_linenumber" name="602" href="#602">602</a>                 <strong class="jxr_keyword">default</strong>:
-<a class="jxr_linenumber" name="603" href="#603">603</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Unreachable"</span>);
-<a class="jxr_linenumber" name="604" href="#604">604</a>             }
-<a class="jxr_linenumber" name="605" href="#605">605</a>         }
-<a class="jxr_linenumber" name="606" href="#606">606</a> 
-<a class="jxr_linenumber" name="607" href="#607">607</a>         @Override
-<a class="jxr_linenumber" name="608" href="#608">608</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> between(<a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> temporal1, <a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> temporal2) {
-<a class="jxr_linenumber" name="609" href="#609">609</a>             <strong class="jxr_keyword">switch</strong>(<strong class="jxr_keyword">this</strong>) {
-<a class="jxr_linenumber" name="610" href="#610">610</a>                 <strong class="jxr_keyword">case</strong> WEEK_BASED_YEARS:
-<a class="jxr_linenumber" name="611" href="#611">611</a>                     <strong class="jxr_keyword">return</strong> Jdk8Methods.safeSubtract(temporal2.getLong(WEEK_BASED_YEAR), temporal1.getLong(WEEK_BASED_YEAR));
-<a class="jxr_linenumber" name="612" href="#612">612</a>                 <strong class="jxr_keyword">case</strong> QUARTER_YEARS:
-<a class="jxr_linenumber" name="613" href="#613">613</a>                     <strong class="jxr_keyword">return</strong> temporal1.until(temporal2, MONTHS) / 3;
-<a class="jxr_linenumber" name="614" href="#614">614</a>                 <strong class="jxr_keyword">default</strong>:
-<a class="jxr_linenumber" name="615" href="#615">615</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Unreachable"</span>);
-<a class="jxr_linenumber" name="616" href="#616">616</a>             }
-<a class="jxr_linenumber" name="617" href="#617">617</a>         }
-<a class="jxr_linenumber" name="618" href="#618">618</a> 
-<a class="jxr_linenumber" name="619" href="#619">619</a>         @Override
-<a class="jxr_linenumber" name="620" href="#620">620</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="621" href="#621">621</a>             <strong class="jxr_keyword">return</strong> name;
-<a class="jxr_linenumber" name="622" href="#622">622</a>         }
-<a class="jxr_linenumber" name="623" href="#623">623</a>     }
-<a class="jxr_linenumber" name="624" href="#624">624</a> }
+<a class="jxr_linenumber" name="592" href="#592">592</a>         @Override
+<a class="jxr_linenumber" name="593" href="#593">593</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTimeBased() {
+<a class="jxr_linenumber" name="594" href="#594">594</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="595" href="#595">595</a>         }
+<a class="jxr_linenumber" name="596" href="#596">596</a> 
+<a class="jxr_linenumber" name="597" href="#597">597</a>         @Override
+<a class="jxr_linenumber" name="598" href="#598">598</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSupportedBy(<a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> temporal) {
+<a class="jxr_linenumber" name="599" href="#599">599</a>             <strong class="jxr_keyword">return</strong> temporal.isSupported(EPOCH_DAY);
+<a class="jxr_linenumber" name="600" href="#600">600</a>         }
+<a class="jxr_linenumber" name="601" href="#601">601</a> 
+<a class="jxr_linenumber" name="602" href="#602">602</a>         @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="603" href="#603">603</a>         @Override
+<a class="jxr_linenumber" name="604" href="#604">604</a>         <strong class="jxr_keyword">public</strong> &lt;R <strong class="jxr_keyword">extends</strong> Temporal&gt; R addTo(R temporal, <strong class="jxr_keyword">long</strong> periodToAdd) {
+<a class="jxr_linenumber" name="605" href="#605">605</a>             <strong class="jxr_keyword">switch</strong>(<strong class="jxr_keyword">this</strong>) {
+<a class="jxr_linenumber" name="606" href="#606">606</a>                 <strong class="jxr_keyword">case</strong> WEEK_BASED_YEARS:
+<a class="jxr_linenumber" name="607" href="#607">607</a>                     <strong class="jxr_keyword">long</strong> added = Jdk8Methods.safeAdd(temporal.get(WEEK_BASED_YEAR), periodToAdd);
+<a class="jxr_linenumber" name="608" href="#608">608</a>                     <strong class="jxr_keyword">return</strong> (R) temporal.with(WEEK_BASED_YEAR, added);
+<a class="jxr_linenumber" name="609" href="#609">609</a>                 <strong class="jxr_keyword">case</strong> QUARTER_YEARS:
+<a class="jxr_linenumber" name="610" href="#610">610</a>                     <em class="jxr_comment">// no overflow (256 is multiple of 4)</em>
+<a class="jxr_linenumber" name="611" href="#611">611</a>                     <strong class="jxr_keyword">return</strong> (R) temporal.plus(periodToAdd / 256, YEARS).plus((periodToAdd % 256) * 3, MONTHS);
+<a class="jxr_linenumber" name="612" href="#612">612</a>                 <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="613" href="#613">613</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Unreachable"</span>);
+<a class="jxr_linenumber" name="614" href="#614">614</a>             }
+<a class="jxr_linenumber" name="615" href="#615">615</a>         }
+<a class="jxr_linenumber" name="616" href="#616">616</a> 
+<a class="jxr_linenumber" name="617" href="#617">617</a>         @Override
+<a class="jxr_linenumber" name="618" href="#618">618</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> between(<a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> temporal1, <a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> temporal2) {
+<a class="jxr_linenumber" name="619" href="#619">619</a>             <strong class="jxr_keyword">switch</strong>(<strong class="jxr_keyword">this</strong>) {
+<a class="jxr_linenumber" name="620" href="#620">620</a>                 <strong class="jxr_keyword">case</strong> WEEK_BASED_YEARS:
+<a class="jxr_linenumber" name="621" href="#621">621</a>                     <strong class="jxr_keyword">return</strong> Jdk8Methods.safeSubtract(temporal2.getLong(WEEK_BASED_YEAR), temporal1.getLong(WEEK_BASED_YEAR));
+<a class="jxr_linenumber" name="622" href="#622">622</a>                 <strong class="jxr_keyword">case</strong> QUARTER_YEARS:
+<a class="jxr_linenumber" name="623" href="#623">623</a>                     <strong class="jxr_keyword">return</strong> temporal1.until(temporal2, MONTHS) / 3;
+<a class="jxr_linenumber" name="624" href="#624">624</a>                 <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="625" href="#625">625</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Unreachable"</span>);
+<a class="jxr_linenumber" name="626" href="#626">626</a>             }
+<a class="jxr_linenumber" name="627" href="#627">627</a>         }
+<a class="jxr_linenumber" name="628" href="#628">628</a> 
+<a class="jxr_linenumber" name="629" href="#629">629</a>         @Override
+<a class="jxr_linenumber" name="630" href="#630">630</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="631" href="#631">631</a>             <strong class="jxr_keyword">return</strong> name;
+<a class="jxr_linenumber" name="632" href="#632">632</a>         }
+<a class="jxr_linenumber" name="633" href="#633">633</a>     }
+<a class="jxr_linenumber" name="634" href="#634">634</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

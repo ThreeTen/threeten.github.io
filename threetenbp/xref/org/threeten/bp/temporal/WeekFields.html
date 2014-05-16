@@ -469,553 +469,558 @@
 <a class="jxr_linenumber" name="459" href="#459">459</a> <em class="jxr_javadoccomment">     * @return a field providing access to the week-of-week-based-year, not null</em>
 <a class="jxr_linenumber" name="460" href="#460">460</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="461" href="#461">461</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> weekOfWeekBasedYear() {
-<a class="jxr_linenumber" name="462" href="#462">462</a>         <strong class="jxr_keyword">if</strong> (minimalDays == 4 &amp;&amp; firstDayOfWeek == DayOfWeek.MONDAY) {
-<a class="jxr_linenumber" name="463" href="#463">463</a>             <strong class="jxr_keyword">return</strong> IsoFields.WEEK_OF_WEEK_BASED_YEAR;
-<a class="jxr_linenumber" name="464" href="#464">464</a>         }
-<a class="jxr_linenumber" name="465" href="#465">465</a>         <strong class="jxr_keyword">return</strong> weekOfWeekBasedYear;
-<a class="jxr_linenumber" name="466" href="#466">466</a>     }
-<a class="jxr_linenumber" name="467" href="#467">467</a> 
-<a class="jxr_linenumber" name="468" href="#468">468</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="469" href="#469">469</a> <em class="jxr_javadoccomment">     * Returns a field to access the year of a week-based-year based on this {@code WeekFields}.</em>
-<a class="jxr_linenumber" name="470" href="#470">470</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="471" href="#471">471</a> <em class="jxr_javadoccomment">     * This represents the concept of the year where weeks start on a fixed day-of-week,</em>
-<a class="jxr_linenumber" name="472" href="#472">472</a> <em class="jxr_javadoccomment">     * such as Monday and each week belongs to exactly one year.</em>
-<a class="jxr_linenumber" name="473" href="#473">473</a> <em class="jxr_javadoccomment">     * This field is typically used with {@link WeekFields#dayOfWeek()} and</em>
-<a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_javadoccomment">     * {@link WeekFields#weekOfWeekBasedYear()}.</em>
-<a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_javadoccomment">     * Week one(1) is the week starting on the {@link WeekFields#getFirstDayOfWeek}</em>
-<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_javadoccomment">     * where there are at least {@link WeekFields#getMinimalDaysInFirstWeek()} days in the year.</em>
-<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_javadoccomment">     * Thus, week one may start before the start of the year.</em>
-<a class="jxr_linenumber" name="479" href="#479">479</a> <em class="jxr_javadoccomment">     * If the first week starts after the start of the year then the period before</em>
-<a class="jxr_linenumber" name="480" href="#480">480</a> <em class="jxr_javadoccomment">     * is in the last week of the previous year.</em>
-<a class="jxr_linenumber" name="481" href="#481">481</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="482" href="#482">482</a> <em class="jxr_javadoccomment">     * This field can be used with any calendar system.</em>
+<a class="jxr_linenumber" name="462" href="#462">462</a>         <strong class="jxr_keyword">return</strong> weekOfWeekBasedYear;
+<a class="jxr_linenumber" name="463" href="#463">463</a>     }
+<a class="jxr_linenumber" name="464" href="#464">464</a> 
+<a class="jxr_linenumber" name="465" href="#465">465</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="466" href="#466">466</a> <em class="jxr_javadoccomment">     * Returns a field to access the year of a week-based-year based on this {@code WeekFields}.</em>
+<a class="jxr_linenumber" name="467" href="#467">467</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="468" href="#468">468</a> <em class="jxr_javadoccomment">     * This represents the concept of the year where weeks start on a fixed day-of-week,</em>
+<a class="jxr_linenumber" name="469" href="#469">469</a> <em class="jxr_javadoccomment">     * such as Monday and each week belongs to exactly one year.</em>
+<a class="jxr_linenumber" name="470" href="#470">470</a> <em class="jxr_javadoccomment">     * This field is typically used with {@link WeekFields#dayOfWeek()} and</em>
+<a class="jxr_linenumber" name="471" href="#471">471</a> <em class="jxr_javadoccomment">     * {@link WeekFields#weekOfWeekBasedYear()}.</em>
+<a class="jxr_linenumber" name="472" href="#472">472</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="473" href="#473">473</a> <em class="jxr_javadoccomment">     * Week one(1) is the week starting on the {@link WeekFields#getFirstDayOfWeek}</em>
+<a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_javadoccomment">     * where there are at least {@link WeekFields#getMinimalDaysInFirstWeek()} days in the year.</em>
+<a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_javadoccomment">     * Thus, week one may start before the start of the year.</em>
+<a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_javadoccomment">     * If the first week starts after the start of the year then the period before</em>
+<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_javadoccomment">     * is in the last week of the previous year.</em>
+<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="479" href="#479">479</a> <em class="jxr_javadoccomment">     * This field can be used with any calendar system.</em>
+<a class="jxr_linenumber" name="480" href="#480">480</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="481" href="#481">481</a> <em class="jxr_javadoccomment">     * In the resolving phase of parsing, a date can be created from a week-based-year,</em>
+<a class="jxr_linenumber" name="482" href="#482">482</a> <em class="jxr_javadoccomment">     * week-of-year and day-of-week.</em>
 <a class="jxr_linenumber" name="483" href="#483">483</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">     * In the resolving phase of parsing, a date can be created from a week-based-year,</em>
-<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">     * week-of-year and day-of-week.</em>
-<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">     * In {@linkplain ResolverStyle#STRICT strict mode}, all three fields are</em>
-<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_javadoccomment">     * validated against their range of valid values. The week-of-year field</em>
-<a class="jxr_linenumber" name="489" href="#489">489</a> <em class="jxr_javadoccomment">     * is validated to ensure that the resulting week-based-year is the</em>
-<a class="jxr_linenumber" name="490" href="#490">490</a> <em class="jxr_javadoccomment">     * week-based-year requested.</em>
-<a class="jxr_linenumber" name="491" href="#491">491</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="492" href="#492">492</a> <em class="jxr_javadoccomment">     * In {@linkplain ResolverStyle#SMART smart mode}, all three fields are</em>
-<a class="jxr_linenumber" name="493" href="#493">493</a> <em class="jxr_javadoccomment">     * validated against their range of valid values. The week-of-week-based-year field</em>
-<a class="jxr_linenumber" name="494" href="#494">494</a> <em class="jxr_javadoccomment">     * is validated from 1 to 53, meaning that the resulting date can be in the</em>
-<a class="jxr_linenumber" name="495" href="#495">495</a> <em class="jxr_javadoccomment">     * following week-based-year to that specified.</em>
-<a class="jxr_linenumber" name="496" href="#496">496</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="497" href="#497">497</a> <em class="jxr_javadoccomment">     * In {@linkplain ResolverStyle#LENIENT lenient mode}, the year and day-of-week</em>
-<a class="jxr_linenumber" name="498" href="#498">498</a> <em class="jxr_javadoccomment">     * are validated against the range of valid values. The resulting date is calculated</em>
-<a class="jxr_linenumber" name="499" href="#499">499</a> <em class="jxr_javadoccomment">     * equivalent to the following three stage approach.</em>
-<a class="jxr_linenumber" name="500" href="#500">500</a> <em class="jxr_javadoccomment">     * First, create a date on the first day of the first week in the requested week-based-year.</em>
-<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_javadoccomment">     * Then take the week-of-week-based-year, subtract one, and add the amount in weeks to the date.</em>
-<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     * Finally, adjust to the correct day-of-week within the localized week.</em>
-<a class="jxr_linenumber" name="503" href="#503">503</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="504" href="#504">504</a> <em class="jxr_javadoccomment">     * @return a field providing access to the week-based-year, not null</em>
-<a class="jxr_linenumber" name="505" href="#505">505</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="506" href="#506">506</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> weekBasedYear() {
-<a class="jxr_linenumber" name="507" href="#507">507</a>         <strong class="jxr_keyword">if</strong> (minimalDays == 4 &amp;&amp; firstDayOfWeek == DayOfWeek.MONDAY) {
-<a class="jxr_linenumber" name="508" href="#508">508</a>             <strong class="jxr_keyword">return</strong> IsoFields.WEEK_BASED_YEAR;
-<a class="jxr_linenumber" name="509" href="#509">509</a>         }
-<a class="jxr_linenumber" name="510" href="#510">510</a>         <strong class="jxr_keyword">return</strong> weekBasedYear;
-<a class="jxr_linenumber" name="511" href="#511">511</a>     }
-<a class="jxr_linenumber" name="512" href="#512">512</a> 
-<a class="jxr_linenumber" name="513" href="#513">513</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="514" href="#514">514</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="515" href="#515">515</a> <em class="jxr_javadoccomment">     * Checks if this {@code WeekFields} is equal to the specified object.</em>
-<a class="jxr_linenumber" name="516" href="#516">516</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="517" href="#517">517</a> <em class="jxr_javadoccomment">     * The comparison is based on the entire state of the rules, which is</em>
-<a class="jxr_linenumber" name="518" href="#518">518</a> <em class="jxr_javadoccomment">     * the first day-of-week and minimal days.</em>
-<a class="jxr_linenumber" name="519" href="#519">519</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="520" href="#520">520</a> <em class="jxr_javadoccomment">     * @param object  the other rules to compare to, null returns false</em>
-<a class="jxr_linenumber" name="521" href="#521">521</a> <em class="jxr_javadoccomment">     * @return true if this is equal to the specified rules</em>
-<a class="jxr_linenumber" name="522" href="#522">522</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="523" href="#523">523</a>     @Override
-<a class="jxr_linenumber" name="524" href="#524">524</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object object) {
-<a class="jxr_linenumber" name="525" href="#525">525</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong> == object) {
-<a class="jxr_linenumber" name="526" href="#526">526</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="527" href="#527">527</a>         }
-<a class="jxr_linenumber" name="528" href="#528">528</a>         <strong class="jxr_keyword">if</strong> (object instanceof WeekFields) {
-<a class="jxr_linenumber" name="529" href="#529">529</a>             <strong class="jxr_keyword">return</strong> hashCode() == object.hashCode();
-<a class="jxr_linenumber" name="530" href="#530">530</a>         }
-<a class="jxr_linenumber" name="531" href="#531">531</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="532" href="#532">532</a>     }
-<a class="jxr_linenumber" name="533" href="#533">533</a> 
-<a class="jxr_linenumber" name="534" href="#534">534</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="535" href="#535">535</a> <em class="jxr_javadoccomment">     * A hash code for this {@code WeekFields}.</em>
-<a class="jxr_linenumber" name="536" href="#536">536</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="537" href="#537">537</a> <em class="jxr_javadoccomment">     * @return a suitable hash code</em>
-<a class="jxr_linenumber" name="538" href="#538">538</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="539" href="#539">539</a>     @Override
-<a class="jxr_linenumber" name="540" href="#540">540</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
-<a class="jxr_linenumber" name="541" href="#541">541</a>         <strong class="jxr_keyword">return</strong> firstDayOfWeek.ordinal() * 7 + minimalDays;
-<a class="jxr_linenumber" name="542" href="#542">542</a>     }
-<a class="jxr_linenumber" name="543" href="#543">543</a> 
-<a class="jxr_linenumber" name="544" href="#544">544</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="545" href="#545">545</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="546" href="#546">546</a> <em class="jxr_javadoccomment">     * A string representation of this {@code WeekFields} instance.</em>
-<a class="jxr_linenumber" name="547" href="#547">547</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="548" href="#548">548</a> <em class="jxr_javadoccomment">     * @return the string representation, not null</em>
-<a class="jxr_linenumber" name="549" href="#549">549</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="550" href="#550">550</a>     @Override
-<a class="jxr_linenumber" name="551" href="#551">551</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="552" href="#552">552</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"WeekFields["</span> + firstDayOfWeek + ',' + minimalDays + ']';
-<a class="jxr_linenumber" name="553" href="#553">553</a>     }
-<a class="jxr_linenumber" name="554" href="#554">554</a> 
-<a class="jxr_linenumber" name="555" href="#555">555</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="556" href="#556">556</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="557" href="#557">557</a> <em class="jxr_javadoccomment">     * Field type that computes DayOfWeek, WeekOfMonth, and WeekOfYear</em>
-<a class="jxr_linenumber" name="558" href="#558">558</a> <em class="jxr_javadoccomment">     * based on a WeekFields.</em>
-<a class="jxr_linenumber" name="559" href="#559">559</a> <em class="jxr_javadoccomment">     * A separate Field instance is required for each different WeekFields;</em>
-<a class="jxr_linenumber" name="560" href="#560">560</a> <em class="jxr_javadoccomment">     * combination of start of week and minimum number of days.</em>
-<a class="jxr_linenumber" name="561" href="#561">561</a> <em class="jxr_javadoccomment">     * Constructors are provided to create fields for DayOfWeek, WeekOfMonth,</em>
-<a class="jxr_linenumber" name="562" href="#562">562</a> <em class="jxr_javadoccomment">     * and WeekOfYear.</em>
-<a class="jxr_linenumber" name="563" href="#563">563</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="564" href="#564">564</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> {
-<a class="jxr_linenumber" name="565" href="#565">565</a> 
-<a class="jxr_linenumber" name="566" href="#566">566</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="567" href="#567">567</a> <em class="jxr_javadoccomment">         * Returns a field to access the day of week,</em>
-<a class="jxr_linenumber" name="568" href="#568">568</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
-<a class="jxr_linenumber" name="569" href="#569">569</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="570" href="#570">570</a> <em class="jxr_javadoccomment">         * The WeekDefintion of the first day of the week is used with</em>
-<a class="jxr_linenumber" name="571" href="#571">571</a> <em class="jxr_javadoccomment">         * the ISO DAY_OF_WEEK field to compute week boundaries.</em>
-<a class="jxr_linenumber" name="572" href="#572">572</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="573" href="#573">573</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofDayOfWeekField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
-<a class="jxr_linenumber" name="574" href="#574">574</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"DayOfWeek"</span>, weekDef,
-<a class="jxr_linenumber" name="575" href="#575">575</a>                     ChronoUnit.DAYS, ChronoUnit.WEEKS, DAY_OF_WEEK_RANGE);
-<a class="jxr_linenumber" name="576" href="#576">576</a>         }
-<a class="jxr_linenumber" name="577" href="#577">577</a> 
-<a class="jxr_linenumber" name="578" href="#578">578</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="579" href="#579">579</a> <em class="jxr_javadoccomment">         * Returns a field to access the week of month,</em>
-<a class="jxr_linenumber" name="580" href="#580">580</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
-<a class="jxr_linenumber" name="581" href="#581">581</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekOfMonth()</em>
-<a class="jxr_linenumber" name="582" href="#582">582</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="583" href="#583">583</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekOfMonthField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
-<a class="jxr_linenumber" name="584" href="#584">584</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekOfMonth"</span>, weekDef,
-<a class="jxr_linenumber" name="585" href="#585">585</a>                     ChronoUnit.WEEKS, ChronoUnit.MONTHS, WEEK_OF_MONTH_RANGE);
-<a class="jxr_linenumber" name="586" href="#586">586</a>         }
-<a class="jxr_linenumber" name="587" href="#587">587</a> 
-<a class="jxr_linenumber" name="588" href="#588">588</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="589" href="#589">589</a> <em class="jxr_javadoccomment">         * Returns a field to access the week of year,</em>
-<a class="jxr_linenumber" name="590" href="#590">590</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
-<a class="jxr_linenumber" name="591" href="#591">591</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekOfYear()</em>
-<a class="jxr_linenumber" name="592" href="#592">592</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="593" href="#593">593</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekOfYearField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
-<a class="jxr_linenumber" name="594" href="#594">594</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekOfYear"</span>, weekDef,
-<a class="jxr_linenumber" name="595" href="#595">595</a>                     ChronoUnit.WEEKS, ChronoUnit.YEARS, WEEK_OF_YEAR_RANGE);
-<a class="jxr_linenumber" name="596" href="#596">596</a>         }
-<a class="jxr_linenumber" name="597" href="#597">597</a> 
-<a class="jxr_linenumber" name="598" href="#598">598</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="599" href="#599">599</a> <em class="jxr_javadoccomment">         * Returns a field to access the week of week-based-year,</em>
-<a class="jxr_linenumber" name="600" href="#600">600</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
-<a class="jxr_linenumber" name="601" href="#601">601</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekOfWeekBasedYear()</em>
-<a class="jxr_linenumber" name="602" href="#602">602</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="603" href="#603">603</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekOfWeekBasedYearField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
-<a class="jxr_linenumber" name="604" href="#604">604</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekOfWeekBasedYear"</span>, weekDef,
-<a class="jxr_linenumber" name="605" href="#605">605</a>                     ChronoUnit.WEEKS, IsoFields.WEEK_BASED_YEARS, WEEK_OF_WEEK_BASED_YEAR_RANGE);
-<a class="jxr_linenumber" name="606" href="#606">606</a>         }
-<a class="jxr_linenumber" name="607" href="#607">607</a> 
-<a class="jxr_linenumber" name="608" href="#608">608</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="609" href="#609">609</a> <em class="jxr_javadoccomment">         * Returns a field to access the week-based-year,</em>
-<a class="jxr_linenumber" name="610" href="#610">610</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
-<a class="jxr_linenumber" name="611" href="#611">611</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekBasedYear()</em>
-<a class="jxr_linenumber" name="612" href="#612">612</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="613" href="#613">613</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekBasedYearField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
-<a class="jxr_linenumber" name="614" href="#614">614</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekBasedYear"</span>, weekDef,
-<a class="jxr_linenumber" name="615" href="#615">615</a>                     IsoFields.WEEK_BASED_YEARS, ChronoUnit.FOREVER, WEEK_BASED_YEAR_RANGE);
-<a class="jxr_linenumber" name="616" href="#616">616</a>         }
+<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">     * In {@linkplain ResolverStyle#STRICT strict mode}, all three fields are</em>
+<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">     * validated against their range of valid values. The week-of-year field</em>
+<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">     * is validated to ensure that the resulting week-based-year is the</em>
+<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">     * week-based-year requested.</em>
+<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="489" href="#489">489</a> <em class="jxr_javadoccomment">     * In {@linkplain ResolverStyle#SMART smart mode}, all three fields are</em>
+<a class="jxr_linenumber" name="490" href="#490">490</a> <em class="jxr_javadoccomment">     * validated against their range of valid values. The week-of-week-based-year field</em>
+<a class="jxr_linenumber" name="491" href="#491">491</a> <em class="jxr_javadoccomment">     * is validated from 1 to 53, meaning that the resulting date can be in the</em>
+<a class="jxr_linenumber" name="492" href="#492">492</a> <em class="jxr_javadoccomment">     * following week-based-year to that specified.</em>
+<a class="jxr_linenumber" name="493" href="#493">493</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="494" href="#494">494</a> <em class="jxr_javadoccomment">     * In {@linkplain ResolverStyle#LENIENT lenient mode}, the year and day-of-week</em>
+<a class="jxr_linenumber" name="495" href="#495">495</a> <em class="jxr_javadoccomment">     * are validated against the range of valid values. The resulting date is calculated</em>
+<a class="jxr_linenumber" name="496" href="#496">496</a> <em class="jxr_javadoccomment">     * equivalent to the following three stage approach.</em>
+<a class="jxr_linenumber" name="497" href="#497">497</a> <em class="jxr_javadoccomment">     * First, create a date on the first day of the first week in the requested week-based-year.</em>
+<a class="jxr_linenumber" name="498" href="#498">498</a> <em class="jxr_javadoccomment">     * Then take the week-of-week-based-year, subtract one, and add the amount in weeks to the date.</em>
+<a class="jxr_linenumber" name="499" href="#499">499</a> <em class="jxr_javadoccomment">     * Finally, adjust to the correct day-of-week within the localized week.</em>
+<a class="jxr_linenumber" name="500" href="#500">500</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_javadoccomment">     * @return a field providing access to the week-based-year, not null</em>
+<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="503" href="#503">503</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> weekBasedYear() {
+<a class="jxr_linenumber" name="504" href="#504">504</a>         <strong class="jxr_keyword">return</strong> weekBasedYear;
+<a class="jxr_linenumber" name="505" href="#505">505</a>     }
+<a class="jxr_linenumber" name="506" href="#506">506</a> 
+<a class="jxr_linenumber" name="507" href="#507">507</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="508" href="#508">508</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="509" href="#509">509</a> <em class="jxr_javadoccomment">     * Checks if this {@code WeekFields} is equal to the specified object.</em>
+<a class="jxr_linenumber" name="510" href="#510">510</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="511" href="#511">511</a> <em class="jxr_javadoccomment">     * The comparison is based on the entire state of the rules, which is</em>
+<a class="jxr_linenumber" name="512" href="#512">512</a> <em class="jxr_javadoccomment">     * the first day-of-week and minimal days.</em>
+<a class="jxr_linenumber" name="513" href="#513">513</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="514" href="#514">514</a> <em class="jxr_javadoccomment">     * @param object  the other rules to compare to, null returns false</em>
+<a class="jxr_linenumber" name="515" href="#515">515</a> <em class="jxr_javadoccomment">     * @return true if this is equal to the specified rules</em>
+<a class="jxr_linenumber" name="516" href="#516">516</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="517" href="#517">517</a>     @Override
+<a class="jxr_linenumber" name="518" href="#518">518</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object object) {
+<a class="jxr_linenumber" name="519" href="#519">519</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong> == object) {
+<a class="jxr_linenumber" name="520" href="#520">520</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="521" href="#521">521</a>         }
+<a class="jxr_linenumber" name="522" href="#522">522</a>         <strong class="jxr_keyword">if</strong> (object instanceof WeekFields) {
+<a class="jxr_linenumber" name="523" href="#523">523</a>             <strong class="jxr_keyword">return</strong> hashCode() == object.hashCode();
+<a class="jxr_linenumber" name="524" href="#524">524</a>         }
+<a class="jxr_linenumber" name="525" href="#525">525</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="526" href="#526">526</a>     }
+<a class="jxr_linenumber" name="527" href="#527">527</a> 
+<a class="jxr_linenumber" name="528" href="#528">528</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="529" href="#529">529</a> <em class="jxr_javadoccomment">     * A hash code for this {@code WeekFields}.</em>
+<a class="jxr_linenumber" name="530" href="#530">530</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="531" href="#531">531</a> <em class="jxr_javadoccomment">     * @return a suitable hash code</em>
+<a class="jxr_linenumber" name="532" href="#532">532</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="533" href="#533">533</a>     @Override
+<a class="jxr_linenumber" name="534" href="#534">534</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
+<a class="jxr_linenumber" name="535" href="#535">535</a>         <strong class="jxr_keyword">return</strong> firstDayOfWeek.ordinal() * 7 + minimalDays;
+<a class="jxr_linenumber" name="536" href="#536">536</a>     }
+<a class="jxr_linenumber" name="537" href="#537">537</a> 
+<a class="jxr_linenumber" name="538" href="#538">538</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="539" href="#539">539</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="540" href="#540">540</a> <em class="jxr_javadoccomment">     * A string representation of this {@code WeekFields} instance.</em>
+<a class="jxr_linenumber" name="541" href="#541">541</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="542" href="#542">542</a> <em class="jxr_javadoccomment">     * @return the string representation, not null</em>
+<a class="jxr_linenumber" name="543" href="#543">543</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="544" href="#544">544</a>     @Override
+<a class="jxr_linenumber" name="545" href="#545">545</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="546" href="#546">546</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"WeekFields["</span> + firstDayOfWeek + ',' + minimalDays + ']';
+<a class="jxr_linenumber" name="547" href="#547">547</a>     }
+<a class="jxr_linenumber" name="548" href="#548">548</a> 
+<a class="jxr_linenumber" name="549" href="#549">549</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="550" href="#550">550</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="551" href="#551">551</a> <em class="jxr_javadoccomment">     * Field type that computes DayOfWeek, WeekOfMonth, and WeekOfYear</em>
+<a class="jxr_linenumber" name="552" href="#552">552</a> <em class="jxr_javadoccomment">     * based on a WeekFields.</em>
+<a class="jxr_linenumber" name="553" href="#553">553</a> <em class="jxr_javadoccomment">     * A separate Field instance is required for each different WeekFields;</em>
+<a class="jxr_linenumber" name="554" href="#554">554</a> <em class="jxr_javadoccomment">     * combination of start of week and minimum number of days.</em>
+<a class="jxr_linenumber" name="555" href="#555">555</a> <em class="jxr_javadoccomment">     * Constructors are provided to create fields for DayOfWeek, WeekOfMonth,</em>
+<a class="jxr_linenumber" name="556" href="#556">556</a> <em class="jxr_javadoccomment">     * and WeekOfYear.</em>
+<a class="jxr_linenumber" name="557" href="#557">557</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="558" href="#558">558</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> {
+<a class="jxr_linenumber" name="559" href="#559">559</a> 
+<a class="jxr_linenumber" name="560" href="#560">560</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="561" href="#561">561</a> <em class="jxr_javadoccomment">         * Returns a field to access the day of week,</em>
+<a class="jxr_linenumber" name="562" href="#562">562</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
+<a class="jxr_linenumber" name="563" href="#563">563</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="564" href="#564">564</a> <em class="jxr_javadoccomment">         * The WeekDefintion of the first day of the week is used with</em>
+<a class="jxr_linenumber" name="565" href="#565">565</a> <em class="jxr_javadoccomment">         * the ISO DAY_OF_WEEK field to compute week boundaries.</em>
+<a class="jxr_linenumber" name="566" href="#566">566</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="567" href="#567">567</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofDayOfWeekField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
+<a class="jxr_linenumber" name="568" href="#568">568</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"DayOfWeek"</span>, weekDef,
+<a class="jxr_linenumber" name="569" href="#569">569</a>                     ChronoUnit.DAYS, ChronoUnit.WEEKS, DAY_OF_WEEK_RANGE);
+<a class="jxr_linenumber" name="570" href="#570">570</a>         }
+<a class="jxr_linenumber" name="571" href="#571">571</a> 
+<a class="jxr_linenumber" name="572" href="#572">572</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="573" href="#573">573</a> <em class="jxr_javadoccomment">         * Returns a field to access the week of month,</em>
+<a class="jxr_linenumber" name="574" href="#574">574</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
+<a class="jxr_linenumber" name="575" href="#575">575</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekOfMonth()</em>
+<a class="jxr_linenumber" name="576" href="#576">576</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="577" href="#577">577</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekOfMonthField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
+<a class="jxr_linenumber" name="578" href="#578">578</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekOfMonth"</span>, weekDef,
+<a class="jxr_linenumber" name="579" href="#579">579</a>                     ChronoUnit.WEEKS, ChronoUnit.MONTHS, WEEK_OF_MONTH_RANGE);
+<a class="jxr_linenumber" name="580" href="#580">580</a>         }
+<a class="jxr_linenumber" name="581" href="#581">581</a> 
+<a class="jxr_linenumber" name="582" href="#582">582</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="583" href="#583">583</a> <em class="jxr_javadoccomment">         * Returns a field to access the week of year,</em>
+<a class="jxr_linenumber" name="584" href="#584">584</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
+<a class="jxr_linenumber" name="585" href="#585">585</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekOfYear()</em>
+<a class="jxr_linenumber" name="586" href="#586">586</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="587" href="#587">587</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekOfYearField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
+<a class="jxr_linenumber" name="588" href="#588">588</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekOfYear"</span>, weekDef,
+<a class="jxr_linenumber" name="589" href="#589">589</a>                     ChronoUnit.WEEKS, ChronoUnit.YEARS, WEEK_OF_YEAR_RANGE);
+<a class="jxr_linenumber" name="590" href="#590">590</a>         }
+<a class="jxr_linenumber" name="591" href="#591">591</a> 
+<a class="jxr_linenumber" name="592" href="#592">592</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="593" href="#593">593</a> <em class="jxr_javadoccomment">         * Returns a field to access the week of week-based-year,</em>
+<a class="jxr_linenumber" name="594" href="#594">594</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
+<a class="jxr_linenumber" name="595" href="#595">595</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekOfWeekBasedYear()</em>
+<a class="jxr_linenumber" name="596" href="#596">596</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="597" href="#597">597</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekOfWeekBasedYearField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
+<a class="jxr_linenumber" name="598" href="#598">598</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekOfWeekBasedYear"</span>, weekDef,
+<a class="jxr_linenumber" name="599" href="#599">599</a>                     ChronoUnit.WEEKS, IsoFields.WEEK_BASED_YEARS, WEEK_OF_WEEK_BASED_YEAR_RANGE);
+<a class="jxr_linenumber" name="600" href="#600">600</a>         }
+<a class="jxr_linenumber" name="601" href="#601">601</a> 
+<a class="jxr_linenumber" name="602" href="#602">602</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="603" href="#603">603</a> <em class="jxr_javadoccomment">         * Returns a field to access the week-based-year,</em>
+<a class="jxr_linenumber" name="604" href="#604">604</a> <em class="jxr_javadoccomment">         * computed based on a WeekFields.</em>
+<a class="jxr_linenumber" name="605" href="#605">605</a> <em class="jxr_javadoccomment">         * @see WeekFields#weekBasedYear()</em>
+<a class="jxr_linenumber" name="606" href="#606">606</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="607" href="#607">607</a>         <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a> ofWeekBasedYearField(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef) {
+<a class="jxr_linenumber" name="608" href="#608">608</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(<span class="jxr_string">"WeekBasedYear"</span>, weekDef,
+<a class="jxr_linenumber" name="609" href="#609">609</a>                     IsoFields.WEEK_BASED_YEARS, ChronoUnit.FOREVER, WEEK_BASED_YEAR_RANGE);
+<a class="jxr_linenumber" name="610" href="#610">610</a>         }
+<a class="jxr_linenumber" name="611" href="#611">611</a> 
+<a class="jxr_linenumber" name="612" href="#612">612</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String name;
+<a class="jxr_linenumber" name="613" href="#613">613</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef;
+<a class="jxr_linenumber" name="614" href="#614">614</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> baseUnit;
+<a class="jxr_linenumber" name="615" href="#615">615</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> rangeUnit;
+<a class="jxr_linenumber" name="616" href="#616">616</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range;
 <a class="jxr_linenumber" name="617" href="#617">617</a> 
-<a class="jxr_linenumber" name="618" href="#618">618</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String name;
-<a class="jxr_linenumber" name="619" href="#619">619</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef;
-<a class="jxr_linenumber" name="620" href="#620">620</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> baseUnit;
-<a class="jxr_linenumber" name="621" href="#621">621</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> rangeUnit;
-<a class="jxr_linenumber" name="622" href="#622">622</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range;
-<a class="jxr_linenumber" name="623" href="#623">623</a> 
-<a class="jxr_linenumber" name="624" href="#624">624</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(String name, <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef, <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> baseUnit, <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> rangeUnit, <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range) {
-<a class="jxr_linenumber" name="625" href="#625">625</a>             <strong class="jxr_keyword">this</strong>.name = name;
-<a class="jxr_linenumber" name="626" href="#626">626</a>             <strong class="jxr_keyword">this</strong>.weekDef = weekDef;
-<a class="jxr_linenumber" name="627" href="#627">627</a>             <strong class="jxr_keyword">this</strong>.baseUnit = baseUnit;
-<a class="jxr_linenumber" name="628" href="#628">628</a>             <strong class="jxr_keyword">this</strong>.rangeUnit = rangeUnit;
-<a class="jxr_linenumber" name="629" href="#629">629</a>             <strong class="jxr_keyword">this</strong>.range = range;
-<a class="jxr_linenumber" name="630" href="#630">630</a>         }
+<a class="jxr_linenumber" name="618" href="#618">618</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/temporal/WeekFields.html">ComputedDayOfField</a>(String name, <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekDef, <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> baseUnit, <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> rangeUnit, <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range) {
+<a class="jxr_linenumber" name="619" href="#619">619</a>             <strong class="jxr_keyword">this</strong>.name = name;
+<a class="jxr_linenumber" name="620" href="#620">620</a>             <strong class="jxr_keyword">this</strong>.weekDef = weekDef;
+<a class="jxr_linenumber" name="621" href="#621">621</a>             <strong class="jxr_keyword">this</strong>.baseUnit = baseUnit;
+<a class="jxr_linenumber" name="622" href="#622">622</a>             <strong class="jxr_keyword">this</strong>.rangeUnit = rangeUnit;
+<a class="jxr_linenumber" name="623" href="#623">623</a>             <strong class="jxr_keyword">this</strong>.range = range;
+<a class="jxr_linenumber" name="624" href="#624">624</a>         }
+<a class="jxr_linenumber" name="625" href="#625">625</a> 
+<a class="jxr_linenumber" name="626" href="#626">626</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> DAY_OF_WEEK_RANGE = ValueRange.of(1, 7);
+<a class="jxr_linenumber" name="627" href="#627">627</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_OF_MONTH_RANGE = ValueRange.of(0, 1, 4, 6);
+<a class="jxr_linenumber" name="628" href="#628">628</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_OF_YEAR_RANGE = ValueRange.of(0, 1, 52, 54);
+<a class="jxr_linenumber" name="629" href="#629">629</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_OF_WEEK_BASED_YEAR_RANGE = ValueRange.of(1, 52, 53);
+<a class="jxr_linenumber" name="630" href="#630">630</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_BASED_YEAR_RANGE = YEAR.range();
 <a class="jxr_linenumber" name="631" href="#631">631</a> 
-<a class="jxr_linenumber" name="632" href="#632">632</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> DAY_OF_WEEK_RANGE = ValueRange.of(1, 7);
-<a class="jxr_linenumber" name="633" href="#633">633</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_OF_MONTH_RANGE = ValueRange.of(0, 1, 4, 6);
-<a class="jxr_linenumber" name="634" href="#634">634</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_OF_YEAR_RANGE = ValueRange.of(0, 1, 52, 54);
-<a class="jxr_linenumber" name="635" href="#635">635</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_OF_WEEK_BASED_YEAR_RANGE = ValueRange.of(1, 52, 53);
-<a class="jxr_linenumber" name="636" href="#636">636</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> WEEK_BASED_YEAR_RANGE = YEAR.range();
-<a class="jxr_linenumber" name="637" href="#637">637</a> 
-<a class="jxr_linenumber" name="638" href="#638">638</a>         @Override
-<a class="jxr_linenumber" name="639" href="#639">639</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> getFrom(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="640" href="#640">640</a>             <em class="jxr_comment">// Offset the ISO DOW by the start of this week</em>
-<a class="jxr_linenumber" name="641" href="#641">641</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
-<a class="jxr_linenumber" name="642" href="#642">642</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(ChronoField.DAY_OF_WEEK);
-<a class="jxr_linenumber" name="643" href="#643">643</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
-<a class="jxr_linenumber" name="644" href="#644">644</a> 
-<a class="jxr_linenumber" name="645" href="#645">645</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.WEEKS) {
-<a class="jxr_linenumber" name="646" href="#646">646</a>                 <strong class="jxr_keyword">return</strong> dow;
-<a class="jxr_linenumber" name="647" href="#647">647</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.MONTHS) {
-<a class="jxr_linenumber" name="648" href="#648">648</a>                 <strong class="jxr_keyword">int</strong> dom = temporal.get(ChronoField.DAY_OF_MONTH);
-<a class="jxr_linenumber" name="649" href="#649">649</a>                 <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(dom, dow);
-<a class="jxr_linenumber" name="650" href="#650">650</a>                 <strong class="jxr_keyword">return</strong> computeWeek(offset, dom);
-<a class="jxr_linenumber" name="651" href="#651">651</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.YEARS) {
-<a class="jxr_linenumber" name="652" href="#652">652</a>                 <strong class="jxr_keyword">int</strong> doy = temporal.get(ChronoField.DAY_OF_YEAR);
-<a class="jxr_linenumber" name="653" href="#653">653</a>                 <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(doy, dow);
-<a class="jxr_linenumber" name="654" href="#654">654</a>                 <strong class="jxr_keyword">return</strong> computeWeek(offset, doy);
-<a class="jxr_linenumber" name="655" href="#655">655</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == IsoFields.WEEK_BASED_YEARS) {
-<a class="jxr_linenumber" name="656" href="#656">656</a>                 <strong class="jxr_keyword">return</strong> localizedWOWBY(temporal);
-<a class="jxr_linenumber" name="657" href="#657">657</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
-<a class="jxr_linenumber" name="658" href="#658">658</a>                 <strong class="jxr_keyword">return</strong> localizedWBY(temporal);
-<a class="jxr_linenumber" name="659" href="#659">659</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="660" href="#660">660</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"unreachable"</span>);
-<a class="jxr_linenumber" name="661" href="#661">661</a>             }
-<a class="jxr_linenumber" name="662" href="#662">662</a>         }
-<a class="jxr_linenumber" name="663" href="#663">663</a> 
-<a class="jxr_linenumber" name="664" href="#664">664</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> localizedDayOfWeek(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">int</strong> sow) {
-<a class="jxr_linenumber" name="665" href="#665">665</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="666" href="#666">666</a>             <strong class="jxr_keyword">return</strong> Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="632" href="#632">632</a>         @Override
+<a class="jxr_linenumber" name="633" href="#633">633</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> getFrom(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="634" href="#634">634</a>             <em class="jxr_comment">// Offset the ISO DOW by the start of this week</em>
+<a class="jxr_linenumber" name="635" href="#635">635</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
+<a class="jxr_linenumber" name="636" href="#636">636</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(ChronoField.DAY_OF_WEEK);
+<a class="jxr_linenumber" name="637" href="#637">637</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="638" href="#638">638</a> 
+<a class="jxr_linenumber" name="639" href="#639">639</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.WEEKS) {
+<a class="jxr_linenumber" name="640" href="#640">640</a>                 <strong class="jxr_keyword">return</strong> dow;
+<a class="jxr_linenumber" name="641" href="#641">641</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.MONTHS) {
+<a class="jxr_linenumber" name="642" href="#642">642</a>                 <strong class="jxr_keyword">int</strong> dom = temporal.get(ChronoField.DAY_OF_MONTH);
+<a class="jxr_linenumber" name="643" href="#643">643</a>                 <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(dom, dow);
+<a class="jxr_linenumber" name="644" href="#644">644</a>                 <strong class="jxr_keyword">return</strong> computeWeek(offset, dom);
+<a class="jxr_linenumber" name="645" href="#645">645</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.YEARS) {
+<a class="jxr_linenumber" name="646" href="#646">646</a>                 <strong class="jxr_keyword">int</strong> doy = temporal.get(ChronoField.DAY_OF_YEAR);
+<a class="jxr_linenumber" name="647" href="#647">647</a>                 <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(doy, dow);
+<a class="jxr_linenumber" name="648" href="#648">648</a>                 <strong class="jxr_keyword">return</strong> computeWeek(offset, doy);
+<a class="jxr_linenumber" name="649" href="#649">649</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == IsoFields.WEEK_BASED_YEARS) {
+<a class="jxr_linenumber" name="650" href="#650">650</a>                 <strong class="jxr_keyword">return</strong> localizedWOWBY(temporal);
+<a class="jxr_linenumber" name="651" href="#651">651</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
+<a class="jxr_linenumber" name="652" href="#652">652</a>                 <strong class="jxr_keyword">return</strong> localizedWBY(temporal);
+<a class="jxr_linenumber" name="653" href="#653">653</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="654" href="#654">654</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"unreachable"</span>);
+<a class="jxr_linenumber" name="655" href="#655">655</a>             }
+<a class="jxr_linenumber" name="656" href="#656">656</a>         }
+<a class="jxr_linenumber" name="657" href="#657">657</a> 
+<a class="jxr_linenumber" name="658" href="#658">658</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> localizedDayOfWeek(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">int</strong> sow) {
+<a class="jxr_linenumber" name="659" href="#659">659</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="660" href="#660">660</a>             <strong class="jxr_keyword">return</strong> Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="661" href="#661">661</a>         }
+<a class="jxr_linenumber" name="662" href="#662">662</a> 
+<a class="jxr_linenumber" name="663" href="#663">663</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">long</strong> localizedWeekOfMonth(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">int</strong> dow) {
+<a class="jxr_linenumber" name="664" href="#664">664</a>             <strong class="jxr_keyword">int</strong> dom = temporal.get(DAY_OF_MONTH);
+<a class="jxr_linenumber" name="665" href="#665">665</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(dom, dow);
+<a class="jxr_linenumber" name="666" href="#666">666</a>             <strong class="jxr_keyword">return</strong> computeWeek(offset, dom);
 <a class="jxr_linenumber" name="667" href="#667">667</a>         }
 <a class="jxr_linenumber" name="668" href="#668">668</a> 
-<a class="jxr_linenumber" name="669" href="#669">669</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">long</strong> localizedWeekOfMonth(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">int</strong> dow) {
-<a class="jxr_linenumber" name="670" href="#670">670</a>             <strong class="jxr_keyword">int</strong> dom = temporal.get(DAY_OF_MONTH);
-<a class="jxr_linenumber" name="671" href="#671">671</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(dom, dow);
-<a class="jxr_linenumber" name="672" href="#672">672</a>             <strong class="jxr_keyword">return</strong> computeWeek(offset, dom);
+<a class="jxr_linenumber" name="669" href="#669">669</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">long</strong> localizedWeekOfYear(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">int</strong> dow) {
+<a class="jxr_linenumber" name="670" href="#670">670</a>             <strong class="jxr_keyword">int</strong> doy = temporal.get(DAY_OF_YEAR);
+<a class="jxr_linenumber" name="671" href="#671">671</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(doy, dow);
+<a class="jxr_linenumber" name="672" href="#672">672</a>             <strong class="jxr_keyword">return</strong> computeWeek(offset, doy);
 <a class="jxr_linenumber" name="673" href="#673">673</a>         }
 <a class="jxr_linenumber" name="674" href="#674">674</a> 
-<a class="jxr_linenumber" name="675" href="#675">675</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">long</strong> localizedWeekOfYear(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal, <strong class="jxr_keyword">int</strong> dow) {
-<a class="jxr_linenumber" name="676" href="#676">676</a>             <strong class="jxr_keyword">int</strong> doy = temporal.get(DAY_OF_YEAR);
-<a class="jxr_linenumber" name="677" href="#677">677</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(doy, dow);
-<a class="jxr_linenumber" name="678" href="#678">678</a>             <strong class="jxr_keyword">return</strong> computeWeek(offset, doy);
-<a class="jxr_linenumber" name="679" href="#679">679</a>         }
-<a class="jxr_linenumber" name="680" href="#680">680</a> 
-<a class="jxr_linenumber" name="681" href="#681">681</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> localizedWOWBY(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="682" href="#682">682</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
-<a class="jxr_linenumber" name="683" href="#683">683</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="684" href="#684">684</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
-<a class="jxr_linenumber" name="685" href="#685">685</a>             <strong class="jxr_keyword">long</strong> woy = localizedWeekOfYear(temporal, dow);
-<a class="jxr_linenumber" name="686" href="#686">686</a>             <strong class="jxr_keyword">if</strong> (woy == 0) {
-<a class="jxr_linenumber" name="687" href="#687">687</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> previous = Chronology.from(temporal).date(temporal).minus(1, ChronoUnit.WEEKS);
-<a class="jxr_linenumber" name="688" href="#688">688</a>                 <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) localizedWeekOfYear(previous, dow) + 1;
-<a class="jxr_linenumber" name="689" href="#689">689</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (woy &gt;= 53) {
-<a class="jxr_linenumber" name="690" href="#690">690</a>                 <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(DAY_OF_YEAR), dow);
-<a class="jxr_linenumber" name="691" href="#691">691</a>                 <strong class="jxr_keyword">int</strong> year = temporal.get(YEAR);
-<a class="jxr_linenumber" name="692" href="#692">692</a>                 <strong class="jxr_keyword">int</strong> yearLen = Year.isLeap(year) ? 366 : 365;
-<a class="jxr_linenumber" name="693" href="#693">693</a>                 <strong class="jxr_keyword">int</strong> weekIndexOfFirstWeekNextYear = computeWeek(offset, yearLen + weekDef.getMinimalDaysInFirstWeek());
-<a class="jxr_linenumber" name="694" href="#694">694</a>                 <strong class="jxr_keyword">if</strong> (woy &gt;= weekIndexOfFirstWeekNextYear) {
-<a class="jxr_linenumber" name="695" href="#695">695</a>                     <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) (woy - (weekIndexOfFirstWeekNextYear - 1));
-<a class="jxr_linenumber" name="696" href="#696">696</a>                 }
-<a class="jxr_linenumber" name="697" href="#697">697</a>             }
-<a class="jxr_linenumber" name="698" href="#698">698</a>             <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) woy;
-<a class="jxr_linenumber" name="699" href="#699">699</a>         }
-<a class="jxr_linenumber" name="700" href="#700">700</a> 
-<a class="jxr_linenumber" name="701" href="#701">701</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> localizedWBY(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="702" href="#702">702</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
-<a class="jxr_linenumber" name="703" href="#703">703</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="704" href="#704">704</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
-<a class="jxr_linenumber" name="705" href="#705">705</a>             <strong class="jxr_keyword">int</strong> year = temporal.get(YEAR);
-<a class="jxr_linenumber" name="706" href="#706">706</a>             <strong class="jxr_keyword">long</strong> woy = localizedWeekOfYear(temporal, dow);
-<a class="jxr_linenumber" name="707" href="#707">707</a>             <strong class="jxr_keyword">if</strong> (woy == 0) {
-<a class="jxr_linenumber" name="708" href="#708">708</a>                 <strong class="jxr_keyword">return</strong> year - 1;
-<a class="jxr_linenumber" name="709" href="#709">709</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (woy &lt; 53) {
-<a class="jxr_linenumber" name="710" href="#710">710</a>                 <strong class="jxr_keyword">return</strong> year;
+<a class="jxr_linenumber" name="675" href="#675">675</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> localizedWOWBY(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="676" href="#676">676</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
+<a class="jxr_linenumber" name="677" href="#677">677</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="678" href="#678">678</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="679" href="#679">679</a>             <strong class="jxr_keyword">long</strong> woy = localizedWeekOfYear(temporal, dow);
+<a class="jxr_linenumber" name="680" href="#680">680</a>             <strong class="jxr_keyword">if</strong> (woy == 0) {
+<a class="jxr_linenumber" name="681" href="#681">681</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> previous = Chronology.from(temporal).date(temporal).minus(1, ChronoUnit.WEEKS);
+<a class="jxr_linenumber" name="682" href="#682">682</a>                 <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) localizedWeekOfYear(previous, dow) + 1;
+<a class="jxr_linenumber" name="683" href="#683">683</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (woy &gt;= 53) {
+<a class="jxr_linenumber" name="684" href="#684">684</a>                 <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(DAY_OF_YEAR), dow);
+<a class="jxr_linenumber" name="685" href="#685">685</a>                 <strong class="jxr_keyword">int</strong> year = temporal.get(YEAR);
+<a class="jxr_linenumber" name="686" href="#686">686</a>                 <strong class="jxr_keyword">int</strong> yearLen = Year.isLeap(year) ? 366 : 365;
+<a class="jxr_linenumber" name="687" href="#687">687</a>                 <strong class="jxr_keyword">int</strong> weekIndexOfFirstWeekNextYear = computeWeek(offset, yearLen + weekDef.getMinimalDaysInFirstWeek());
+<a class="jxr_linenumber" name="688" href="#688">688</a>                 <strong class="jxr_keyword">if</strong> (woy &gt;= weekIndexOfFirstWeekNextYear) {
+<a class="jxr_linenumber" name="689" href="#689">689</a>                     <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) (woy - (weekIndexOfFirstWeekNextYear - 1));
+<a class="jxr_linenumber" name="690" href="#690">690</a>                 }
+<a class="jxr_linenumber" name="691" href="#691">691</a>             }
+<a class="jxr_linenumber" name="692" href="#692">692</a>             <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) woy;
+<a class="jxr_linenumber" name="693" href="#693">693</a>         }
+<a class="jxr_linenumber" name="694" href="#694">694</a> 
+<a class="jxr_linenumber" name="695" href="#695">695</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> localizedWBY(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="696" href="#696">696</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
+<a class="jxr_linenumber" name="697" href="#697">697</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="698" href="#698">698</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="699" href="#699">699</a>             <strong class="jxr_keyword">int</strong> year = temporal.get(YEAR);
+<a class="jxr_linenumber" name="700" href="#700">700</a>             <strong class="jxr_keyword">long</strong> woy = localizedWeekOfYear(temporal, dow);
+<a class="jxr_linenumber" name="701" href="#701">701</a>             <strong class="jxr_keyword">if</strong> (woy == 0) {
+<a class="jxr_linenumber" name="702" href="#702">702</a>                 <strong class="jxr_keyword">return</strong> year - 1;
+<a class="jxr_linenumber" name="703" href="#703">703</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (woy &lt; 53) {
+<a class="jxr_linenumber" name="704" href="#704">704</a>                 <strong class="jxr_keyword">return</strong> year;
+<a class="jxr_linenumber" name="705" href="#705">705</a>             }
+<a class="jxr_linenumber" name="706" href="#706">706</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(DAY_OF_YEAR), dow);
+<a class="jxr_linenumber" name="707" href="#707">707</a>             <strong class="jxr_keyword">int</strong> yearLen = Year.isLeap(year) ? 366 : 365;
+<a class="jxr_linenumber" name="708" href="#708">708</a>             <strong class="jxr_keyword">int</strong> weekIndexOfFirstWeekNextYear = computeWeek(offset, yearLen + weekDef.getMinimalDaysInFirstWeek());
+<a class="jxr_linenumber" name="709" href="#709">709</a>             <strong class="jxr_keyword">if</strong> (woy &gt;= weekIndexOfFirstWeekNextYear) {
+<a class="jxr_linenumber" name="710" href="#710">710</a>                 <strong class="jxr_keyword">return</strong> year + 1;
 <a class="jxr_linenumber" name="711" href="#711">711</a>             }
-<a class="jxr_linenumber" name="712" href="#712">712</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(DAY_OF_YEAR), dow);
-<a class="jxr_linenumber" name="713" href="#713">713</a>             <strong class="jxr_keyword">int</strong> yearLen = Year.isLeap(year) ? 366 : 365;
-<a class="jxr_linenumber" name="714" href="#714">714</a>             <strong class="jxr_keyword">int</strong> weekIndexOfFirstWeekNextYear = computeWeek(offset, yearLen + weekDef.getMinimalDaysInFirstWeek());
-<a class="jxr_linenumber" name="715" href="#715">715</a>             <strong class="jxr_keyword">if</strong> (woy &gt;= weekIndexOfFirstWeekNextYear) {
-<a class="jxr_linenumber" name="716" href="#716">716</a>                 <strong class="jxr_keyword">return</strong> year + 1;
-<a class="jxr_linenumber" name="717" href="#717">717</a>             }
-<a class="jxr_linenumber" name="718" href="#718">718</a>             <strong class="jxr_keyword">return</strong> year;
-<a class="jxr_linenumber" name="719" href="#719">719</a>         }
-<a class="jxr_linenumber" name="720" href="#720">720</a> 
-<a class="jxr_linenumber" name="721" href="#721">721</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="722" href="#722">722</a> <em class="jxr_javadoccomment">         * Returns an offset to align week start with a day of month or day of year.</em>
-<a class="jxr_linenumber" name="723" href="#723">723</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="724" href="#724">724</a> <em class="jxr_javadoccomment">         * @param day the day; 1 through infinity</em>
-<a class="jxr_linenumber" name="725" href="#725">725</a> <em class="jxr_javadoccomment">         * @param dow the day of the week of that day; 1 through 7</em>
-<a class="jxr_linenumber" name="726" href="#726">726</a> <em class="jxr_javadoccomment">         * @return an offset in days to align a day with the start of the first 'full' week</em>
-<a class="jxr_linenumber" name="727" href="#727">727</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="728" href="#728">728</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> startOfWeekOffset(<strong class="jxr_keyword">int</strong> day, <strong class="jxr_keyword">int</strong> dow) {
-<a class="jxr_linenumber" name="729" href="#729">729</a>             <em class="jxr_comment">// offset of first day corresponding to the day of week in first 7 days (zero origin)</em>
-<a class="jxr_linenumber" name="730" href="#730">730</a>             <strong class="jxr_keyword">int</strong> weekStart = Jdk8Methods.floorMod(day - dow, 7);
-<a class="jxr_linenumber" name="731" href="#731">731</a>             <strong class="jxr_keyword">int</strong> offset = -weekStart;
-<a class="jxr_linenumber" name="732" href="#732">732</a>             <strong class="jxr_keyword">if</strong> (weekStart + 1 &gt; weekDef.getMinimalDaysInFirstWeek()) {
-<a class="jxr_linenumber" name="733" href="#733">733</a>                 <em class="jxr_comment">// The previous week has the minimum days in the current month to be a 'week'</em>
-<a class="jxr_linenumber" name="734" href="#734">734</a>                 offset = 7 - weekStart;
-<a class="jxr_linenumber" name="735" href="#735">735</a>             }
-<a class="jxr_linenumber" name="736" href="#736">736</a>             <strong class="jxr_keyword">return</strong> offset;
-<a class="jxr_linenumber" name="737" href="#737">737</a>         }
-<a class="jxr_linenumber" name="738" href="#738">738</a> 
-<a class="jxr_linenumber" name="739" href="#739">739</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="740" href="#740">740</a> <em class="jxr_javadoccomment">         * Returns the week number computed from the reference day and reference dayOfWeek.</em>
-<a class="jxr_linenumber" name="741" href="#741">741</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="742" href="#742">742</a> <em class="jxr_javadoccomment">         * @param offset the offset to align a date with the start of week</em>
-<a class="jxr_linenumber" name="743" href="#743">743</a> <em class="jxr_javadoccomment">         *     from {@link #startOfWeekOffset}.</em>
-<a class="jxr_linenumber" name="744" href="#744">744</a> <em class="jxr_javadoccomment">         * @param day  the day for which to compute the week number</em>
-<a class="jxr_linenumber" name="745" href="#745">745</a> <em class="jxr_javadoccomment">         * @return the week number where zero is used for a partial week and 1 for the first full week</em>
-<a class="jxr_linenumber" name="746" href="#746">746</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="747" href="#747">747</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> computeWeek(<strong class="jxr_keyword">int</strong> offset, <strong class="jxr_keyword">int</strong> day) {
-<a class="jxr_linenumber" name="748" href="#748">748</a>             <strong class="jxr_keyword">return</strong> ((7 + offset + (day - 1)) / 7);
-<a class="jxr_linenumber" name="749" href="#749">749</a>         }
-<a class="jxr_linenumber" name="750" href="#750">750</a> 
-<a class="jxr_linenumber" name="751" href="#751">751</a>         @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="752" href="#752">752</a>         @Override
-<a class="jxr_linenumber" name="753" href="#753">753</a>         <strong class="jxr_keyword">public</strong> &lt;R <strong class="jxr_keyword">extends</strong> Temporal&gt; R adjustInto(R temporal, <strong class="jxr_keyword">long</strong> newValue) {
-<a class="jxr_linenumber" name="754" href="#754">754</a>             <em class="jxr_comment">// Check the new value and get the old value of the field</em>
-<a class="jxr_linenumber" name="755" href="#755">755</a>             <strong class="jxr_keyword">int</strong> newVal = range.checkValidIntValue(newValue, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="756" href="#756">756</a>             <strong class="jxr_keyword">int</strong> currentVal = temporal.get(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="757" href="#757">757</a>             <strong class="jxr_keyword">if</strong> (newVal == currentVal) {
-<a class="jxr_linenumber" name="758" href="#758">758</a>                 <strong class="jxr_keyword">return</strong> temporal;
-<a class="jxr_linenumber" name="759" href="#759">759</a>             }
-<a class="jxr_linenumber" name="760" href="#760">760</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
-<a class="jxr_linenumber" name="761" href="#761">761</a>                 <em class="jxr_comment">// adjust in whole weeks so dow never changes</em>
-<a class="jxr_linenumber" name="762" href="#762">762</a>                 <strong class="jxr_keyword">int</strong> baseWowby = temporal.get(weekDef.weekOfWeekBasedYear);
-<a class="jxr_linenumber" name="763" href="#763">763</a>                 <strong class="jxr_keyword">long</strong> diffWeeks = (<strong class="jxr_keyword">long</strong>) ((newValue - currentVal) * 52.1775);
-<a class="jxr_linenumber" name="764" href="#764">764</a>                 <a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> result = temporal.plus(diffWeeks, ChronoUnit.WEEKS);
-<a class="jxr_linenumber" name="765" href="#765">765</a>                 <strong class="jxr_keyword">int</strong> newWowby = result.get(weekDef.weekOfWeekBasedYear);
-<a class="jxr_linenumber" name="766" href="#766">766</a>                 <strong class="jxr_keyword">if</strong> (baseWowby == 53 &amp;&amp; newWowby == 1) {
-<a class="jxr_linenumber" name="767" href="#767">767</a>                     result = result.minus(1, ChronoUnit.WEEKS);
-<a class="jxr_linenumber" name="768" href="#768">768</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (baseWowby == 1 &amp;&amp; newWowby == 53) {
-<a class="jxr_linenumber" name="769" href="#769">769</a>                     result = result.plus(1, ChronoUnit.WEEKS);
-<a class="jxr_linenumber" name="770" href="#770">770</a>                 }
-<a class="jxr_linenumber" name="771" href="#771">771</a>                 <strong class="jxr_keyword">return</strong> (R) result;
-<a class="jxr_linenumber" name="772" href="#772">772</a>             }
-<a class="jxr_linenumber" name="773" href="#773">773</a>             <em class="jxr_comment">// Compute the difference and add that using the base using of the field</em>
-<a class="jxr_linenumber" name="774" href="#774">774</a>             <strong class="jxr_keyword">int</strong> delta = newVal - currentVal;
-<a class="jxr_linenumber" name="775" href="#775">775</a>             <strong class="jxr_keyword">return</strong> (R) temporal.plus(delta, baseUnit);
-<a class="jxr_linenumber" name="776" href="#776">776</a>         }
-<a class="jxr_linenumber" name="777" href="#777">777</a> 
-<a class="jxr_linenumber" name="778" href="#778">778</a>         @Override
-<a class="jxr_linenumber" name="779" href="#779">779</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> resolve(Map&lt;TemporalField, Long&gt; fieldValues,
-<a class="jxr_linenumber" name="780" href="#780">780</a>                         <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> partialTemporal, <a href="../../../../org/threeten/bp/format/ResolverStyle.html">ResolverStyle</a> resolverStyle) {
-<a class="jxr_linenumber" name="781" href="#781">781</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
-<a class="jxr_linenumber" name="782" href="#782">782</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == WEEKS) {  <em class="jxr_comment">// day-of-week</em>
-<a class="jxr_linenumber" name="783" href="#783">783</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value = fieldValues.remove(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="784" href="#784">784</a>                 <strong class="jxr_keyword">int</strong> localDow = range.checkValidIntValue(value, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="785" href="#785">785</a>                 <strong class="jxr_keyword">int</strong> isoDow = Jdk8Methods.floorMod((sow - 1) + (localDow - 1), 7) + 1;
-<a class="jxr_linenumber" name="786" href="#786">786</a>                 fieldValues.put(DAY_OF_WEEK, (<strong class="jxr_keyword">long</strong>) isoDow);
-<a class="jxr_linenumber" name="787" href="#787">787</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="788" href="#788">788</a>             }
-<a class="jxr_linenumber" name="789" href="#789">789</a>             <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(DAY_OF_WEEK) == false) {
-<a class="jxr_linenumber" name="790" href="#790">790</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="791" href="#791">791</a>             }
-<a class="jxr_linenumber" name="792" href="#792">792</a>             
-<a class="jxr_linenumber" name="793" href="#793">793</a>             <em class="jxr_comment">// week-based-year</em>
-<a class="jxr_linenumber" name="794" href="#794">794</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
-<a class="jxr_linenumber" name="795" href="#795">795</a>                 <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(weekDef.weekOfWeekBasedYear) == false) {
-<a class="jxr_linenumber" name="796" href="#796">796</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="797" href="#797">797</a>                 }
-<a class="jxr_linenumber" name="798" href="#798">798</a>                 <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = Chronology.from(partialTemporal);  <em class="jxr_comment">// defaults to ISO</em>
-<a class="jxr_linenumber" name="799" href="#799">799</a>                 <strong class="jxr_keyword">int</strong> isoDow = DAY_OF_WEEK.checkValidIntValue(fieldValues.get(DAY_OF_WEEK));
-<a class="jxr_linenumber" name="800" href="#800">800</a>                 <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
-<a class="jxr_linenumber" name="801" href="#801">801</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> wby = range().checkValidIntValue(fieldValues.get(<strong class="jxr_keyword">this</strong>), <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="802" href="#802">802</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> date;
-<a class="jxr_linenumber" name="803" href="#803">803</a>                 <strong class="jxr_keyword">long</strong> days;
-<a class="jxr_linenumber" name="804" href="#804">804</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.LENIENT) {
-<a class="jxr_linenumber" name="805" href="#805">805</a>                     date = chrono.date(wby, 1, weekDef.getMinimalDaysInFirstWeek());
-<a class="jxr_linenumber" name="806" href="#806">806</a>                     <strong class="jxr_keyword">long</strong> wowby = fieldValues.get(weekDef.weekOfWeekBasedYear);
-<a class="jxr_linenumber" name="807" href="#807">807</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
-<a class="jxr_linenumber" name="808" href="#808">808</a>                     <strong class="jxr_keyword">long</strong> weeks = wowby - localizedWeekOfYear(date, dateDow);
-<a class="jxr_linenumber" name="809" href="#809">809</a>                     days = weeks * 7 + (dow - dateDow);
-<a class="jxr_linenumber" name="810" href="#810">810</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="811" href="#811">811</a>                     date = chrono.date(wby, 1, weekDef.getMinimalDaysInFirstWeek());
-<a class="jxr_linenumber" name="812" href="#812">812</a>                     <strong class="jxr_keyword">long</strong> wowby = weekDef.weekOfWeekBasedYear.range().checkValidIntValue(
-<a class="jxr_linenumber" name="813" href="#813">813</a>                                     fieldValues.get(weekDef.weekOfWeekBasedYear), weekDef.weekOfWeekBasedYear);
-<a class="jxr_linenumber" name="814" href="#814">814</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
-<a class="jxr_linenumber" name="815" href="#815">815</a>                     <strong class="jxr_keyword">long</strong> weeks = wowby - localizedWeekOfYear(date, dateDow);
-<a class="jxr_linenumber" name="816" href="#816">816</a>                     days = weeks * 7 + (dow - dateDow);
-<a class="jxr_linenumber" name="817" href="#817">817</a>                 }
-<a class="jxr_linenumber" name="818" href="#818">818</a>                 date = date.plus(days, DAYS);
-<a class="jxr_linenumber" name="819" href="#819">819</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.STRICT) {
-<a class="jxr_linenumber" name="820" href="#820">820</a>                     <strong class="jxr_keyword">if</strong> (date.getLong(<strong class="jxr_keyword">this</strong>) != fieldValues.get(<strong class="jxr_keyword">this</strong>)) {
-<a class="jxr_linenumber" name="821" href="#821">821</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Strict mode rejected date parsed to a different year"</span>);
-<a class="jxr_linenumber" name="822" href="#822">822</a>                     }
-<a class="jxr_linenumber" name="823" href="#823">823</a>                 }
-<a class="jxr_linenumber" name="824" href="#824">824</a>                 fieldValues.remove(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="825" href="#825">825</a>                 fieldValues.remove(weekDef.weekOfWeekBasedYear);
-<a class="jxr_linenumber" name="826" href="#826">826</a>                 fieldValues.remove(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="827" href="#827">827</a>                 <strong class="jxr_keyword">return</strong> date;
-<a class="jxr_linenumber" name="828" href="#828">828</a>             }
-<a class="jxr_linenumber" name="829" href="#829">829</a>             
-<a class="jxr_linenumber" name="830" href="#830">830</a>             <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(YEAR) == false) {
-<a class="jxr_linenumber" name="831" href="#831">831</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="832" href="#832">832</a>             }
-<a class="jxr_linenumber" name="833" href="#833">833</a>             <strong class="jxr_keyword">int</strong> isoDow = DAY_OF_WEEK.checkValidIntValue(fieldValues.get(DAY_OF_WEEK));
-<a class="jxr_linenumber" name="834" href="#834">834</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
-<a class="jxr_linenumber" name="835" href="#835">835</a>             <strong class="jxr_keyword">int</strong> year = YEAR.checkValidIntValue(fieldValues.get(YEAR));
-<a class="jxr_linenumber" name="836" href="#836">836</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = Chronology.from(partialTemporal);  <em class="jxr_comment">// defaults to ISO</em>
-<a class="jxr_linenumber" name="837" href="#837">837</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == MONTHS) {  <em class="jxr_comment">// week-of-month</em>
-<a class="jxr_linenumber" name="838" href="#838">838</a>                 <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(MONTH_OF_YEAR) == false) {
-<a class="jxr_linenumber" name="839" href="#839">839</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="840" href="#840">840</a>                 }
-<a class="jxr_linenumber" name="841" href="#841">841</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value = fieldValues.remove(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="842" href="#842">842</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> date;
-<a class="jxr_linenumber" name="843" href="#843">843</a>                 <strong class="jxr_keyword">long</strong> days;
-<a class="jxr_linenumber" name="844" href="#844">844</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.LENIENT) {
-<a class="jxr_linenumber" name="845" href="#845">845</a>                     <strong class="jxr_keyword">long</strong> month = fieldValues.get(MONTH_OF_YEAR);
-<a class="jxr_linenumber" name="846" href="#846">846</a>                     date = chrono.date(year, 1, 1);
-<a class="jxr_linenumber" name="847" href="#847">847</a>                     date = date.plus(month - 1, MONTHS);
-<a class="jxr_linenumber" name="848" href="#848">848</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
-<a class="jxr_linenumber" name="849" href="#849">849</a>                     <strong class="jxr_keyword">long</strong> weeks = value - localizedWeekOfMonth(date, dateDow);
-<a class="jxr_linenumber" name="850" href="#850">850</a>                     days = weeks * 7 + (dow - dateDow);
-<a class="jxr_linenumber" name="851" href="#851">851</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="852" href="#852">852</a>                     <strong class="jxr_keyword">int</strong> month = MONTH_OF_YEAR.checkValidIntValue(fieldValues.get(MONTH_OF_YEAR));
-<a class="jxr_linenumber" name="853" href="#853">853</a>                     date = chrono.date(year, month, 8);
-<a class="jxr_linenumber" name="854" href="#854">854</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
-<a class="jxr_linenumber" name="855" href="#855">855</a>                     <strong class="jxr_keyword">int</strong> wom = range.checkValidIntValue(value, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="856" href="#856">856</a>                     <strong class="jxr_keyword">long</strong> weeks = wom - localizedWeekOfMonth(date, dateDow);
-<a class="jxr_linenumber" name="857" href="#857">857</a>                     days = weeks * 7 + (dow - dateDow);
-<a class="jxr_linenumber" name="858" href="#858">858</a>                 }
-<a class="jxr_linenumber" name="859" href="#859">859</a>                 date = date.plus(days, DAYS);
-<a class="jxr_linenumber" name="860" href="#860">860</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.STRICT) {
-<a class="jxr_linenumber" name="861" href="#861">861</a>                     <strong class="jxr_keyword">if</strong> (date.getLong(MONTH_OF_YEAR) != fieldValues.get(MONTH_OF_YEAR)) {
-<a class="jxr_linenumber" name="862" href="#862">862</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Strict mode rejected date parsed to a different month"</span>);
-<a class="jxr_linenumber" name="863" href="#863">863</a>                     }
-<a class="jxr_linenumber" name="864" href="#864">864</a>                 }
-<a class="jxr_linenumber" name="865" href="#865">865</a>                 fieldValues.remove(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="866" href="#866">866</a>                 fieldValues.remove(YEAR);
-<a class="jxr_linenumber" name="867" href="#867">867</a>                 fieldValues.remove(MONTH_OF_YEAR);
-<a class="jxr_linenumber" name="868" href="#868">868</a>                 fieldValues.remove(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="869" href="#869">869</a>                 <strong class="jxr_keyword">return</strong> date;
-<a class="jxr_linenumber" name="870" href="#870">870</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == YEARS) {  <em class="jxr_comment">// week-of-year</em>
-<a class="jxr_linenumber" name="871" href="#871">871</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value = fieldValues.remove(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="872" href="#872">872</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> date = chrono.date(year, 1, 1);
-<a class="jxr_linenumber" name="873" href="#873">873</a>                 <strong class="jxr_keyword">long</strong> days;
-<a class="jxr_linenumber" name="874" href="#874">874</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.LENIENT) {
-<a class="jxr_linenumber" name="875" href="#875">875</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
-<a class="jxr_linenumber" name="876" href="#876">876</a>                     <strong class="jxr_keyword">long</strong> weeks = value - localizedWeekOfYear(date, dateDow);
-<a class="jxr_linenumber" name="877" href="#877">877</a>                     days = weeks * 7 + (dow - dateDow);
-<a class="jxr_linenumber" name="878" href="#878">878</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="879" href="#879">879</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
-<a class="jxr_linenumber" name="880" href="#880">880</a>                     <strong class="jxr_keyword">int</strong> woy = range.checkValidIntValue(value, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="881" href="#881">881</a>                     <strong class="jxr_keyword">long</strong> weeks = woy - localizedWeekOfYear(date, dateDow);
+<a class="jxr_linenumber" name="712" href="#712">712</a>             <strong class="jxr_keyword">return</strong> year;
+<a class="jxr_linenumber" name="713" href="#713">713</a>         }
+<a class="jxr_linenumber" name="714" href="#714">714</a> 
+<a class="jxr_linenumber" name="715" href="#715">715</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="716" href="#716">716</a> <em class="jxr_javadoccomment">         * Returns an offset to align week start with a day of month or day of year.</em>
+<a class="jxr_linenumber" name="717" href="#717">717</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="718" href="#718">718</a> <em class="jxr_javadoccomment">         * @param day the day; 1 through infinity</em>
+<a class="jxr_linenumber" name="719" href="#719">719</a> <em class="jxr_javadoccomment">         * @param dow the day of the week of that day; 1 through 7</em>
+<a class="jxr_linenumber" name="720" href="#720">720</a> <em class="jxr_javadoccomment">         * @return an offset in days to align a day with the start of the first 'full' week</em>
+<a class="jxr_linenumber" name="721" href="#721">721</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="722" href="#722">722</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> startOfWeekOffset(<strong class="jxr_keyword">int</strong> day, <strong class="jxr_keyword">int</strong> dow) {
+<a class="jxr_linenumber" name="723" href="#723">723</a>             <em class="jxr_comment">// offset of first day corresponding to the day of week in first 7 days (zero origin)</em>
+<a class="jxr_linenumber" name="724" href="#724">724</a>             <strong class="jxr_keyword">int</strong> weekStart = Jdk8Methods.floorMod(day - dow, 7);
+<a class="jxr_linenumber" name="725" href="#725">725</a>             <strong class="jxr_keyword">int</strong> offset = -weekStart;
+<a class="jxr_linenumber" name="726" href="#726">726</a>             <strong class="jxr_keyword">if</strong> (weekStart + 1 &gt; weekDef.getMinimalDaysInFirstWeek()) {
+<a class="jxr_linenumber" name="727" href="#727">727</a>                 <em class="jxr_comment">// The previous week has the minimum days in the current month to be a 'week'</em>
+<a class="jxr_linenumber" name="728" href="#728">728</a>                 offset = 7 - weekStart;
+<a class="jxr_linenumber" name="729" href="#729">729</a>             }
+<a class="jxr_linenumber" name="730" href="#730">730</a>             <strong class="jxr_keyword">return</strong> offset;
+<a class="jxr_linenumber" name="731" href="#731">731</a>         }
+<a class="jxr_linenumber" name="732" href="#732">732</a> 
+<a class="jxr_linenumber" name="733" href="#733">733</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="734" href="#734">734</a> <em class="jxr_javadoccomment">         * Returns the week number computed from the reference day and reference dayOfWeek.</em>
+<a class="jxr_linenumber" name="735" href="#735">735</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="736" href="#736">736</a> <em class="jxr_javadoccomment">         * @param offset the offset to align a date with the start of week</em>
+<a class="jxr_linenumber" name="737" href="#737">737</a> <em class="jxr_javadoccomment">         *     from {@link #startOfWeekOffset}.</em>
+<a class="jxr_linenumber" name="738" href="#738">738</a> <em class="jxr_javadoccomment">         * @param day  the day for which to compute the week number</em>
+<a class="jxr_linenumber" name="739" href="#739">739</a> <em class="jxr_javadoccomment">         * @return the week number where zero is used for a partial week and 1 for the first full week</em>
+<a class="jxr_linenumber" name="740" href="#740">740</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="741" href="#741">741</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> computeWeek(<strong class="jxr_keyword">int</strong> offset, <strong class="jxr_keyword">int</strong> day) {
+<a class="jxr_linenumber" name="742" href="#742">742</a>             <strong class="jxr_keyword">return</strong> ((7 + offset + (day - 1)) / 7);
+<a class="jxr_linenumber" name="743" href="#743">743</a>         }
+<a class="jxr_linenumber" name="744" href="#744">744</a> 
+<a class="jxr_linenumber" name="745" href="#745">745</a>         @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="746" href="#746">746</a>         @Override
+<a class="jxr_linenumber" name="747" href="#747">747</a>         <strong class="jxr_keyword">public</strong> &lt;R <strong class="jxr_keyword">extends</strong> Temporal&gt; R adjustInto(R temporal, <strong class="jxr_keyword">long</strong> newValue) {
+<a class="jxr_linenumber" name="748" href="#748">748</a>             <em class="jxr_comment">// Check the new value and get the old value of the field</em>
+<a class="jxr_linenumber" name="749" href="#749">749</a>             <strong class="jxr_keyword">int</strong> newVal = range.checkValidIntValue(newValue, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="750" href="#750">750</a>             <strong class="jxr_keyword">int</strong> currentVal = temporal.get(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="751" href="#751">751</a>             <strong class="jxr_keyword">if</strong> (newVal == currentVal) {
+<a class="jxr_linenumber" name="752" href="#752">752</a>                 <strong class="jxr_keyword">return</strong> temporal;
+<a class="jxr_linenumber" name="753" href="#753">753</a>             }
+<a class="jxr_linenumber" name="754" href="#754">754</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
+<a class="jxr_linenumber" name="755" href="#755">755</a>                 <em class="jxr_comment">// adjust in whole weeks so dow never changes</em>
+<a class="jxr_linenumber" name="756" href="#756">756</a>                 <strong class="jxr_keyword">int</strong> baseWowby = temporal.get(weekDef.weekOfWeekBasedYear);
+<a class="jxr_linenumber" name="757" href="#757">757</a>                 <strong class="jxr_keyword">long</strong> diffWeeks = (<strong class="jxr_keyword">long</strong>) ((newValue - currentVal) * 52.1775);
+<a class="jxr_linenumber" name="758" href="#758">758</a>                 <a href="../../../../org/threeten/bp/temporal/Temporal.html">Temporal</a> result = temporal.plus(diffWeeks, ChronoUnit.WEEKS);
+<a class="jxr_linenumber" name="759" href="#759">759</a>                 <strong class="jxr_keyword">if</strong> (result.get(<strong class="jxr_keyword">this</strong>) &gt; newVal) {
+<a class="jxr_linenumber" name="760" href="#760">760</a>                     <em class="jxr_comment">// ended up in later week-based-year</em>
+<a class="jxr_linenumber" name="761" href="#761">761</a>                     <em class="jxr_comment">// move to last week of previous year</em>
+<a class="jxr_linenumber" name="762" href="#762">762</a>                     <strong class="jxr_keyword">int</strong> newWowby = result.get(weekDef.weekOfWeekBasedYear);
+<a class="jxr_linenumber" name="763" href="#763">763</a>                     result = result.minus(newWowby, ChronoUnit.WEEKS);
+<a class="jxr_linenumber" name="764" href="#764">764</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="765" href="#765">765</a>                     <strong class="jxr_keyword">if</strong> (result.get(<strong class="jxr_keyword">this</strong>) &lt; newVal) {
+<a class="jxr_linenumber" name="766" href="#766">766</a>                         <em class="jxr_comment">// ended up in earlier week-based-year</em>
+<a class="jxr_linenumber" name="767" href="#767">767</a>                         result = result.plus(2, ChronoUnit.WEEKS);
+<a class="jxr_linenumber" name="768" href="#768">768</a>                     }
+<a class="jxr_linenumber" name="769" href="#769">769</a>                     <em class="jxr_comment">// reset the week-of-week-based-year</em>
+<a class="jxr_linenumber" name="770" href="#770">770</a>                     <strong class="jxr_keyword">int</strong> newWowby = result.get(weekDef.weekOfWeekBasedYear);
+<a class="jxr_linenumber" name="771" href="#771">771</a>                     result = result.plus(baseWowby - newWowby, ChronoUnit.WEEKS);
+<a class="jxr_linenumber" name="772" href="#772">772</a>                     <strong class="jxr_keyword">if</strong> (result.get(<strong class="jxr_keyword">this</strong>) &gt; newVal) {
+<a class="jxr_linenumber" name="773" href="#773">773</a>                         result = result.minus(1, ChronoUnit.WEEKS);
+<a class="jxr_linenumber" name="774" href="#774">774</a>                     }
+<a class="jxr_linenumber" name="775" href="#775">775</a>                 }
+<a class="jxr_linenumber" name="776" href="#776">776</a>                 <strong class="jxr_keyword">return</strong> (R) result;
+<a class="jxr_linenumber" name="777" href="#777">777</a>             }
+<a class="jxr_linenumber" name="778" href="#778">778</a>             <em class="jxr_comment">// Compute the difference and add that using the base using of the field</em>
+<a class="jxr_linenumber" name="779" href="#779">779</a>             <strong class="jxr_keyword">int</strong> delta = newVal - currentVal;
+<a class="jxr_linenumber" name="780" href="#780">780</a>             <strong class="jxr_keyword">return</strong> (R) temporal.plus(delta, baseUnit);
+<a class="jxr_linenumber" name="781" href="#781">781</a>         }
+<a class="jxr_linenumber" name="782" href="#782">782</a> 
+<a class="jxr_linenumber" name="783" href="#783">783</a>         @Override
+<a class="jxr_linenumber" name="784" href="#784">784</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> resolve(Map&lt;TemporalField, Long&gt; fieldValues,
+<a class="jxr_linenumber" name="785" href="#785">785</a>                         <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> partialTemporal, <a href="../../../../org/threeten/bp/format/ResolverStyle.html">ResolverStyle</a> resolverStyle) {
+<a class="jxr_linenumber" name="786" href="#786">786</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
+<a class="jxr_linenumber" name="787" href="#787">787</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == WEEKS) {  <em class="jxr_comment">// day-of-week</em>
+<a class="jxr_linenumber" name="788" href="#788">788</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value = fieldValues.remove(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="789" href="#789">789</a>                 <strong class="jxr_keyword">int</strong> localDow = range.checkValidIntValue(value, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="790" href="#790">790</a>                 <strong class="jxr_keyword">int</strong> isoDow = Jdk8Methods.floorMod((sow - 1) + (localDow - 1), 7) + 1;
+<a class="jxr_linenumber" name="791" href="#791">791</a>                 fieldValues.put(DAY_OF_WEEK, (<strong class="jxr_keyword">long</strong>) isoDow);
+<a class="jxr_linenumber" name="792" href="#792">792</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="793" href="#793">793</a>             }
+<a class="jxr_linenumber" name="794" href="#794">794</a>             <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(DAY_OF_WEEK) == false) {
+<a class="jxr_linenumber" name="795" href="#795">795</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="796" href="#796">796</a>             }
+<a class="jxr_linenumber" name="797" href="#797">797</a>             
+<a class="jxr_linenumber" name="798" href="#798">798</a>             <em class="jxr_comment">// week-based-year</em>
+<a class="jxr_linenumber" name="799" href="#799">799</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
+<a class="jxr_linenumber" name="800" href="#800">800</a>                 <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(weekDef.weekOfWeekBasedYear) == false) {
+<a class="jxr_linenumber" name="801" href="#801">801</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="802" href="#802">802</a>                 }
+<a class="jxr_linenumber" name="803" href="#803">803</a>                 <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = Chronology.from(partialTemporal);  <em class="jxr_comment">// defaults to ISO</em>
+<a class="jxr_linenumber" name="804" href="#804">804</a>                 <strong class="jxr_keyword">int</strong> isoDow = DAY_OF_WEEK.checkValidIntValue(fieldValues.get(DAY_OF_WEEK));
+<a class="jxr_linenumber" name="805" href="#805">805</a>                 <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="806" href="#806">806</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> wby = range().checkValidIntValue(fieldValues.get(<strong class="jxr_keyword">this</strong>), <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="807" href="#807">807</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> date;
+<a class="jxr_linenumber" name="808" href="#808">808</a>                 <strong class="jxr_keyword">long</strong> days;
+<a class="jxr_linenumber" name="809" href="#809">809</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.LENIENT) {
+<a class="jxr_linenumber" name="810" href="#810">810</a>                     date = chrono.date(wby, 1, weekDef.getMinimalDaysInFirstWeek());
+<a class="jxr_linenumber" name="811" href="#811">811</a>                     <strong class="jxr_keyword">long</strong> wowby = fieldValues.get(weekDef.weekOfWeekBasedYear);
+<a class="jxr_linenumber" name="812" href="#812">812</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
+<a class="jxr_linenumber" name="813" href="#813">813</a>                     <strong class="jxr_keyword">long</strong> weeks = wowby - localizedWeekOfYear(date, dateDow);
+<a class="jxr_linenumber" name="814" href="#814">814</a>                     days = weeks * 7 + (dow - dateDow);
+<a class="jxr_linenumber" name="815" href="#815">815</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="816" href="#816">816</a>                     date = chrono.date(wby, 1, weekDef.getMinimalDaysInFirstWeek());
+<a class="jxr_linenumber" name="817" href="#817">817</a>                     <strong class="jxr_keyword">long</strong> wowby = weekDef.weekOfWeekBasedYear.range().checkValidIntValue(
+<a class="jxr_linenumber" name="818" href="#818">818</a>                                     fieldValues.get(weekDef.weekOfWeekBasedYear), weekDef.weekOfWeekBasedYear);
+<a class="jxr_linenumber" name="819" href="#819">819</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
+<a class="jxr_linenumber" name="820" href="#820">820</a>                     <strong class="jxr_keyword">long</strong> weeks = wowby - localizedWeekOfYear(date, dateDow);
+<a class="jxr_linenumber" name="821" href="#821">821</a>                     days = weeks * 7 + (dow - dateDow);
+<a class="jxr_linenumber" name="822" href="#822">822</a>                 }
+<a class="jxr_linenumber" name="823" href="#823">823</a>                 date = date.plus(days, DAYS);
+<a class="jxr_linenumber" name="824" href="#824">824</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.STRICT) {
+<a class="jxr_linenumber" name="825" href="#825">825</a>                     <strong class="jxr_keyword">if</strong> (date.getLong(<strong class="jxr_keyword">this</strong>) != fieldValues.get(<strong class="jxr_keyword">this</strong>)) {
+<a class="jxr_linenumber" name="826" href="#826">826</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Strict mode rejected date parsed to a different year"</span>);
+<a class="jxr_linenumber" name="827" href="#827">827</a>                     }
+<a class="jxr_linenumber" name="828" href="#828">828</a>                 }
+<a class="jxr_linenumber" name="829" href="#829">829</a>                 fieldValues.remove(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="830" href="#830">830</a>                 fieldValues.remove(weekDef.weekOfWeekBasedYear);
+<a class="jxr_linenumber" name="831" href="#831">831</a>                 fieldValues.remove(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="832" href="#832">832</a>                 <strong class="jxr_keyword">return</strong> date;
+<a class="jxr_linenumber" name="833" href="#833">833</a>             }
+<a class="jxr_linenumber" name="834" href="#834">834</a>             
+<a class="jxr_linenumber" name="835" href="#835">835</a>             <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(YEAR) == false) {
+<a class="jxr_linenumber" name="836" href="#836">836</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="837" href="#837">837</a>             }
+<a class="jxr_linenumber" name="838" href="#838">838</a>             <strong class="jxr_keyword">int</strong> isoDow = DAY_OF_WEEK.checkValidIntValue(fieldValues.get(DAY_OF_WEEK));
+<a class="jxr_linenumber" name="839" href="#839">839</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="840" href="#840">840</a>             <strong class="jxr_keyword">int</strong> year = YEAR.checkValidIntValue(fieldValues.get(YEAR));
+<a class="jxr_linenumber" name="841" href="#841">841</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = Chronology.from(partialTemporal);  <em class="jxr_comment">// defaults to ISO</em>
+<a class="jxr_linenumber" name="842" href="#842">842</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == MONTHS) {  <em class="jxr_comment">// week-of-month</em>
+<a class="jxr_linenumber" name="843" href="#843">843</a>                 <strong class="jxr_keyword">if</strong> (fieldValues.containsKey(MONTH_OF_YEAR) == false) {
+<a class="jxr_linenumber" name="844" href="#844">844</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="845" href="#845">845</a>                 }
+<a class="jxr_linenumber" name="846" href="#846">846</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value = fieldValues.remove(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="847" href="#847">847</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> date;
+<a class="jxr_linenumber" name="848" href="#848">848</a>                 <strong class="jxr_keyword">long</strong> days;
+<a class="jxr_linenumber" name="849" href="#849">849</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.LENIENT) {
+<a class="jxr_linenumber" name="850" href="#850">850</a>                     <strong class="jxr_keyword">long</strong> month = fieldValues.get(MONTH_OF_YEAR);
+<a class="jxr_linenumber" name="851" href="#851">851</a>                     date = chrono.date(year, 1, 1);
+<a class="jxr_linenumber" name="852" href="#852">852</a>                     date = date.plus(month - 1, MONTHS);
+<a class="jxr_linenumber" name="853" href="#853">853</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
+<a class="jxr_linenumber" name="854" href="#854">854</a>                     <strong class="jxr_keyword">long</strong> weeks = value - localizedWeekOfMonth(date, dateDow);
+<a class="jxr_linenumber" name="855" href="#855">855</a>                     days = weeks * 7 + (dow - dateDow);
+<a class="jxr_linenumber" name="856" href="#856">856</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="857" href="#857">857</a>                     <strong class="jxr_keyword">int</strong> month = MONTH_OF_YEAR.checkValidIntValue(fieldValues.get(MONTH_OF_YEAR));
+<a class="jxr_linenumber" name="858" href="#858">858</a>                     date = chrono.date(year, month, 8);
+<a class="jxr_linenumber" name="859" href="#859">859</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
+<a class="jxr_linenumber" name="860" href="#860">860</a>                     <strong class="jxr_keyword">int</strong> wom = range.checkValidIntValue(value, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="861" href="#861">861</a>                     <strong class="jxr_keyword">long</strong> weeks = wom - localizedWeekOfMonth(date, dateDow);
+<a class="jxr_linenumber" name="862" href="#862">862</a>                     days = weeks * 7 + (dow - dateDow);
+<a class="jxr_linenumber" name="863" href="#863">863</a>                 }
+<a class="jxr_linenumber" name="864" href="#864">864</a>                 date = date.plus(days, DAYS);
+<a class="jxr_linenumber" name="865" href="#865">865</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.STRICT) {
+<a class="jxr_linenumber" name="866" href="#866">866</a>                     <strong class="jxr_keyword">if</strong> (date.getLong(MONTH_OF_YEAR) != fieldValues.get(MONTH_OF_YEAR)) {
+<a class="jxr_linenumber" name="867" href="#867">867</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Strict mode rejected date parsed to a different month"</span>);
+<a class="jxr_linenumber" name="868" href="#868">868</a>                     }
+<a class="jxr_linenumber" name="869" href="#869">869</a>                 }
+<a class="jxr_linenumber" name="870" href="#870">870</a>                 fieldValues.remove(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="871" href="#871">871</a>                 fieldValues.remove(YEAR);
+<a class="jxr_linenumber" name="872" href="#872">872</a>                 fieldValues.remove(MONTH_OF_YEAR);
+<a class="jxr_linenumber" name="873" href="#873">873</a>                 fieldValues.remove(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="874" href="#874">874</a>                 <strong class="jxr_keyword">return</strong> date;
+<a class="jxr_linenumber" name="875" href="#875">875</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == YEARS) {  <em class="jxr_comment">// week-of-year</em>
+<a class="jxr_linenumber" name="876" href="#876">876</a>                 <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> value = fieldValues.remove(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="877" href="#877">877</a>                 <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> date = chrono.date(year, 1, 1);
+<a class="jxr_linenumber" name="878" href="#878">878</a>                 <strong class="jxr_keyword">long</strong> days;
+<a class="jxr_linenumber" name="879" href="#879">879</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.LENIENT) {
+<a class="jxr_linenumber" name="880" href="#880">880</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
+<a class="jxr_linenumber" name="881" href="#881">881</a>                     <strong class="jxr_keyword">long</strong> weeks = value - localizedWeekOfYear(date, dateDow);
 <a class="jxr_linenumber" name="882" href="#882">882</a>                     days = weeks * 7 + (dow - dateDow);
-<a class="jxr_linenumber" name="883" href="#883">883</a>                 }
-<a class="jxr_linenumber" name="884" href="#884">884</a>                 date = date.plus(days, DAYS);
-<a class="jxr_linenumber" name="885" href="#885">885</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.STRICT) {
-<a class="jxr_linenumber" name="886" href="#886">886</a>                     <strong class="jxr_keyword">if</strong> (date.getLong(YEAR) != fieldValues.get(YEAR)) {
-<a class="jxr_linenumber" name="887" href="#887">887</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Strict mode rejected date parsed to a different year"</span>);
-<a class="jxr_linenumber" name="888" href="#888">888</a>                     }
-<a class="jxr_linenumber" name="889" href="#889">889</a>                 }
-<a class="jxr_linenumber" name="890" href="#890">890</a>                 fieldValues.remove(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="891" href="#891">891</a>                 fieldValues.remove(YEAR);
-<a class="jxr_linenumber" name="892" href="#892">892</a>                 fieldValues.remove(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="893" href="#893">893</a>                 <strong class="jxr_keyword">return</strong> date;
-<a class="jxr_linenumber" name="894" href="#894">894</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="895" href="#895">895</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"unreachable"</span>);
-<a class="jxr_linenumber" name="896" href="#896">896</a>             }
-<a class="jxr_linenumber" name="897" href="#897">897</a>         }
-<a class="jxr_linenumber" name="898" href="#898">898</a> 
-<a class="jxr_linenumber" name="899" href="#899">899</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="900" href="#900">900</a>         @Override
-<a class="jxr_linenumber" name="901" href="#901">901</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getBaseUnit() {
-<a class="jxr_linenumber" name="902" href="#902">902</a>             <strong class="jxr_keyword">return</strong> baseUnit;
-<a class="jxr_linenumber" name="903" href="#903">903</a>         }
-<a class="jxr_linenumber" name="904" href="#904">904</a> 
+<a class="jxr_linenumber" name="883" href="#883">883</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="884" href="#884">884</a>                     <strong class="jxr_keyword">int</strong> dateDow = localizedDayOfWeek(date, sow);
+<a class="jxr_linenumber" name="885" href="#885">885</a>                     <strong class="jxr_keyword">int</strong> woy = range.checkValidIntValue(value, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="886" href="#886">886</a>                     <strong class="jxr_keyword">long</strong> weeks = woy - localizedWeekOfYear(date, dateDow);
+<a class="jxr_linenumber" name="887" href="#887">887</a>                     days = weeks * 7 + (dow - dateDow);
+<a class="jxr_linenumber" name="888" href="#888">888</a>                 }
+<a class="jxr_linenumber" name="889" href="#889">889</a>                 date = date.plus(days, DAYS);
+<a class="jxr_linenumber" name="890" href="#890">890</a>                 <strong class="jxr_keyword">if</strong> (resolverStyle == ResolverStyle.STRICT) {
+<a class="jxr_linenumber" name="891" href="#891">891</a>                     <strong class="jxr_keyword">if</strong> (date.getLong(YEAR) != fieldValues.get(YEAR)) {
+<a class="jxr_linenumber" name="892" href="#892">892</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Strict mode rejected date parsed to a different year"</span>);
+<a class="jxr_linenumber" name="893" href="#893">893</a>                     }
+<a class="jxr_linenumber" name="894" href="#894">894</a>                 }
+<a class="jxr_linenumber" name="895" href="#895">895</a>                 fieldValues.remove(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="896" href="#896">896</a>                 fieldValues.remove(YEAR);
+<a class="jxr_linenumber" name="897" href="#897">897</a>                 fieldValues.remove(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="898" href="#898">898</a>                 <strong class="jxr_keyword">return</strong> date;
+<a class="jxr_linenumber" name="899" href="#899">899</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="900" href="#900">900</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"unreachable"</span>);
+<a class="jxr_linenumber" name="901" href="#901">901</a>             }
+<a class="jxr_linenumber" name="902" href="#902">902</a>         }
+<a class="jxr_linenumber" name="903" href="#903">903</a> 
+<a class="jxr_linenumber" name="904" href="#904">904</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
 <a class="jxr_linenumber" name="905" href="#905">905</a>         @Override
-<a class="jxr_linenumber" name="906" href="#906">906</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getRangeUnit() {
-<a class="jxr_linenumber" name="907" href="#907">907</a>             <strong class="jxr_keyword">return</strong> rangeUnit;
+<a class="jxr_linenumber" name="906" href="#906">906</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getBaseUnit() {
+<a class="jxr_linenumber" name="907" href="#907">907</a>             <strong class="jxr_keyword">return</strong> baseUnit;
 <a class="jxr_linenumber" name="908" href="#908">908</a>         }
 <a class="jxr_linenumber" name="909" href="#909">909</a> 
 <a class="jxr_linenumber" name="910" href="#910">910</a>         @Override
-<a class="jxr_linenumber" name="911" href="#911">911</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range() {
-<a class="jxr_linenumber" name="912" href="#912">912</a>             <strong class="jxr_keyword">return</strong> range;
+<a class="jxr_linenumber" name="911" href="#911">911</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/TemporalUnit.html">TemporalUnit</a> getRangeUnit() {
+<a class="jxr_linenumber" name="912" href="#912">912</a>             <strong class="jxr_keyword">return</strong> rangeUnit;
 <a class="jxr_linenumber" name="913" href="#913">913</a>         }
 <a class="jxr_linenumber" name="914" href="#914">914</a> 
-<a class="jxr_linenumber" name="915" href="#915">915</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="916" href="#916">916</a>         @Override
-<a class="jxr_linenumber" name="917" href="#917">917</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDateBased() {
-<a class="jxr_linenumber" name="918" href="#918">918</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="919" href="#919">919</a>         }
-<a class="jxr_linenumber" name="920" href="#920">920</a> 
+<a class="jxr_linenumber" name="915" href="#915">915</a>         @Override
+<a class="jxr_linenumber" name="916" href="#916">916</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range() {
+<a class="jxr_linenumber" name="917" href="#917">917</a>             <strong class="jxr_keyword">return</strong> range;
+<a class="jxr_linenumber" name="918" href="#918">918</a>         }
+<a class="jxr_linenumber" name="919" href="#919">919</a> 
+<a class="jxr_linenumber" name="920" href="#920">920</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
 <a class="jxr_linenumber" name="921" href="#921">921</a>         @Override
-<a class="jxr_linenumber" name="922" href="#922">922</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTimeBased() {
-<a class="jxr_linenumber" name="923" href="#923">923</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="922" href="#922">922</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDateBased() {
+<a class="jxr_linenumber" name="923" href="#923">923</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="924" href="#924">924</a>         }
 <a class="jxr_linenumber" name="925" href="#925">925</a> 
 <a class="jxr_linenumber" name="926" href="#926">926</a>         @Override
-<a class="jxr_linenumber" name="927" href="#927">927</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSupportedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="928" href="#928">928</a>             <strong class="jxr_keyword">if</strong> (temporal.isSupported(ChronoField.DAY_OF_WEEK)) {
-<a class="jxr_linenumber" name="929" href="#929">929</a>                 <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.WEEKS) {
-<a class="jxr_linenumber" name="930" href="#930">930</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="931" href="#931">931</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.MONTHS) {
-<a class="jxr_linenumber" name="932" href="#932">932</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.DAY_OF_MONTH);
-<a class="jxr_linenumber" name="933" href="#933">933</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.YEARS) {
-<a class="jxr_linenumber" name="934" href="#934">934</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.DAY_OF_YEAR);
-<a class="jxr_linenumber" name="935" href="#935">935</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == IsoFields.WEEK_BASED_YEARS) {
-<a class="jxr_linenumber" name="936" href="#936">936</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.EPOCH_DAY);
-<a class="jxr_linenumber" name="937" href="#937">937</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
-<a class="jxr_linenumber" name="938" href="#938">938</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.EPOCH_DAY);
-<a class="jxr_linenumber" name="939" href="#939">939</a>                 }
-<a class="jxr_linenumber" name="940" href="#940">940</a>             }
-<a class="jxr_linenumber" name="941" href="#941">941</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="942" href="#942">942</a>         }
-<a class="jxr_linenumber" name="943" href="#943">943</a> 
-<a class="jxr_linenumber" name="944" href="#944">944</a>         @Override
-<a class="jxr_linenumber" name="945" href="#945">945</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> rangeRefinedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="946" href="#946">946</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.WEEKS) {
-<a class="jxr_linenumber" name="947" href="#947">947</a>                 <strong class="jxr_keyword">return</strong> range;
-<a class="jxr_linenumber" name="948" href="#948">948</a>             }
-<a class="jxr_linenumber" name="949" href="#949">949</a> 
-<a class="jxr_linenumber" name="950" href="#950">950</a>             <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="951" href="#951">951</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.MONTHS) {
-<a class="jxr_linenumber" name="952" href="#952">952</a>                 field = ChronoField.DAY_OF_MONTH;
-<a class="jxr_linenumber" name="953" href="#953">953</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.YEARS) {
-<a class="jxr_linenumber" name="954" href="#954">954</a>                 field = ChronoField.DAY_OF_YEAR;
-<a class="jxr_linenumber" name="955" href="#955">955</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == IsoFields.WEEK_BASED_YEARS) {
-<a class="jxr_linenumber" name="956" href="#956">956</a>                 <strong class="jxr_keyword">return</strong> rangeWOWBY(temporal);
-<a class="jxr_linenumber" name="957" href="#957">957</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
-<a class="jxr_linenumber" name="958" href="#958">958</a>                 <strong class="jxr_keyword">return</strong> temporal.range(YEAR);
-<a class="jxr_linenumber" name="959" href="#959">959</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="960" href="#960">960</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"unreachable"</span>);
-<a class="jxr_linenumber" name="961" href="#961">961</a>             }
-<a class="jxr_linenumber" name="962" href="#962">962</a> 
-<a class="jxr_linenumber" name="963" href="#963">963</a>             <em class="jxr_comment">// Offset the ISO DOW by the start of this week</em>
-<a class="jxr_linenumber" name="964" href="#964">964</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
-<a class="jxr_linenumber" name="965" href="#965">965</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(ChronoField.DAY_OF_WEEK);
-<a class="jxr_linenumber" name="966" href="#966">966</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="927" href="#927">927</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTimeBased() {
+<a class="jxr_linenumber" name="928" href="#928">928</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="929" href="#929">929</a>         }
+<a class="jxr_linenumber" name="930" href="#930">930</a> 
+<a class="jxr_linenumber" name="931" href="#931">931</a>         @Override
+<a class="jxr_linenumber" name="932" href="#932">932</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSupportedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="933" href="#933">933</a>             <strong class="jxr_keyword">if</strong> (temporal.isSupported(ChronoField.DAY_OF_WEEK)) {
+<a class="jxr_linenumber" name="934" href="#934">934</a>                 <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.WEEKS) {
+<a class="jxr_linenumber" name="935" href="#935">935</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="936" href="#936">936</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.MONTHS) {
+<a class="jxr_linenumber" name="937" href="#937">937</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.DAY_OF_MONTH);
+<a class="jxr_linenumber" name="938" href="#938">938</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.YEARS) {
+<a class="jxr_linenumber" name="939" href="#939">939</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.DAY_OF_YEAR);
+<a class="jxr_linenumber" name="940" href="#940">940</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == IsoFields.WEEK_BASED_YEARS) {
+<a class="jxr_linenumber" name="941" href="#941">941</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.EPOCH_DAY);
+<a class="jxr_linenumber" name="942" href="#942">942</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
+<a class="jxr_linenumber" name="943" href="#943">943</a>                     <strong class="jxr_keyword">return</strong> temporal.isSupported(ChronoField.EPOCH_DAY);
+<a class="jxr_linenumber" name="944" href="#944">944</a>                 }
+<a class="jxr_linenumber" name="945" href="#945">945</a>             }
+<a class="jxr_linenumber" name="946" href="#946">946</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="947" href="#947">947</a>         }
+<a class="jxr_linenumber" name="948" href="#948">948</a> 
+<a class="jxr_linenumber" name="949" href="#949">949</a>         @Override
+<a class="jxr_linenumber" name="950" href="#950">950</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> rangeRefinedBy(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="951" href="#951">951</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.WEEKS) {
+<a class="jxr_linenumber" name="952" href="#952">952</a>                 <strong class="jxr_keyword">return</strong> range;
+<a class="jxr_linenumber" name="953" href="#953">953</a>             }
+<a class="jxr_linenumber" name="954" href="#954">954</a> 
+<a class="jxr_linenumber" name="955" href="#955">955</a>             <a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="956" href="#956">956</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.MONTHS) {
+<a class="jxr_linenumber" name="957" href="#957">957</a>                 field = ChronoField.DAY_OF_MONTH;
+<a class="jxr_linenumber" name="958" href="#958">958</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.YEARS) {
+<a class="jxr_linenumber" name="959" href="#959">959</a>                 field = ChronoField.DAY_OF_YEAR;
+<a class="jxr_linenumber" name="960" href="#960">960</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == IsoFields.WEEK_BASED_YEARS) {
+<a class="jxr_linenumber" name="961" href="#961">961</a>                 <strong class="jxr_keyword">return</strong> rangeWOWBY(temporal);
+<a class="jxr_linenumber" name="962" href="#962">962</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (rangeUnit == ChronoUnit.FOREVER) {
+<a class="jxr_linenumber" name="963" href="#963">963</a>                 <strong class="jxr_keyword">return</strong> temporal.range(YEAR);
+<a class="jxr_linenumber" name="964" href="#964">964</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="965" href="#965">965</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"unreachable"</span>);
+<a class="jxr_linenumber" name="966" href="#966">966</a>             }
 <a class="jxr_linenumber" name="967" href="#967">967</a> 
-<a class="jxr_linenumber" name="968" href="#968">968</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(field), dow);
-<a class="jxr_linenumber" name="969" href="#969">969</a>             <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> fieldRange = temporal.range(field);
-<a class="jxr_linenumber" name="970" href="#970">970</a>             <strong class="jxr_keyword">return</strong> ValueRange.of(computeWeek(offset, (<strong class="jxr_keyword">int</strong>) fieldRange.getMinimum()),
-<a class="jxr_linenumber" name="971" href="#971">971</a>                     computeWeek(offset, (<strong class="jxr_keyword">int</strong>) fieldRange.getMaximum()));
-<a class="jxr_linenumber" name="972" href="#972">972</a>         }
-<a class="jxr_linenumber" name="973" href="#973">973</a> 
-<a class="jxr_linenumber" name="974" href="#974">974</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> rangeWOWBY(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="975" href="#975">975</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
-<a class="jxr_linenumber" name="976" href="#976">976</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
-<a class="jxr_linenumber" name="977" href="#977">977</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
-<a class="jxr_linenumber" name="978" href="#978">978</a>             <strong class="jxr_keyword">long</strong> woy = localizedWeekOfYear(temporal, dow);
-<a class="jxr_linenumber" name="979" href="#979">979</a>             <strong class="jxr_keyword">if</strong> (woy == 0) {
-<a class="jxr_linenumber" name="980" href="#980">980</a>                 <strong class="jxr_keyword">return</strong> rangeWOWBY(Chronology.from(temporal).date(temporal).minus(2, ChronoUnit.WEEKS));
-<a class="jxr_linenumber" name="981" href="#981">981</a>             }
-<a class="jxr_linenumber" name="982" href="#982">982</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(DAY_OF_YEAR), dow);
-<a class="jxr_linenumber" name="983" href="#983">983</a>             <strong class="jxr_keyword">int</strong> year = temporal.get(YEAR);
-<a class="jxr_linenumber" name="984" href="#984">984</a>             <strong class="jxr_keyword">int</strong> yearLen = Year.isLeap(year) ? 366 : 365;
-<a class="jxr_linenumber" name="985" href="#985">985</a>             <strong class="jxr_keyword">int</strong> weekIndexOfFirstWeekNextYear = computeWeek(offset, yearLen + weekDef.getMinimalDaysInFirstWeek());
-<a class="jxr_linenumber" name="986" href="#986">986</a>             <strong class="jxr_keyword">if</strong> (woy &gt;= weekIndexOfFirstWeekNextYear) {
-<a class="jxr_linenumber" name="987" href="#987">987</a>                 <strong class="jxr_keyword">return</strong> rangeWOWBY(Chronology.from(temporal).date(temporal).plus(2, ChronoUnit.WEEKS));
-<a class="jxr_linenumber" name="988" href="#988">988</a>             }
-<a class="jxr_linenumber" name="989" href="#989">989</a>             <strong class="jxr_keyword">return</strong> ValueRange.of(1, weekIndexOfFirstWeekNextYear - 1);
-<a class="jxr_linenumber" name="990" href="#990">990</a>         }
-<a class="jxr_linenumber" name="991" href="#991">991</a> 
-<a class="jxr_linenumber" name="992" href="#992">992</a>         @Override
-<a class="jxr_linenumber" name="993" href="#993">993</a>         <strong class="jxr_keyword">public</strong> String getDisplayName(Locale locale) {
-<a class="jxr_linenumber" name="994" href="#994">994</a>             Objects.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
-<a class="jxr_linenumber" name="995" href="#995">995</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == YEARS) {  <em class="jxr_comment">// week-of-year</em>
-<a class="jxr_linenumber" name="996" href="#996">996</a>                 <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Week"</span>;
-<a class="jxr_linenumber" name="997" href="#997">997</a>             }
-<a class="jxr_linenumber" name="998" href="#998">998</a>             <strong class="jxr_keyword">return</strong> toString();
-<a class="jxr_linenumber" name="999" href="#999">999</a>         }
-<a class="jxr_linenumber" name="1000" href="#1000">1000</a> 
-<a class="jxr_linenumber" name="1001" href="#1001">1001</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="1002" href="#1002">1002</a>         @Override
-<a class="jxr_linenumber" name="1003" href="#1003">1003</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="1004" href="#1004">1004</a>             <strong class="jxr_keyword">return</strong> name + <span class="jxr_string">"["</span> + weekDef.toString() + <span class="jxr_string">"]"</span>;
-<a class="jxr_linenumber" name="1005" href="#1005">1005</a>         }
-<a class="jxr_linenumber" name="1006" href="#1006">1006</a>     }
-<a class="jxr_linenumber" name="1007" href="#1007">1007</a> 
-<a class="jxr_linenumber" name="1008" href="#1008">1008</a> }
+<a class="jxr_linenumber" name="968" href="#968">968</a>             <em class="jxr_comment">// Offset the ISO DOW by the start of this week</em>
+<a class="jxr_linenumber" name="969" href="#969">969</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
+<a class="jxr_linenumber" name="970" href="#970">970</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(ChronoField.DAY_OF_WEEK);
+<a class="jxr_linenumber" name="971" href="#971">971</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="972" href="#972">972</a> 
+<a class="jxr_linenumber" name="973" href="#973">973</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(field), dow);
+<a class="jxr_linenumber" name="974" href="#974">974</a>             <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> fieldRange = temporal.range(field);
+<a class="jxr_linenumber" name="975" href="#975">975</a>             <strong class="jxr_keyword">return</strong> ValueRange.of(computeWeek(offset, (<strong class="jxr_keyword">int</strong>) fieldRange.getMinimum()),
+<a class="jxr_linenumber" name="976" href="#976">976</a>                     computeWeek(offset, (<strong class="jxr_keyword">int</strong>) fieldRange.getMaximum()));
+<a class="jxr_linenumber" name="977" href="#977">977</a>         }
+<a class="jxr_linenumber" name="978" href="#978">978</a> 
+<a class="jxr_linenumber" name="979" href="#979">979</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> rangeWOWBY(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
+<a class="jxr_linenumber" name="980" href="#980">980</a>             <strong class="jxr_keyword">int</strong> sow = weekDef.getFirstDayOfWeek().getValue();
+<a class="jxr_linenumber" name="981" href="#981">981</a>             <strong class="jxr_keyword">int</strong> isoDow = temporal.get(DAY_OF_WEEK);
+<a class="jxr_linenumber" name="982" href="#982">982</a>             <strong class="jxr_keyword">int</strong> dow = Jdk8Methods.floorMod(isoDow - sow, 7) + 1;
+<a class="jxr_linenumber" name="983" href="#983">983</a>             <strong class="jxr_keyword">long</strong> woy = localizedWeekOfYear(temporal, dow);
+<a class="jxr_linenumber" name="984" href="#984">984</a>             <strong class="jxr_keyword">if</strong> (woy == 0) {
+<a class="jxr_linenumber" name="985" href="#985">985</a>                 <strong class="jxr_keyword">return</strong> rangeWOWBY(Chronology.from(temporal).date(temporal).minus(2, ChronoUnit.WEEKS));
+<a class="jxr_linenumber" name="986" href="#986">986</a>             }
+<a class="jxr_linenumber" name="987" href="#987">987</a>             <strong class="jxr_keyword">int</strong> offset = startOfWeekOffset(temporal.get(DAY_OF_YEAR), dow);
+<a class="jxr_linenumber" name="988" href="#988">988</a>             <strong class="jxr_keyword">int</strong> year = temporal.get(YEAR);
+<a class="jxr_linenumber" name="989" href="#989">989</a>             <strong class="jxr_keyword">int</strong> yearLen = Year.isLeap(year) ? 366 : 365;
+<a class="jxr_linenumber" name="990" href="#990">990</a>             <strong class="jxr_keyword">int</strong> weekIndexOfFirstWeekNextYear = computeWeek(offset, yearLen + weekDef.getMinimalDaysInFirstWeek());
+<a class="jxr_linenumber" name="991" href="#991">991</a>             <strong class="jxr_keyword">if</strong> (woy &gt;= weekIndexOfFirstWeekNextYear) {
+<a class="jxr_linenumber" name="992" href="#992">992</a>                 <strong class="jxr_keyword">return</strong> rangeWOWBY(Chronology.from(temporal).date(temporal).plus(2, ChronoUnit.WEEKS));
+<a class="jxr_linenumber" name="993" href="#993">993</a>             }
+<a class="jxr_linenumber" name="994" href="#994">994</a>             <strong class="jxr_keyword">return</strong> ValueRange.of(1, weekIndexOfFirstWeekNextYear - 1);
+<a class="jxr_linenumber" name="995" href="#995">995</a>         }
+<a class="jxr_linenumber" name="996" href="#996">996</a> 
+<a class="jxr_linenumber" name="997" href="#997">997</a>         @Override
+<a class="jxr_linenumber" name="998" href="#998">998</a>         <strong class="jxr_keyword">public</strong> String getDisplayName(Locale locale) {
+<a class="jxr_linenumber" name="999" href="#999">999</a>             Objects.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
+<a class="jxr_linenumber" name="1000" href="#1000">1000</a>             <strong class="jxr_keyword">if</strong> (rangeUnit == YEARS) {  <em class="jxr_comment">// week-of-year</em>
+<a class="jxr_linenumber" name="1001" href="#1001">1001</a>                 <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Week"</span>;
+<a class="jxr_linenumber" name="1002" href="#1002">1002</a>             }
+<a class="jxr_linenumber" name="1003" href="#1003">1003</a>             <strong class="jxr_keyword">return</strong> toString();
+<a class="jxr_linenumber" name="1004" href="#1004">1004</a>         }
+<a class="jxr_linenumber" name="1005" href="#1005">1005</a> 
+<a class="jxr_linenumber" name="1006" href="#1006">1006</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="1007" href="#1007">1007</a>         @Override
+<a class="jxr_linenumber" name="1008" href="#1008">1008</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="1009" href="#1009">1009</a>             <strong class="jxr_keyword">return</strong> name + <span class="jxr_string">"["</span> + weekDef.toString() + <span class="jxr_string">"]"</span>;
+<a class="jxr_linenumber" name="1010" href="#1010">1010</a>         }
+<a class="jxr_linenumber" name="1011" href="#1011">1011</a>     }
+<a class="jxr_linenumber" name="1012" href="#1012">1012</a> 
+<a class="jxr_linenumber" name="1013" href="#1013">1013</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
