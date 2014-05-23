@@ -16,10 +16,11 @@ Feeds:
 
 * [Stack Overflow JSR-310 feed](http://stackoverflow.com/questions/tagged/jsr310)
 * [InfoQ JSR-310 feed](http://www.infoq.com/jsr-310)
-* [Reddit JSR-310 feed] (http://www.reddit.com/r/programming/search?q=jsr310)
+* [Reddit JSR-310 feed](http://www.reddit.com/r/programming/search?q=jsr310)
 
 Articles/Blogs:
 
+* [Intuitive, robust date and time](http://www.infoq.com/articles/java.time) - Stephen Colebourne
 * [Oracle JDK 8 tutorial](http://docs.oracle.com/javase/tutorial/datetime/)
 * [Oracle Tech Network](http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html) - Ben Evans & Richard Warburton
 * [Introduction to JSR 310, part 1](http://java.amitph.com/2013/03/introduction-to-new-java-date-and-time.html) - Amit Phaltankar
@@ -38,8 +39,8 @@ Videos:
 
 Older:
 
-* [The JSR-310 experience](http://developers.opengamma.com/blog/2011/03/14/jsr-310-experience) - Jim Moores
 * [Why JSR-310 isn't Joda-Time](http://blog.joda.org/2009/11/why-jsr-310-isn-joda-time_4941.html) - Stephen Colebourne
+* [The JSR-310 experience](http://developers.opengamma.com/blog/2011/03/14/jsr-310-experience) - Jim Moores
 * [About JSR-310](http://londonjavacommunity.wordpress.com/2011/08/17/about-jsr-310-a-new-java-datetime-api/) - Jim Gough
 * [Java Date and Time API](http://www.wolkje.net/2010/01/06/java-date-and-time-api-and-jsr-310/) - Martin Sturm, also in [Dutch](http://blog.finalist.nl/2010/01/06/datum-en-tijd-in-java/)
 
