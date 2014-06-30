@@ -46,17 +46,17 @@
 <a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoUnit.NANOS;
 <a class="jxr_linenumber" name="37" href="#37">37</a>  
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
-<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="40" href="#40">40</a>  
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporal;
+<a class="jxr_linenumber" name="39" href="#39">39</a>  
+<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporal;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
 <a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
@@ -126,9 +126,9 @@
 <a class="jxr_linenumber" name="116" href="#116">116</a>             <strong class="jxr_keyword">new</strong> Comparator&lt;ChronoLocalDateTime&lt;?&gt;&gt;() {
 <a class="jxr_linenumber" name="117" href="#117">117</a>         @Override
 <a class="jxr_linenumber" name="118" href="#118">118</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(ChronoLocalDateTime&lt;?&gt; datetime1, ChronoLocalDateTime&lt;?&gt; datetime2) {
-<a class="jxr_linenumber" name="119" href="#119">119</a>             <strong class="jxr_keyword">int</strong> cmp = Long.compare(datetime1.toLocalDate().toEpochDay(), datetime2.toLocalDate().toEpochDay());
+<a class="jxr_linenumber" name="119" href="#119">119</a>             <strong class="jxr_keyword">int</strong> cmp = Jdk8Methods.compareLongs(datetime1.toLocalDate().toEpochDay(), datetime2.toLocalDate().toEpochDay());
 <a class="jxr_linenumber" name="120" href="#120">120</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="121" href="#121">121</a>                 cmp = Long.compare(datetime1.toLocalTime().toNanoOfDay(), datetime2.toLocalTime().toNanoOfDay());
+<a class="jxr_linenumber" name="121" href="#121">121</a>                 cmp = Jdk8Methods.compareLongs(datetime1.toLocalTime().toNanoOfDay(), datetime2.toLocalTime().toNanoOfDay());
 <a class="jxr_linenumber" name="122" href="#122">122</a>             }
 <a class="jxr_linenumber" name="123" href="#123">123</a>             <strong class="jxr_keyword">return</strong> cmp;
 <a class="jxr_linenumber" name="124" href="#124">124</a>         }
@@ -157,7 +157,7 @@
 <a class="jxr_linenumber" name="147" href="#147">147</a> <em class="jxr_javadoccomment">     * @see Chronology#localDateTime(TemporalAccessor)</em>
 <a class="jxr_linenumber" name="148" href="#148">148</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="149" href="#149">149</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> ChronoLocalDateTime&lt;?&gt; from(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="150" href="#150">150</a>         Objects.requireNonNull(temporal, <span class="jxr_string">"temporal"</span>);
+<a class="jxr_linenumber" name="150" href="#150">150</a>         Jdk8Methods.requireNonNull(temporal, <span class="jxr_string">"temporal"</span>);
 <a class="jxr_linenumber" name="151" href="#151">151</a>         <strong class="jxr_keyword">if</strong> (temporal instanceof ChronoLocalDateTime) {
 <a class="jxr_linenumber" name="152" href="#152">152</a>             <strong class="jxr_keyword">return</strong> (ChronoLocalDateTime&lt;?&gt;) temporal;
 <a class="jxr_linenumber" name="153" href="#153">153</a>         }
@@ -269,7 +269,7 @@
 <a class="jxr_linenumber" name="259" href="#259">259</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if an error occurs during printing</em>
 <a class="jxr_linenumber" name="260" href="#260">260</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="261" href="#261">261</a>     <strong class="jxr_keyword">public</strong> String format(<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="262" href="#262">262</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="262" href="#262">262</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="263" href="#263">263</a>         <strong class="jxr_keyword">return</strong> formatter.format(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="264" href="#264">264</a>     }
 <a class="jxr_linenumber" name="265" href="#265">265</a> 
@@ -329,7 +329,7 @@
 <a class="jxr_linenumber" name="319" href="#319">319</a> <em class="jxr_javadoccomment">     * @return the number of seconds from the epoch of 1970-01-01T00:00:00Z</em>
 <a class="jxr_linenumber" name="320" href="#320">320</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="321" href="#321">321</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> toEpochSecond(<a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset) {
-<a class="jxr_linenumber" name="322" href="#322">322</a>         Objects.requireNonNull(offset, <span class="jxr_string">"offset"</span>);
+<a class="jxr_linenumber" name="322" href="#322">322</a>         Jdk8Methods.requireNonNull(offset, <span class="jxr_string">"offset"</span>);
 <a class="jxr_linenumber" name="323" href="#323">323</a>         <strong class="jxr_keyword">long</strong> epochDay = toLocalDate().toEpochDay();
 <a class="jxr_linenumber" name="324" href="#324">324</a>         <strong class="jxr_keyword">long</strong> secs = epochDay * 86400 + toLocalTime().toSecondOfDay();
 <a class="jxr_linenumber" name="325" href="#325">325</a>         secs -= offset.getTotalSeconds();

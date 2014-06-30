@@ -46,17 +46,17 @@
 <a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoUnit.NANOS;
 <a class="jxr_linenumber" name="37" href="#37">37</a>  
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
-<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="40" href="#40">40</a>  
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZonedDateTime;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporal;
+<a class="jxr_linenumber" name="39" href="#39">39</a>  
+<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZonedDateTime;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporal;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
 <a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
@@ -126,9 +126,9 @@
 <a class="jxr_linenumber" name="116" href="#116">116</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Comparator&lt;ChronoZonedDateTime&lt;?&gt;&gt; INSTANT_COMPARATOR = <strong class="jxr_keyword">new</strong> Comparator&lt;ChronoZonedDateTime&lt;?&gt;&gt;() {
 <a class="jxr_linenumber" name="117" href="#117">117</a>         @Override
 <a class="jxr_linenumber" name="118" href="#118">118</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(ChronoZonedDateTime&lt;?&gt; datetime1, ChronoZonedDateTime&lt;?&gt; datetime2) {
-<a class="jxr_linenumber" name="119" href="#119">119</a>             <strong class="jxr_keyword">int</strong> cmp = Long.compare(datetime1.toEpochSecond(), datetime2.toEpochSecond());
+<a class="jxr_linenumber" name="119" href="#119">119</a>             <strong class="jxr_keyword">int</strong> cmp = Jdk8Methods.compareLongs(datetime1.toEpochSecond(), datetime2.toEpochSecond());
 <a class="jxr_linenumber" name="120" href="#120">120</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="121" href="#121">121</a>                 cmp = Long.compare(datetime1.toLocalTime().toNanoOfDay(), datetime2.toLocalTime().toNanoOfDay());
+<a class="jxr_linenumber" name="121" href="#121">121</a>                 cmp = Jdk8Methods.compareLongs(datetime1.toLocalTime().toNanoOfDay(), datetime2.toLocalTime().toNanoOfDay());
 <a class="jxr_linenumber" name="122" href="#122">122</a>             }
 <a class="jxr_linenumber" name="123" href="#123">123</a>             <strong class="jxr_keyword">return</strong> cmp;
 <a class="jxr_linenumber" name="124" href="#124">124</a>         }
@@ -157,7 +157,7 @@
 <a class="jxr_linenumber" name="147" href="#147">147</a> <em class="jxr_javadoccomment">     * @see Chronology#zonedDateTime(TemporalAccessor)</em>
 <a class="jxr_linenumber" name="148" href="#148">148</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="149" href="#149">149</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> ChronoZonedDateTime&lt;?&gt; from(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="150" href="#150">150</a>         Objects.requireNonNull(temporal, <span class="jxr_string">"temporal"</span>);
+<a class="jxr_linenumber" name="150" href="#150">150</a>         Jdk8Methods.requireNonNull(temporal, <span class="jxr_string">"temporal"</span>);
 <a class="jxr_linenumber" name="151" href="#151">151</a>         <strong class="jxr_keyword">if</strong> (temporal instanceof ChronoZonedDateTime) {
 <a class="jxr_linenumber" name="152" href="#152">152</a>             <strong class="jxr_keyword">return</strong> (ChronoZonedDateTime&lt;?&gt;) temporal;
 <a class="jxr_linenumber" name="153" href="#153">153</a>         }
@@ -403,7 +403,7 @@
 <a class="jxr_linenumber" name="393" href="#393">393</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if an error occurs during printing</em>
 <a class="jxr_linenumber" name="394" href="#394">394</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="395" href="#395">395</a>     <strong class="jxr_keyword">public</strong> String format(<a href="../../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="396" href="#396">396</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="396" href="#396">396</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="397" href="#397">397</a>         <strong class="jxr_keyword">return</strong> formatter.format(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="398" href="#398">398</a>     }
 <a class="jxr_linenumber" name="399" href="#399">399</a> 
@@ -456,7 +456,7 @@
 <a class="jxr_linenumber" name="446" href="#446">446</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="447" href="#447">447</a>     @Override
 <a class="jxr_linenumber" name="448" href="#448">448</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(ChronoZonedDateTime&lt;?&gt; other) {
-<a class="jxr_linenumber" name="449" href="#449">449</a>         <strong class="jxr_keyword">int</strong> cmp = Long.compare(toEpochSecond(), other.toEpochSecond());
+<a class="jxr_linenumber" name="449" href="#449">449</a>         <strong class="jxr_keyword">int</strong> cmp = Jdk8Methods.compareLongs(toEpochSecond(), other.toEpochSecond());
 <a class="jxr_linenumber" name="450" href="#450">450</a>         <strong class="jxr_keyword">if</strong> (cmp == 0) {
 <a class="jxr_linenumber" name="451" href="#451">451</a>             cmp = toLocalTime().getNano() - other.toLocalTime().getNano();
 <a class="jxr_linenumber" name="452" href="#452">452</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {

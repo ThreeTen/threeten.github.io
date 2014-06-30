@@ -44,13 +44,13 @@
 <a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
 <a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
 <a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="38" href="#38">38</a>  
-<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Duration;
-<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="37" href="#37">37</a>  
+<a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Duration;
+<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
+<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="44" href="#44">44</a>  
 <a class="jxr_linenumber" name="45" href="#45">45</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> * The rules defining how the zone offset varies for a single time-zone.</em>
@@ -92,11 +92,11 @@
 <a class="jxr_linenumber" name="82" href="#82">82</a>                                 List&lt;ZoneOffsetTransition&gt; standardOffsetTransitionList,
 <a class="jxr_linenumber" name="83" href="#83">83</a>                                 List&lt;ZoneOffsetTransition&gt; transitionList,
 <a class="jxr_linenumber" name="84" href="#84">84</a>                                 List&lt;ZoneOffsetTransitionRule&gt; lastRules) {
-<a class="jxr_linenumber" name="85" href="#85">85</a>          Objects.requireNonNull(baseStandardOffset, <span class="jxr_string">"baseStandardOffset"</span>);
-<a class="jxr_linenumber" name="86" href="#86">86</a>          Objects.requireNonNull(baseWallOffset, <span class="jxr_string">"baseWallOffset"</span>);
-<a class="jxr_linenumber" name="87" href="#87">87</a>          Objects.requireNonNull(standardOffsetTransitionList, <span class="jxr_string">"standardOffsetTransitionList"</span>);
-<a class="jxr_linenumber" name="88" href="#88">88</a>          Objects.requireNonNull(transitionList, <span class="jxr_string">"transitionList"</span>);
-<a class="jxr_linenumber" name="89" href="#89">89</a>          Objects.requireNonNull(lastRules, <span class="jxr_string">"lastRules"</span>);
+<a class="jxr_linenumber" name="85" href="#85">85</a>          Jdk8Methods.requireNonNull(baseStandardOffset, <span class="jxr_string">"baseStandardOffset"</span>);
+<a class="jxr_linenumber" name="86" href="#86">86</a>          Jdk8Methods.requireNonNull(baseWallOffset, <span class="jxr_string">"baseWallOffset"</span>);
+<a class="jxr_linenumber" name="87" href="#87">87</a>          Jdk8Methods.requireNonNull(standardOffsetTransitionList, <span class="jxr_string">"standardOffsetTransitionList"</span>);
+<a class="jxr_linenumber" name="88" href="#88">88</a>          Jdk8Methods.requireNonNull(transitionList, <span class="jxr_string">"transitionList"</span>);
+<a class="jxr_linenumber" name="89" href="#89">89</a>          Jdk8Methods.requireNonNull(lastRules, <span class="jxr_string">"lastRules"</span>);
 <a class="jxr_linenumber" name="90" href="#90">90</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/StandardZoneRules.html">StandardZoneRules</a>(baseStandardOffset, baseWallOffset,
 <a class="jxr_linenumber" name="91" href="#91">91</a>                               standardOffsetTransitionList, transitionList, lastRules);
 <a class="jxr_linenumber" name="92" href="#92">92</a>      }
@@ -110,7 +110,7 @@
 <a class="jxr_linenumber" name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * @return the zone rules, not null</em>
 <a class="jxr_linenumber" name="101" href="#101">101</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="102" href="#102">102</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/zone/ZoneRules.html">ZoneRules</a> of(<a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset) {
-<a class="jxr_linenumber" name="103" href="#103">103</a>         Objects.requireNonNull(offset, <span class="jxr_string">"offset"</span>);
+<a class="jxr_linenumber" name="103" href="#103">103</a>         Jdk8Methods.requireNonNull(offset, <span class="jxr_string">"offset"</span>);
 <a class="jxr_linenumber" name="104" href="#104">104</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneRules.html">Fixed</a>(offset);
 <a class="jxr_linenumber" name="105" href="#105">105</a>     }
 <a class="jxr_linenumber" name="106" href="#106">106</a> 

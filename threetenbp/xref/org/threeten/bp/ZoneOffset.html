@@ -49,10 +49,10 @@
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.io.InvalidObjectException;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.ConcurrentHashMap;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.ConcurrentMap;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.ConcurrentHashMap;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.ConcurrentMap;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
@@ -111,9 +111,9 @@
 <a class="jxr_linenumber" name="101" href="#101">101</a>     };
 <a class="jxr_linenumber" name="102" href="#102">102</a> 
 <a class="jxr_linenumber" name="103" href="#103">103</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Cache of time-zone offset by offset in seconds. */</em>
-<a class="jxr_linenumber" name="104" href="#104">104</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ConcurrentMap&lt;Integer, ZoneOffset&gt; SECONDS_CACHE = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;(16, 0.75f, 4);
+<a class="jxr_linenumber" name="104" href="#104">104</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ConcurrentMap&lt;Integer, ZoneOffset&gt; SECONDS_CACHE = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;Integer, ZoneOffset&gt;(16, 0.75f, 4);
 <a class="jxr_linenumber" name="105" href="#105">105</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Cache of time-zone offset by ID. */</em>
-<a class="jxr_linenumber" name="106" href="#106">106</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ConcurrentMap&lt;String, ZoneOffset&gt; ID_CACHE = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;(16, 0.75f, 4);
+<a class="jxr_linenumber" name="106" href="#106">106</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ConcurrentMap&lt;String, ZoneOffset&gt; ID_CACHE = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;String, ZoneOffset&gt;(16, 0.75f, 4);
 <a class="jxr_linenumber" name="107" href="#107">107</a> 
 <a class="jxr_linenumber" name="108" href="#108">108</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="109" href="#109">109</a> <em class="jxr_javadoccomment">     * The number of seconds per hour.</em>
@@ -190,7 +190,7 @@
 <a class="jxr_linenumber" name="180" href="#180">180</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the offset ID is invalid</em>
 <a class="jxr_linenumber" name="181" href="#181">181</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="182" href="#182">182</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> of(String offsetId) {
-<a class="jxr_linenumber" name="183" href="#183">183</a>         Objects.requireNonNull(offsetId, <span class="jxr_string">"offsetId"</span>);
+<a class="jxr_linenumber" name="183" href="#183">183</a>         Jdk8Methods.requireNonNull(offsetId, <span class="jxr_string">"offsetId"</span>);
 <a class="jxr_linenumber" name="184" href="#184">184</a>         <em class="jxr_comment">// "Z" is always in the cache</em>
 <a class="jxr_linenumber" name="185" href="#185">185</a>         <a href="../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset = ID_CACHE.get(offsetId);
 <a class="jxr_linenumber" name="186" href="#186">186</a>         <strong class="jxr_keyword">if</strong> (offset != <strong class="jxr_keyword">null</strong>) {

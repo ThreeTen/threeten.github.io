@@ -42,9 +42,9 @@
 <a class="jxr_linenumber" name="32" href="#32">32</a>  <strong class="jxr_keyword">package</strong> org.threeten.bp.chrono;
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
 <a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="36" href="#36">36</a>  
-<a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="35" href="#35">35</a>  
+<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoUnit;
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAmount;
@@ -96,8 +96,8 @@
 <a class="jxr_linenumber" name="86" href="#86">86</a>  <em class="jxr_javadoccomment">     * @see ChronoLocalDate#until(ChronoLocalDate)</em>
 <a class="jxr_linenumber" name="87" href="#87">87</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="88" href="#88">88</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/ChronoPeriod.html">ChronoPeriod</a> between(<a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> startDateInclusive, <a href="../../../../org/threeten/bp/chrono/ChronoLocalDate.html">ChronoLocalDate</a> endDateExclusive) {
-<a class="jxr_linenumber" name="89" href="#89">89</a>          Objects.requireNonNull(startDateInclusive, <span class="jxr_string">"startDateInclusive"</span>);
-<a class="jxr_linenumber" name="90" href="#90">90</a>          Objects.requireNonNull(endDateExclusive, <span class="jxr_string">"endDateExclusive"</span>);
+<a class="jxr_linenumber" name="89" href="#89">89</a>          Jdk8Methods.requireNonNull(startDateInclusive, <span class="jxr_string">"startDateInclusive"</span>);
+<a class="jxr_linenumber" name="90" href="#90">90</a>          Jdk8Methods.requireNonNull(endDateExclusive, <span class="jxr_string">"endDateExclusive"</span>);
 <a class="jxr_linenumber" name="91" href="#91">91</a>          <strong class="jxr_keyword">return</strong> startDateInclusive.until(endDateExclusive);
 <a class="jxr_linenumber" name="92" href="#92">92</a>      }
 <a class="jxr_linenumber" name="93" href="#93">93</a>  

@@ -48,12 +48,12 @@
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Duration;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Duration;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="47" href="#47">47</a>  
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="49" href="#49">49</a>  <em class="jxr_javadoccomment"> * A transition between two offsets caused by a discontinuity in the local time-line.</em>
@@ -109,9 +109,9 @@
 <a class="jxr_linenumber" name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     *         are equal, or {@code transition.getNano()} returns non-zero value</em>
 <a class="jxr_linenumber" name="100" href="#100">100</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="101" href="#101">101</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransition.html">ZoneOffsetTransition</a> of(<a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> transition, <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offsetBefore, <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offsetAfter) {
-<a class="jxr_linenumber" name="102" href="#102">102</a>         Objects.requireNonNull(transition, <span class="jxr_string">"transition"</span>);
-<a class="jxr_linenumber" name="103" href="#103">103</a>         Objects.requireNonNull(offsetBefore, <span class="jxr_string">"offsetBefore"</span>);
-<a class="jxr_linenumber" name="104" href="#104">104</a>         Objects.requireNonNull(offsetAfter, <span class="jxr_string">"offsetAfter"</span>);
+<a class="jxr_linenumber" name="102" href="#102">102</a>         Jdk8Methods.requireNonNull(transition, <span class="jxr_string">"transition"</span>);
+<a class="jxr_linenumber" name="103" href="#103">103</a>         Jdk8Methods.requireNonNull(offsetBefore, <span class="jxr_string">"offsetBefore"</span>);
+<a class="jxr_linenumber" name="104" href="#104">104</a>         Jdk8Methods.requireNonNull(offsetAfter, <span class="jxr_string">"offsetAfter"</span>);
 <a class="jxr_linenumber" name="105" href="#105">105</a>         <strong class="jxr_keyword">if</strong> (offsetBefore.equals(offsetAfter)) {
 <a class="jxr_linenumber" name="106" href="#106">106</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Offsets must not be equal"</span>);
 <a class="jxr_linenumber" name="107" href="#107">107</a>         }

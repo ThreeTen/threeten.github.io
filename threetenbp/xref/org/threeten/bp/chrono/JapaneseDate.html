@@ -51,14 +51,14 @@
 <a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectInputStream;
 <a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
 <a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> java.util.Calendar;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Clock;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Period;
-<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Clock;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Period;
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
 <a class="jxr_linenumber" name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAdjuster;
@@ -191,7 +191,7 @@
 <a class="jxr_linenumber" name="181" href="#181">181</a> <em class="jxr_javadoccomment">     *  or if the day-of-month is invalid for the month-year</em>
 <a class="jxr_linenumber" name="182" href="#182">182</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="183" href="#183">183</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseDate.html">JapaneseDate</a> of(<a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> era, <strong class="jxr_keyword">int</strong> yearOfEra, <strong class="jxr_keyword">int</strong> month, <strong class="jxr_keyword">int</strong> dayOfMonth) {
-<a class="jxr_linenumber" name="184" href="#184">184</a>         Objects.requireNonNull(era, <span class="jxr_string">"era"</span>);
+<a class="jxr_linenumber" name="184" href="#184">184</a>         Jdk8Methods.requireNonNull(era, <span class="jxr_string">"era"</span>);
 <a class="jxr_linenumber" name="185" href="#185">185</a>         <strong class="jxr_keyword">if</strong> (yearOfEra &lt; 1) {
 <a class="jxr_linenumber" name="186" href="#186">186</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid YearOfEra: "</span> + yearOfEra);
 <a class="jxr_linenumber" name="187" href="#187">187</a>         }
@@ -221,7 +221,7 @@
 <a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">     *  or if the day-of-year is invalid for the year</em>
 <a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="213" href="#213">213</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseDate.html">JapaneseDate</a> ofYearDay(<a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> era, <strong class="jxr_keyword">int</strong> yearOfEra, <strong class="jxr_keyword">int</strong> dayOfYear) {
-<a class="jxr_linenumber" name="214" href="#214">214</a>         Objects.requireNonNull(era, <span class="jxr_string">"era"</span>);
+<a class="jxr_linenumber" name="214" href="#214">214</a>         Jdk8Methods.requireNonNull(era, <span class="jxr_string">"era"</span>);
 <a class="jxr_linenumber" name="215" href="#215">215</a>         <strong class="jxr_keyword">if</strong> (yearOfEra &lt; 1) {
 <a class="jxr_linenumber" name="216" href="#216">216</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid YearOfEra: "</span> + yearOfEra);
 <a class="jxr_linenumber" name="217" href="#217">217</a>         }

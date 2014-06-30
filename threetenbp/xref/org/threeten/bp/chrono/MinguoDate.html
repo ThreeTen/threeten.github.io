@@ -50,14 +50,14 @@
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.io.DataOutput;
 <a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
 <a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Clock;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Period;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Clock;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Period;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
 <a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAdjuster;
@@ -185,7 +185,7 @@
 <a class="jxr_linenumber" name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * @param isoDate  the standard local date, validated not null</em>
 <a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="177" href="#177">177</a>     <a href="../../../../org/threeten/bp/chrono/MinguoDate.html">MinguoDate</a>(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
-<a class="jxr_linenumber" name="178" href="#178">178</a>         Objects.requireNonNull(date, <span class="jxr_string">"date"</span>);
+<a class="jxr_linenumber" name="178" href="#178">178</a>         Jdk8Methods.requireNonNull(date, <span class="jxr_string">"date"</span>);
 <a class="jxr_linenumber" name="179" href="#179">179</a>         <strong class="jxr_keyword">this</strong>.isoDate = date;
 <a class="jxr_linenumber" name="180" href="#180">180</a>     }
 <a class="jxr_linenumber" name="181" href="#181">181</a> 

@@ -47,9 +47,9 @@
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> java.io.InvalidObjectException;
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.util.regex.Pattern;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  
+<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.util.regex.Pattern;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.zone.ZoneRules;
 <a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.zone.ZoneRulesException;
 <a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.zone.ZoneRulesProvider;
@@ -143,7 +143,7 @@
 <a class="jxr_linenumber" name="133" href="#133">133</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if checking availability and the ID cannot be found</em>
 <a class="jxr_linenumber" name="134" href="#134">134</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="135" href="#135">135</a>     <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/ZoneRegion.html">ZoneRegion</a> ofId(String zoneId, <strong class="jxr_keyword">boolean</strong> checkAvailable) {
-<a class="jxr_linenumber" name="136" href="#136">136</a>         Objects.requireNonNull(zoneId, <span class="jxr_string">"zoneId"</span>);
+<a class="jxr_linenumber" name="136" href="#136">136</a>         Jdk8Methods.requireNonNull(zoneId, <span class="jxr_string">"zoneId"</span>);
 <a class="jxr_linenumber" name="137" href="#137">137</a>         <strong class="jxr_keyword">if</strong> (zoneId.length() &lt; 2 || PATTERN.matcher(zoneId).matches() == false) {
 <a class="jxr_linenumber" name="138" href="#138">138</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Invalid ID for region-based ZoneId, invalid format: "</span> + zoneId);
 <a class="jxr_linenumber" name="139" href="#139">139</a>         }

@@ -76,7 +76,7 @@
 <a class="jxr_linenumber" name="66" href="#66">66</a>  <em class="jxr_javadoccomment">     * Unit that represents the concept of a millisecond.</em>
 <a class="jxr_linenumber" name="67" href="#67">67</a>  <em class="jxr_javadoccomment">     * For the ISO calendar system, it is equal to the 1000th part of the second unit.</em>
 <a class="jxr_linenumber" name="68" href="#68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="69" href="#69">69</a>      MILLIS(<span class="jxr_string">"Millis"</span>, Duration.ofNanos(1000_000)),
+<a class="jxr_linenumber" name="69" href="#69">69</a>      MILLIS(<span class="jxr_string">"Millis"</span>, Duration.ofNanos(1000000)),
 <a class="jxr_linenumber" name="70" href="#70">70</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="71" href="#71">71</a>  <em class="jxr_javadoccomment">     * Unit that represents the concept of a second.</em>
 <a class="jxr_linenumber" name="72" href="#72">72</a>  <em class="jxr_javadoccomment">     * For the ISO calendar system, it is equal to the second in the SI system</em>
@@ -165,7 +165,7 @@
 <a class="jxr_linenumber" name="155" href="#155">155</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
 <a class="jxr_linenumber" name="156" href="#156">156</a> <em class="jxr_javadoccomment">     * When used with other calendar systems there are no restrictions on the unit.</em>
 <a class="jxr_linenumber" name="157" href="#157">157</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="158" href="#158">158</a>     ERAS(<span class="jxr_string">"Eras"</span>, Duration.ofSeconds(31556952L * 1000_000_000L)),
+<a class="jxr_linenumber" name="158" href="#158">158</a>     ERAS(<span class="jxr_string">"Eras"</span>, Duration.ofSeconds(31556952L * 1000000000L)),
 <a class="jxr_linenumber" name="159" href="#159">159</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="160" href="#160">160</a> <em class="jxr_javadoccomment">     * Artificial unit that represents the concept of forever.</em>
 <a class="jxr_linenumber" name="161" href="#161">161</a> <em class="jxr_javadoccomment">     * This is primarily used with {@link TemporalField} to represent unbounded fields</em>
@@ -173,7 +173,7 @@
 <a class="jxr_linenumber" name="163" href="#163">163</a> <em class="jxr_javadoccomment">     * The estimated duration of the era is artificially defined as the largest duration</em>
 <a class="jxr_linenumber" name="164" href="#164">164</a> <em class="jxr_javadoccomment">     * supported by {@code Duration}.</em>
 <a class="jxr_linenumber" name="165" href="#165">165</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="166" href="#166">166</a>     FOREVER(<span class="jxr_string">"Forever"</span>, Duration.ofSeconds(Long.MAX_VALUE, 999_999_999));
+<a class="jxr_linenumber" name="166" href="#166">166</a>     FOREVER(<span class="jxr_string">"Forever"</span>, Duration.ofSeconds(Long.MAX_VALUE, 999999999));
 <a class="jxr_linenumber" name="167" href="#167">167</a> 
 <a class="jxr_linenumber" name="168" href="#168">168</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String name;
 <a class="jxr_linenumber" name="169" href="#169">169</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/Duration.html">Duration</a> duration;

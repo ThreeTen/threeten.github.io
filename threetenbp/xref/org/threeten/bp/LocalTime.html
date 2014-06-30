@@ -56,11 +56,11 @@
 <a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> java.io.InvalidObjectException;
 <a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  
-<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
-<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeParseException;
-<a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeParseException;
+<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor;
+<a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="55" href="#55">55</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoUnit;
 <a class="jxr_linenumber" name="56" href="#56">56</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
@@ -137,7 +137,7 @@
 <a class="jxr_linenumber" name="127" href="#127">127</a>         MIDNIGHT = HOURS[0];
 <a class="jxr_linenumber" name="128" href="#128">128</a>         NOON = HOURS[12];
 <a class="jxr_linenumber" name="129" href="#129">129</a>         MIN = HOURS[0];
-<a class="jxr_linenumber" name="130" href="#130">130</a>         MAX = <strong class="jxr_keyword">new</strong> <a href="../../../org/threeten/bp/LocalTime.html">LocalTime</a>(23, 59, 59, 999_999_999);
+<a class="jxr_linenumber" name="130" href="#130">130</a>         MAX = <strong class="jxr_keyword">new</strong> <a href="../../../org/threeten/bp/LocalTime.html">LocalTime</a>(23, 59, 59, 999999999);
 <a class="jxr_linenumber" name="131" href="#131">131</a>     }
 <a class="jxr_linenumber" name="132" href="#132">132</a> 
 <a class="jxr_linenumber" name="133" href="#133">133</a>     <em class="jxr_javadoccomment">/**</em>
@@ -171,11 +171,11 @@
 <a class="jxr_linenumber" name="161" href="#161">161</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="162" href="#162">162</a> <em class="jxr_javadoccomment">     * Microseconds per day.</em>
 <a class="jxr_linenumber" name="163" href="#163">163</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="164" href="#164">164</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> MICROS_PER_DAY = SECONDS_PER_DAY * 1000_000L;
+<a class="jxr_linenumber" name="164" href="#164">164</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> MICROS_PER_DAY = SECONDS_PER_DAY * 1000000L;
 <a class="jxr_linenumber" name="165" href="#165">165</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="166" href="#166">166</a> <em class="jxr_javadoccomment">     * Nanos per second.</em>
 <a class="jxr_linenumber" name="167" href="#167">167</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="168" href="#168">168</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> NANOS_PER_SECOND = 1000_000_000L;
+<a class="jxr_linenumber" name="168" href="#168">168</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> NANOS_PER_SECOND = 1000000000L;
 <a class="jxr_linenumber" name="169" href="#169">169</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="170" href="#170">170</a> <em class="jxr_javadoccomment">     * Nanos per minute.</em>
 <a class="jxr_linenumber" name="171" href="#171">171</a> <em class="jxr_javadoccomment">     */</em>
@@ -254,7 +254,7 @@
 <a class="jxr_linenumber" name="244" href="#244">244</a> <em class="jxr_javadoccomment">     * @return the current time, not null</em>
 <a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="246" href="#246">246</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/LocalTime.html">LocalTime</a> now(<a href="../../../org/threeten/bp/Clock.html">Clock</a> clock) {
-<a class="jxr_linenumber" name="247" href="#247">247</a>         Objects.requireNonNull(clock, <span class="jxr_string">"clock"</span>);
+<a class="jxr_linenumber" name="247" href="#247">247</a>         Jdk8Methods.requireNonNull(clock, <span class="jxr_string">"clock"</span>);
 <a class="jxr_linenumber" name="248" href="#248">248</a>         <em class="jxr_comment">// inline OffsetTime factory to avoid creating object and InstantProvider checks</em>
 <a class="jxr_linenumber" name="249" href="#249">249</a>         <strong class="jxr_keyword">final</strong> <a href="../../../org/threeten/bp/Instant.html">Instant</a> now = clock.instant();  <em class="jxr_comment">// called once</em>
 <a class="jxr_linenumber" name="250" href="#250">250</a>         <a href="../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset = clock.getZone().getRules().getOffset(now);
@@ -443,7 +443,7 @@
 <a class="jxr_linenumber" name="433" href="#433">433</a> <em class="jxr_javadoccomment">     * @throws DateTimeParseException if the text cannot be parsed</em>
 <a class="jxr_linenumber" name="434" href="#434">434</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="435" href="#435">435</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/LocalTime.html">LocalTime</a> parse(CharSequence text, <a href="../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="436" href="#436">436</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="436" href="#436">436</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="437" href="#437">437</a>         <strong class="jxr_keyword">return</strong> formatter.parse(text, LocalTime.FROM);
 <a class="jxr_linenumber" name="438" href="#438">438</a>     }
 <a class="jxr_linenumber" name="439" href="#439">439</a> 
@@ -635,8 +635,8 @@
 <a class="jxr_linenumber" name="625" href="#625">625</a>             <strong class="jxr_keyword">case</strong> NANO_OF_DAY: <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Field too large for an int: "</span> + field);
 <a class="jxr_linenumber" name="626" href="#626">626</a>             <strong class="jxr_keyword">case</strong> MICRO_OF_SECOND: <strong class="jxr_keyword">return</strong> nano / 1000;
 <a class="jxr_linenumber" name="627" href="#627">627</a>             <strong class="jxr_keyword">case</strong> MICRO_OF_DAY: <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Field too large for an int: "</span> + field);
-<a class="jxr_linenumber" name="628" href="#628">628</a>             <strong class="jxr_keyword">case</strong> MILLI_OF_SECOND: <strong class="jxr_keyword">return</strong> nano / 1000_000;
-<a class="jxr_linenumber" name="629" href="#629">629</a>             <strong class="jxr_keyword">case</strong> MILLI_OF_DAY: <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) (toNanoOfDay() / 1000_000);
+<a class="jxr_linenumber" name="628" href="#628">628</a>             <strong class="jxr_keyword">case</strong> MILLI_OF_SECOND: <strong class="jxr_keyword">return</strong> nano / 1000000;
+<a class="jxr_linenumber" name="629" href="#629">629</a>             <strong class="jxr_keyword">case</strong> MILLI_OF_DAY: <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) (toNanoOfDay() / 1000000);
 <a class="jxr_linenumber" name="630" href="#630">630</a>             <strong class="jxr_keyword">case</strong> SECOND_OF_MINUTE: <strong class="jxr_keyword">return</strong> second;
 <a class="jxr_linenumber" name="631" href="#631">631</a>             <strong class="jxr_keyword">case</strong> SECOND_OF_DAY: <strong class="jxr_keyword">return</strong> toSecondOfDay();
 <a class="jxr_linenumber" name="632" href="#632">632</a>             <strong class="jxr_keyword">case</strong> MINUTE_OF_HOUR: <strong class="jxr_keyword">return</strong> minute;
@@ -809,8 +809,8 @@
 <a class="jxr_linenumber" name="799" href="#799">799</a>                 <strong class="jxr_keyword">case</strong> NANO_OF_DAY: <strong class="jxr_keyword">return</strong> LocalTime.ofNanoOfDay(newValue);
 <a class="jxr_linenumber" name="800" href="#800">800</a>                 <strong class="jxr_keyword">case</strong> MICRO_OF_SECOND: <strong class="jxr_keyword">return</strong> withNano((<strong class="jxr_keyword">int</strong>) newValue * 1000);
 <a class="jxr_linenumber" name="801" href="#801">801</a>                 <strong class="jxr_keyword">case</strong> MICRO_OF_DAY: <strong class="jxr_keyword">return</strong> LocalTime.ofNanoOfDay(newValue * 1000);
-<a class="jxr_linenumber" name="802" href="#802">802</a>                 <strong class="jxr_keyword">case</strong> MILLI_OF_SECOND: <strong class="jxr_keyword">return</strong> withNano((<strong class="jxr_keyword">int</strong>) newValue * 1000_000);
-<a class="jxr_linenumber" name="803" href="#803">803</a>                 <strong class="jxr_keyword">case</strong> MILLI_OF_DAY: <strong class="jxr_keyword">return</strong> LocalTime.ofNanoOfDay(newValue * 1000_000);
+<a class="jxr_linenumber" name="802" href="#802">802</a>                 <strong class="jxr_keyword">case</strong> MILLI_OF_SECOND: <strong class="jxr_keyword">return</strong> withNano((<strong class="jxr_keyword">int</strong>) newValue * 1000000);
+<a class="jxr_linenumber" name="803" href="#803">803</a>                 <strong class="jxr_keyword">case</strong> MILLI_OF_DAY: <strong class="jxr_keyword">return</strong> LocalTime.ofNanoOfDay(newValue * 1000000);
 <a class="jxr_linenumber" name="804" href="#804">804</a>                 <strong class="jxr_keyword">case</strong> SECOND_OF_MINUTE: <strong class="jxr_keyword">return</strong> withSecond((<strong class="jxr_keyword">int</strong>) newValue);
 <a class="jxr_linenumber" name="805" href="#805">805</a>                 <strong class="jxr_keyword">case</strong> SECOND_OF_DAY: <strong class="jxr_keyword">return</strong> plusSeconds(newValue - toSecondOfDay());
 <a class="jxr_linenumber" name="806" href="#806">806</a>                 <strong class="jxr_keyword">case</strong> MINUTE_OF_HOUR: <strong class="jxr_keyword">return</strong> withMinute((<strong class="jxr_keyword">int</strong>) newValue);
@@ -975,7 +975,7 @@
 <a class="jxr_linenumber" name="965" href="#965">965</a>             <strong class="jxr_keyword">switch</strong> (f) {
 <a class="jxr_linenumber" name="966" href="#966">966</a>                 <strong class="jxr_keyword">case</strong> NANOS: <strong class="jxr_keyword">return</strong> plusNanos(amountToAdd);
 <a class="jxr_linenumber" name="967" href="#967">967</a>                 <strong class="jxr_keyword">case</strong> MICROS: <strong class="jxr_keyword">return</strong> plusNanos((amountToAdd % MICROS_PER_DAY) * 1000);
-<a class="jxr_linenumber" name="968" href="#968">968</a>                 <strong class="jxr_keyword">case</strong> MILLIS: <strong class="jxr_keyword">return</strong> plusNanos((amountToAdd % MILLIS_PER_DAY) * 1000_000);
+<a class="jxr_linenumber" name="968" href="#968">968</a>                 <strong class="jxr_keyword">case</strong> MILLIS: <strong class="jxr_keyword">return</strong> plusNanos((amountToAdd % MILLIS_PER_DAY) * 1000000);
 <a class="jxr_linenumber" name="969" href="#969">969</a>                 <strong class="jxr_keyword">case</strong> SECONDS: <strong class="jxr_keyword">return</strong> plusSeconds(amountToAdd);
 <a class="jxr_linenumber" name="970" href="#970">970</a>                 <strong class="jxr_keyword">case</strong> MINUTES: <strong class="jxr_keyword">return</strong> plusMinutes(amountToAdd);
 <a class="jxr_linenumber" name="971" href="#971">971</a>                 <strong class="jxr_keyword">case</strong> HOURS: <strong class="jxr_keyword">return</strong> plusHours(amountToAdd);
@@ -1304,7 +1304,7 @@
 <a class="jxr_linenumber" name="1294" href="#1294">1294</a>             <strong class="jxr_keyword">switch</strong> ((ChronoUnit) unit) {
 <a class="jxr_linenumber" name="1295" href="#1295">1295</a>                 <strong class="jxr_keyword">case</strong> NANOS: <strong class="jxr_keyword">return</strong> nanosUntil;
 <a class="jxr_linenumber" name="1296" href="#1296">1296</a>                 <strong class="jxr_keyword">case</strong> MICROS: <strong class="jxr_keyword">return</strong> nanosUntil / 1000;
-<a class="jxr_linenumber" name="1297" href="#1297">1297</a>                 <strong class="jxr_keyword">case</strong> MILLIS: <strong class="jxr_keyword">return</strong> nanosUntil / 1000_000;
+<a class="jxr_linenumber" name="1297" href="#1297">1297</a>                 <strong class="jxr_keyword">case</strong> MILLIS: <strong class="jxr_keyword">return</strong> nanosUntil / 1000000;
 <a class="jxr_linenumber" name="1298" href="#1298">1298</a>                 <strong class="jxr_keyword">case</strong> SECONDS: <strong class="jxr_keyword">return</strong> nanosUntil / NANOS_PER_SECOND;
 <a class="jxr_linenumber" name="1299" href="#1299">1299</a>                 <strong class="jxr_keyword">case</strong> MINUTES: <strong class="jxr_keyword">return</strong> nanosUntil / NANOS_PER_MINUTE;
 <a class="jxr_linenumber" name="1300" href="#1300">1300</a>                 <strong class="jxr_keyword">case</strong> HOURS: <strong class="jxr_keyword">return</strong> nanosUntil / NANOS_PER_HOUR;
@@ -1383,13 +1383,13 @@
 <a class="jxr_linenumber" name="1373" href="#1373">1373</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="1374" href="#1374">1374</a>     @Override
 <a class="jxr_linenumber" name="1375" href="#1375">1375</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../org/threeten/bp/LocalTime.html">LocalTime</a> other) {
-<a class="jxr_linenumber" name="1376" href="#1376">1376</a>         <strong class="jxr_keyword">int</strong> cmp = Integer.compare(hour, other.hour);
+<a class="jxr_linenumber" name="1376" href="#1376">1376</a>         <strong class="jxr_keyword">int</strong> cmp = Jdk8Methods.compareInts(hour, other.hour);
 <a class="jxr_linenumber" name="1377" href="#1377">1377</a>         <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="1378" href="#1378">1378</a>             cmp = Integer.compare(minute, other.minute);
+<a class="jxr_linenumber" name="1378" href="#1378">1378</a>             cmp = Jdk8Methods.compareInts(minute, other.minute);
 <a class="jxr_linenumber" name="1379" href="#1379">1379</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="1380" href="#1380">1380</a>                 cmp = Integer.compare(second, other.second);
+<a class="jxr_linenumber" name="1380" href="#1380">1380</a>                 cmp = Jdk8Methods.compareInts(second, other.second);
 <a class="jxr_linenumber" name="1381" href="#1381">1381</a>                 <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="1382" href="#1382">1382</a>                     cmp = Integer.compare(nano, other.nano);
+<a class="jxr_linenumber" name="1382" href="#1382">1382</a>                     cmp = Jdk8Methods.compareInts(nano, other.nano);
 <a class="jxr_linenumber" name="1383" href="#1383">1383</a>                 }
 <a class="jxr_linenumber" name="1384" href="#1384">1384</a>             }
 <a class="jxr_linenumber" name="1385" href="#1385">1385</a>         }
@@ -1489,12 +1489,12 @@
 <a class="jxr_linenumber" name="1479" href="#1479">1479</a>             buf.append(secondValue &lt; 10 ? <span class="jxr_string">":0"</span> : <span class="jxr_string">":"</span>).append(secondValue);
 <a class="jxr_linenumber" name="1480" href="#1480">1480</a>             <strong class="jxr_keyword">if</strong> (nanoValue &gt; 0) {
 <a class="jxr_linenumber" name="1481" href="#1481">1481</a>                 buf.append('.');
-<a class="jxr_linenumber" name="1482" href="#1482">1482</a>                 <strong class="jxr_keyword">if</strong> (nanoValue % 1000_000 == 0) {
-<a class="jxr_linenumber" name="1483" href="#1483">1483</a>                     buf.append(Integer.toString((nanoValue / 1000_000) + 1000).substring(1));
+<a class="jxr_linenumber" name="1482" href="#1482">1482</a>                 <strong class="jxr_keyword">if</strong> (nanoValue % 1000000 == 0) {
+<a class="jxr_linenumber" name="1483" href="#1483">1483</a>                     buf.append(Integer.toString((nanoValue / 1000000) + 1000).substring(1));
 <a class="jxr_linenumber" name="1484" href="#1484">1484</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (nanoValue % 1000 == 0) {
-<a class="jxr_linenumber" name="1485" href="#1485">1485</a>                     buf.append(Integer.toString((nanoValue / 1000) + 1000_000).substring(1));
+<a class="jxr_linenumber" name="1485" href="#1485">1485</a>                     buf.append(Integer.toString((nanoValue / 1000) + 1000000).substring(1));
 <a class="jxr_linenumber" name="1486" href="#1486">1486</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="1487" href="#1487">1487</a>                     buf.append(Integer.toString((nanoValue) + 1000_000_000).substring(1));
+<a class="jxr_linenumber" name="1487" href="#1487">1487</a>                     buf.append(Integer.toString((nanoValue) + 1000000000).substring(1));
 <a class="jxr_linenumber" name="1488" href="#1488">1488</a>                 }
 <a class="jxr_linenumber" name="1489" href="#1489">1489</a>             }
 <a class="jxr_linenumber" name="1490" href="#1490">1490</a>         }
@@ -1512,7 +1512,7 @@
 <a class="jxr_linenumber" name="1502" href="#1502">1502</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if an error occurs during printing</em>
 <a class="jxr_linenumber" name="1503" href="#1503">1503</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="1504" href="#1504">1504</a>     <strong class="jxr_keyword">public</strong> String format(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="1505" href="#1505">1505</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="1505" href="#1505">1505</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="1506" href="#1506">1506</a>         <strong class="jxr_keyword">return</strong> formatter.format(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="1507" href="#1507">1507</a>     }
 <a class="jxr_linenumber" name="1508" href="#1508">1508</a> 

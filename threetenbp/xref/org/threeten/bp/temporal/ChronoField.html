@@ -57,15 +57,15 @@
 <a class="jxr_linenumber" name="47" href="#47">47</a>  
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
 <a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="51" href="#51">51</a>  
-<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DayOfWeek;
-<a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
-<a class="jxr_linenumber" name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Year;
-<a class="jxr_linenumber" name="55" href="#55">55</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
-<a class="jxr_linenumber" name="56" href="#56">56</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.ChronoLocalDate;
-<a class="jxr_linenumber" name="57" href="#57">57</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.Chronology;
-<a class="jxr_linenumber" name="58" href="#58">58</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.ResolverStyle;
+<a class="jxr_linenumber" name="50" href="#50">50</a>  
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DayOfWeek;
+<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
+<a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Year;
+<a class="jxr_linenumber" name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="55" href="#55">55</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.ChronoLocalDate;
+<a class="jxr_linenumber" name="56" href="#56">56</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.Chronology;
+<a class="jxr_linenumber" name="57" href="#57">57</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.ResolverStyle;
+<a class="jxr_linenumber" name="58" href="#58">58</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="59" href="#59">59</a>  
 <a class="jxr_linenumber" name="60" href="#60">60</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="61" href="#61">61</a>  <em class="jxr_javadoccomment"> * A standard set of fields.</em>
@@ -99,7 +99,7 @@
 <a class="jxr_linenumber" name="89" href="#89">89</a>  <em class="jxr_javadoccomment">     * For example, if the {@code TemporalAccessor} stores time to millisecond precision,</em>
 <a class="jxr_linenumber" name="90" href="#90">90</a>  <em class="jxr_javadoccomment">     * then the nano-of-second must be divided by 1,000,000 before replacing the milli-of-second.</em>
 <a class="jxr_linenumber" name="91" href="#91">91</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="92" href="#92">92</a>      NANO_OF_SECOND(<span class="jxr_string">"NanoOfSecond"</span>, NANOS, SECONDS, ValueRange.of(0, 999_999_999)),
+<a class="jxr_linenumber" name="92" href="#92">92</a>      NANO_OF_SECOND(<span class="jxr_string">"NanoOfSecond"</span>, NANOS, SECONDS, ValueRange.of(0, 999999999)),
 <a class="jxr_linenumber" name="93" href="#93">93</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="94" href="#94">94</a>  <em class="jxr_javadoccomment">     * The nano-of-day.</em>
 <a class="jxr_linenumber" name="95" href="#95">95</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
@@ -110,7 +110,7 @@
 <a class="jxr_linenumber" name="100" href="#100">100</a> <em class="jxr_javadoccomment">     * Implementations of {@code TemporalAccessor} should provide a value for this field if</em>
 <a class="jxr_linenumber" name="101" href="#101">101</a> <em class="jxr_javadoccomment">     * they can return a value for {@link #SECOND_OF_DAY} filling unknown precision with zero.</em>
 <a class="jxr_linenumber" name="102" href="#102">102</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="103" href="#103">103</a>     NANO_OF_DAY(<span class="jxr_string">"NanoOfDay"</span>, NANOS, DAYS, ValueRange.of(0, 86400L * 1000_000_000L - 1)),
+<a class="jxr_linenumber" name="103" href="#103">103</a>     NANO_OF_DAY(<span class="jxr_string">"NanoOfDay"</span>, NANOS, DAYS, ValueRange.of(0, 86400L * 1000000000L - 1)),
 <a class="jxr_linenumber" name="104" href="#104">104</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * The micro-of-second.</em>
 <a class="jxr_linenumber" name="106" href="#106">106</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
@@ -125,7 +125,7 @@
 <a class="jxr_linenumber" name="115" href="#115">115</a> <em class="jxr_javadoccomment">     * When this field is used for setting a value, it should behave in the same way as</em>
 <a class="jxr_linenumber" name="116" href="#116">116</a> <em class="jxr_javadoccomment">     * setting {@link #NANO_OF_SECOND} with the value multiplied by 1,000.</em>
 <a class="jxr_linenumber" name="117" href="#117">117</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="118" href="#118">118</a>     MICRO_OF_SECOND(<span class="jxr_string">"MicroOfSecond"</span>, MICROS, SECONDS, ValueRange.of(0, 999_999)),
+<a class="jxr_linenumber" name="118" href="#118">118</a>     MICRO_OF_SECOND(<span class="jxr_string">"MicroOfSecond"</span>, MICROS, SECONDS, ValueRange.of(0, 999999)),
 <a class="jxr_linenumber" name="119" href="#119">119</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * The micro-of-day.</em>
 <a class="jxr_linenumber" name="121" href="#121">121</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
@@ -139,7 +139,7 @@
 <a class="jxr_linenumber" name="129" href="#129">129</a> <em class="jxr_javadoccomment">     * When this field is used for setting a value, it should behave in the same way as</em>
 <a class="jxr_linenumber" name="130" href="#130">130</a> <em class="jxr_javadoccomment">     * setting {@link #NANO_OF_DAY} with the value multiplied by 1,000.</em>
 <a class="jxr_linenumber" name="131" href="#131">131</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="132" href="#132">132</a>     MICRO_OF_DAY(<span class="jxr_string">"MicroOfDay"</span>, MICROS, DAYS, ValueRange.of(0, 86400L * 1000_000L - 1)),
+<a class="jxr_linenumber" name="132" href="#132">132</a>     MICRO_OF_DAY(<span class="jxr_string">"MicroOfDay"</span>, MICROS, DAYS, ValueRange.of(0, 86400L * 1000000L - 1)),
 <a class="jxr_linenumber" name="133" href="#133">133</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="134" href="#134">134</a> <em class="jxr_javadoccomment">     * The milli-of-second.</em>
 <a class="jxr_linenumber" name="135" href="#135">135</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
@@ -610,7 +610,7 @@
 <a class="jxr_linenumber" name="600" href="#600">600</a> 
 <a class="jxr_linenumber" name="601" href="#601">601</a>     @Override
 <a class="jxr_linenumber" name="602" href="#602">602</a>     <strong class="jxr_keyword">public</strong> String getDisplayName(Locale locale) {
-<a class="jxr_linenumber" name="603" href="#603">603</a>         Objects.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
+<a class="jxr_linenumber" name="603" href="#603">603</a>         Jdk8Methods.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
 <a class="jxr_linenumber" name="604" href="#604">604</a>         <strong class="jxr_keyword">return</strong> toString();
 <a class="jxr_linenumber" name="605" href="#605">605</a>     }
 <a class="jxr_linenumber" name="606" href="#606">606</a> 

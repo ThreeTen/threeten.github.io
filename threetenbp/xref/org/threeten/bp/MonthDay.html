@@ -50,14 +50,14 @@
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.io.InvalidObjectException;
 <a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.Chronology;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatterBuilder;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeParseException;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.Chronology;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatterBuilder;
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeParseException;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor;
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
 <a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
@@ -199,7 +199,7 @@
 <a class="jxr_linenumber" name="189" href="#189">189</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the day-of-month is invalid for the month</em>
 <a class="jxr_linenumber" name="190" href="#190">190</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="191" href="#191">191</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/MonthDay.html">MonthDay</a> of(<a href="../../../org/threeten/bp/Month.html">Month</a> month, <strong class="jxr_keyword">int</strong> dayOfMonth) {
-<a class="jxr_linenumber" name="192" href="#192">192</a>         Objects.requireNonNull(month, <span class="jxr_string">"month"</span>);
+<a class="jxr_linenumber" name="192" href="#192">192</a>         Jdk8Methods.requireNonNull(month, <span class="jxr_string">"month"</span>);
 <a class="jxr_linenumber" name="193" href="#193">193</a>         DAY_OF_MONTH.checkValidValue(dayOfMonth);
 <a class="jxr_linenumber" name="194" href="#194">194</a>         <strong class="jxr_keyword">if</strong> (dayOfMonth &gt; month.maxLength()) {
 <a class="jxr_linenumber" name="195" href="#195">195</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Illegal value for DayOfMonth field, value "</span> + dayOfMonth +
@@ -287,7 +287,7 @@
 <a class="jxr_linenumber" name="277" href="#277">277</a> <em class="jxr_javadoccomment">     * @throws DateTimeParseException if the text cannot be parsed</em>
 <a class="jxr_linenumber" name="278" href="#278">278</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="279" href="#279">279</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/MonthDay.html">MonthDay</a> parse(CharSequence text, <a href="../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="280" href="#280">280</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="280" href="#280">280</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="281" href="#281">281</a>         <strong class="jxr_keyword">return</strong> formatter.parse(text, MonthDay.FROM);
 <a class="jxr_linenumber" name="282" href="#282">282</a>     }
 <a class="jxr_linenumber" name="283" href="#283">283</a> 
@@ -519,7 +519,7 @@
 <a class="jxr_linenumber" name="509" href="#509">509</a> <em class="jxr_javadoccomment">    * @return a {@code MonthDay} based on this month-day with the requested month, not null</em>
 <a class="jxr_linenumber" name="510" href="#510">510</a> <em class="jxr_javadoccomment">    */</em>
 <a class="jxr_linenumber" name="511" href="#511">511</a>     <strong class="jxr_keyword">public</strong> <a href="../../../org/threeten/bp/MonthDay.html">MonthDay</a> with(<a href="../../../org/threeten/bp/Month.html">Month</a> month) {
-<a class="jxr_linenumber" name="512" href="#512">512</a>         Objects.requireNonNull(month, <span class="jxr_string">"month"</span>);
+<a class="jxr_linenumber" name="512" href="#512">512</a>         Jdk8Methods.requireNonNull(month, <span class="jxr_string">"month"</span>);
 <a class="jxr_linenumber" name="513" href="#513">513</a>         <strong class="jxr_keyword">if</strong> (month.getValue() == <strong class="jxr_keyword">this</strong>.month) {
 <a class="jxr_linenumber" name="514" href="#514">514</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="515" href="#515">515</a>         }
@@ -726,7 +726,7 @@
 <a class="jxr_linenumber" name="716" href="#716">716</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if an error occurs during printing</em>
 <a class="jxr_linenumber" name="717" href="#717">717</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="718" href="#718">718</a>     <strong class="jxr_keyword">public</strong> String format(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="719" href="#719">719</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="719" href="#719">719</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="720" href="#720">720</a>         <strong class="jxr_keyword">return</strong> formatter.format(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="721" href="#721">721</a>     }
 <a class="jxr_linenumber" name="722" href="#722">722</a> 

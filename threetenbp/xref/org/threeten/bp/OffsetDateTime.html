@@ -54,12 +54,12 @@
 <a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
 <a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
-<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeParseException;
-<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporal;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeFormatter;
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.format.DateTimeParseException;
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporal;
+<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoUnit;
 <a class="jxr_linenumber" name="55" href="#55">55</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.Temporal;
@@ -146,9 +146,9 @@
 <a class="jxr_linenumber" name="136" href="#136">136</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Comparator&lt;OffsetDateTime&gt; INSTANT_COMPARATOR = <strong class="jxr_keyword">new</strong> Comparator&lt;OffsetDateTime&gt;() {
 <a class="jxr_linenumber" name="137" href="#137">137</a>         @Override
 <a class="jxr_linenumber" name="138" href="#138">138</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(<a href="../../../org/threeten/bp/OffsetDateTime.html">OffsetDateTime</a> datetime1, <a href="../../../org/threeten/bp/OffsetDateTime.html">OffsetDateTime</a> datetime2) {
-<a class="jxr_linenumber" name="139" href="#139">139</a>             <strong class="jxr_keyword">int</strong> cmp = Long.compare(datetime1.toEpochSecond(), datetime2.toEpochSecond());
+<a class="jxr_linenumber" name="139" href="#139">139</a>             <strong class="jxr_keyword">int</strong> cmp = Jdk8Methods.compareLongs(datetime1.toEpochSecond(), datetime2.toEpochSecond());
 <a class="jxr_linenumber" name="140" href="#140">140</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
-<a class="jxr_linenumber" name="141" href="#141">141</a>                 cmp = Long.compare(datetime1.getNano(), datetime2.getNano());
+<a class="jxr_linenumber" name="141" href="#141">141</a>                 cmp = Jdk8Methods.compareLongs(datetime1.getNano(), datetime2.getNano());
 <a class="jxr_linenumber" name="142" href="#142">142</a>             }
 <a class="jxr_linenumber" name="143" href="#143">143</a>             <strong class="jxr_keyword">return</strong> cmp;
 <a class="jxr_linenumber" name="144" href="#144">144</a>         }
@@ -215,7 +215,7 @@
 <a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_javadoccomment">     * @return the current date-time, not null</em>
 <a class="jxr_linenumber" name="206" href="#206">206</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="207" href="#207">207</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/OffsetDateTime.html">OffsetDateTime</a> now(<a href="../../../org/threeten/bp/Clock.html">Clock</a> clock) {
-<a class="jxr_linenumber" name="208" href="#208">208</a>         Objects.requireNonNull(clock, <span class="jxr_string">"clock"</span>);
+<a class="jxr_linenumber" name="208" href="#208">208</a>         Jdk8Methods.requireNonNull(clock, <span class="jxr_string">"clock"</span>);
 <a class="jxr_linenumber" name="209" href="#209">209</a>         <strong class="jxr_keyword">final</strong> <a href="../../../org/threeten/bp/Instant.html">Instant</a> now = clock.instant();  <em class="jxr_comment">// called once</em>
 <a class="jxr_linenumber" name="210" href="#210">210</a>         <strong class="jxr_keyword">return</strong> ofInstant(now, clock.getZone().getRules().getOffset(now));
 <a class="jxr_linenumber" name="211" href="#211">211</a>     }
@@ -294,8 +294,8 @@
 <a class="jxr_linenumber" name="284" href="#284">284</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the result exceeds the supported range</em>
 <a class="jxr_linenumber" name="285" href="#285">285</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="286" href="#286">286</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/OffsetDateTime.html">OffsetDateTime</a> ofInstant(<a href="../../../org/threeten/bp/Instant.html">Instant</a> instant, <a href="../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone) {
-<a class="jxr_linenumber" name="287" href="#287">287</a>         Objects.requireNonNull(instant, <span class="jxr_string">"instant"</span>);
-<a class="jxr_linenumber" name="288" href="#288">288</a>         Objects.requireNonNull(zone, <span class="jxr_string">"zone"</span>);
+<a class="jxr_linenumber" name="287" href="#287">287</a>         Jdk8Methods.requireNonNull(instant, <span class="jxr_string">"instant"</span>);
+<a class="jxr_linenumber" name="288" href="#288">288</a>         Jdk8Methods.requireNonNull(zone, <span class="jxr_string">"zone"</span>);
 <a class="jxr_linenumber" name="289" href="#289">289</a>         <a href="../../../org/threeten/bp/zone/ZoneRules.html">ZoneRules</a> rules = zone.getRules();
 <a class="jxr_linenumber" name="290" href="#290">290</a>         <a href="../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset = rules.getOffset(instant);
 <a class="jxr_linenumber" name="291" href="#291">291</a>         <a href="../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> ldt = LocalDateTime.ofEpochSecond(instant.getEpochSecond(), instant.getNano(), offset);
@@ -365,7 +365,7 @@
 <a class="jxr_linenumber" name="355" href="#355">355</a> <em class="jxr_javadoccomment">     * @throws DateTimeParseException if the text cannot be parsed</em>
 <a class="jxr_linenumber" name="356" href="#356">356</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="357" href="#357">357</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/bp/OffsetDateTime.html">OffsetDateTime</a> parse(CharSequence text, <a href="../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="358" href="#358">358</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="358" href="#358">358</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="359" href="#359">359</a>         <strong class="jxr_keyword">return</strong> formatter.parse(text, OffsetDateTime.FROM);
 <a class="jxr_linenumber" name="360" href="#360">360</a>     }
 <a class="jxr_linenumber" name="361" href="#361">361</a> 
@@ -377,8 +377,8 @@
 <a class="jxr_linenumber" name="367" href="#367">367</a> <em class="jxr_javadoccomment">     * @param offset  the zone offset, not null</em>
 <a class="jxr_linenumber" name="368" href="#368">368</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="369" href="#369">369</a>     <strong class="jxr_keyword">private</strong> <a href="../../../org/threeten/bp/OffsetDateTime.html">OffsetDateTime</a>(<a href="../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> dateTime, <a href="../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset) {
-<a class="jxr_linenumber" name="370" href="#370">370</a>         <strong class="jxr_keyword">this</strong>.dateTime = Objects.requireNonNull(dateTime, <span class="jxr_string">"dateTime"</span>);
-<a class="jxr_linenumber" name="371" href="#371">371</a>         <strong class="jxr_keyword">this</strong>.offset = Objects.requireNonNull(offset, <span class="jxr_string">"offset"</span>);
+<a class="jxr_linenumber" name="370" href="#370">370</a>         <strong class="jxr_keyword">this</strong>.dateTime = Jdk8Methods.requireNonNull(dateTime, <span class="jxr_string">"dateTime"</span>);
+<a class="jxr_linenumber" name="371" href="#371">371</a>         <strong class="jxr_keyword">this</strong>.offset = Jdk8Methods.requireNonNull(offset, <span class="jxr_string">"offset"</span>);
 <a class="jxr_linenumber" name="372" href="#372">372</a>     }
 <a class="jxr_linenumber" name="373" href="#373">373</a> 
 <a class="jxr_linenumber" name="374" href="#374">374</a>     <em class="jxr_javadoccomment">/**</em>
@@ -1671,7 +1671,7 @@
 <a class="jxr_linenumber" name="1661" href="#1661">1661</a>         <strong class="jxr_keyword">if</strong> (getOffset().equals(other.getOffset())) {
 <a class="jxr_linenumber" name="1662" href="#1662">1662</a>             <strong class="jxr_keyword">return</strong> toLocalDateTime().compareTo(other.toLocalDateTime());
 <a class="jxr_linenumber" name="1663" href="#1663">1663</a>         }
-<a class="jxr_linenumber" name="1664" href="#1664">1664</a>         <strong class="jxr_keyword">int</strong> cmp = Long.compare(toEpochSecond(), other.toEpochSecond());
+<a class="jxr_linenumber" name="1664" href="#1664">1664</a>         <strong class="jxr_keyword">int</strong> cmp = Jdk8Methods.compareLongs(toEpochSecond(), other.toEpochSecond());
 <a class="jxr_linenumber" name="1665" href="#1665">1665</a>         <strong class="jxr_keyword">if</strong> (cmp == 0) {
 <a class="jxr_linenumber" name="1666" href="#1666">1666</a>             cmp = toLocalTime().getNano() - other.toLocalTime().getNano();
 <a class="jxr_linenumber" name="1667" href="#1667">1667</a>             <strong class="jxr_keyword">if</strong> (cmp == 0) {
@@ -1797,7 +1797,7 @@
 <a class="jxr_linenumber" name="1787" href="#1787">1787</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if an error occurs during printing</em>
 <a class="jxr_linenumber" name="1788" href="#1788">1788</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="1789" href="#1789">1789</a>     <strong class="jxr_keyword">public</strong> String format(<a href="../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter) {
-<a class="jxr_linenumber" name="1790" href="#1790">1790</a>         Objects.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
+<a class="jxr_linenumber" name="1790" href="#1790">1790</a>         Jdk8Methods.requireNonNull(formatter, <span class="jxr_string">"formatter"</span>);
 <a class="jxr_linenumber" name="1791" href="#1791">1791</a>         <strong class="jxr_keyword">return</strong> formatter.format(<strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="1792" href="#1792">1792</a>     }
 <a class="jxr_linenumber" name="1793" href="#1793">1793</a> 

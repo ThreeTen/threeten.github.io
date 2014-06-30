@@ -48,11 +48,11 @@
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> java.io.ObjectStreamException;
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.io.Serializable;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceEra;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceEra;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalField;
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ValueRange;
@@ -212,7 +212,7 @@
 <a class="jxr_linenumber" name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException if there is not JapaneseEra with the specified name</em>
 <a class="jxr_linenumber" name="203" href="#203">203</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="204" href="#204">204</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> valueOf(String japaneseEra) {
-<a class="jxr_linenumber" name="205" href="#205">205</a>         Objects.requireNonNull(japaneseEra, <span class="jxr_string">"japaneseEra"</span>);
+<a class="jxr_linenumber" name="205" href="#205">205</a>         Jdk8Methods.requireNonNull(japaneseEra, <span class="jxr_string">"japaneseEra"</span>);
 <a class="jxr_linenumber" name="206" href="#206">206</a>         <strong class="jxr_keyword">for</strong> (JapaneseEra era : KNOWN_ERAS) {
 <a class="jxr_linenumber" name="207" href="#207">207</a>             <strong class="jxr_keyword">if</strong> (japaneseEra.equals(era.getName())) {
 <a class="jxr_linenumber" name="208" href="#208">208</a>                 <strong class="jxr_keyword">return</strong> era;

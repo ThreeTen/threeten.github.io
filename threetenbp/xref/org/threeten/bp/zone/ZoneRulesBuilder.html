@@ -50,17 +50,17 @@
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
 <a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DayOfWeek;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Month;
-<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Year;
-<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
-<a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DayOfWeek;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDate;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalDateTime;
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.LocalTime;
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Month;
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Year;
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="52" href="#52">52</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
+<a class="jxr_linenumber" name="53" href="#53">53</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="54" href="#54">54</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.zone.ZoneOffsetTransitionRule.TimeDefinition;
 <a class="jxr_linenumber" name="55" href="#55">55</a>  
 <a class="jxr_linenumber" name="56" href="#56">56</a>  <em class="jxr_javadoccomment">/**</em>
@@ -84,7 +84,7 @@
 <a class="jxr_linenumber" name="74" href="#74">74</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     * The list of windows.</em>
 <a class="jxr_linenumber" name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="77" href="#77">77</a>      <strong class="jxr_keyword">private</strong> List&lt;TZWindow&gt; windowList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="77" href="#77">77</a>      <strong class="jxr_keyword">private</strong> List&lt;TZWindow&gt; windowList = <strong class="jxr_keyword">new</strong> ArrayList&lt;ZoneRulesBuilder.TZWindow&gt;();
 <a class="jxr_linenumber" name="78" href="#78">78</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="79" href="#79">79</a>  <em class="jxr_javadoccomment">     * A map for deduplicating the output.</em>
 <a class="jxr_linenumber" name="80" href="#80">80</a>  <em class="jxr_javadoccomment">     */</em>
@@ -127,9 +127,9 @@
 <a class="jxr_linenumber" name="117" href="#117">117</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> standardOffset,
 <a class="jxr_linenumber" name="118" href="#118">118</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> until,
 <a class="jxr_linenumber" name="119" href="#119">119</a>             <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> untilDefinition) {
-<a class="jxr_linenumber" name="120" href="#120">120</a>         Objects.requireNonNull(standardOffset, <span class="jxr_string">"standardOffset"</span>);
-<a class="jxr_linenumber" name="121" href="#121">121</a>         Objects.requireNonNull(until, <span class="jxr_string">"until"</span>);
-<a class="jxr_linenumber" name="122" href="#122">122</a>         Objects.requireNonNull(untilDefinition, <span class="jxr_string">"untilDefinition"</span>);
+<a class="jxr_linenumber" name="120" href="#120">120</a>         Jdk8Methods.requireNonNull(standardOffset, <span class="jxr_string">"standardOffset"</span>);
+<a class="jxr_linenumber" name="121" href="#121">121</a>         Jdk8Methods.requireNonNull(until, <span class="jxr_string">"until"</span>);
+<a class="jxr_linenumber" name="122" href="#122">122</a>         Jdk8Methods.requireNonNull(untilDefinition, <span class="jxr_string">"untilDefinition"</span>);
 <a class="jxr_linenumber" name="123" href="#123">123</a>         <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> window = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a>(standardOffset, until, untilDefinition);
 <a class="jxr_linenumber" name="124" href="#124">124</a>         <strong class="jxr_keyword">if</strong> (windowList.size() &gt; 0) {
 <a class="jxr_linenumber" name="125" href="#125">125</a>             <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> previous = windowList.get(windowList.size() - 1);
@@ -202,7 +202,7 @@
 <a class="jxr_linenumber" name="192" href="#192">192</a>             <a href="../../../../org/threeten/bp/LocalDateTime.html">LocalDateTime</a> transitionDateTime,
 <a class="jxr_linenumber" name="193" href="#193">193</a>             <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition,
 <a class="jxr_linenumber" name="194" href="#194">194</a>             <strong class="jxr_keyword">int</strong> savingAmountSecs) {
-<a class="jxr_linenumber" name="195" href="#195">195</a>         Objects.requireNonNull(transitionDateTime, <span class="jxr_string">"transitionDateTime"</span>);
+<a class="jxr_linenumber" name="195" href="#195">195</a>         Jdk8Methods.requireNonNull(transitionDateTime, <span class="jxr_string">"transitionDateTime"</span>);
 <a class="jxr_linenumber" name="196" href="#196">196</a>         <strong class="jxr_keyword">return</strong> addRuleToWindow(
 <a class="jxr_linenumber" name="197" href="#197">197</a>                 transitionDateTime.getYear(), transitionDateTime.getYear(),
 <a class="jxr_linenumber" name="198" href="#198">198</a>                 transitionDateTime.getMonth(), transitionDateTime.getDayOfMonth(),
@@ -274,9 +274,9 @@
 <a class="jxr_linenumber" name="264" href="#264">264</a>             <strong class="jxr_keyword">boolean</strong> timeEndOfDay,
 <a class="jxr_linenumber" name="265" href="#265">265</a>             <a href="../../../../org/threeten/bp/zone/ZoneOffsetTransitionRule.html">TimeDefinition</a> timeDefinition,
 <a class="jxr_linenumber" name="266" href="#266">266</a>             <strong class="jxr_keyword">int</strong> savingAmountSecs) {
-<a class="jxr_linenumber" name="267" href="#267">267</a>         Objects.requireNonNull(month, <span class="jxr_string">"month"</span>);
-<a class="jxr_linenumber" name="268" href="#268">268</a>         Objects.requireNonNull(time, <span class="jxr_string">"time"</span>);
-<a class="jxr_linenumber" name="269" href="#269">269</a>         Objects.requireNonNull(timeDefinition, <span class="jxr_string">"timeDefinition"</span>);
+<a class="jxr_linenumber" name="267" href="#267">267</a>         Jdk8Methods.requireNonNull(month, <span class="jxr_string">"month"</span>);
+<a class="jxr_linenumber" name="268" href="#268">268</a>         Jdk8Methods.requireNonNull(time, <span class="jxr_string">"time"</span>);
+<a class="jxr_linenumber" name="269" href="#269">269</a>         Jdk8Methods.requireNonNull(timeDefinition, <span class="jxr_string">"timeDefinition"</span>);
 <a class="jxr_linenumber" name="270" href="#270">270</a>         YEAR.checkValidValue(startYear);
 <a class="jxr_linenumber" name="271" href="#271">271</a>         YEAR.checkValidValue(endYear);
 <a class="jxr_linenumber" name="272" href="#272">272</a>         <strong class="jxr_keyword">if</strong> (dayOfMonthIndicator &lt; -28 || dayOfMonthIndicator &gt; 31 || dayOfMonthIndicator == 0) {
@@ -322,15 +322,15 @@
 <a class="jxr_linenumber" name="312" href="#312">312</a> <em class="jxr_javadoccomment">     * @throws IllegalStateException if there is only one rule defined as being forever for any given window</em>
 <a class="jxr_linenumber" name="313" href="#313">313</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="314" href="#314">314</a>     <a href="../../../../org/threeten/bp/zone/ZoneRules.html">ZoneRules</a> toRules(String zoneId, Map&lt;Object, Object&gt; deduplicateMap) {
-<a class="jxr_linenumber" name="315" href="#315">315</a>         Objects.requireNonNull(zoneId, <span class="jxr_string">"zoneId"</span>);
+<a class="jxr_linenumber" name="315" href="#315">315</a>         Jdk8Methods.requireNonNull(zoneId, <span class="jxr_string">"zoneId"</span>);
 <a class="jxr_linenumber" name="316" href="#316">316</a>         <strong class="jxr_keyword">this</strong>.deduplicateMap = deduplicateMap;
 <a class="jxr_linenumber" name="317" href="#317">317</a>         <strong class="jxr_keyword">if</strong> (windowList.isEmpty()) {
 <a class="jxr_linenumber" name="318" href="#318">318</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"No windows have been added to the builder"</span>);
 <a class="jxr_linenumber" name="319" href="#319">319</a>         }
 <a class="jxr_linenumber" name="320" href="#320">320</a> 
-<a class="jxr_linenumber" name="321" href="#321">321</a>         <strong class="jxr_keyword">final</strong> List&lt;ZoneOffsetTransition&gt; standardTransitionList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(4);
-<a class="jxr_linenumber" name="322" href="#322">322</a>         <strong class="jxr_keyword">final</strong> List&lt;ZoneOffsetTransition&gt; transitionList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(256);
-<a class="jxr_linenumber" name="323" href="#323">323</a>         <strong class="jxr_keyword">final</strong> List&lt;ZoneOffsetTransitionRule&gt; lastTransitionRuleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(2);
+<a class="jxr_linenumber" name="321" href="#321">321</a>         <strong class="jxr_keyword">final</strong> List&lt;ZoneOffsetTransition&gt; standardTransitionList = <strong class="jxr_keyword">new</strong> ArrayList&lt;ZoneOffsetTransition&gt;(4);
+<a class="jxr_linenumber" name="322" href="#322">322</a>         <strong class="jxr_keyword">final</strong> List&lt;ZoneOffsetTransition&gt; transitionList = <strong class="jxr_keyword">new</strong> ArrayList&lt;ZoneOffsetTransition&gt;(256);
+<a class="jxr_linenumber" name="323" href="#323">323</a>         <strong class="jxr_keyword">final</strong> List&lt;ZoneOffsetTransitionRule&gt; lastTransitionRuleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;ZoneOffsetTransitionRule&gt;(2);
 <a class="jxr_linenumber" name="324" href="#324">324</a> 
 <a class="jxr_linenumber" name="325" href="#325">325</a>         <em class="jxr_comment">// initialize the standard offset calculation</em>
 <a class="jxr_linenumber" name="326" href="#326">326</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/zone/ZoneRulesBuilder.html">TZWindow</a> firstWindow = windowList.get(0);
@@ -444,11 +444,11 @@
 <a class="jxr_linenumber" name="434" href="#434">434</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The fixed amount of the saving to be applied during this window. */</em>
 <a class="jxr_linenumber" name="435" href="#435">435</a>         <strong class="jxr_keyword">private</strong> Integer fixedSavingAmountSecs;
 <a class="jxr_linenumber" name="436" href="#436">436</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The rules for the current window. */</em>
-<a class="jxr_linenumber" name="437" href="#437">437</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; ruleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="437" href="#437">437</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; ruleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;TZRule&gt;();
 <a class="jxr_linenumber" name="438" href="#438">438</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The latest year that the last year starts at. */</em>
 <a class="jxr_linenumber" name="439" href="#439">439</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> maxLastRuleStartYear = Year.MIN_VALUE;
 <a class="jxr_linenumber" name="440" href="#440">440</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The last rules. */</em>
-<a class="jxr_linenumber" name="441" href="#441">441</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; lastRuleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="441" href="#441">441</a>         <strong class="jxr_keyword">private</strong> List&lt;TZRule&gt; lastRuleList = <strong class="jxr_keyword">new</strong> ArrayList&lt;TZRule&gt;();
 <a class="jxr_linenumber" name="442" href="#442">442</a> 
 <a class="jxr_linenumber" name="443" href="#443">443</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="444" href="#444">444</a> <em class="jxr_javadoccomment">         * Constructor.</em>

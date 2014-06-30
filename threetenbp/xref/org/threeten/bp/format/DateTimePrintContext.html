@@ -45,16 +45,16 @@
 <a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.INSTANT_SECONDS;
 <a class="jxr_linenumber" name="36" href="#36">36</a>  
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
-<a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> java.util.Objects;
-<a class="jxr_linenumber" name="39" href="#39">39</a>  
-<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.ChronoLocalDate;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.Chronology;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor;
+<a class="jxr_linenumber" name="38" href="#38">38</a>  
+<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.DateTimeException;
+<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.Instant;
+<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneId;
+<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.ZoneOffset;
+<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.ChronoLocalDate;
+<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.Chronology;
+<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.chrono.IsoChronology;
+<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.DefaultInterfaceTemporalAccessor;
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.jdk8.Jdk8Methods;
 <a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.ChronoField;
 <a class="jxr_linenumber" name="49" href="#49">49</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalAccessor;
 <a class="jxr_linenumber" name="50" href="#50">50</a>  <strong class="jxr_keyword">import</strong> org.threeten.bp.temporal.TemporalField;
@@ -122,10 +122,10 @@
 <a class="jxr_linenumber" name="112" href="#112">112</a>         <em class="jxr_comment">// ensure minimal change</em>
 <a class="jxr_linenumber" name="113" href="#113">113</a>         <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> temporalChrono = temporal.query(TemporalQueries.chronology());
 <a class="jxr_linenumber" name="114" href="#114">114</a>         <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> temporalZone = temporal.query(TemporalQueries.zoneId());
-<a class="jxr_linenumber" name="115" href="#115">115</a>         <strong class="jxr_keyword">if</strong> (Objects.equals(temporalChrono, overrideChrono)) {
+<a class="jxr_linenumber" name="115" href="#115">115</a>         <strong class="jxr_keyword">if</strong> (Jdk8Methods.equals(temporalChrono, overrideChrono)) {
 <a class="jxr_linenumber" name="116" href="#116">116</a>             overrideChrono = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="117" href="#117">117</a>         }
-<a class="jxr_linenumber" name="118" href="#118">118</a>         <strong class="jxr_keyword">if</strong> (Objects.equals(temporalZone, overrideZone)) {
+<a class="jxr_linenumber" name="118" href="#118">118</a>         <strong class="jxr_keyword">if</strong> (Jdk8Methods.equals(temporalZone, overrideZone)) {
 <a class="jxr_linenumber" name="119" href="#119">119</a>             overrideZone = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="120" href="#120">120</a>         }
 <a class="jxr_linenumber" name="121" href="#121">121</a>         <strong class="jxr_keyword">if</strong> (overrideChrono == <strong class="jxr_keyword">null</strong> &amp;&amp; overrideZone == <strong class="jxr_keyword">null</strong>) {
@@ -309,7 +309,7 @@
 <a class="jxr_linenumber" name="299" href="#299">299</a> <em class="jxr_javadoccomment">     * @param temporal  the date-time object, not null</em>
 <a class="jxr_linenumber" name="300" href="#300">300</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="301" href="#301">301</a>     <strong class="jxr_keyword">void</strong> setDateTime(<a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal) {
-<a class="jxr_linenumber" name="302" href="#302">302</a>         Objects.requireNonNull(temporal, <span class="jxr_string">"temporal"</span>);
+<a class="jxr_linenumber" name="302" href="#302">302</a>         Jdk8Methods.requireNonNull(temporal, <span class="jxr_string">"temporal"</span>);
 <a class="jxr_linenumber" name="303" href="#303">303</a>         <strong class="jxr_keyword">this</strong>.temporal = temporal;
 <a class="jxr_linenumber" name="304" href="#304">304</a>     }
 <a class="jxr_linenumber" name="305" href="#305">305</a> 
@@ -322,7 +322,7 @@
 <a class="jxr_linenumber" name="312" href="#312">312</a> <em class="jxr_javadoccomment">     * @param locale  the locale, not null</em>
 <a class="jxr_linenumber" name="313" href="#313">313</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="314" href="#314">314</a>     <strong class="jxr_keyword">void</strong> setLocale(Locale locale) {
-<a class="jxr_linenumber" name="315" href="#315">315</a>         Objects.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
+<a class="jxr_linenumber" name="315" href="#315">315</a>         Jdk8Methods.requireNonNull(locale, <span class="jxr_string">"locale"</span>);
 <a class="jxr_linenumber" name="316" href="#316">316</a>         <strong class="jxr_keyword">this</strong>.locale = locale;
 <a class="jxr_linenumber" name="317" href="#317">317</a>     }
 <a class="jxr_linenumber" name="318" href="#318">318</a> 

@@ -41,9 +41,9 @@
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>  <strong class="jxr_keyword">package</strong> org.threeten.bp.format;
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
-<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.ERA;
-<a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.AMPM_OF_DAY;
-<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.DAY_OF_WEEK;
+<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.AMPM_OF_DAY;
+<a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.DAY_OF_WEEK;
+<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.ERA;
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.threeten.bp.temporal.ChronoField.MONTH_OF_YEAR;
 <a class="jxr_linenumber" name="38" href="#38">38</a>  
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> java.text.DateFormatSymbols;
@@ -128,7 +128,7 @@
 <a class="jxr_linenumber" name="118" href="#118">118</a>     <strong class="jxr_keyword">private</strong> Object createStore(<a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field, Locale locale) {
 <a class="jxr_linenumber" name="119" href="#119">119</a>         <strong class="jxr_keyword">if</strong> (field == MONTH_OF_YEAR) {
 <a class="jxr_linenumber" name="120" href="#120">120</a>             DateFormatSymbols oldSymbols = DateFormatSymbols.getInstance(locale);
-<a class="jxr_linenumber" name="121" href="#121">121</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="121" href="#121">121</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;TextStyle, Map&lt;Long,String&gt;&gt;();
 <a class="jxr_linenumber" name="122" href="#122">122</a>             Long f1 = 1L;
 <a class="jxr_linenumber" name="123" href="#123">123</a>             Long f2 = 2L;
 <a class="jxr_linenumber" name="124" href="#124">124</a>             Long f3 = 3L;
@@ -142,7 +142,7 @@
 <a class="jxr_linenumber" name="132" href="#132">132</a>             Long f11 = 11L;
 <a class="jxr_linenumber" name="133" href="#133">133</a>             Long f12 = 12L;
 <a class="jxr_linenumber" name="134" href="#134">134</a>             String[] array = oldSymbols.getMonths();
-<a class="jxr_linenumber" name="135" href="#135">135</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="135" href="#135">135</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="136" href="#136">136</a>             map.put(f1, array[Calendar.JANUARY]);
 <a class="jxr_linenumber" name="137" href="#137">137</a>             map.put(f2, array[Calendar.FEBRUARY]);
 <a class="jxr_linenumber" name="138" href="#138">138</a>             map.put(f3, array[Calendar.MARCH]);
@@ -157,7 +157,7 @@
 <a class="jxr_linenumber" name="147" href="#147">147</a>             map.put(f12, array[Calendar.DECEMBER]);
 <a class="jxr_linenumber" name="148" href="#148">148</a>             styleMap.put(TextStyle.FULL, map);
 <a class="jxr_linenumber" name="149" href="#149">149</a>             
-<a class="jxr_linenumber" name="150" href="#150">150</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="150" href="#150">150</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="151" href="#151">151</a>             map.put(f1, array[Calendar.JANUARY].substring(0, 1));
 <a class="jxr_linenumber" name="152" href="#152">152</a>             map.put(f2, array[Calendar.FEBRUARY].substring(0, 1));
 <a class="jxr_linenumber" name="153" href="#153">153</a>             map.put(f3, array[Calendar.MARCH].substring(0, 1));
@@ -173,7 +173,7 @@
 <a class="jxr_linenumber" name="163" href="#163">163</a>             styleMap.put(TextStyle.NARROW, map);
 <a class="jxr_linenumber" name="164" href="#164">164</a>             
 <a class="jxr_linenumber" name="165" href="#165">165</a>             array = oldSymbols.getShortMonths();
-<a class="jxr_linenumber" name="166" href="#166">166</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="166" href="#166">166</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="167" href="#167">167</a>             map.put(f1, array[Calendar.JANUARY]);
 <a class="jxr_linenumber" name="168" href="#168">168</a>             map.put(f2, array[Calendar.FEBRUARY]);
 <a class="jxr_linenumber" name="169" href="#169">169</a>             map.put(f3, array[Calendar.MARCH]);
@@ -191,7 +191,7 @@
 <a class="jxr_linenumber" name="181" href="#181">181</a>         }
 <a class="jxr_linenumber" name="182" href="#182">182</a>         <strong class="jxr_keyword">if</strong> (field == DAY_OF_WEEK) {
 <a class="jxr_linenumber" name="183" href="#183">183</a>             DateFormatSymbols oldSymbols = DateFormatSymbols.getInstance(locale);
-<a class="jxr_linenumber" name="184" href="#184">184</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="184" href="#184">184</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;TextStyle, Map&lt;Long,String&gt;&gt;();
 <a class="jxr_linenumber" name="185" href="#185">185</a>             Long f1 = 1L;
 <a class="jxr_linenumber" name="186" href="#186">186</a>             Long f2 = 2L;
 <a class="jxr_linenumber" name="187" href="#187">187</a>             Long f3 = 3L;
@@ -200,7 +200,7 @@
 <a class="jxr_linenumber" name="190" href="#190">190</a>             Long f6 = 6L;
 <a class="jxr_linenumber" name="191" href="#191">191</a>             Long f7 = 7L;
 <a class="jxr_linenumber" name="192" href="#192">192</a>             String[] array = oldSymbols.getWeekdays();
-<a class="jxr_linenumber" name="193" href="#193">193</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="193" href="#193">193</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="194" href="#194">194</a>             map.put(f1, array[Calendar.MONDAY]);
 <a class="jxr_linenumber" name="195" href="#195">195</a>             map.put(f2, array[Calendar.TUESDAY]);
 <a class="jxr_linenumber" name="196" href="#196">196</a>             map.put(f3, array[Calendar.WEDNESDAY]);
@@ -210,7 +210,7 @@
 <a class="jxr_linenumber" name="200" href="#200">200</a>             map.put(f7, array[Calendar.SUNDAY]);
 <a class="jxr_linenumber" name="201" href="#201">201</a>             styleMap.put(TextStyle.FULL, map);
 <a class="jxr_linenumber" name="202" href="#202">202</a>             
-<a class="jxr_linenumber" name="203" href="#203">203</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="203" href="#203">203</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="204" href="#204">204</a>             map.put(f1, array[Calendar.MONDAY].substring(0, 1));
 <a class="jxr_linenumber" name="205" href="#205">205</a>             map.put(f2, array[Calendar.TUESDAY].substring(0, 1));
 <a class="jxr_linenumber" name="206" href="#206">206</a>             map.put(f3, array[Calendar.WEDNESDAY].substring(0, 1));
@@ -221,7 +221,7 @@
 <a class="jxr_linenumber" name="211" href="#211">211</a>             styleMap.put(TextStyle.NARROW, map);
 <a class="jxr_linenumber" name="212" href="#212">212</a>             
 <a class="jxr_linenumber" name="213" href="#213">213</a>             array = oldSymbols.getShortWeekdays();
-<a class="jxr_linenumber" name="214" href="#214">214</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="214" href="#214">214</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="215" href="#215">215</a>             map.put(f1, array[Calendar.MONDAY]);
 <a class="jxr_linenumber" name="216" href="#216">216</a>             map.put(f2, array[Calendar.TUESDAY]);
 <a class="jxr_linenumber" name="217" href="#217">217</a>             map.put(f3, array[Calendar.WEDNESDAY]);
@@ -234,9 +234,9 @@
 <a class="jxr_linenumber" name="224" href="#224">224</a>         }
 <a class="jxr_linenumber" name="225" href="#225">225</a>         <strong class="jxr_keyword">if</strong> (field == AMPM_OF_DAY) {
 <a class="jxr_linenumber" name="226" href="#226">226</a>             DateFormatSymbols oldSymbols = DateFormatSymbols.getInstance(locale);
-<a class="jxr_linenumber" name="227" href="#227">227</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="227" href="#227">227</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;TextStyle, Map&lt;Long,String&gt;&gt;();
 <a class="jxr_linenumber" name="228" href="#228">228</a>             String[] array = oldSymbols.getAmPmStrings();
-<a class="jxr_linenumber" name="229" href="#229">229</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="229" href="#229">229</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="230" href="#230">230</a>             map.put(0L, array[Calendar.AM]);
 <a class="jxr_linenumber" name="231" href="#231">231</a>             map.put(1L, array[Calendar.PM]);
 <a class="jxr_linenumber" name="232" href="#232">232</a>             styleMap.put(TextStyle.FULL, map);
@@ -245,14 +245,14 @@
 <a class="jxr_linenumber" name="235" href="#235">235</a>         }
 <a class="jxr_linenumber" name="236" href="#236">236</a>         <strong class="jxr_keyword">if</strong> (field == ERA) {
 <a class="jxr_linenumber" name="237" href="#237">237</a>             DateFormatSymbols oldSymbols = DateFormatSymbols.getInstance(locale);
-<a class="jxr_linenumber" name="238" href="#238">238</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="238" href="#238">238</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;TextStyle, Map&lt;Long,String&gt;&gt;();
 <a class="jxr_linenumber" name="239" href="#239">239</a>             String[] array = oldSymbols.getEras();
-<a class="jxr_linenumber" name="240" href="#240">240</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="240" href="#240">240</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="241" href="#241">241</a>             map.put(0L, array[GregorianCalendar.BC]);
 <a class="jxr_linenumber" name="242" href="#242">242</a>             map.put(1L, array[GregorianCalendar.AD]);
 <a class="jxr_linenumber" name="243" href="#243">243</a>             styleMap.put(TextStyle.SHORT, map);
 <a class="jxr_linenumber" name="244" href="#244">244</a>             <strong class="jxr_keyword">if</strong> (locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-<a class="jxr_linenumber" name="245" href="#245">245</a>                 map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="245" href="#245">245</a>                 map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="246" href="#246">246</a>                 map.put(0L, <span class="jxr_string">"Before Christ"</span>);
 <a class="jxr_linenumber" name="247" href="#247">247</a>                 map.put(1L, <span class="jxr_string">"Anno Domini"</span>);
 <a class="jxr_linenumber" name="248" href="#248">248</a>                 styleMap.put(TextStyle.FULL, map);
@@ -260,7 +260,7 @@
 <a class="jxr_linenumber" name="250" href="#250">250</a>                 <em class="jxr_comment">// re-use, as we don't have different data</em>
 <a class="jxr_linenumber" name="251" href="#251">251</a>                 styleMap.put(TextStyle.FULL, map);
 <a class="jxr_linenumber" name="252" href="#252">252</a>             }
-<a class="jxr_linenumber" name="253" href="#253">253</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="253" href="#253">253</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="254" href="#254">254</a>             map.put(0L, array[GregorianCalendar.BC].substring(0, 1));
 <a class="jxr_linenumber" name="255" href="#255">255</a>             map.put(1L, array[GregorianCalendar.AD].substring(0, 1));
 <a class="jxr_linenumber" name="256" href="#256">256</a>             styleMap.put(TextStyle.NARROW, map);
@@ -268,14 +268,14 @@
 <a class="jxr_linenumber" name="258" href="#258">258</a>         }
 <a class="jxr_linenumber" name="259" href="#259">259</a>         <em class="jxr_comment">// hard code English quarter text</em>
 <a class="jxr_linenumber" name="260" href="#260">260</a>         <strong class="jxr_keyword">if</strong> (field == IsoFields.QUARTER_OF_YEAR) {
-<a class="jxr_linenumber" name="261" href="#261">261</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
-<a class="jxr_linenumber" name="262" href="#262">262</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="261" href="#261">261</a>             Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; styleMap = <strong class="jxr_keyword">new</strong> HashMap&lt;TextStyle, Map&lt;Long,String&gt;&gt;();
+<a class="jxr_linenumber" name="262" href="#262">262</a>             Map&lt;Long, String&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="263" href="#263">263</a>             map.put(1L, <span class="jxr_string">"Q1"</span>);
 <a class="jxr_linenumber" name="264" href="#264">264</a>             map.put(2L, <span class="jxr_string">"Q2"</span>);
 <a class="jxr_linenumber" name="265" href="#265">265</a>             map.put(3L, <span class="jxr_string">"Q3"</span>);
 <a class="jxr_linenumber" name="266" href="#266">266</a>             map.put(4L, <span class="jxr_string">"Q4"</span>);
 <a class="jxr_linenumber" name="267" href="#267">267</a>             styleMap.put(TextStyle.SHORT, map);
-<a class="jxr_linenumber" name="268" href="#268">268</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="268" href="#268">268</a>             map = <strong class="jxr_keyword">new</strong> HashMap&lt;Long, String&gt;();
 <a class="jxr_linenumber" name="269" href="#269">269</a>             map.put(1L, <span class="jxr_string">"1st quarter"</span>);
 <a class="jxr_linenumber" name="270" href="#270">270</a>             map.put(2L, <span class="jxr_string">"2nd quarter"</span>);
 <a class="jxr_linenumber" name="271" href="#271">271</a>             map.put(3L, <span class="jxr_string">"3rd quarter"</span>);
@@ -335,16 +335,16 @@
 <a class="jxr_linenumber" name="325" href="#325">325</a> <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="326" href="#326">326</a>         <a href="../../../../org/threeten/bp/format/SimpleDateTimeTextProvider.html">LocaleStore</a>(Map&lt;TextStyle, Map&lt;Long, String&gt;&gt; valueTextMap) {
 <a class="jxr_linenumber" name="327" href="#327">327</a>             <strong class="jxr_keyword">this</strong>.valueTextMap = valueTextMap;
-<a class="jxr_linenumber" name="328" href="#328">328</a>             Map&lt;TextStyle, List&lt;Entry&lt;String, Long&gt;&gt;&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
-<a class="jxr_linenumber" name="329" href="#329">329</a>             List&lt;Entry&lt;String, Long&gt;&gt; allList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="328" href="#328">328</a>             Map&lt;TextStyle, List&lt;Entry&lt;String, Long&gt;&gt;&gt; map = <strong class="jxr_keyword">new</strong> HashMap&lt;TextStyle, List&lt;Entry&lt;String,Long&gt;&gt;&gt;();
+<a class="jxr_linenumber" name="329" href="#329">329</a>             List&lt;Entry&lt;String, Long&gt;&gt; allList = <strong class="jxr_keyword">new</strong> ArrayList&lt;Map.Entry&lt;String,Long&gt;&gt;();
 <a class="jxr_linenumber" name="330" href="#330">330</a>             <strong class="jxr_keyword">for</strong> (TextStyle style : valueTextMap.keySet()) {
-<a class="jxr_linenumber" name="331" href="#331">331</a>                 Map&lt;String, Entry&lt;String, Long&gt;&gt; reverse = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="331" href="#331">331</a>                 Map&lt;String, Entry&lt;String, Long&gt;&gt; reverse = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Map.Entry&lt;String,Long&gt;&gt;();
 <a class="jxr_linenumber" name="332" href="#332">332</a>                 <strong class="jxr_keyword">for</strong> (Map.Entry&lt;Long, String&gt; entry : valueTextMap.get(style).entrySet()) {
 <a class="jxr_linenumber" name="333" href="#333">333</a>                     <strong class="jxr_keyword">if</strong> (reverse.put(entry.getValue(), createEntry(entry.getValue(), entry.getKey())) != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="334" href="#334">334</a>                         <strong class="jxr_keyword">continue</strong>;  <em class="jxr_comment">// not parsable, try next style</em>
 <a class="jxr_linenumber" name="335" href="#335">335</a>                     }
 <a class="jxr_linenumber" name="336" href="#336">336</a>                 }
-<a class="jxr_linenumber" name="337" href="#337">337</a>                 List&lt;Entry&lt;String, Long&gt;&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(reverse.values());
+<a class="jxr_linenumber" name="337" href="#337">337</a>                 List&lt;Entry&lt;String, Long&gt;&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;Map.Entry&lt;String,Long&gt;&gt;(reverse.values());
 <a class="jxr_linenumber" name="338" href="#338">338</a>                 Collections.sort(list, COMPARATOR);
 <a class="jxr_linenumber" name="339" href="#339">339</a>                 map.put(style, list);
 <a class="jxr_linenumber" name="340" href="#340">340</a>                 allList.addAll(list);
