@@ -46,6 +46,8 @@ The backport is used in projects such as [OpenGamma](https://github.com/OpenGamm
 Not every piece of functionality in the domain of date/time ended up in OpenJDK and Java SE 8.
 The "extras" have been combined into a new project - [ThreeTen-Extra](http://www.threeten.org/threeten-extra/) - which can be used as an additional date/time jar file on Java SE 8.
 
+To store JSR-310 classes in a database, you may need to use bindings for Hibernate or JPA. Have a look at the [user type](http://jadira.sourceforge.net/usertype-userguide.html) or [threeten-jpa](https://github.com/marschall/threeten-jpa) projects for more info.
+
 #### History
 
 The [old home page](https://sourceforge.net/apps/mediawiki/threeten/index.php?title=Old_home_page) is still up at Sourceforge for the moment.
