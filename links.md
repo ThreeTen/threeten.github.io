@@ -30,6 +30,7 @@ Articles/Blogs:
 * [Happy Martin Luther King day](http://javajimlondon.blogspot.co.uk/2014/01/java-8-date-time-happy-martin-luther.html) - Jim Gough
 * [It's about time](https://blog.codecentric.de/en/2014/01/time/) - Matthias Langer
 * [A deeper look into the Java 8 Date and Time API](http://www.mscharhag.com/2014/02/java-8-datetime-api.html) - Michael Scharhag
+* [Using the Java 8 DateTime Classes with JPA!](https://weblogs.java.net/blog/montanajava/archive/2014/06/17/using-java-8-datetime-classes-jpa) - Steven Gertiser
 
 Videos:
 
