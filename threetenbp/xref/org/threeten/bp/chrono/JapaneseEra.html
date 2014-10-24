@@ -175,197 +175,196 @@
 <a class="jxr_linenumber" name="165" href="#165">165</a> <em class="jxr_javadoccomment">     * Returns the Sun private Era instance corresponding to this {@code JapaneseEra}.</em>
 <a class="jxr_linenumber" name="166" href="#166">166</a> <em class="jxr_javadoccomment">     * SEIREKI doesn't have its corresponding one.</em>
 <a class="jxr_linenumber" name="167" href="#167">167</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="168" href="#168">168</a> <em class="jxr_javadoccomment">     * @return the Sun private Era instance for this {@code JapaneseEra},</em>
-<a class="jxr_linenumber" name="169" href="#169">169</a> <em class="jxr_javadoccomment">     *         or null for SEIREKI.</em>
-<a class="jxr_linenumber" name="170" href="#170">170</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="171" href="#171">171</a>     sun.util.calendar.Era getPrivateEra() {
-<a class="jxr_linenumber" name="172" href="#172">172</a>         <strong class="jxr_keyword">return</strong> ERA_CONFIG[ordinal(eraValue)];
-<a class="jxr_linenumber" name="173" href="#173">173</a>     }
-<a class="jxr_linenumber" name="174" href="#174">174</a> 
-<a class="jxr_linenumber" name="175" href="#175">175</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="176" href="#176">176</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="177" href="#177">177</a> <em class="jxr_javadoccomment">     * Obtains an instance of {@code JapaneseEra} from an {@code int} value.</em>
-<a class="jxr_linenumber" name="178" href="#178">178</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="179" href="#179">179</a> <em class="jxr_javadoccomment">     * The {@link #SHOWA} era that contains 1970-01-01 (ISO calendar system) has the value 1</em>
-<a class="jxr_linenumber" name="180" href="#180">180</a> <em class="jxr_javadoccomment">     * Later era is numbered 2 ({@link #HEISEI}). Earlier eras are numbered 0 ({@link #TAISHO}),</em>
-<a class="jxr_linenumber" name="181" href="#181">181</a> <em class="jxr_javadoccomment">     * -1 ({@link #MEIJI}), only Meiji and later eras are supported.</em>
-<a class="jxr_linenumber" name="182" href="#182">182</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="183" href="#183">183</a> <em class="jxr_javadoccomment">     * @param japaneseEra  the era to represent</em>
-<a class="jxr_linenumber" name="184" href="#184">184</a> <em class="jxr_javadoccomment">     * @return the {@code JapaneseEra} singleton, not null</em>
-<a class="jxr_linenumber" name="185" href="#185">185</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the value is invalid</em>
-<a class="jxr_linenumber" name="186" href="#186">186</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="187" href="#187">187</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> of(<strong class="jxr_keyword">int</strong> japaneseEra) {
-<a class="jxr_linenumber" name="188" href="#188">188</a>         <strong class="jxr_keyword">if</strong> (japaneseEra &lt; MEIJI.eraValue || japaneseEra + ERA_OFFSET - 1 &gt;= KNOWN_ERAS.length) {
-<a class="jxr_linenumber" name="189" href="#189">189</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"japaneseEra is invalid"</span>);
-<a class="jxr_linenumber" name="190" href="#190">190</a>         }
-<a class="jxr_linenumber" name="191" href="#191">191</a>         <strong class="jxr_keyword">return</strong> KNOWN_ERAS[ordinal(japaneseEra)];
-<a class="jxr_linenumber" name="192" href="#192">192</a>     }
-<a class="jxr_linenumber" name="193" href="#193">193</a> 
-<a class="jxr_linenumber" name="194" href="#194">194</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * Returns the {@code JapaneseEra} with the name.</em>
-<a class="jxr_linenumber" name="196" href="#196">196</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="197" href="#197">197</a> <em class="jxr_javadoccomment">     * The string must match exactly the name of the era.</em>
-<a class="jxr_linenumber" name="198" href="#198">198</a> <em class="jxr_javadoccomment">     * (Extraneous whitespace characters are not permitted.)</em>
-<a class="jxr_linenumber" name="199" href="#199">199</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * @param japaneseEra  the japaneseEra name; non-null</em>
-<a class="jxr_linenumber" name="201" href="#201">201</a> <em class="jxr_javadoccomment">     * @return the {@code JapaneseEra} singleton, never null</em>
-<a class="jxr_linenumber" name="202" href="#202">202</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException if there is not JapaneseEra with the specified name</em>
-<a class="jxr_linenumber" name="203" href="#203">203</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="204" href="#204">204</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> valueOf(String japaneseEra) {
-<a class="jxr_linenumber" name="205" href="#205">205</a>         Jdk8Methods.requireNonNull(japaneseEra, <span class="jxr_string">"japaneseEra"</span>);
-<a class="jxr_linenumber" name="206" href="#206">206</a>         <strong class="jxr_keyword">for</strong> (JapaneseEra era : KNOWN_ERAS) {
-<a class="jxr_linenumber" name="207" href="#207">207</a>             <strong class="jxr_keyword">if</strong> (japaneseEra.equals(era.getName())) {
-<a class="jxr_linenumber" name="208" href="#208">208</a>                 <strong class="jxr_keyword">return</strong> era;
-<a class="jxr_linenumber" name="209" href="#209">209</a>             }
-<a class="jxr_linenumber" name="210" href="#210">210</a>         }
-<a class="jxr_linenumber" name="211" href="#211">211</a>         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Era not found: "</span> + japaneseEra);
-<a class="jxr_linenumber" name="212" href="#212">212</a>     }
-<a class="jxr_linenumber" name="213" href="#213">213</a> 
-<a class="jxr_linenumber" name="214" href="#214">214</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     * Returns an array of JapaneseEras.</em>
-<a class="jxr_linenumber" name="216" href="#216">216</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="217" href="#217">217</a> <em class="jxr_javadoccomment">     * This method may be used to iterate over the JapaneseEras as follows:</em>
-<a class="jxr_linenumber" name="218" href="#218">218</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="219" href="#219">219</a> <em class="jxr_javadoccomment">     * for (JapaneseEra c : JapaneseEra.values())</em>
-<a class="jxr_linenumber" name="220" href="#220">220</a> <em class="jxr_javadoccomment">     *     System.out.println(c);</em>
-<a class="jxr_linenumber" name="221" href="#221">221</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="223" href="#223">223</a> <em class="jxr_javadoccomment">     * @return an array of JapaneseEras</em>
-<a class="jxr_linenumber" name="224" href="#224">224</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="225" href="#225">225</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a>[] values() {
-<a class="jxr_linenumber" name="226" href="#226">226</a>         <strong class="jxr_keyword">return</strong> Arrays.copyOf(KNOWN_ERAS, KNOWN_ERAS.length);
-<a class="jxr_linenumber" name="227" href="#227">227</a>     }
-<a class="jxr_linenumber" name="228" href="#228">228</a> 
-<a class="jxr_linenumber" name="229" href="#229">229</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="230" href="#230">230</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="231" href="#231">231</a> <em class="jxr_javadoccomment">     * Obtains an instance of {@code JapaneseEra} from a date.</em>
-<a class="jxr_linenumber" name="232" href="#232">232</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="233" href="#233">233</a> <em class="jxr_javadoccomment">     * @param date  the date, not null</em>
-<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_javadoccomment">     * @return the Era singleton, never null</em>
-<a class="jxr_linenumber" name="235" href="#235">235</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="236" href="#236">236</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> from(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
-<a class="jxr_linenumber" name="237" href="#237">237</a>         <strong class="jxr_keyword">if</strong> (date.isBefore(MEIJI.since)) {
-<a class="jxr_linenumber" name="238" href="#238">238</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Date too early: "</span> + date);
-<a class="jxr_linenumber" name="239" href="#239">239</a>         }
-<a class="jxr_linenumber" name="240" href="#240">240</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = KNOWN_ERAS.length - 1; i &gt;= 0; i--) {
-<a class="jxr_linenumber" name="241" href="#241">241</a>             <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> era = KNOWN_ERAS[i];
-<a class="jxr_linenumber" name="242" href="#242">242</a>             <strong class="jxr_keyword">if</strong> (date.compareTo(era.since) &gt;= 0) {
-<a class="jxr_linenumber" name="243" href="#243">243</a>                 <strong class="jxr_keyword">return</strong> era;
-<a class="jxr_linenumber" name="244" href="#244">244</a>             }
-<a class="jxr_linenumber" name="245" href="#245">245</a>         }
-<a class="jxr_linenumber" name="246" href="#246">246</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="247" href="#247">247</a>     }
-<a class="jxr_linenumber" name="248" href="#248">248</a> 
-<a class="jxr_linenumber" name="249" href="#249">249</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> toJapaneseEra(sun.util.calendar.Era privateEra) {
-<a class="jxr_linenumber" name="250" href="#250">250</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = ERA_CONFIG.length - 1; i &gt;= 0; i--) {
-<a class="jxr_linenumber" name="251" href="#251">251</a>             <strong class="jxr_keyword">if</strong> (ERA_CONFIG[i].equals(privateEra)) {
-<a class="jxr_linenumber" name="252" href="#252">252</a>                 <strong class="jxr_keyword">return</strong> KNOWN_ERAS[i];
-<a class="jxr_linenumber" name="253" href="#253">253</a>             }
-<a class="jxr_linenumber" name="254" href="#254">254</a>         }
-<a class="jxr_linenumber" name="255" href="#255">255</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="256" href="#256">256</a>     }
-<a class="jxr_linenumber" name="257" href="#257">257</a> 
-<a class="jxr_linenumber" name="258" href="#258">258</a>     <strong class="jxr_keyword">static</strong> sun.util.calendar.Era privateEraFrom(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> isoDate) {
-<a class="jxr_linenumber" name="259" href="#259">259</a>         <strong class="jxr_keyword">if</strong> (isoDate.isBefore(MEIJI.since)) {
-<a class="jxr_linenumber" name="260" href="#260">260</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Date too early: "</span> + isoDate);
-<a class="jxr_linenumber" name="261" href="#261">261</a>         }
-<a class="jxr_linenumber" name="262" href="#262">262</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = KNOWN_ERAS.length - 1; i &gt;= 0; i--) {
-<a class="jxr_linenumber" name="263" href="#263">263</a>             <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> era = KNOWN_ERAS[i];
-<a class="jxr_linenumber" name="264" href="#264">264</a>             <strong class="jxr_keyword">if</strong> (isoDate.compareTo(era.since) &gt;= 0) {
-<a class="jxr_linenumber" name="265" href="#265">265</a>                 <strong class="jxr_keyword">return</strong> ERA_CONFIG[i];
-<a class="jxr_linenumber" name="266" href="#266">266</a>             }
-<a class="jxr_linenumber" name="267" href="#267">267</a>         }
-<a class="jxr_linenumber" name="268" href="#268">268</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="269" href="#269">269</a>     }
-<a class="jxr_linenumber" name="270" href="#270">270</a> 
-<a class="jxr_linenumber" name="271" href="#271">271</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="272" href="#272">272</a> <em class="jxr_javadoccomment">     * Returns the index into the arrays from the Era value.</em>
-<a class="jxr_linenumber" name="273" href="#273">273</a> <em class="jxr_javadoccomment">     * the eraValue is a valid Era number, -999, -1..2.</em>
-<a class="jxr_linenumber" name="274" href="#274">274</a> <em class="jxr_javadoccomment">     * @param eraValue the era value to convert to the index</em>
-<a class="jxr_linenumber" name="275" href="#275">275</a> <em class="jxr_javadoccomment">     * @return the index of the current Era</em>
-<a class="jxr_linenumber" name="276" href="#276">276</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="277" href="#277">277</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> ordinal(<strong class="jxr_keyword">int</strong> eraValue) {
-<a class="jxr_linenumber" name="278" href="#278">278</a>         <strong class="jxr_keyword">return</strong> eraValue + ERA_OFFSET - 1;
-<a class="jxr_linenumber" name="279" href="#279">279</a>     }
-<a class="jxr_linenumber" name="280" href="#280">280</a> 
-<a class="jxr_linenumber" name="281" href="#281">281</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="282" href="#282">282</a> <em class="jxr_javadoccomment">     * Returns the start date of the era.</em>
-<a class="jxr_linenumber" name="283" href="#283">283</a> <em class="jxr_javadoccomment">     * @return the start date</em>
-<a class="jxr_linenumber" name="284" href="#284">284</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="285" href="#285">285</a>     <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> startDate() {
-<a class="jxr_linenumber" name="286" href="#286">286</a>         <strong class="jxr_keyword">return</strong> since;
-<a class="jxr_linenumber" name="287" href="#287">287</a>     }
-<a class="jxr_linenumber" name="288" href="#288">288</a> 
-<a class="jxr_linenumber" name="289" href="#289">289</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="290" href="#290">290</a> <em class="jxr_javadoccomment">     * Returns the start date of the era.</em>
-<a class="jxr_linenumber" name="291" href="#291">291</a> <em class="jxr_javadoccomment">     * @return the start date</em>
-<a class="jxr_linenumber" name="292" href="#292">292</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="293" href="#293">293</a>     <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> endDate() {
-<a class="jxr_linenumber" name="294" href="#294">294</a>         <strong class="jxr_keyword">int</strong> ordinal = ordinal(eraValue);
-<a class="jxr_linenumber" name="295" href="#295">295</a>         <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a>[] eras = values();
-<a class="jxr_linenumber" name="296" href="#296">296</a>         <strong class="jxr_keyword">if</strong> (ordinal &gt;= eras.length - 1) {
-<a class="jxr_linenumber" name="297" href="#297">297</a>             <strong class="jxr_keyword">return</strong> LocalDate.MAX;
-<a class="jxr_linenumber" name="298" href="#298">298</a>         }
-<a class="jxr_linenumber" name="299" href="#299">299</a>         <strong class="jxr_keyword">return</strong> eras[ordinal + 1].startDate().minusDays(1);
-<a class="jxr_linenumber" name="300" href="#300">300</a>     }
-<a class="jxr_linenumber" name="301" href="#301">301</a> 
-<a class="jxr_linenumber" name="302" href="#302">302</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="303" href="#303">303</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="304" href="#304">304</a> <em class="jxr_javadoccomment">     * Returns the numeric value of this {@code JapaneseEra}.</em>
-<a class="jxr_linenumber" name="305" href="#305">305</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="306" href="#306">306</a> <em class="jxr_javadoccomment">     * The {@link #SHOWA} era that contains 1970-01-01 (ISO calendar system) has the value 1.</em>
-<a class="jxr_linenumber" name="307" href="#307">307</a> <em class="jxr_javadoccomment">     * Later eras are numbered from 2 ({@link #HEISEI}).</em>
-<a class="jxr_linenumber" name="308" href="#308">308</a> <em class="jxr_javadoccomment">     * Earlier eras are numbered 0 ({@link #TAISHO}), -1 ({@link #MEIJI}), and -999 ({@link #SEIREKI}).</em>
-<a class="jxr_linenumber" name="309" href="#309">309</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="310" href="#310">310</a> <em class="jxr_javadoccomment">     * @return the era value</em>
-<a class="jxr_linenumber" name="311" href="#311">311</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="312" href="#312">312</a>     @Override
-<a class="jxr_linenumber" name="313" href="#313">313</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getValue() {
-<a class="jxr_linenumber" name="314" href="#314">314</a>         <strong class="jxr_keyword">return</strong> eraValue;
-<a class="jxr_linenumber" name="315" href="#315">315</a>     }
-<a class="jxr_linenumber" name="316" href="#316">316</a> 
-<a class="jxr_linenumber" name="317" href="#317">317</a>     @Override
-<a class="jxr_linenumber" name="318" href="#318">318</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range(<a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field) {
-<a class="jxr_linenumber" name="319" href="#319">319</a>         <strong class="jxr_keyword">if</strong> (field == ChronoField.ERA) {
-<a class="jxr_linenumber" name="320" href="#320">320</a>             <strong class="jxr_keyword">return</strong> JapaneseChronology.INSTANCE.range(ChronoField.ERA);
-<a class="jxr_linenumber" name="321" href="#321">321</a>         }
-<a class="jxr_linenumber" name="322" href="#322">322</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.range(field);
-<a class="jxr_linenumber" name="323" href="#323">323</a>     }
-<a class="jxr_linenumber" name="324" href="#324">324</a> 
-<a class="jxr_linenumber" name="325" href="#325">325</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="326" href="#326">326</a>     String getAbbreviation() {
-<a class="jxr_linenumber" name="327" href="#327">327</a>         <strong class="jxr_keyword">int</strong> index = ordinal(getValue());
-<a class="jxr_linenumber" name="328" href="#328">328</a>         <strong class="jxr_keyword">if</strong> (index == 0) {
-<a class="jxr_linenumber" name="329" href="#329">329</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="330" href="#330">330</a>         }
-<a class="jxr_linenumber" name="331" href="#331">331</a>         <strong class="jxr_keyword">return</strong> ERA_CONFIG[index].getAbbreviation();
-<a class="jxr_linenumber" name="332" href="#332">332</a>     }
-<a class="jxr_linenumber" name="333" href="#333">333</a> 
-<a class="jxr_linenumber" name="334" href="#334">334</a>     String getName() {
-<a class="jxr_linenumber" name="335" href="#335">335</a>         <strong class="jxr_keyword">int</strong> index = ordinal(getValue());
-<a class="jxr_linenumber" name="336" href="#336">336</a>         <strong class="jxr_keyword">return</strong> ERA_CONFIG[index].getName();
-<a class="jxr_linenumber" name="337" href="#337">337</a>     }
-<a class="jxr_linenumber" name="338" href="#338">338</a> 
-<a class="jxr_linenumber" name="339" href="#339">339</a>     @Override
-<a class="jxr_linenumber" name="340" href="#340">340</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="341" href="#341">341</a>         <strong class="jxr_keyword">return</strong> getName();
-<a class="jxr_linenumber" name="342" href="#342">342</a>     }
-<a class="jxr_linenumber" name="343" href="#343">343</a> 
-<a class="jxr_linenumber" name="344" href="#344">344</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="345" href="#345">345</a>     <strong class="jxr_keyword">private</strong> Object writeReplace() {
-<a class="jxr_linenumber" name="346" href="#346">346</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/Ser.html">Ser</a>(Ser.JAPANESE_ERA_TYPE, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="347" href="#347">347</a>     }
-<a class="jxr_linenumber" name="348" href="#348">348</a> 
-<a class="jxr_linenumber" name="349" href="#349">349</a>     <strong class="jxr_keyword">void</strong> writeExternal(DataOutput out) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="350" href="#350">350</a>         out.writeByte(<strong class="jxr_keyword">this</strong>.getValue());
-<a class="jxr_linenumber" name="351" href="#351">351</a>     }
-<a class="jxr_linenumber" name="352" href="#352">352</a> 
-<a class="jxr_linenumber" name="353" href="#353">353</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> readExternal(DataInput in) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="354" href="#354">354</a>         byte eraValue = in.readByte();
-<a class="jxr_linenumber" name="355" href="#355">355</a>         <strong class="jxr_keyword">return</strong> JapaneseEra.of(eraValue);
-<a class="jxr_linenumber" name="356" href="#356">356</a>     }
-<a class="jxr_linenumber" name="357" href="#357">357</a> 
-<a class="jxr_linenumber" name="358" href="#358">358</a> }
+<a class="jxr_linenumber" name="168" href="#168">168</a> <em class="jxr_javadoccomment">     * @return the Sun private Era instance for this {@code JapaneseEra}</em>
+<a class="jxr_linenumber" name="169" href="#169">169</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="170" href="#170">170</a>     sun.util.calendar.Era getPrivateEra() {
+<a class="jxr_linenumber" name="171" href="#171">171</a>         <strong class="jxr_keyword">return</strong> ERA_CONFIG[ordinal(eraValue)];
+<a class="jxr_linenumber" name="172" href="#172">172</a>     }
+<a class="jxr_linenumber" name="173" href="#173">173</a> 
+<a class="jxr_linenumber" name="174" href="#174">174</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="175" href="#175">175</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     * Obtains an instance of {@code JapaneseEra} from an {@code int} value.</em>
+<a class="jxr_linenumber" name="177" href="#177">177</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="178" href="#178">178</a> <em class="jxr_javadoccomment">     * The {@link #SHOWA} era that contains 1970-01-01 (ISO calendar system) has the value 1</em>
+<a class="jxr_linenumber" name="179" href="#179">179</a> <em class="jxr_javadoccomment">     * Later era is numbered 2 ({@link #HEISEI}). Earlier eras are numbered 0 ({@link #TAISHO}),</em>
+<a class="jxr_linenumber" name="180" href="#180">180</a> <em class="jxr_javadoccomment">     * -1 ({@link #MEIJI}), only Meiji and later eras are supported.</em>
+<a class="jxr_linenumber" name="181" href="#181">181</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="182" href="#182">182</a> <em class="jxr_javadoccomment">     * @param japaneseEra  the era to represent</em>
+<a class="jxr_linenumber" name="183" href="#183">183</a> <em class="jxr_javadoccomment">     * @return the {@code JapaneseEra} singleton, not null</em>
+<a class="jxr_linenumber" name="184" href="#184">184</a> <em class="jxr_javadoccomment">     * @throws DateTimeException if the value is invalid</em>
+<a class="jxr_linenumber" name="185" href="#185">185</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="186" href="#186">186</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> of(<strong class="jxr_keyword">int</strong> japaneseEra) {
+<a class="jxr_linenumber" name="187" href="#187">187</a>         <strong class="jxr_keyword">if</strong> (japaneseEra &lt; MEIJI.eraValue || japaneseEra + ERA_OFFSET - 1 &gt;= KNOWN_ERAS.length) {
+<a class="jxr_linenumber" name="188" href="#188">188</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"japaneseEra is invalid"</span>);
+<a class="jxr_linenumber" name="189" href="#189">189</a>         }
+<a class="jxr_linenumber" name="190" href="#190">190</a>         <strong class="jxr_keyword">return</strong> KNOWN_ERAS[ordinal(japaneseEra)];
+<a class="jxr_linenumber" name="191" href="#191">191</a>     }
+<a class="jxr_linenumber" name="192" href="#192">192</a> 
+<a class="jxr_linenumber" name="193" href="#193">193</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="194" href="#194">194</a> <em class="jxr_javadoccomment">     * Returns the {@code JapaneseEra} with the name.</em>
+<a class="jxr_linenumber" name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="196" href="#196">196</a> <em class="jxr_javadoccomment">     * The string must match exactly the name of the era.</em>
+<a class="jxr_linenumber" name="197" href="#197">197</a> <em class="jxr_javadoccomment">     * (Extraneous whitespace characters are not permitted.)</em>
+<a class="jxr_linenumber" name="198" href="#198">198</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="199" href="#199">199</a> <em class="jxr_javadoccomment">     * @param japaneseEra  the japaneseEra name; non-null</em>
+<a class="jxr_linenumber" name="200" href="#200">200</a> <em class="jxr_javadoccomment">     * @return the {@code JapaneseEra} singleton, never null</em>
+<a class="jxr_linenumber" name="201" href="#201">201</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException if there is not JapaneseEra with the specified name</em>
+<a class="jxr_linenumber" name="202" href="#202">202</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="203" href="#203">203</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> valueOf(String japaneseEra) {
+<a class="jxr_linenumber" name="204" href="#204">204</a>         Jdk8Methods.requireNonNull(japaneseEra, <span class="jxr_string">"japaneseEra"</span>);
+<a class="jxr_linenumber" name="205" href="#205">205</a>         <strong class="jxr_keyword">for</strong> (JapaneseEra era : KNOWN_ERAS) {
+<a class="jxr_linenumber" name="206" href="#206">206</a>             <strong class="jxr_keyword">if</strong> (japaneseEra.equals(era.getName())) {
+<a class="jxr_linenumber" name="207" href="#207">207</a>                 <strong class="jxr_keyword">return</strong> era;
+<a class="jxr_linenumber" name="208" href="#208">208</a>             }
+<a class="jxr_linenumber" name="209" href="#209">209</a>         }
+<a class="jxr_linenumber" name="210" href="#210">210</a>         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Era not found: "</span> + japaneseEra);
+<a class="jxr_linenumber" name="211" href="#211">211</a>     }
+<a class="jxr_linenumber" name="212" href="#212">212</a> 
+<a class="jxr_linenumber" name="213" href="#213">213</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * Returns an array of JapaneseEras.</em>
+<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="216" href="#216">216</a> <em class="jxr_javadoccomment">     * This method may be used to iterate over the JapaneseEras as follows:</em>
+<a class="jxr_linenumber" name="217" href="#217">217</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="218" href="#218">218</a> <em class="jxr_javadoccomment">     * for (JapaneseEra c : JapaneseEra.values())</em>
+<a class="jxr_linenumber" name="219" href="#219">219</a> <em class="jxr_javadoccomment">     *     System.out.println(c);</em>
+<a class="jxr_linenumber" name="220" href="#220">220</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="221" href="#221">221</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_javadoccomment">     * @return an array of JapaneseEras</em>
+<a class="jxr_linenumber" name="223" href="#223">223</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="224" href="#224">224</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a>[] values() {
+<a class="jxr_linenumber" name="225" href="#225">225</a>         <strong class="jxr_keyword">return</strong> Arrays.copyOf(KNOWN_ERAS, KNOWN_ERAS.length);
+<a class="jxr_linenumber" name="226" href="#226">226</a>     }
+<a class="jxr_linenumber" name="227" href="#227">227</a> 
+<a class="jxr_linenumber" name="228" href="#228">228</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="229" href="#229">229</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="230" href="#230">230</a> <em class="jxr_javadoccomment">     * Obtains an instance of {@code JapaneseEra} from a date.</em>
+<a class="jxr_linenumber" name="231" href="#231">231</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="232" href="#232">232</a> <em class="jxr_javadoccomment">     * @param date  the date, not null</em>
+<a class="jxr_linenumber" name="233" href="#233">233</a> <em class="jxr_javadoccomment">     * @return the Era singleton, never null</em>
+<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="235" href="#235">235</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> from(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> date) {
+<a class="jxr_linenumber" name="236" href="#236">236</a>         <strong class="jxr_keyword">if</strong> (date.isBefore(MEIJI.since)) {
+<a class="jxr_linenumber" name="237" href="#237">237</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Date too early: "</span> + date);
+<a class="jxr_linenumber" name="238" href="#238">238</a>         }
+<a class="jxr_linenumber" name="239" href="#239">239</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = KNOWN_ERAS.length - 1; i &gt;= 0; i--) {
+<a class="jxr_linenumber" name="240" href="#240">240</a>             <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> era = KNOWN_ERAS[i];
+<a class="jxr_linenumber" name="241" href="#241">241</a>             <strong class="jxr_keyword">if</strong> (date.compareTo(era.since) &gt;= 0) {
+<a class="jxr_linenumber" name="242" href="#242">242</a>                 <strong class="jxr_keyword">return</strong> era;
+<a class="jxr_linenumber" name="243" href="#243">243</a>             }
+<a class="jxr_linenumber" name="244" href="#244">244</a>         }
+<a class="jxr_linenumber" name="245" href="#245">245</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="246" href="#246">246</a>     }
+<a class="jxr_linenumber" name="247" href="#247">247</a> 
+<a class="jxr_linenumber" name="248" href="#248">248</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> toJapaneseEra(sun.util.calendar.Era privateEra) {
+<a class="jxr_linenumber" name="249" href="#249">249</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = ERA_CONFIG.length - 1; i &gt;= 0; i--) {
+<a class="jxr_linenumber" name="250" href="#250">250</a>             <strong class="jxr_keyword">if</strong> (ERA_CONFIG[i].equals(privateEra)) {
+<a class="jxr_linenumber" name="251" href="#251">251</a>                 <strong class="jxr_keyword">return</strong> KNOWN_ERAS[i];
+<a class="jxr_linenumber" name="252" href="#252">252</a>             }
+<a class="jxr_linenumber" name="253" href="#253">253</a>         }
+<a class="jxr_linenumber" name="254" href="#254">254</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="255" href="#255">255</a>     }
+<a class="jxr_linenumber" name="256" href="#256">256</a> 
+<a class="jxr_linenumber" name="257" href="#257">257</a>     <strong class="jxr_keyword">static</strong> sun.util.calendar.Era privateEraFrom(<a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> isoDate) {
+<a class="jxr_linenumber" name="258" href="#258">258</a>         <strong class="jxr_keyword">if</strong> (isoDate.isBefore(MEIJI.since)) {
+<a class="jxr_linenumber" name="259" href="#259">259</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/DateTimeException.html">DateTimeException</a>(<span class="jxr_string">"Date too early: "</span> + isoDate);
+<a class="jxr_linenumber" name="260" href="#260">260</a>         }
+<a class="jxr_linenumber" name="261" href="#261">261</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = KNOWN_ERAS.length - 1; i &gt;= 0; i--) {
+<a class="jxr_linenumber" name="262" href="#262">262</a>             <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> era = KNOWN_ERAS[i];
+<a class="jxr_linenumber" name="263" href="#263">263</a>             <strong class="jxr_keyword">if</strong> (isoDate.compareTo(era.since) &gt;= 0) {
+<a class="jxr_linenumber" name="264" href="#264">264</a>                 <strong class="jxr_keyword">return</strong> ERA_CONFIG[i];
+<a class="jxr_linenumber" name="265" href="#265">265</a>             }
+<a class="jxr_linenumber" name="266" href="#266">266</a>         }
+<a class="jxr_linenumber" name="267" href="#267">267</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="268" href="#268">268</a>     }
+<a class="jxr_linenumber" name="269" href="#269">269</a> 
+<a class="jxr_linenumber" name="270" href="#270">270</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="271" href="#271">271</a> <em class="jxr_javadoccomment">     * Returns the index into the arrays from the Era value.</em>
+<a class="jxr_linenumber" name="272" href="#272">272</a> <em class="jxr_javadoccomment">     * the eraValue is a valid Era number, -999, -1..2.</em>
+<a class="jxr_linenumber" name="273" href="#273">273</a> <em class="jxr_javadoccomment">     * @param eraValue the era value to convert to the index</em>
+<a class="jxr_linenumber" name="274" href="#274">274</a> <em class="jxr_javadoccomment">     * @return the index of the current Era</em>
+<a class="jxr_linenumber" name="275" href="#275">275</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="276" href="#276">276</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> ordinal(<strong class="jxr_keyword">int</strong> eraValue) {
+<a class="jxr_linenumber" name="277" href="#277">277</a>         <strong class="jxr_keyword">return</strong> eraValue + ERA_OFFSET - 1;
+<a class="jxr_linenumber" name="278" href="#278">278</a>     }
+<a class="jxr_linenumber" name="279" href="#279">279</a> 
+<a class="jxr_linenumber" name="280" href="#280">280</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="281" href="#281">281</a> <em class="jxr_javadoccomment">     * Returns the start date of the era.</em>
+<a class="jxr_linenumber" name="282" href="#282">282</a> <em class="jxr_javadoccomment">     * @return the start date</em>
+<a class="jxr_linenumber" name="283" href="#283">283</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="284" href="#284">284</a>     <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> startDate() {
+<a class="jxr_linenumber" name="285" href="#285">285</a>         <strong class="jxr_keyword">return</strong> since;
+<a class="jxr_linenumber" name="286" href="#286">286</a>     }
+<a class="jxr_linenumber" name="287" href="#287">287</a> 
+<a class="jxr_linenumber" name="288" href="#288">288</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="289" href="#289">289</a> <em class="jxr_javadoccomment">     * Returns the start date of the era.</em>
+<a class="jxr_linenumber" name="290" href="#290">290</a> <em class="jxr_javadoccomment">     * @return the start date</em>
+<a class="jxr_linenumber" name="291" href="#291">291</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="292" href="#292">292</a>     <a href="../../../../org/threeten/bp/LocalDate.html">LocalDate</a> endDate() {
+<a class="jxr_linenumber" name="293" href="#293">293</a>         <strong class="jxr_keyword">int</strong> ordinal = ordinal(eraValue);
+<a class="jxr_linenumber" name="294" href="#294">294</a>         <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a>[] eras = values();
+<a class="jxr_linenumber" name="295" href="#295">295</a>         <strong class="jxr_keyword">if</strong> (ordinal &gt;= eras.length - 1) {
+<a class="jxr_linenumber" name="296" href="#296">296</a>             <strong class="jxr_keyword">return</strong> LocalDate.MAX;
+<a class="jxr_linenumber" name="297" href="#297">297</a>         }
+<a class="jxr_linenumber" name="298" href="#298">298</a>         <strong class="jxr_keyword">return</strong> eras[ordinal + 1].startDate().minusDays(1);
+<a class="jxr_linenumber" name="299" href="#299">299</a>     }
+<a class="jxr_linenumber" name="300" href="#300">300</a> 
+<a class="jxr_linenumber" name="301" href="#301">301</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="302" href="#302">302</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="303" href="#303">303</a> <em class="jxr_javadoccomment">     * Returns the numeric value of this {@code JapaneseEra}.</em>
+<a class="jxr_linenumber" name="304" href="#304">304</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="305" href="#305">305</a> <em class="jxr_javadoccomment">     * The {@link #SHOWA} era that contains 1970-01-01 (ISO calendar system) has the value 1.</em>
+<a class="jxr_linenumber" name="306" href="#306">306</a> <em class="jxr_javadoccomment">     * Later eras are numbered from 2 ({@link #HEISEI}).</em>
+<a class="jxr_linenumber" name="307" href="#307">307</a> <em class="jxr_javadoccomment">     * Earlier eras are numbered 0 ({@link #TAISHO}) and -1 ({@link #MEIJI}).</em>
+<a class="jxr_linenumber" name="308" href="#308">308</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="309" href="#309">309</a> <em class="jxr_javadoccomment">     * @return the era value</em>
+<a class="jxr_linenumber" name="310" href="#310">310</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="311" href="#311">311</a>     @Override
+<a class="jxr_linenumber" name="312" href="#312">312</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getValue() {
+<a class="jxr_linenumber" name="313" href="#313">313</a>         <strong class="jxr_keyword">return</strong> eraValue;
+<a class="jxr_linenumber" name="314" href="#314">314</a>     }
+<a class="jxr_linenumber" name="315" href="#315">315</a> 
+<a class="jxr_linenumber" name="316" href="#316">316</a>     @Override
+<a class="jxr_linenumber" name="317" href="#317">317</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/temporal/ValueRange.html">ValueRange</a> range(<a href="../../../../org/threeten/bp/temporal/TemporalField.html">TemporalField</a> field) {
+<a class="jxr_linenumber" name="318" href="#318">318</a>         <strong class="jxr_keyword">if</strong> (field == ChronoField.ERA) {
+<a class="jxr_linenumber" name="319" href="#319">319</a>             <strong class="jxr_keyword">return</strong> JapaneseChronology.INSTANCE.range(ChronoField.ERA);
+<a class="jxr_linenumber" name="320" href="#320">320</a>         }
+<a class="jxr_linenumber" name="321" href="#321">321</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.range(field);
+<a class="jxr_linenumber" name="322" href="#322">322</a>     }
+<a class="jxr_linenumber" name="323" href="#323">323</a> 
+<a class="jxr_linenumber" name="324" href="#324">324</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="325" href="#325">325</a>     String getAbbreviation() {
+<a class="jxr_linenumber" name="326" href="#326">326</a>         <strong class="jxr_keyword">int</strong> index = ordinal(getValue());
+<a class="jxr_linenumber" name="327" href="#327">327</a>         <strong class="jxr_keyword">if</strong> (index == 0) {
+<a class="jxr_linenumber" name="328" href="#328">328</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="329" href="#329">329</a>         }
+<a class="jxr_linenumber" name="330" href="#330">330</a>         <strong class="jxr_keyword">return</strong> ERA_CONFIG[index].getAbbreviation();
+<a class="jxr_linenumber" name="331" href="#331">331</a>     }
+<a class="jxr_linenumber" name="332" href="#332">332</a> 
+<a class="jxr_linenumber" name="333" href="#333">333</a>     String getName() {
+<a class="jxr_linenumber" name="334" href="#334">334</a>         <strong class="jxr_keyword">int</strong> index = ordinal(getValue());
+<a class="jxr_linenumber" name="335" href="#335">335</a>         <strong class="jxr_keyword">return</strong> ERA_CONFIG[index].getName();
+<a class="jxr_linenumber" name="336" href="#336">336</a>     }
+<a class="jxr_linenumber" name="337" href="#337">337</a> 
+<a class="jxr_linenumber" name="338" href="#338">338</a>     @Override
+<a class="jxr_linenumber" name="339" href="#339">339</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="340" href="#340">340</a>         <strong class="jxr_keyword">return</strong> getName();
+<a class="jxr_linenumber" name="341" href="#341">341</a>     }
+<a class="jxr_linenumber" name="342" href="#342">342</a> 
+<a class="jxr_linenumber" name="343" href="#343">343</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="344" href="#344">344</a>     <strong class="jxr_keyword">private</strong> Object writeReplace() {
+<a class="jxr_linenumber" name="345" href="#345">345</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/Ser.html">Ser</a>(Ser.JAPANESE_ERA_TYPE, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="346" href="#346">346</a>     }
+<a class="jxr_linenumber" name="347" href="#347">347</a> 
+<a class="jxr_linenumber" name="348" href="#348">348</a>     <strong class="jxr_keyword">void</strong> writeExternal(DataOutput out) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="349" href="#349">349</a>         out.writeByte(<strong class="jxr_keyword">this</strong>.getValue());
+<a class="jxr_linenumber" name="350" href="#350">350</a>     }
+<a class="jxr_linenumber" name="351" href="#351">351</a> 
+<a class="jxr_linenumber" name="352" href="#352">352</a>     <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/chrono/JapaneseEra.html">JapaneseEra</a> readExternal(DataInput in) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="353" href="#353">353</a>         byte eraValue = in.readByte();
+<a class="jxr_linenumber" name="354" href="#354">354</a>         <strong class="jxr_keyword">return</strong> JapaneseEra.of(eraValue);
+<a class="jxr_linenumber" name="355" href="#355">355</a>     }
+<a class="jxr_linenumber" name="356" href="#356">356</a> 
+<a class="jxr_linenumber" name="357" href="#357">357</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
