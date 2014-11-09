@@ -9,10 +9,6 @@ a[name]:before {
  height:0px;
  margin:0px;
 }
-/* Coloured navbar */
-.navbar-inner {
- background-color: #183552;
-}
 /* Blacker text */
 body {
  color: #222;
