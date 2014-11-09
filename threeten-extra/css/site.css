@@ -6,8 +6,12 @@ h4[id]:before,
 h5[id]:before,
 h6[id]:before,
 a[name]:before {
-    height:0px;
-    margin:0px;
+ height:0px;
+ margin:0px;
+}
+/* Coloured navbar */
+.navbar-inner {
+ background-color: #183552;
 }
 /* Blacker text */
 body {
@@ -21,27 +25,27 @@ code, pre {
 }
 /* Sidebar had too much padding at the top */
 .well {
-  padding-top: 6px;
-  padding-bottom: 36px;
+ padding-top: 6px;
+ padding-bottom: 36px;
 }
 /* Font Awesome icons by CSS as markdown class is stripped */
 h2 i {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+ display: inline-block;
+ font: normal normal normal 14px/1 FontAwesome;
+ font-size: inherit;
+ text-rendering: auto;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
 }
 h2#About i:before {
-  content: "\f015";
+ content: "\f015";
 }
 h2#Features i:before {
-  content: "\f0d0";
+ content: "\f0d0";
 }
 h2#Documentation i:before {
-  content: "\f19d";
+ content: "\f02d";
 }
 h2#Releases i:before {
-  content: "\f02c";
+ content: "\f02c";
 }
