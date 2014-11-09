@@ -114,7 +114,7 @@
 <a class="jxr_linenumber" name="104" href="#104">104</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="105" href="#105">105</a> <em class="jxr_javadoccomment">     * @return the current day-of-year using the system clock and default time-zone, not null</em>
 <a class="jxr_linenumber" name="106" href="#106">106</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="107" href="#107">107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Year now() {
+<a class="jxr_linenumber" name="107" href="#107">107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/extra/DayOfYear.html">DayOfYear</a> now() {
 <a class="jxr_linenumber" name="108" href="#108">108</a>         <strong class="jxr_keyword">return</strong> now(Clock.systemDefaultZone());
 <a class="jxr_linenumber" name="109" href="#109">109</a>     }
 <a class="jxr_linenumber" name="110" href="#110">110</a> 
@@ -130,7 +130,7 @@
 <a class="jxr_linenumber" name="120" href="#120">120</a> <em class="jxr_javadoccomment">     * @param zone  the zone ID to use, not null</em>
 <a class="jxr_linenumber" name="121" href="#121">121</a> <em class="jxr_javadoccomment">     * @return the current day-of-year using the system clock, not null</em>
 <a class="jxr_linenumber" name="122" href="#122">122</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="123" href="#123">123</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Year now(ZoneId zone) {
+<a class="jxr_linenumber" name="123" href="#123">123</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/extra/DayOfYear.html">DayOfYear</a> now(ZoneId zone) {
 <a class="jxr_linenumber" name="124" href="#124">124</a>         <strong class="jxr_keyword">return</strong> now(Clock.system(zone));
 <a class="jxr_linenumber" name="125" href="#125">125</a>     }
 <a class="jxr_linenumber" name="126" href="#126">126</a> 
@@ -144,9 +144,9 @@
 <a class="jxr_linenumber" name="134" href="#134">134</a> <em class="jxr_javadoccomment">     * @param clock  the clock to use, not null</em>
 <a class="jxr_linenumber" name="135" href="#135">135</a> <em class="jxr_javadoccomment">     * @return the current day-of-year, not null</em>
 <a class="jxr_linenumber" name="136" href="#136">136</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="137" href="#137">137</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Year now(Clock clock) {
+<a class="jxr_linenumber" name="137" href="#137">137</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../org/threeten/extra/DayOfYear.html">DayOfYear</a> now(Clock clock) {
 <a class="jxr_linenumber" name="138" href="#138">138</a>         <strong class="jxr_keyword">final</strong> LocalDate now = LocalDate.now(clock);  <em class="jxr_comment">// called once</em>
-<a class="jxr_linenumber" name="139" href="#139">139</a>         <strong class="jxr_keyword">return</strong> Year.of(now.getYear());
+<a class="jxr_linenumber" name="139" href="#139">139</a>         <strong class="jxr_keyword">return</strong> DayOfYear.of(now.getDayOfYear());
 <a class="jxr_linenumber" name="140" href="#140">140</a>     }
 <a class="jxr_linenumber" name="141" href="#141">141</a> 
 <a class="jxr_linenumber" name="142" href="#142">142</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
@@ -484,50 +484,51 @@
 <a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_javadoccomment">     * @param other  the other day-of-year instance, not null</em>
 <a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_javadoccomment">     * @return the comparator value, negative if less, positive if greater</em>
 <a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="477" href="#477">477</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../org/threeten/extra/DayOfYear.html">DayOfYear</a> other) {
-<a class="jxr_linenumber" name="478" href="#478">478</a>         <strong class="jxr_keyword">return</strong> day - other.day;
-<a class="jxr_linenumber" name="479" href="#479">479</a>     }
-<a class="jxr_linenumber" name="480" href="#480">480</a> 
-<a class="jxr_linenumber" name="481" href="#481">481</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="482" href="#482">482</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="483" href="#483">483</a> <em class="jxr_javadoccomment">     * Checks if this day-of-year is equal to another day-of-year.</em>
-<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">     * @param obj  the other day-of-year instance, null returns false</em>
-<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">     * @return true if the day-of-year is the same</em>
-<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="488" href="#488">488</a>     @Override
-<a class="jxr_linenumber" name="489" href="#489">489</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object obj) {
-<a class="jxr_linenumber" name="490" href="#490">490</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong> == obj) {
-<a class="jxr_linenumber" name="491" href="#491">491</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="492" href="#492">492</a>         }
-<a class="jxr_linenumber" name="493" href="#493">493</a>         <strong class="jxr_keyword">if</strong> (obj instanceof DayOfYear) {
-<a class="jxr_linenumber" name="494" href="#494">494</a>             <strong class="jxr_keyword">return</strong> day == ((DayOfYear) obj).day;
-<a class="jxr_linenumber" name="495" href="#495">495</a>         }
-<a class="jxr_linenumber" name="496" href="#496">496</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="497" href="#497">497</a>     }
-<a class="jxr_linenumber" name="498" href="#498">498</a> 
-<a class="jxr_linenumber" name="499" href="#499">499</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="500" href="#500">500</a> <em class="jxr_javadoccomment">     * A hash code for this day-of-year.</em>
-<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     * @return a suitable hash code</em>
-<a class="jxr_linenumber" name="503" href="#503">503</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="504" href="#504">504</a>     @Override
-<a class="jxr_linenumber" name="505" href="#505">505</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
-<a class="jxr_linenumber" name="506" href="#506">506</a>         <strong class="jxr_keyword">return</strong> day;
-<a class="jxr_linenumber" name="507" href="#507">507</a>     }
-<a class="jxr_linenumber" name="508" href="#508">508</a> 
-<a class="jxr_linenumber" name="509" href="#509">509</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="510" href="#510">510</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="511" href="#511">511</a> <em class="jxr_javadoccomment">     * Outputs this year as a {@code String}.</em>
-<a class="jxr_linenumber" name="512" href="#512">512</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="513" href="#513">513</a> <em class="jxr_javadoccomment">     * @return a string representation of this day-of-year, not null</em>
-<a class="jxr_linenumber" name="514" href="#514">514</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="515" href="#515">515</a>     @Override
-<a class="jxr_linenumber" name="516" href="#516">516</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="517" href="#517">517</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"DayOfYear:"</span> + day;
-<a class="jxr_linenumber" name="518" href="#518">518</a>     }
-<a class="jxr_linenumber" name="519" href="#519">519</a> 
-<a class="jxr_linenumber" name="520" href="#520">520</a> }
+<a class="jxr_linenumber" name="477" href="#477">477</a>     @Override
+<a class="jxr_linenumber" name="478" href="#478">478</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compareTo(<a href="../../../org/threeten/extra/DayOfYear.html">DayOfYear</a> other) {
+<a class="jxr_linenumber" name="479" href="#479">479</a>         <strong class="jxr_keyword">return</strong> day - other.day;
+<a class="jxr_linenumber" name="480" href="#480">480</a>     }
+<a class="jxr_linenumber" name="481" href="#481">481</a> 
+<a class="jxr_linenumber" name="482" href="#482">482</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="483" href="#483">483</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_javadoccomment">     * Checks if this day-of-year is equal to another day-of-year.</em>
+<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_javadoccomment">     * @param obj  the other day-of-year instance, null returns false</em>
+<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">     * @return true if the day-of-year is the same</em>
+<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="489" href="#489">489</a>     @Override
+<a class="jxr_linenumber" name="490" href="#490">490</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object obj) {
+<a class="jxr_linenumber" name="491" href="#491">491</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong> == obj) {
+<a class="jxr_linenumber" name="492" href="#492">492</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="493" href="#493">493</a>         }
+<a class="jxr_linenumber" name="494" href="#494">494</a>         <strong class="jxr_keyword">if</strong> (obj instanceof DayOfYear) {
+<a class="jxr_linenumber" name="495" href="#495">495</a>             <strong class="jxr_keyword">return</strong> day == ((DayOfYear) obj).day;
+<a class="jxr_linenumber" name="496" href="#496">496</a>         }
+<a class="jxr_linenumber" name="497" href="#497">497</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="498" href="#498">498</a>     }
+<a class="jxr_linenumber" name="499" href="#499">499</a> 
+<a class="jxr_linenumber" name="500" href="#500">500</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_javadoccomment">     * A hash code for this day-of-year.</em>
+<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="503" href="#503">503</a> <em class="jxr_javadoccomment">     * @return a suitable hash code</em>
+<a class="jxr_linenumber" name="504" href="#504">504</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="505" href="#505">505</a>     @Override
+<a class="jxr_linenumber" name="506" href="#506">506</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
+<a class="jxr_linenumber" name="507" href="#507">507</a>         <strong class="jxr_keyword">return</strong> day;
+<a class="jxr_linenumber" name="508" href="#508">508</a>     }
+<a class="jxr_linenumber" name="509" href="#509">509</a> 
+<a class="jxr_linenumber" name="510" href="#510">510</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="511" href="#511">511</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="512" href="#512">512</a> <em class="jxr_javadoccomment">     * Outputs this day-of-year as a {@code String}.</em>
+<a class="jxr_linenumber" name="513" href="#513">513</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="514" href="#514">514</a> <em class="jxr_javadoccomment">     * @return a string representation of this day-of-year, not null</em>
+<a class="jxr_linenumber" name="515" href="#515">515</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="516" href="#516">516</a>     @Override
+<a class="jxr_linenumber" name="517" href="#517">517</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="518" href="#518">518</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"DayOfYear:"</span> + day;
+<a class="jxr_linenumber" name="519" href="#519">519</a>     }
+<a class="jxr_linenumber" name="520" href="#520">520</a> 
+<a class="jxr_linenumber" name="521" href="#521">521</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
