@@ -3377,513 +3377,511 @@
 <a class="jxr_linenumber" name="3367" href="#3367">3367</a>                 buf.append(zone.getId());
 <a class="jxr_linenumber" name="3368" href="#3368">3368</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="3369" href="#3369">3369</a>             }
-<a class="jxr_linenumber" name="3370" href="#3370">3370</a>             Long epochSec = context.getTemporal().getLong(INSTANT_SECONDS);
-<a class="jxr_linenumber" name="3371" href="#3371">3371</a>             <a href="../../../../org/threeten/bp/Instant.html">Instant</a> instant;
-<a class="jxr_linenumber" name="3372" href="#3372">3372</a>             <strong class="jxr_keyword">if</strong> (epochSec != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3373" href="#3373">3373</a>                 instant = Instant.ofEpochSecond(epochSec);
-<a class="jxr_linenumber" name="3374" href="#3374">3374</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3375" href="#3375">3375</a>                 instant = Instant.ofEpochSecond(-200L * 365 * 86400);  <em class="jxr_comment">// about 1770</em>
-<a class="jxr_linenumber" name="3376" href="#3376">3376</a>             }
-<a class="jxr_linenumber" name="3377" href="#3377">3377</a>             TimeZone tz = TimeZone.getTimeZone(zone.getId());
-<a class="jxr_linenumber" name="3378" href="#3378">3378</a>             <strong class="jxr_keyword">boolean</strong> daylight = zone.getRules().isDaylightSavings(instant);
-<a class="jxr_linenumber" name="3379" href="#3379">3379</a>             <strong class="jxr_keyword">int</strong> tzstyle = (textStyle.asNormal() == TextStyle.FULL ? TimeZone.LONG : TimeZone.SHORT);
-<a class="jxr_linenumber" name="3380" href="#3380">3380</a>             String text = tz.getDisplayName(daylight, tzstyle, context.getLocale());
-<a class="jxr_linenumber" name="3381" href="#3381">3381</a>             buf.append(text);
-<a class="jxr_linenumber" name="3382" href="#3382">3382</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="3383" href="#3383">3383</a>         }
-<a class="jxr_linenumber" name="3384" href="#3384">3384</a> 
-<a class="jxr_linenumber" name="3385" href="#3385">3385</a>         @Override
-<a class="jxr_linenumber" name="3386" href="#3386">3386</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
-<a class="jxr_linenumber" name="3387" href="#3387">3387</a>             <em class="jxr_comment">// this is a poor implementation that handles some but not all of the spec</em>
-<a class="jxr_linenumber" name="3388" href="#3388">3388</a>             <em class="jxr_comment">// JDK8 has a lot of extra information here</em>
-<a class="jxr_linenumber" name="3389" href="#3389">3389</a>             Map&lt;String, String&gt; ids = <strong class="jxr_keyword">new</strong> TreeMap&lt;String, String&gt;(LENGTH_COMPARATOR);
-<a class="jxr_linenumber" name="3390" href="#3390">3390</a>             <strong class="jxr_keyword">for</strong> (String id : ZoneId.getAvailableZoneIds()) {
-<a class="jxr_linenumber" name="3391" href="#3391">3391</a>                 ids.put(id, id);
-<a class="jxr_linenumber" name="3392" href="#3392">3392</a>                 TimeZone tz = TimeZone.getTimeZone(id);
-<a class="jxr_linenumber" name="3393" href="#3393">3393</a>                 <strong class="jxr_keyword">int</strong> tzstyle = (textStyle.asNormal() == TextStyle.FULL ? TimeZone.LONG : TimeZone.SHORT);
-<a class="jxr_linenumber" name="3394" href="#3394">3394</a>                 ids.put(tz.getDisplayName(false, tzstyle, context.getLocale()), id);
-<a class="jxr_linenumber" name="3395" href="#3395">3395</a>                 ids.put(tz.getDisplayName(<strong class="jxr_keyword">true</strong>, tzstyle, context.getLocale()), id);
-<a class="jxr_linenumber" name="3396" href="#3396">3396</a>             }
-<a class="jxr_linenumber" name="3397" href="#3397">3397</a>             <strong class="jxr_keyword">for</strong> (Entry&lt;String, String&gt; entry : ids.entrySet()) {
-<a class="jxr_linenumber" name="3398" href="#3398">3398</a>                 String name = entry.getKey();
-<a class="jxr_linenumber" name="3399" href="#3399">3399</a>                 <strong class="jxr_keyword">if</strong> (context.subSequenceEquals(text, position, name, 0, name.length())) {
-<a class="jxr_linenumber" name="3400" href="#3400">3400</a>                     context.setParsed(ZoneId.of(entry.getValue()));
-<a class="jxr_linenumber" name="3401" href="#3401">3401</a>                     <strong class="jxr_keyword">return</strong> position + name.length();
-<a class="jxr_linenumber" name="3402" href="#3402">3402</a>                 }
-<a class="jxr_linenumber" name="3403" href="#3403">3403</a>             }
-<a class="jxr_linenumber" name="3404" href="#3404">3404</a>             <strong class="jxr_keyword">return</strong> ~position;
-<a class="jxr_linenumber" name="3405" href="#3405">3405</a>         }
-<a class="jxr_linenumber" name="3406" href="#3406">3406</a> 
-<a class="jxr_linenumber" name="3407" href="#3407">3407</a>         @Override
-<a class="jxr_linenumber" name="3408" href="#3408">3408</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="3409" href="#3409">3409</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">"ZoneText("</span> + textStyle + <span class="jxr_string">")"</span>;
-<a class="jxr_linenumber" name="3410" href="#3410">3410</a>         }
-<a class="jxr_linenumber" name="3411" href="#3411">3411</a>     }
-<a class="jxr_linenumber" name="3412" href="#3412">3412</a> 
-<a class="jxr_linenumber" name="3413" href="#3413">3413</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3414" href="#3414">3414</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3415" href="#3415">3415</a> <em class="jxr_javadoccomment">     * Prints or parses a zone ID.</em>
-<a class="jxr_linenumber" name="3416" href="#3416">3416</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="3417" href="#3417">3417</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ZoneIdPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
-<a class="jxr_linenumber" name="3418" href="#3418">3418</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> TemporalQuery&lt;ZoneId&gt; query;
-<a class="jxr_linenumber" name="3419" href="#3419">3419</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String description;
-<a class="jxr_linenumber" name="3420" href="#3420">3420</a> 
-<a class="jxr_linenumber" name="3421" href="#3421">3421</a>         <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ZoneIdPrinterParser</a>(TemporalQuery&lt;ZoneId&gt; query, String description) {
-<a class="jxr_linenumber" name="3422" href="#3422">3422</a>             <strong class="jxr_keyword">this</strong>.query = query;
-<a class="jxr_linenumber" name="3423" href="#3423">3423</a>             <strong class="jxr_keyword">this</strong>.description = description;
-<a class="jxr_linenumber" name="3424" href="#3424">3424</a>         }
-<a class="jxr_linenumber" name="3425" href="#3425">3425</a> 
-<a class="jxr_linenumber" name="3426" href="#3426">3426</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3427" href="#3427">3427</a>         @Override
-<a class="jxr_linenumber" name="3428" href="#3428">3428</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
-<a class="jxr_linenumber" name="3429" href="#3429">3429</a>             <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone = context.getValue(query);
-<a class="jxr_linenumber" name="3430" href="#3430">3430</a>             <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3431" href="#3431">3431</a>                 <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="3432" href="#3432">3432</a>             }
-<a class="jxr_linenumber" name="3433" href="#3433">3433</a>             buf.append(zone.getId());
-<a class="jxr_linenumber" name="3434" href="#3434">3434</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="3435" href="#3435">3435</a>         }
-<a class="jxr_linenumber" name="3436" href="#3436">3436</a> 
-<a class="jxr_linenumber" name="3437" href="#3437">3437</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3438" href="#3438">3438</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3439" href="#3439">3439</a> <em class="jxr_javadoccomment">         * The cached tree to speed up parsing.</em>
-<a class="jxr_linenumber" name="3440" href="#3440">3440</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="3441" href="#3441">3441</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">volatile</strong> Entry&lt;Integer, SubstringTree&gt; cachedSubstringTree;
-<a class="jxr_linenumber" name="3442" href="#3442">3442</a> 
-<a class="jxr_linenumber" name="3443" href="#3443">3443</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3444" href="#3444">3444</a> <em class="jxr_javadoccomment">         * This implementation looks for the longest matching string.</em>
-<a class="jxr_linenumber" name="3445" href="#3445">3445</a> <em class="jxr_javadoccomment">         * For example, parsing Etc/GMT-2 will return Etc/GMC-2 rather than just</em>
-<a class="jxr_linenumber" name="3446" href="#3446">3446</a> <em class="jxr_javadoccomment">         * Etc/GMC although both are valid.</em>
-<a class="jxr_linenumber" name="3447" href="#3447">3447</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="3448" href="#3448">3448</a> <em class="jxr_javadoccomment">         * This implementation uses a tree to search for valid time-zone names in</em>
-<a class="jxr_linenumber" name="3449" href="#3449">3449</a> <em class="jxr_javadoccomment">         * the parseText. The top level node of the tree has a length equal to the</em>
-<a class="jxr_linenumber" name="3450" href="#3450">3450</a> <em class="jxr_javadoccomment">         * length of the shortest time-zone as well as the beginning characters of</em>
-<a class="jxr_linenumber" name="3451" href="#3451">3451</a> <em class="jxr_javadoccomment">         * all other time-zones.</em>
-<a class="jxr_linenumber" name="3452" href="#3452">3452</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="3453" href="#3453">3453</a>         @Override
-<a class="jxr_linenumber" name="3454" href="#3454">3454</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
-<a class="jxr_linenumber" name="3455" href="#3455">3455</a>             <strong class="jxr_keyword">int</strong> length = text.length();
-<a class="jxr_linenumber" name="3456" href="#3456">3456</a>             <strong class="jxr_keyword">if</strong> (position &gt; length) {
-<a class="jxr_linenumber" name="3457" href="#3457">3457</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IndexOutOfBoundsException();
-<a class="jxr_linenumber" name="3458" href="#3458">3458</a>             }
-<a class="jxr_linenumber" name="3459" href="#3459">3459</a>             <strong class="jxr_keyword">if</strong> (position == length) {
-<a class="jxr_linenumber" name="3460" href="#3460">3460</a>                 <strong class="jxr_keyword">return</strong> ~position;
-<a class="jxr_linenumber" name="3461" href="#3461">3461</a>             }
-<a class="jxr_linenumber" name="3462" href="#3462">3462</a> 
-<a class="jxr_linenumber" name="3463" href="#3463">3463</a>             <em class="jxr_comment">// handle fixed time-zone IDs</em>
-<a class="jxr_linenumber" name="3464" href="#3464">3464</a>             <strong class="jxr_keyword">char</strong> nextChar = text.charAt(position);
-<a class="jxr_linenumber" name="3465" href="#3465">3465</a>             <strong class="jxr_keyword">if</strong> (nextChar == '+' || nextChar == '-') {
-<a class="jxr_linenumber" name="3466" href="#3466">3466</a>                 <a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> newContext = context.copy();
-<a class="jxr_linenumber" name="3467" href="#3467">3467</a>                 <strong class="jxr_keyword">int</strong> endPos = OffsetIdPrinterParser.INSTANCE_ID.parse(newContext, text, position);
-<a class="jxr_linenumber" name="3468" href="#3468">3468</a>                 <strong class="jxr_keyword">if</strong> (endPos &lt; 0) {
-<a class="jxr_linenumber" name="3469" href="#3469">3469</a>                     <strong class="jxr_keyword">return</strong> endPos;
-<a class="jxr_linenumber" name="3470" href="#3470">3470</a>                 }
-<a class="jxr_linenumber" name="3471" href="#3471">3471</a>                 <strong class="jxr_keyword">int</strong> offset = (<strong class="jxr_keyword">int</strong>) newContext.getParsed(OFFSET_SECONDS).longValue();
-<a class="jxr_linenumber" name="3472" href="#3472">3472</a>                 <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone = ZoneOffset.ofTotalSeconds(offset);
-<a class="jxr_linenumber" name="3473" href="#3473">3473</a>                 context.setParsed(zone);
-<a class="jxr_linenumber" name="3474" href="#3474">3474</a>                 <strong class="jxr_keyword">return</strong> endPos;
-<a class="jxr_linenumber" name="3475" href="#3475">3475</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (length &gt;= position + 2) {
-<a class="jxr_linenumber" name="3476" href="#3476">3476</a>                 <strong class="jxr_keyword">char</strong> nextNextChar = text.charAt(position + 1);
-<a class="jxr_linenumber" name="3477" href="#3477">3477</a>                 <strong class="jxr_keyword">if</strong> (context.charEquals(nextChar, 'U') &amp;&amp;
-<a class="jxr_linenumber" name="3478" href="#3478">3478</a>                                 context.charEquals(nextNextChar, 'T')) {
-<a class="jxr_linenumber" name="3479" href="#3479">3479</a>                     <strong class="jxr_keyword">if</strong> (length &gt;= position + 3 &amp;&amp;
-<a class="jxr_linenumber" name="3480" href="#3480">3480</a>                                     context.charEquals(text.charAt(position + 2), 'C')) {
-<a class="jxr_linenumber" name="3481" href="#3481">3481</a>                         <strong class="jxr_keyword">return</strong> parsePrefixedOffset(context, text, position, position + 3);
-<a class="jxr_linenumber" name="3482" href="#3482">3482</a>                     }
-<a class="jxr_linenumber" name="3483" href="#3483">3483</a>                     <strong class="jxr_keyword">return</strong> parsePrefixedOffset(context, text, position, position + 2);
-<a class="jxr_linenumber" name="3484" href="#3484">3484</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (context.charEquals(nextChar, 'G') &amp;&amp;
-<a class="jxr_linenumber" name="3485" href="#3485">3485</a>                         length &gt;= position + 3 &amp;&amp;
-<a class="jxr_linenumber" name="3486" href="#3486">3486</a>                         context.charEquals(nextNextChar, 'M') &amp;&amp;
-<a class="jxr_linenumber" name="3487" href="#3487">3487</a>                         context.charEquals(text.charAt(position + 2), 'T')) {
-<a class="jxr_linenumber" name="3488" href="#3488">3488</a>                     <strong class="jxr_keyword">return</strong> parsePrefixedOffset(context, text, position, position + 3);
-<a class="jxr_linenumber" name="3489" href="#3489">3489</a>                 }
-<a class="jxr_linenumber" name="3490" href="#3490">3490</a>             }
-<a class="jxr_linenumber" name="3491" href="#3491">3491</a> 
-<a class="jxr_linenumber" name="3492" href="#3492">3492</a>             <em class="jxr_comment">// prepare parse tree</em>
-<a class="jxr_linenumber" name="3493" href="#3493">3493</a>             Set&lt;String&gt; regionIds = ZoneRulesProvider.getAvailableZoneIds();
-<a class="jxr_linenumber" name="3494" href="#3494">3494</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> regionIdsSize = regionIds.size();
-<a class="jxr_linenumber" name="3495" href="#3495">3495</a>             Entry&lt;Integer, SubstringTree&gt; cached = cachedSubstringTree;
-<a class="jxr_linenumber" name="3496" href="#3496">3496</a>             <strong class="jxr_keyword">if</strong> (cached == <strong class="jxr_keyword">null</strong> || cached.getKey() != regionIdsSize) {
-<a class="jxr_linenumber" name="3497" href="#3497">3497</a>                 <strong class="jxr_keyword">synchronized</strong> (<strong class="jxr_keyword">this</strong>) {
-<a class="jxr_linenumber" name="3498" href="#3498">3498</a>                     cached = cachedSubstringTree;
-<a class="jxr_linenumber" name="3499" href="#3499">3499</a>                     <strong class="jxr_keyword">if</strong> (cached == <strong class="jxr_keyword">null</strong> || cached.getKey() != regionIdsSize) {
-<a class="jxr_linenumber" name="3500" href="#3500">3500</a>                         cachedSubstringTree = cached = <strong class="jxr_keyword">new</strong> SimpleImmutableEntry&lt;Integer, SubstringTree&gt;(regionIdsSize, prepareParser(regionIds));
-<a class="jxr_linenumber" name="3501" href="#3501">3501</a>                     }
-<a class="jxr_linenumber" name="3502" href="#3502">3502</a>                 }
-<a class="jxr_linenumber" name="3503" href="#3503">3503</a>             }
-<a class="jxr_linenumber" name="3504" href="#3504">3504</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> tree = cached.getValue();
-<a class="jxr_linenumber" name="3505" href="#3505">3505</a> 
-<a class="jxr_linenumber" name="3506" href="#3506">3506</a>             <em class="jxr_comment">// parse</em>
-<a class="jxr_linenumber" name="3507" href="#3507">3507</a>             String parsedZoneId = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="3508" href="#3508">3508</a>             String lastZoneId = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="3509" href="#3509">3509</a>             <strong class="jxr_keyword">while</strong> (tree != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3510" href="#3510">3510</a>                 <strong class="jxr_keyword">int</strong> nodeLength = tree.length;
-<a class="jxr_linenumber" name="3511" href="#3511">3511</a>                 <strong class="jxr_keyword">if</strong> (position + nodeLength &gt; length) {
-<a class="jxr_linenumber" name="3512" href="#3512">3512</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="3513" href="#3513">3513</a>                 }
-<a class="jxr_linenumber" name="3514" href="#3514">3514</a>                 lastZoneId = parsedZoneId;
-<a class="jxr_linenumber" name="3515" href="#3515">3515</a>                 parsedZoneId = text.subSequence(position, position + nodeLength).toString();
-<a class="jxr_linenumber" name="3516" href="#3516">3516</a>                 tree = tree.get(parsedZoneId, context.isCaseSensitive());
-<a class="jxr_linenumber" name="3517" href="#3517">3517</a>             }
-<a class="jxr_linenumber" name="3518" href="#3518">3518</a>             <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone = convertToZone(regionIds, parsedZoneId, context.isCaseSensitive());
-<a class="jxr_linenumber" name="3519" href="#3519">3519</a>             <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3520" href="#3520">3520</a>                 zone = convertToZone(regionIds, lastZoneId, context.isCaseSensitive());
-<a class="jxr_linenumber" name="3521" href="#3521">3521</a>                 <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3522" href="#3522">3522</a>                     <strong class="jxr_keyword">if</strong> (context.charEquals(nextChar, 'Z')) {
-<a class="jxr_linenumber" name="3523" href="#3523">3523</a>                         context.setParsed(ZoneOffset.UTC);
-<a class="jxr_linenumber" name="3524" href="#3524">3524</a>                         <strong class="jxr_keyword">return</strong> position + 1;
-<a class="jxr_linenumber" name="3525" href="#3525">3525</a>                     }
-<a class="jxr_linenumber" name="3526" href="#3526">3526</a>                     <strong class="jxr_keyword">return</strong> ~position;
-<a class="jxr_linenumber" name="3527" href="#3527">3527</a>                 }
-<a class="jxr_linenumber" name="3528" href="#3528">3528</a>                 parsedZoneId = lastZoneId;
-<a class="jxr_linenumber" name="3529" href="#3529">3529</a>             }
-<a class="jxr_linenumber" name="3530" href="#3530">3530</a>             context.setParsed(zone);
-<a class="jxr_linenumber" name="3531" href="#3531">3531</a>             <strong class="jxr_keyword">return</strong> position + parsedZoneId.length();
-<a class="jxr_linenumber" name="3532" href="#3532">3532</a>         }
-<a class="jxr_linenumber" name="3533" href="#3533">3533</a> 
-<a class="jxr_linenumber" name="3534" href="#3534">3534</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> convertToZone(Set&lt;String&gt; regionIds, String parsedZoneId, <strong class="jxr_keyword">boolean</strong> caseSensitive) {
-<a class="jxr_linenumber" name="3535" href="#3535">3535</a>             <strong class="jxr_keyword">if</strong> (parsedZoneId == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3536" href="#3536">3536</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="3537" href="#3537">3537</a>             }
-<a class="jxr_linenumber" name="3538" href="#3538">3538</a>             <strong class="jxr_keyword">if</strong> (caseSensitive) {
-<a class="jxr_linenumber" name="3539" href="#3539">3539</a>                 <strong class="jxr_keyword">return</strong> (regionIds.contains(parsedZoneId) ? ZoneId.of(parsedZoneId) : <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="3540" href="#3540">3540</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3541" href="#3541">3541</a>                 <strong class="jxr_keyword">for</strong> (String regionId : regionIds) {
-<a class="jxr_linenumber" name="3542" href="#3542">3542</a>                     <strong class="jxr_keyword">if</strong> (regionId.equalsIgnoreCase(parsedZoneId)) {
-<a class="jxr_linenumber" name="3543" href="#3543">3543</a>                         <strong class="jxr_keyword">return</strong> ZoneId.of(regionId);
-<a class="jxr_linenumber" name="3544" href="#3544">3544</a>                     }
-<a class="jxr_linenumber" name="3545" href="#3545">3545</a>                 }
-<a class="jxr_linenumber" name="3546" href="#3546">3546</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="3547" href="#3547">3547</a>             }
-<a class="jxr_linenumber" name="3548" href="#3548">3548</a>         }
-<a class="jxr_linenumber" name="3549" href="#3549">3549</a> 
-<a class="jxr_linenumber" name="3550" href="#3550">3550</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> parsePrefixedOffset(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> prefixPos, <strong class="jxr_keyword">int</strong> position) {
-<a class="jxr_linenumber" name="3551" href="#3551">3551</a>             String prefix = text.subSequence(prefixPos, position).toString().toUpperCase();
-<a class="jxr_linenumber" name="3552" href="#3552">3552</a>             <a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> newContext = context.copy();
-<a class="jxr_linenumber" name="3553" href="#3553">3553</a>             <strong class="jxr_keyword">if</strong> (position &lt; text.length() &amp;&amp; context.charEquals(text.charAt(position), 'Z')) {
-<a class="jxr_linenumber" name="3554" href="#3554">3554</a>                 context.setParsed(ZoneId.ofOffset(prefix, ZoneOffset.UTC));
-<a class="jxr_linenumber" name="3555" href="#3555">3555</a>                 <strong class="jxr_keyword">return</strong> position;
-<a class="jxr_linenumber" name="3556" href="#3556">3556</a>             }
-<a class="jxr_linenumber" name="3557" href="#3557">3557</a>             <strong class="jxr_keyword">int</strong> endPos = OffsetIdPrinterParser.INSTANCE_ID.parse(newContext, text, position);
-<a class="jxr_linenumber" name="3558" href="#3558">3558</a>             <strong class="jxr_keyword">if</strong> (endPos &lt; 0) {
-<a class="jxr_linenumber" name="3559" href="#3559">3559</a>                 context.setParsed(ZoneId.ofOffset(prefix, ZoneOffset.UTC));
-<a class="jxr_linenumber" name="3560" href="#3560">3560</a>                 <strong class="jxr_keyword">return</strong> position;
-<a class="jxr_linenumber" name="3561" href="#3561">3561</a>             }
-<a class="jxr_linenumber" name="3562" href="#3562">3562</a>             <strong class="jxr_keyword">int</strong> offsetSecs = (<strong class="jxr_keyword">int</strong>) newContext.getParsed(OFFSET_SECONDS).longValue();
-<a class="jxr_linenumber" name="3563" href="#3563">3563</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset = ZoneOffset.ofTotalSeconds(offsetSecs);
-<a class="jxr_linenumber" name="3564" href="#3564">3564</a>             context.setParsed(ZoneId.ofOffset(prefix, offset));
-<a class="jxr_linenumber" name="3565" href="#3565">3565</a>             <strong class="jxr_keyword">return</strong> endPos;
-<a class="jxr_linenumber" name="3566" href="#3566">3566</a>         }
-<a class="jxr_linenumber" name="3567" href="#3567">3567</a> 
-<a class="jxr_linenumber" name="3568" href="#3568">3568</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3569" href="#3569">3569</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3570" href="#3570">3570</a> <em class="jxr_javadoccomment">         * Model a tree of substrings to make the parsing easier. Due to the nature</em>
-<a class="jxr_linenumber" name="3571" href="#3571">3571</a> <em class="jxr_javadoccomment">         * of time-zone names, it can be faster to parse based in unique substrings</em>
-<a class="jxr_linenumber" name="3572" href="#3572">3572</a> <em class="jxr_javadoccomment">         * rather than just a character by character match.</em>
-<a class="jxr_linenumber" name="3573" href="#3573">3573</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="3574" href="#3574">3574</a> <em class="jxr_javadoccomment">         * For example, to parse America/Denver we can look at the first two</em>
-<a class="jxr_linenumber" name="3575" href="#3575">3575</a> <em class="jxr_javadoccomment">         * character "Am". We then notice that the shortest time-zone that starts</em>
-<a class="jxr_linenumber" name="3576" href="#3576">3576</a> <em class="jxr_javadoccomment">         * with Am is America/Nome which is 12 characters long. Checking the first</em>
-<a class="jxr_linenumber" name="3577" href="#3577">3577</a> <em class="jxr_javadoccomment">         * 12 characters of America/Denver gives America/Denv which is a substring</em>
-<a class="jxr_linenumber" name="3578" href="#3578">3578</a> <em class="jxr_javadoccomment">         * of only 1 time-zone: America/Denver. Thus, with just 3 comparisons that</em>
-<a class="jxr_linenumber" name="3579" href="#3579">3579</a> <em class="jxr_javadoccomment">         * match can be found.</em>
-<a class="jxr_linenumber" name="3580" href="#3580">3580</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="3581" href="#3581">3581</a> <em class="jxr_javadoccomment">         * This structure maps substrings to substrings of a longer length. Each</em>
-<a class="jxr_linenumber" name="3582" href="#3582">3582</a> <em class="jxr_javadoccomment">         * node of the tree contains a length and a map of valid substrings to</em>
-<a class="jxr_linenumber" name="3583" href="#3583">3583</a> <em class="jxr_javadoccomment">         * sub-nodes. The parser gets the length from the root node. It then</em>
-<a class="jxr_linenumber" name="3584" href="#3584">3584</a> <em class="jxr_javadoccomment">         * extracts a substring of that length from the parseText. If the map</em>
-<a class="jxr_linenumber" name="3585" href="#3585">3585</a> <em class="jxr_javadoccomment">         * contains the substring, it is set as the possible time-zone and the</em>
-<a class="jxr_linenumber" name="3586" href="#3586">3586</a> <em class="jxr_javadoccomment">         * sub-node for that substring is retrieved. The process continues until the</em>
-<a class="jxr_linenumber" name="3587" href="#3587">3587</a> <em class="jxr_javadoccomment">         * substring is no longer found, at which point the matched text is checked</em>
-<a class="jxr_linenumber" name="3588" href="#3588">3588</a> <em class="jxr_javadoccomment">         * against the real time-zones.</em>
-<a class="jxr_linenumber" name="3589" href="#3589">3589</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="3590" href="#3590">3590</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> {
-<a class="jxr_linenumber" name="3591" href="#3591">3591</a>             <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3592" href="#3592">3592</a> <em class="jxr_javadoccomment">             * The length of the substring this node of the tree contains.</em>
-<a class="jxr_linenumber" name="3593" href="#3593">3593</a> <em class="jxr_javadoccomment">             * Subtrees will have a longer length.</em>
-<a class="jxr_linenumber" name="3594" href="#3594">3594</a> <em class="jxr_javadoccomment">             */</em>
-<a class="jxr_linenumber" name="3595" href="#3595">3595</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length;
-<a class="jxr_linenumber" name="3596" href="#3596">3596</a>             <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3597" href="#3597">3597</a> <em class="jxr_javadoccomment">             * Map of a substring to a set of substrings that contain the key.</em>
-<a class="jxr_linenumber" name="3598" href="#3598">3598</a> <em class="jxr_javadoccomment">             */</em>
-<a class="jxr_linenumber" name="3599" href="#3599">3599</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;CharSequence, SubstringTree&gt; substringMap = <strong class="jxr_keyword">new</strong> HashMap&lt;CharSequence, SubstringTree&gt;();
-<a class="jxr_linenumber" name="3600" href="#3600">3600</a>             <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3601" href="#3601">3601</a> <em class="jxr_javadoccomment">             * Map of a substring to a set of substrings that contain the key.</em>
-<a class="jxr_linenumber" name="3602" href="#3602">3602</a> <em class="jxr_javadoccomment">             */</em>
-<a class="jxr_linenumber" name="3603" href="#3603">3603</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;String, SubstringTree&gt; substringMapCI = <strong class="jxr_keyword">new</strong> HashMap&lt;String, SubstringTree&gt;();
-<a class="jxr_linenumber" name="3604" href="#3604">3604</a> 
-<a class="jxr_linenumber" name="3605" href="#3605">3605</a>             <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3606" href="#3606">3606</a> <em class="jxr_javadoccomment">             * Constructor.</em>
-<a class="jxr_linenumber" name="3607" href="#3607">3607</a> <em class="jxr_javadoccomment">             *</em>
-<a class="jxr_linenumber" name="3608" href="#3608">3608</a> <em class="jxr_javadoccomment">             * @param length  the length of this tree</em>
-<a class="jxr_linenumber" name="3609" href="#3609">3609</a> <em class="jxr_javadoccomment">             */</em>
-<a class="jxr_linenumber" name="3610" href="#3610">3610</a>             <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a>(<strong class="jxr_keyword">int</strong> length) {
-<a class="jxr_linenumber" name="3611" href="#3611">3611</a>                 <strong class="jxr_keyword">this</strong>.length = length;
-<a class="jxr_linenumber" name="3612" href="#3612">3612</a>             }
-<a class="jxr_linenumber" name="3613" href="#3613">3613</a> 
-<a class="jxr_linenumber" name="3614" href="#3614">3614</a>             <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> get(CharSequence substring2, <strong class="jxr_keyword">boolean</strong> caseSensitive) {
-<a class="jxr_linenumber" name="3615" href="#3615">3615</a>                 <strong class="jxr_keyword">if</strong> (caseSensitive) {
-<a class="jxr_linenumber" name="3616" href="#3616">3616</a>                     <strong class="jxr_keyword">return</strong> substringMap.get(substring2);
-<a class="jxr_linenumber" name="3617" href="#3617">3617</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3618" href="#3618">3618</a>                     <strong class="jxr_keyword">return</strong> substringMapCI.get(substring2.toString().toLowerCase(Locale.ENGLISH));
-<a class="jxr_linenumber" name="3619" href="#3619">3619</a>                 }
-<a class="jxr_linenumber" name="3620" href="#3620">3620</a>             }
-<a class="jxr_linenumber" name="3621" href="#3621">3621</a> 
-<a class="jxr_linenumber" name="3622" href="#3622">3622</a>             <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3623" href="#3623">3623</a> <em class="jxr_javadoccomment">             * Values must be added from shortest to longest.</em>
-<a class="jxr_linenumber" name="3624" href="#3624">3624</a> <em class="jxr_javadoccomment">             *</em>
-<a class="jxr_linenumber" name="3625" href="#3625">3625</a> <em class="jxr_javadoccomment">             * @param newSubstring  the substring to add, not null</em>
-<a class="jxr_linenumber" name="3626" href="#3626">3626</a> <em class="jxr_javadoccomment">             */</em>
-<a class="jxr_linenumber" name="3627" href="#3627">3627</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> add(String newSubstring) {
-<a class="jxr_linenumber" name="3628" href="#3628">3628</a>                 <strong class="jxr_keyword">int</strong> idLen = newSubstring.length();
-<a class="jxr_linenumber" name="3629" href="#3629">3629</a>                 <strong class="jxr_keyword">if</strong> (idLen == length) {
-<a class="jxr_linenumber" name="3630" href="#3630">3630</a>                     substringMap.put(newSubstring, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="3631" href="#3631">3631</a>                     substringMapCI.put(newSubstring.toLowerCase(Locale.ENGLISH), <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="3632" href="#3632">3632</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (idLen &gt; length) {
-<a class="jxr_linenumber" name="3633" href="#3633">3633</a>                     String substring = newSubstring.substring(0, length);
-<a class="jxr_linenumber" name="3634" href="#3634">3634</a>                     <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> parserTree = substringMap.get(substring);
-<a class="jxr_linenumber" name="3635" href="#3635">3635</a>                     <strong class="jxr_keyword">if</strong> (parserTree == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3636" href="#3636">3636</a>                         parserTree = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a>(idLen);
-<a class="jxr_linenumber" name="3637" href="#3637">3637</a>                         substringMap.put(substring, parserTree);
-<a class="jxr_linenumber" name="3638" href="#3638">3638</a>                         substringMapCI.put(substring.toLowerCase(Locale.ENGLISH), parserTree);
-<a class="jxr_linenumber" name="3639" href="#3639">3639</a>                     }
-<a class="jxr_linenumber" name="3640" href="#3640">3640</a>                     parserTree.add(newSubstring);
-<a class="jxr_linenumber" name="3641" href="#3641">3641</a>                 }
-<a class="jxr_linenumber" name="3642" href="#3642">3642</a>             }
-<a class="jxr_linenumber" name="3643" href="#3643">3643</a>         }
-<a class="jxr_linenumber" name="3644" href="#3644">3644</a> 
-<a class="jxr_linenumber" name="3645" href="#3645">3645</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3646" href="#3646">3646</a> <em class="jxr_javadoccomment">         * Builds an optimized parsing tree.</em>
-<a class="jxr_linenumber" name="3647" href="#3647">3647</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="3648" href="#3648">3648</a> <em class="jxr_javadoccomment">         * @param availableIDs  the available IDs, not null, not empty</em>
-<a class="jxr_linenumber" name="3649" href="#3649">3649</a> <em class="jxr_javadoccomment">         * @return the tree, not null</em>
-<a class="jxr_linenumber" name="3650" href="#3650">3650</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="3651" href="#3651">3651</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> prepareParser(Set&lt;String&gt; availableIDs) {
-<a class="jxr_linenumber" name="3652" href="#3652">3652</a>             <em class="jxr_comment">// sort by length</em>
-<a class="jxr_linenumber" name="3653" href="#3653">3653</a>             List&lt;String&gt; ids = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(availableIDs);
-<a class="jxr_linenumber" name="3654" href="#3654">3654</a>             Collections.sort(ids, LENGTH_SORT);
-<a class="jxr_linenumber" name="3655" href="#3655">3655</a> 
-<a class="jxr_linenumber" name="3656" href="#3656">3656</a>             <em class="jxr_comment">// build the tree</em>
-<a class="jxr_linenumber" name="3657" href="#3657">3657</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> tree = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a>(ids.get(0).length());
-<a class="jxr_linenumber" name="3658" href="#3658">3658</a>             <strong class="jxr_keyword">for</strong> (String id : ids) {
-<a class="jxr_linenumber" name="3659" href="#3659">3659</a>                 tree.add(id);
-<a class="jxr_linenumber" name="3660" href="#3660">3660</a>             }
-<a class="jxr_linenumber" name="3661" href="#3661">3661</a>             <strong class="jxr_keyword">return</strong> tree;
-<a class="jxr_linenumber" name="3662" href="#3662">3662</a>         }
-<a class="jxr_linenumber" name="3663" href="#3663">3663</a> 
-<a class="jxr_linenumber" name="3664" href="#3664">3664</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3665" href="#3665">3665</a>         @Override
-<a class="jxr_linenumber" name="3666" href="#3666">3666</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="3667" href="#3667">3667</a>             <strong class="jxr_keyword">return</strong> description;
-<a class="jxr_linenumber" name="3668" href="#3668">3668</a>         }
-<a class="jxr_linenumber" name="3669" href="#3669">3669</a>     }
-<a class="jxr_linenumber" name="3670" href="#3670">3670</a> 
-<a class="jxr_linenumber" name="3671" href="#3671">3671</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3672" href="#3672">3672</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3673" href="#3673">3673</a> <em class="jxr_javadoccomment">     * Prints or parses a chronology.</em>
-<a class="jxr_linenumber" name="3674" href="#3674">3674</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="3675" href="#3675">3675</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ChronoPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
-<a class="jxr_linenumber" name="3676" href="#3676">3676</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The text style to output, null means the ID. */</em>
-<a class="jxr_linenumber" name="3677" href="#3677">3677</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/format/TextStyle.html">TextStyle</a> textStyle;
-<a class="jxr_linenumber" name="3678" href="#3678">3678</a> 
-<a class="jxr_linenumber" name="3679" href="#3679">3679</a>         <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ChronoPrinterParser</a>(<a href="../../../../org/threeten/bp/format/TextStyle.html">TextStyle</a> textStyle) {
-<a class="jxr_linenumber" name="3680" href="#3680">3680</a>             <em class="jxr_comment">// validated by caller</em>
-<a class="jxr_linenumber" name="3681" href="#3681">3681</a>             <strong class="jxr_keyword">this</strong>.textStyle = textStyle;
-<a class="jxr_linenumber" name="3682" href="#3682">3682</a>         }
-<a class="jxr_linenumber" name="3683" href="#3683">3683</a> 
-<a class="jxr_linenumber" name="3684" href="#3684">3684</a>         @Override
-<a class="jxr_linenumber" name="3685" href="#3685">3685</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
-<a class="jxr_linenumber" name="3686" href="#3686">3686</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = context.getValue(TemporalQueries.chronology());
-<a class="jxr_linenumber" name="3687" href="#3687">3687</a>             <strong class="jxr_keyword">if</strong> (chrono == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3688" href="#3688">3688</a>                 <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="3689" href="#3689">3689</a>             }
-<a class="jxr_linenumber" name="3690" href="#3690">3690</a>             <strong class="jxr_keyword">if</strong> (textStyle == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3691" href="#3691">3691</a>                 buf.append(chrono.getId());
-<a class="jxr_linenumber" name="3692" href="#3692">3692</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3693" href="#3693">3693</a>                 ResourceBundle bundle = ResourceBundle.getBundle(
-<a class="jxr_linenumber" name="3694" href="#3694">3694</a>                         <span class="jxr_string">"org.threeten.bp.format.ChronologyText"</span>, context.getLocale(), DateTimeFormatterBuilder.<strong class="jxr_keyword">class</strong>.getClassLoader());
-<a class="jxr_linenumber" name="3695" href="#3695">3695</a>                 <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="3696" href="#3696">3696</a>                     String text = bundle.getString(chrono.getId());
-<a class="jxr_linenumber" name="3697" href="#3697">3697</a>                     buf.append(text);
-<a class="jxr_linenumber" name="3698" href="#3698">3698</a>                 } <strong class="jxr_keyword">catch</strong> (MissingResourceException ex) {
-<a class="jxr_linenumber" name="3699" href="#3699">3699</a>                     buf.append(chrono.getId());
-<a class="jxr_linenumber" name="3700" href="#3700">3700</a>                 }
-<a class="jxr_linenumber" name="3701" href="#3701">3701</a>             }
-<a class="jxr_linenumber" name="3702" href="#3702">3702</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="3703" href="#3703">3703</a>         }
-<a class="jxr_linenumber" name="3704" href="#3704">3704</a> 
-<a class="jxr_linenumber" name="3705" href="#3705">3705</a>         @Override
-<a class="jxr_linenumber" name="3706" href="#3706">3706</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
-<a class="jxr_linenumber" name="3707" href="#3707">3707</a>             <em class="jxr_comment">// simple looping parser to find the chronology</em>
-<a class="jxr_linenumber" name="3708" href="#3708">3708</a>             <strong class="jxr_keyword">if</strong> (position &lt; 0 || position &gt; text.length()) {
-<a class="jxr_linenumber" name="3709" href="#3709">3709</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IndexOutOfBoundsException();
-<a class="jxr_linenumber" name="3710" href="#3710">3710</a>             }
-<a class="jxr_linenumber" name="3711" href="#3711">3711</a>             Set&lt;Chronology&gt; chronos = Chronology.getAvailableChronologies();
-<a class="jxr_linenumber" name="3712" href="#3712">3712</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> bestMatch = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="3713" href="#3713">3713</a>             <strong class="jxr_keyword">int</strong> matchLen = -1;
-<a class="jxr_linenumber" name="3714" href="#3714">3714</a>             <strong class="jxr_keyword">for</strong> (Chronology chrono : chronos) {
-<a class="jxr_linenumber" name="3715" href="#3715">3715</a>                 String id = chrono.getId();
-<a class="jxr_linenumber" name="3716" href="#3716">3716</a>                 <strong class="jxr_keyword">int</strong> idLen = id.length();
-<a class="jxr_linenumber" name="3717" href="#3717">3717</a>                 <strong class="jxr_keyword">if</strong> (idLen &gt; matchLen &amp;&amp; context.subSequenceEquals(text, position, id, 0, idLen)) {
-<a class="jxr_linenumber" name="3718" href="#3718">3718</a>                     bestMatch = chrono;
-<a class="jxr_linenumber" name="3719" href="#3719">3719</a>                     matchLen = idLen;
-<a class="jxr_linenumber" name="3720" href="#3720">3720</a>                 }
-<a class="jxr_linenumber" name="3721" href="#3721">3721</a>             }
-<a class="jxr_linenumber" name="3722" href="#3722">3722</a>             <strong class="jxr_keyword">if</strong> (bestMatch == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="3723" href="#3723">3723</a>                 <strong class="jxr_keyword">return</strong> ~position;
-<a class="jxr_linenumber" name="3724" href="#3724">3724</a>             }
-<a class="jxr_linenumber" name="3725" href="#3725">3725</a>             context.setParsed(bestMatch);
-<a class="jxr_linenumber" name="3726" href="#3726">3726</a>             <strong class="jxr_keyword">return</strong> position + matchLen;
-<a class="jxr_linenumber" name="3727" href="#3727">3727</a>         }
-<a class="jxr_linenumber" name="3728" href="#3728">3728</a>     }
-<a class="jxr_linenumber" name="3729" href="#3729">3729</a> 
-<a class="jxr_linenumber" name="3730" href="#3730">3730</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3731" href="#3731">3731</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3732" href="#3732">3732</a> <em class="jxr_javadoccomment">     * Prints or parses a localized pattern.</em>
-<a class="jxr_linenumber" name="3733" href="#3733">3733</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="3734" href="#3734">3734</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">LocalizedPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
-<a class="jxr_linenumber" name="3735" href="#3735">3735</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> dateStyle;
-<a class="jxr_linenumber" name="3736" href="#3736">3736</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> timeStyle;
-<a class="jxr_linenumber" name="3737" href="#3737">3737</a> 
-<a class="jxr_linenumber" name="3738" href="#3738">3738</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3739" href="#3739">3739</a> <em class="jxr_javadoccomment">         * Constructor.</em>
-<a class="jxr_linenumber" name="3740" href="#3740">3740</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="3741" href="#3741">3741</a> <em class="jxr_javadoccomment">         * @param dateStyle  the date style to use, may be null</em>
-<a class="jxr_linenumber" name="3742" href="#3742">3742</a> <em class="jxr_javadoccomment">         * @param timeStyle  the time style to use, may be null</em>
-<a class="jxr_linenumber" name="3743" href="#3743">3743</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="3744" href="#3744">3744</a>         <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">LocalizedPrinterParser</a>(<a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> dateStyle, <a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> timeStyle) {
-<a class="jxr_linenumber" name="3745" href="#3745">3745</a>             <em class="jxr_comment">// validated by caller</em>
-<a class="jxr_linenumber" name="3746" href="#3746">3746</a>             <strong class="jxr_keyword">this</strong>.dateStyle = dateStyle;
-<a class="jxr_linenumber" name="3747" href="#3747">3747</a>             <strong class="jxr_keyword">this</strong>.timeStyle = timeStyle;
-<a class="jxr_linenumber" name="3748" href="#3748">3748</a>         }
-<a class="jxr_linenumber" name="3749" href="#3749">3749</a> 
-<a class="jxr_linenumber" name="3750" href="#3750">3750</a>         @Override
-<a class="jxr_linenumber" name="3751" href="#3751">3751</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
-<a class="jxr_linenumber" name="3752" href="#3752">3752</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = Chronology.from(context.getTemporal());
-<a class="jxr_linenumber" name="3753" href="#3753">3753</a>             <strong class="jxr_keyword">return</strong> formatter(context.getLocale(), chrono).toPrinterParser(false).print(context, buf);
-<a class="jxr_linenumber" name="3754" href="#3754">3754</a>         }
-<a class="jxr_linenumber" name="3755" href="#3755">3755</a> 
-<a class="jxr_linenumber" name="3756" href="#3756">3756</a>         @Override
-<a class="jxr_linenumber" name="3757" href="#3757">3757</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
-<a class="jxr_linenumber" name="3758" href="#3758">3758</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = context.getEffectiveChronology();
-<a class="jxr_linenumber" name="3759" href="#3759">3759</a>             <strong class="jxr_keyword">return</strong> formatter(context.getLocale(), chrono).toPrinterParser(false).parse(context, text, position);
-<a class="jxr_linenumber" name="3760" href="#3760">3760</a>         }
-<a class="jxr_linenumber" name="3761" href="#3761">3761</a> 
-<a class="jxr_linenumber" name="3762" href="#3762">3762</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3763" href="#3763">3763</a> <em class="jxr_javadoccomment">         * Gets the formatter to use.</em>
-<a class="jxr_linenumber" name="3764" href="#3764">3764</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="3765" href="#3765">3765</a> <em class="jxr_javadoccomment">         * @param locale  the locale to use, not null</em>
-<a class="jxr_linenumber" name="3766" href="#3766">3766</a> <em class="jxr_javadoccomment">         * @return the formatter, not null</em>
-<a class="jxr_linenumber" name="3767" href="#3767">3767</a> <em class="jxr_javadoccomment">         * @throws IllegalArgumentException if the formatter cannot be found</em>
-<a class="jxr_linenumber" name="3768" href="#3768">3768</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="3769" href="#3769">3769</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter(Locale locale, <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono) {
-<a class="jxr_linenumber" name="3770" href="#3770">3770</a>             <strong class="jxr_keyword">return</strong> DateTimeFormatStyleProvider.getInstance()
-<a class="jxr_linenumber" name="3771" href="#3771">3771</a>                     .getFormatter(dateStyle, timeStyle, chrono, locale);
-<a class="jxr_linenumber" name="3772" href="#3772">3772</a>         }
-<a class="jxr_linenumber" name="3773" href="#3773">3773</a> 
-<a class="jxr_linenumber" name="3774" href="#3774">3774</a>         @Override
-<a class="jxr_linenumber" name="3775" href="#3775">3775</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="3776" href="#3776">3776</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Localized("</span> + (dateStyle != <strong class="jxr_keyword">null</strong> ? dateStyle : <span class="jxr_string">""</span>) + <span class="jxr_string">","</span> +
-<a class="jxr_linenumber" name="3777" href="#3777">3777</a>                 (timeStyle != <strong class="jxr_keyword">null</strong> ? timeStyle : <span class="jxr_string">""</span>) + <span class="jxr_string">")"</span>;
-<a class="jxr_linenumber" name="3778" href="#3778">3778</a>         }
-<a class="jxr_linenumber" name="3779" href="#3779">3779</a>     }
-<a class="jxr_linenumber" name="3780" href="#3780">3780</a> 
-<a class="jxr_linenumber" name="3781" href="#3781">3781</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3782" href="#3782">3782</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3783" href="#3783">3783</a> <em class="jxr_javadoccomment">     * Prints or parses a localized pattern.</em>
-<a class="jxr_linenumber" name="3784" href="#3784">3784</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="3785" href="#3785">3785</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">WeekFieldsPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
-<a class="jxr_linenumber" name="3786" href="#3786">3786</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong> letter;
-<a class="jxr_linenumber" name="3787" href="#3787">3787</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count;
-<a class="jxr_linenumber" name="3788" href="#3788">3788</a> 
-<a class="jxr_linenumber" name="3789" href="#3789">3789</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">WeekFieldsPrinterParser</a>(<strong class="jxr_keyword">char</strong> letter, <strong class="jxr_keyword">int</strong> count) {
-<a class="jxr_linenumber" name="3790" href="#3790">3790</a>             <strong class="jxr_keyword">this</strong>.letter = letter;
-<a class="jxr_linenumber" name="3791" href="#3791">3791</a>             <strong class="jxr_keyword">this</strong>.count = count;
-<a class="jxr_linenumber" name="3792" href="#3792">3792</a>         }
-<a class="jxr_linenumber" name="3793" href="#3793">3793</a> 
-<a class="jxr_linenumber" name="3794" href="#3794">3794</a>         @Override
-<a class="jxr_linenumber" name="3795" href="#3795">3795</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
-<a class="jxr_linenumber" name="3796" href="#3796">3796</a>             <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekFields = WeekFields.of(context.getLocale());
-<a class="jxr_linenumber" name="3797" href="#3797">3797</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> pp = evaluate(weekFields);
-<a class="jxr_linenumber" name="3798" href="#3798">3798</a>             <strong class="jxr_keyword">return</strong> pp.print(context, buf);
-<a class="jxr_linenumber" name="3799" href="#3799">3799</a>         }
-<a class="jxr_linenumber" name="3800" href="#3800">3800</a> 
-<a class="jxr_linenumber" name="3801" href="#3801">3801</a>         @Override
-<a class="jxr_linenumber" name="3802" href="#3802">3802</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
-<a class="jxr_linenumber" name="3803" href="#3803">3803</a>             <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekFields = WeekFields.of(context.getLocale());
-<a class="jxr_linenumber" name="3804" href="#3804">3804</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> pp = evaluate(weekFields);
-<a class="jxr_linenumber" name="3805" href="#3805">3805</a>             <strong class="jxr_keyword">return</strong> pp.parse(context, text, position);
-<a class="jxr_linenumber" name="3806" href="#3806">3806</a>         }
-<a class="jxr_linenumber" name="3807" href="#3807">3807</a>         
-<a class="jxr_linenumber" name="3808" href="#3808">3808</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> evaluate(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekFields) {
-<a class="jxr_linenumber" name="3809" href="#3809">3809</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> pp = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="3810" href="#3810">3810</a>             <strong class="jxr_keyword">switch</strong> (letter) {
-<a class="jxr_linenumber" name="3811" href="#3811">3811</a>                 <strong class="jxr_keyword">case</strong> 'e':  <em class="jxr_comment">// day-of-week</em>
-<a class="jxr_linenumber" name="3812" href="#3812">3812</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.dayOfWeek(), count, 2, SignStyle.NOT_NEGATIVE);
-<a class="jxr_linenumber" name="3813" href="#3813">3813</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="3814" href="#3814">3814</a>                 <strong class="jxr_keyword">case</strong> 'c':  <em class="jxr_comment">// day-of-week</em>
-<a class="jxr_linenumber" name="3815" href="#3815">3815</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.dayOfWeek(), count, 2, SignStyle.NOT_NEGATIVE);
-<a class="jxr_linenumber" name="3816" href="#3816">3816</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="3817" href="#3817">3817</a>                 <strong class="jxr_keyword">case</strong> 'w':  <em class="jxr_comment">// week-of-year</em>
-<a class="jxr_linenumber" name="3818" href="#3818">3818</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.weekOfWeekBasedYear(), count, 2, SignStyle.NOT_NEGATIVE);
-<a class="jxr_linenumber" name="3819" href="#3819">3819</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="3820" href="#3820">3820</a>                 <strong class="jxr_keyword">case</strong> 'W':  <em class="jxr_comment">// week-of-month</em>
-<a class="jxr_linenumber" name="3821" href="#3821">3821</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.weekOfMonth(), 1, 2, SignStyle.NOT_NEGATIVE);
-<a class="jxr_linenumber" name="3822" href="#3822">3822</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="3823" href="#3823">3823</a>                 <strong class="jxr_keyword">case</strong> 'Y':  <em class="jxr_comment">// weekyear</em>
-<a class="jxr_linenumber" name="3824" href="#3824">3824</a>                     <strong class="jxr_keyword">if</strong> (count == 2) {
-<a class="jxr_linenumber" name="3825" href="#3825">3825</a>                         pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ReducedPrinterParser</a>(weekFields.weekBasedYear(), 2, 2, 0, ReducedPrinterParser.BASE_DATE);
-<a class="jxr_linenumber" name="3826" href="#3826">3826</a>                     } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3827" href="#3827">3827</a>                         pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.weekBasedYear(), count, 19,
-<a class="jxr_linenumber" name="3828" href="#3828">3828</a>                                 (count &lt; 4) ? SignStyle.NORMAL : SignStyle.EXCEEDS_PAD, -1);
-<a class="jxr_linenumber" name="3829" href="#3829">3829</a>                     }
-<a class="jxr_linenumber" name="3830" href="#3830">3830</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="3831" href="#3831">3831</a>             }
-<a class="jxr_linenumber" name="3832" href="#3832">3832</a>             <strong class="jxr_keyword">return</strong> pp;
-<a class="jxr_linenumber" name="3833" href="#3833">3833</a>         }
-<a class="jxr_linenumber" name="3834" href="#3834">3834</a> 
-<a class="jxr_linenumber" name="3835" href="#3835">3835</a>         @Override
-<a class="jxr_linenumber" name="3836" href="#3836">3836</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="3837" href="#3837">3837</a>             StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(30);
-<a class="jxr_linenumber" name="3838" href="#3838">3838</a>             sb.append(<span class="jxr_string">"Localized("</span>);
-<a class="jxr_linenumber" name="3839" href="#3839">3839</a>             <strong class="jxr_keyword">if</strong> (letter == 'Y') {
-<a class="jxr_linenumber" name="3840" href="#3840">3840</a>                 <strong class="jxr_keyword">if</strong> (count == 1) {
-<a class="jxr_linenumber" name="3841" href="#3841">3841</a>                     sb.append(<span class="jxr_string">"WeekBasedYear"</span>);
-<a class="jxr_linenumber" name="3842" href="#3842">3842</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (count == 2) {
-<a class="jxr_linenumber" name="3843" href="#3843">3843</a>                     sb.append(<span class="jxr_string">"ReducedValue(WeekBasedYear,2,2,2000-01-01)"</span>);
-<a class="jxr_linenumber" name="3844" href="#3844">3844</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3845" href="#3845">3845</a>                     sb.append(<span class="jxr_string">"WeekBasedYear,"</span>).append(count).append(<span class="jxr_string">","</span>)
-<a class="jxr_linenumber" name="3846" href="#3846">3846</a>                             .append(19).append(<span class="jxr_string">","</span>)
-<a class="jxr_linenumber" name="3847" href="#3847">3847</a>                             .append((count &lt; 4) ? SignStyle.NORMAL : SignStyle.EXCEEDS_PAD);
-<a class="jxr_linenumber" name="3848" href="#3848">3848</a>                 }
-<a class="jxr_linenumber" name="3849" href="#3849">3849</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="3850" href="#3850">3850</a>                 <strong class="jxr_keyword">if</strong> (letter == 'c' || letter == 'e') {
-<a class="jxr_linenumber" name="3851" href="#3851">3851</a>                     sb.append(<span class="jxr_string">"DayOfWeek"</span>);
-<a class="jxr_linenumber" name="3852" href="#3852">3852</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (letter == 'w') {
-<a class="jxr_linenumber" name="3853" href="#3853">3853</a>                     sb.append(<span class="jxr_string">"WeekOfWeekBasedYear"</span>);
-<a class="jxr_linenumber" name="3854" href="#3854">3854</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (letter == 'W') {
-<a class="jxr_linenumber" name="3855" href="#3855">3855</a>                     sb.append(<span class="jxr_string">"WeekOfMonth"</span>);
-<a class="jxr_linenumber" name="3856" href="#3856">3856</a>                 }
-<a class="jxr_linenumber" name="3857" href="#3857">3857</a>                 sb.append(<span class="jxr_string">","</span>);
-<a class="jxr_linenumber" name="3858" href="#3858">3858</a>                 sb.append(count);
-<a class="jxr_linenumber" name="3859" href="#3859">3859</a>             }
-<a class="jxr_linenumber" name="3860" href="#3860">3860</a>             sb.append(<span class="jxr_string">")"</span>);
-<a class="jxr_linenumber" name="3861" href="#3861">3861</a>             <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="3862" href="#3862">3862</a>         }
-<a class="jxr_linenumber" name="3863" href="#3863">3863</a>     }
-<a class="jxr_linenumber" name="3864" href="#3864">3864</a> 
-<a class="jxr_linenumber" name="3865" href="#3865">3865</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="3866" href="#3866">3866</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="3867" href="#3867">3867</a> <em class="jxr_javadoccomment">     * Length comparator.</em>
-<a class="jxr_linenumber" name="3868" href="#3868">3868</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="3869" href="#3869">3869</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Comparator&lt;String&gt; LENGTH_SORT = <strong class="jxr_keyword">new</strong> Comparator&lt;String&gt;() {
-<a class="jxr_linenumber" name="3870" href="#3870">3870</a>         @Override
-<a class="jxr_linenumber" name="3871" href="#3871">3871</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(String str1, String str2) {
-<a class="jxr_linenumber" name="3872" href="#3872">3872</a>             <strong class="jxr_keyword">return</strong> str1.length() == str2.length() ? str1.compareTo(str2) : str1.length() - str2.length();
-<a class="jxr_linenumber" name="3873" href="#3873">3873</a>         }
-<a class="jxr_linenumber" name="3874" href="#3874">3874</a>     };
-<a class="jxr_linenumber" name="3875" href="#3875">3875</a> 
-<a class="jxr_linenumber" name="3876" href="#3876">3876</a> }
+<a class="jxr_linenumber" name="3370" href="#3370">3370</a>             <a href="../../../../org/threeten/bp/temporal/TemporalAccessor.html">TemporalAccessor</a> temporal = context.getTemporal();
+<a class="jxr_linenumber" name="3371" href="#3371">3371</a>             <strong class="jxr_keyword">boolean</strong> daylight = false;
+<a class="jxr_linenumber" name="3372" href="#3372">3372</a>             <strong class="jxr_keyword">if</strong> (temporal.isSupported(INSTANT_SECONDS)) {
+<a class="jxr_linenumber" name="3373" href="#3373">3373</a>                 <a href="../../../../org/threeten/bp/Instant.html">Instant</a> instant = Instant.ofEpochSecond(temporal.getLong(INSTANT_SECONDS));
+<a class="jxr_linenumber" name="3374" href="#3374">3374</a>                 daylight = zone.getRules().isDaylightSavings(instant);
+<a class="jxr_linenumber" name="3375" href="#3375">3375</a>             }
+<a class="jxr_linenumber" name="3376" href="#3376">3376</a>             TimeZone tz = TimeZone.getTimeZone(zone.getId());
+<a class="jxr_linenumber" name="3377" href="#3377">3377</a>             <strong class="jxr_keyword">int</strong> tzstyle = (textStyle.asNormal() == TextStyle.FULL ? TimeZone.LONG : TimeZone.SHORT);
+<a class="jxr_linenumber" name="3378" href="#3378">3378</a>             String text = tz.getDisplayName(daylight, tzstyle, context.getLocale());
+<a class="jxr_linenumber" name="3379" href="#3379">3379</a>             buf.append(text);
+<a class="jxr_linenumber" name="3380" href="#3380">3380</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="3381" href="#3381">3381</a>         }
+<a class="jxr_linenumber" name="3382" href="#3382">3382</a> 
+<a class="jxr_linenumber" name="3383" href="#3383">3383</a>         @Override
+<a class="jxr_linenumber" name="3384" href="#3384">3384</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="3385" href="#3385">3385</a>             <em class="jxr_comment">// this is a poor implementation that handles some but not all of the spec</em>
+<a class="jxr_linenumber" name="3386" href="#3386">3386</a>             <em class="jxr_comment">// JDK8 has a lot of extra information here</em>
+<a class="jxr_linenumber" name="3387" href="#3387">3387</a>             Map&lt;String, String&gt; ids = <strong class="jxr_keyword">new</strong> TreeMap&lt;String, String&gt;(LENGTH_COMPARATOR);
+<a class="jxr_linenumber" name="3388" href="#3388">3388</a>             <strong class="jxr_keyword">for</strong> (String id : ZoneId.getAvailableZoneIds()) {
+<a class="jxr_linenumber" name="3389" href="#3389">3389</a>                 ids.put(id, id);
+<a class="jxr_linenumber" name="3390" href="#3390">3390</a>                 TimeZone tz = TimeZone.getTimeZone(id);
+<a class="jxr_linenumber" name="3391" href="#3391">3391</a>                 <strong class="jxr_keyword">int</strong> tzstyle = (textStyle.asNormal() == TextStyle.FULL ? TimeZone.LONG : TimeZone.SHORT);
+<a class="jxr_linenumber" name="3392" href="#3392">3392</a>                 ids.put(tz.getDisplayName(false, tzstyle, context.getLocale()), id);
+<a class="jxr_linenumber" name="3393" href="#3393">3393</a>                 ids.put(tz.getDisplayName(<strong class="jxr_keyword">true</strong>, tzstyle, context.getLocale()), id);
+<a class="jxr_linenumber" name="3394" href="#3394">3394</a>             }
+<a class="jxr_linenumber" name="3395" href="#3395">3395</a>             <strong class="jxr_keyword">for</strong> (Entry&lt;String, String&gt; entry : ids.entrySet()) {
+<a class="jxr_linenumber" name="3396" href="#3396">3396</a>                 String name = entry.getKey();
+<a class="jxr_linenumber" name="3397" href="#3397">3397</a>                 <strong class="jxr_keyword">if</strong> (context.subSequenceEquals(text, position, name, 0, name.length())) {
+<a class="jxr_linenumber" name="3398" href="#3398">3398</a>                     context.setParsed(ZoneId.of(entry.getValue()));
+<a class="jxr_linenumber" name="3399" href="#3399">3399</a>                     <strong class="jxr_keyword">return</strong> position + name.length();
+<a class="jxr_linenumber" name="3400" href="#3400">3400</a>                 }
+<a class="jxr_linenumber" name="3401" href="#3401">3401</a>             }
+<a class="jxr_linenumber" name="3402" href="#3402">3402</a>             <strong class="jxr_keyword">return</strong> ~position;
+<a class="jxr_linenumber" name="3403" href="#3403">3403</a>         }
+<a class="jxr_linenumber" name="3404" href="#3404">3404</a> 
+<a class="jxr_linenumber" name="3405" href="#3405">3405</a>         @Override
+<a class="jxr_linenumber" name="3406" href="#3406">3406</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="3407" href="#3407">3407</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">"ZoneText("</span> + textStyle + <span class="jxr_string">")"</span>;
+<a class="jxr_linenumber" name="3408" href="#3408">3408</a>         }
+<a class="jxr_linenumber" name="3409" href="#3409">3409</a>     }
+<a class="jxr_linenumber" name="3410" href="#3410">3410</a> 
+<a class="jxr_linenumber" name="3411" href="#3411">3411</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3412" href="#3412">3412</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3413" href="#3413">3413</a> <em class="jxr_javadoccomment">     * Prints or parses a zone ID.</em>
+<a class="jxr_linenumber" name="3414" href="#3414">3414</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="3415" href="#3415">3415</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ZoneIdPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
+<a class="jxr_linenumber" name="3416" href="#3416">3416</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> TemporalQuery&lt;ZoneId&gt; query;
+<a class="jxr_linenumber" name="3417" href="#3417">3417</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String description;
+<a class="jxr_linenumber" name="3418" href="#3418">3418</a> 
+<a class="jxr_linenumber" name="3419" href="#3419">3419</a>         <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ZoneIdPrinterParser</a>(TemporalQuery&lt;ZoneId&gt; query, String description) {
+<a class="jxr_linenumber" name="3420" href="#3420">3420</a>             <strong class="jxr_keyword">this</strong>.query = query;
+<a class="jxr_linenumber" name="3421" href="#3421">3421</a>             <strong class="jxr_keyword">this</strong>.description = description;
+<a class="jxr_linenumber" name="3422" href="#3422">3422</a>         }
+<a class="jxr_linenumber" name="3423" href="#3423">3423</a> 
+<a class="jxr_linenumber" name="3424" href="#3424">3424</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3425" href="#3425">3425</a>         @Override
+<a class="jxr_linenumber" name="3426" href="#3426">3426</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
+<a class="jxr_linenumber" name="3427" href="#3427">3427</a>             <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone = context.getValue(query);
+<a class="jxr_linenumber" name="3428" href="#3428">3428</a>             <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3429" href="#3429">3429</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="3430" href="#3430">3430</a>             }
+<a class="jxr_linenumber" name="3431" href="#3431">3431</a>             buf.append(zone.getId());
+<a class="jxr_linenumber" name="3432" href="#3432">3432</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="3433" href="#3433">3433</a>         }
+<a class="jxr_linenumber" name="3434" href="#3434">3434</a> 
+<a class="jxr_linenumber" name="3435" href="#3435">3435</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3436" href="#3436">3436</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3437" href="#3437">3437</a> <em class="jxr_javadoccomment">         * The cached tree to speed up parsing.</em>
+<a class="jxr_linenumber" name="3438" href="#3438">3438</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="3439" href="#3439">3439</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">volatile</strong> Entry&lt;Integer, SubstringTree&gt; cachedSubstringTree;
+<a class="jxr_linenumber" name="3440" href="#3440">3440</a> 
+<a class="jxr_linenumber" name="3441" href="#3441">3441</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3442" href="#3442">3442</a> <em class="jxr_javadoccomment">         * This implementation looks for the longest matching string.</em>
+<a class="jxr_linenumber" name="3443" href="#3443">3443</a> <em class="jxr_javadoccomment">         * For example, parsing Etc/GMT-2 will return Etc/GMC-2 rather than just</em>
+<a class="jxr_linenumber" name="3444" href="#3444">3444</a> <em class="jxr_javadoccomment">         * Etc/GMC although both are valid.</em>
+<a class="jxr_linenumber" name="3445" href="#3445">3445</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="3446" href="#3446">3446</a> <em class="jxr_javadoccomment">         * This implementation uses a tree to search for valid time-zone names in</em>
+<a class="jxr_linenumber" name="3447" href="#3447">3447</a> <em class="jxr_javadoccomment">         * the parseText. The top level node of the tree has a length equal to the</em>
+<a class="jxr_linenumber" name="3448" href="#3448">3448</a> <em class="jxr_javadoccomment">         * length of the shortest time-zone as well as the beginning characters of</em>
+<a class="jxr_linenumber" name="3449" href="#3449">3449</a> <em class="jxr_javadoccomment">         * all other time-zones.</em>
+<a class="jxr_linenumber" name="3450" href="#3450">3450</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="3451" href="#3451">3451</a>         @Override
+<a class="jxr_linenumber" name="3452" href="#3452">3452</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="3453" href="#3453">3453</a>             <strong class="jxr_keyword">int</strong> length = text.length();
+<a class="jxr_linenumber" name="3454" href="#3454">3454</a>             <strong class="jxr_keyword">if</strong> (position &gt; length) {
+<a class="jxr_linenumber" name="3455" href="#3455">3455</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IndexOutOfBoundsException();
+<a class="jxr_linenumber" name="3456" href="#3456">3456</a>             }
+<a class="jxr_linenumber" name="3457" href="#3457">3457</a>             <strong class="jxr_keyword">if</strong> (position == length) {
+<a class="jxr_linenumber" name="3458" href="#3458">3458</a>                 <strong class="jxr_keyword">return</strong> ~position;
+<a class="jxr_linenumber" name="3459" href="#3459">3459</a>             }
+<a class="jxr_linenumber" name="3460" href="#3460">3460</a> 
+<a class="jxr_linenumber" name="3461" href="#3461">3461</a>             <em class="jxr_comment">// handle fixed time-zone IDs</em>
+<a class="jxr_linenumber" name="3462" href="#3462">3462</a>             <strong class="jxr_keyword">char</strong> nextChar = text.charAt(position);
+<a class="jxr_linenumber" name="3463" href="#3463">3463</a>             <strong class="jxr_keyword">if</strong> (nextChar == '+' || nextChar == '-') {
+<a class="jxr_linenumber" name="3464" href="#3464">3464</a>                 <a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> newContext = context.copy();
+<a class="jxr_linenumber" name="3465" href="#3465">3465</a>                 <strong class="jxr_keyword">int</strong> endPos = OffsetIdPrinterParser.INSTANCE_ID.parse(newContext, text, position);
+<a class="jxr_linenumber" name="3466" href="#3466">3466</a>                 <strong class="jxr_keyword">if</strong> (endPos &lt; 0) {
+<a class="jxr_linenumber" name="3467" href="#3467">3467</a>                     <strong class="jxr_keyword">return</strong> endPos;
+<a class="jxr_linenumber" name="3468" href="#3468">3468</a>                 }
+<a class="jxr_linenumber" name="3469" href="#3469">3469</a>                 <strong class="jxr_keyword">int</strong> offset = (<strong class="jxr_keyword">int</strong>) newContext.getParsed(OFFSET_SECONDS).longValue();
+<a class="jxr_linenumber" name="3470" href="#3470">3470</a>                 <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone = ZoneOffset.ofTotalSeconds(offset);
+<a class="jxr_linenumber" name="3471" href="#3471">3471</a>                 context.setParsed(zone);
+<a class="jxr_linenumber" name="3472" href="#3472">3472</a>                 <strong class="jxr_keyword">return</strong> endPos;
+<a class="jxr_linenumber" name="3473" href="#3473">3473</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (length &gt;= position + 2) {
+<a class="jxr_linenumber" name="3474" href="#3474">3474</a>                 <strong class="jxr_keyword">char</strong> nextNextChar = text.charAt(position + 1);
+<a class="jxr_linenumber" name="3475" href="#3475">3475</a>                 <strong class="jxr_keyword">if</strong> (context.charEquals(nextChar, 'U') &amp;&amp;
+<a class="jxr_linenumber" name="3476" href="#3476">3476</a>                                 context.charEquals(nextNextChar, 'T')) {
+<a class="jxr_linenumber" name="3477" href="#3477">3477</a>                     <strong class="jxr_keyword">if</strong> (length &gt;= position + 3 &amp;&amp;
+<a class="jxr_linenumber" name="3478" href="#3478">3478</a>                                     context.charEquals(text.charAt(position + 2), 'C')) {
+<a class="jxr_linenumber" name="3479" href="#3479">3479</a>                         <strong class="jxr_keyword">return</strong> parsePrefixedOffset(context, text, position, position + 3);
+<a class="jxr_linenumber" name="3480" href="#3480">3480</a>                     }
+<a class="jxr_linenumber" name="3481" href="#3481">3481</a>                     <strong class="jxr_keyword">return</strong> parsePrefixedOffset(context, text, position, position + 2);
+<a class="jxr_linenumber" name="3482" href="#3482">3482</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (context.charEquals(nextChar, 'G') &amp;&amp;
+<a class="jxr_linenumber" name="3483" href="#3483">3483</a>                         length &gt;= position + 3 &amp;&amp;
+<a class="jxr_linenumber" name="3484" href="#3484">3484</a>                         context.charEquals(nextNextChar, 'M') &amp;&amp;
+<a class="jxr_linenumber" name="3485" href="#3485">3485</a>                         context.charEquals(text.charAt(position + 2), 'T')) {
+<a class="jxr_linenumber" name="3486" href="#3486">3486</a>                     <strong class="jxr_keyword">return</strong> parsePrefixedOffset(context, text, position, position + 3);
+<a class="jxr_linenumber" name="3487" href="#3487">3487</a>                 }
+<a class="jxr_linenumber" name="3488" href="#3488">3488</a>             }
+<a class="jxr_linenumber" name="3489" href="#3489">3489</a> 
+<a class="jxr_linenumber" name="3490" href="#3490">3490</a>             <em class="jxr_comment">// prepare parse tree</em>
+<a class="jxr_linenumber" name="3491" href="#3491">3491</a>             Set&lt;String&gt; regionIds = ZoneRulesProvider.getAvailableZoneIds();
+<a class="jxr_linenumber" name="3492" href="#3492">3492</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> regionIdsSize = regionIds.size();
+<a class="jxr_linenumber" name="3493" href="#3493">3493</a>             Entry&lt;Integer, SubstringTree&gt; cached = cachedSubstringTree;
+<a class="jxr_linenumber" name="3494" href="#3494">3494</a>             <strong class="jxr_keyword">if</strong> (cached == <strong class="jxr_keyword">null</strong> || cached.getKey() != regionIdsSize) {
+<a class="jxr_linenumber" name="3495" href="#3495">3495</a>                 <strong class="jxr_keyword">synchronized</strong> (<strong class="jxr_keyword">this</strong>) {
+<a class="jxr_linenumber" name="3496" href="#3496">3496</a>                     cached = cachedSubstringTree;
+<a class="jxr_linenumber" name="3497" href="#3497">3497</a>                     <strong class="jxr_keyword">if</strong> (cached == <strong class="jxr_keyword">null</strong> || cached.getKey() != regionIdsSize) {
+<a class="jxr_linenumber" name="3498" href="#3498">3498</a>                         cachedSubstringTree = cached = <strong class="jxr_keyword">new</strong> SimpleImmutableEntry&lt;Integer, SubstringTree&gt;(regionIdsSize, prepareParser(regionIds));
+<a class="jxr_linenumber" name="3499" href="#3499">3499</a>                     }
+<a class="jxr_linenumber" name="3500" href="#3500">3500</a>                 }
+<a class="jxr_linenumber" name="3501" href="#3501">3501</a>             }
+<a class="jxr_linenumber" name="3502" href="#3502">3502</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> tree = cached.getValue();
+<a class="jxr_linenumber" name="3503" href="#3503">3503</a> 
+<a class="jxr_linenumber" name="3504" href="#3504">3504</a>             <em class="jxr_comment">// parse</em>
+<a class="jxr_linenumber" name="3505" href="#3505">3505</a>             String parsedZoneId = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="3506" href="#3506">3506</a>             String lastZoneId = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="3507" href="#3507">3507</a>             <strong class="jxr_keyword">while</strong> (tree != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3508" href="#3508">3508</a>                 <strong class="jxr_keyword">int</strong> nodeLength = tree.length;
+<a class="jxr_linenumber" name="3509" href="#3509">3509</a>                 <strong class="jxr_keyword">if</strong> (position + nodeLength &gt; length) {
+<a class="jxr_linenumber" name="3510" href="#3510">3510</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="3511" href="#3511">3511</a>                 }
+<a class="jxr_linenumber" name="3512" href="#3512">3512</a>                 lastZoneId = parsedZoneId;
+<a class="jxr_linenumber" name="3513" href="#3513">3513</a>                 parsedZoneId = text.subSequence(position, position + nodeLength).toString();
+<a class="jxr_linenumber" name="3514" href="#3514">3514</a>                 tree = tree.get(parsedZoneId, context.isCaseSensitive());
+<a class="jxr_linenumber" name="3515" href="#3515">3515</a>             }
+<a class="jxr_linenumber" name="3516" href="#3516">3516</a>             <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> zone = convertToZone(regionIds, parsedZoneId, context.isCaseSensitive());
+<a class="jxr_linenumber" name="3517" href="#3517">3517</a>             <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3518" href="#3518">3518</a>                 zone = convertToZone(regionIds, lastZoneId, context.isCaseSensitive());
+<a class="jxr_linenumber" name="3519" href="#3519">3519</a>                 <strong class="jxr_keyword">if</strong> (zone == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3520" href="#3520">3520</a>                     <strong class="jxr_keyword">if</strong> (context.charEquals(nextChar, 'Z')) {
+<a class="jxr_linenumber" name="3521" href="#3521">3521</a>                         context.setParsed(ZoneOffset.UTC);
+<a class="jxr_linenumber" name="3522" href="#3522">3522</a>                         <strong class="jxr_keyword">return</strong> position + 1;
+<a class="jxr_linenumber" name="3523" href="#3523">3523</a>                     }
+<a class="jxr_linenumber" name="3524" href="#3524">3524</a>                     <strong class="jxr_keyword">return</strong> ~position;
+<a class="jxr_linenumber" name="3525" href="#3525">3525</a>                 }
+<a class="jxr_linenumber" name="3526" href="#3526">3526</a>                 parsedZoneId = lastZoneId;
+<a class="jxr_linenumber" name="3527" href="#3527">3527</a>             }
+<a class="jxr_linenumber" name="3528" href="#3528">3528</a>             context.setParsed(zone);
+<a class="jxr_linenumber" name="3529" href="#3529">3529</a>             <strong class="jxr_keyword">return</strong> position + parsedZoneId.length();
+<a class="jxr_linenumber" name="3530" href="#3530">3530</a>         }
+<a class="jxr_linenumber" name="3531" href="#3531">3531</a> 
+<a class="jxr_linenumber" name="3532" href="#3532">3532</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/ZoneId.html">ZoneId</a> convertToZone(Set&lt;String&gt; regionIds, String parsedZoneId, <strong class="jxr_keyword">boolean</strong> caseSensitive) {
+<a class="jxr_linenumber" name="3533" href="#3533">3533</a>             <strong class="jxr_keyword">if</strong> (parsedZoneId == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3534" href="#3534">3534</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="3535" href="#3535">3535</a>             }
+<a class="jxr_linenumber" name="3536" href="#3536">3536</a>             <strong class="jxr_keyword">if</strong> (caseSensitive) {
+<a class="jxr_linenumber" name="3537" href="#3537">3537</a>                 <strong class="jxr_keyword">return</strong> (regionIds.contains(parsedZoneId) ? ZoneId.of(parsedZoneId) : <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="3538" href="#3538">3538</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="3539" href="#3539">3539</a>                 <strong class="jxr_keyword">for</strong> (String regionId : regionIds) {
+<a class="jxr_linenumber" name="3540" href="#3540">3540</a>                     <strong class="jxr_keyword">if</strong> (regionId.equalsIgnoreCase(parsedZoneId)) {
+<a class="jxr_linenumber" name="3541" href="#3541">3541</a>                         <strong class="jxr_keyword">return</strong> ZoneId.of(regionId);
+<a class="jxr_linenumber" name="3542" href="#3542">3542</a>                     }
+<a class="jxr_linenumber" name="3543" href="#3543">3543</a>                 }
+<a class="jxr_linenumber" name="3544" href="#3544">3544</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="3545" href="#3545">3545</a>             }
+<a class="jxr_linenumber" name="3546" href="#3546">3546</a>         }
+<a class="jxr_linenumber" name="3547" href="#3547">3547</a> 
+<a class="jxr_linenumber" name="3548" href="#3548">3548</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> parsePrefixedOffset(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> prefixPos, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="3549" href="#3549">3549</a>             String prefix = text.subSequence(prefixPos, position).toString().toUpperCase();
+<a class="jxr_linenumber" name="3550" href="#3550">3550</a>             <a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> newContext = context.copy();
+<a class="jxr_linenumber" name="3551" href="#3551">3551</a>             <strong class="jxr_keyword">if</strong> (position &lt; text.length() &amp;&amp; context.charEquals(text.charAt(position), 'Z')) {
+<a class="jxr_linenumber" name="3552" href="#3552">3552</a>                 context.setParsed(ZoneId.ofOffset(prefix, ZoneOffset.UTC));
+<a class="jxr_linenumber" name="3553" href="#3553">3553</a>                 <strong class="jxr_keyword">return</strong> position;
+<a class="jxr_linenumber" name="3554" href="#3554">3554</a>             }
+<a class="jxr_linenumber" name="3555" href="#3555">3555</a>             <strong class="jxr_keyword">int</strong> endPos = OffsetIdPrinterParser.INSTANCE_ID.parse(newContext, text, position);
+<a class="jxr_linenumber" name="3556" href="#3556">3556</a>             <strong class="jxr_keyword">if</strong> (endPos &lt; 0) {
+<a class="jxr_linenumber" name="3557" href="#3557">3557</a>                 context.setParsed(ZoneId.ofOffset(prefix, ZoneOffset.UTC));
+<a class="jxr_linenumber" name="3558" href="#3558">3558</a>                 <strong class="jxr_keyword">return</strong> position;
+<a class="jxr_linenumber" name="3559" href="#3559">3559</a>             }
+<a class="jxr_linenumber" name="3560" href="#3560">3560</a>             <strong class="jxr_keyword">int</strong> offsetSecs = (<strong class="jxr_keyword">int</strong>) newContext.getParsed(OFFSET_SECONDS).longValue();
+<a class="jxr_linenumber" name="3561" href="#3561">3561</a>             <a href="../../../../org/threeten/bp/ZoneOffset.html">ZoneOffset</a> offset = ZoneOffset.ofTotalSeconds(offsetSecs);
+<a class="jxr_linenumber" name="3562" href="#3562">3562</a>             context.setParsed(ZoneId.ofOffset(prefix, offset));
+<a class="jxr_linenumber" name="3563" href="#3563">3563</a>             <strong class="jxr_keyword">return</strong> endPos;
+<a class="jxr_linenumber" name="3564" href="#3564">3564</a>         }
+<a class="jxr_linenumber" name="3565" href="#3565">3565</a> 
+<a class="jxr_linenumber" name="3566" href="#3566">3566</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3567" href="#3567">3567</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3568" href="#3568">3568</a> <em class="jxr_javadoccomment">         * Model a tree of substrings to make the parsing easier. Due to the nature</em>
+<a class="jxr_linenumber" name="3569" href="#3569">3569</a> <em class="jxr_javadoccomment">         * of time-zone names, it can be faster to parse based in unique substrings</em>
+<a class="jxr_linenumber" name="3570" href="#3570">3570</a> <em class="jxr_javadoccomment">         * rather than just a character by character match.</em>
+<a class="jxr_linenumber" name="3571" href="#3571">3571</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="3572" href="#3572">3572</a> <em class="jxr_javadoccomment">         * For example, to parse America/Denver we can look at the first two</em>
+<a class="jxr_linenumber" name="3573" href="#3573">3573</a> <em class="jxr_javadoccomment">         * character "Am". We then notice that the shortest time-zone that starts</em>
+<a class="jxr_linenumber" name="3574" href="#3574">3574</a> <em class="jxr_javadoccomment">         * with Am is America/Nome which is 12 characters long. Checking the first</em>
+<a class="jxr_linenumber" name="3575" href="#3575">3575</a> <em class="jxr_javadoccomment">         * 12 characters of America/Denver gives America/Denv which is a substring</em>
+<a class="jxr_linenumber" name="3576" href="#3576">3576</a> <em class="jxr_javadoccomment">         * of only 1 time-zone: America/Denver. Thus, with just 3 comparisons that</em>
+<a class="jxr_linenumber" name="3577" href="#3577">3577</a> <em class="jxr_javadoccomment">         * match can be found.</em>
+<a class="jxr_linenumber" name="3578" href="#3578">3578</a> <em class="jxr_javadoccomment">         * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="3579" href="#3579">3579</a> <em class="jxr_javadoccomment">         * This structure maps substrings to substrings of a longer length. Each</em>
+<a class="jxr_linenumber" name="3580" href="#3580">3580</a> <em class="jxr_javadoccomment">         * node of the tree contains a length and a map of valid substrings to</em>
+<a class="jxr_linenumber" name="3581" href="#3581">3581</a> <em class="jxr_javadoccomment">         * sub-nodes. The parser gets the length from the root node. It then</em>
+<a class="jxr_linenumber" name="3582" href="#3582">3582</a> <em class="jxr_javadoccomment">         * extracts a substring of that length from the parseText. If the map</em>
+<a class="jxr_linenumber" name="3583" href="#3583">3583</a> <em class="jxr_javadoccomment">         * contains the substring, it is set as the possible time-zone and the</em>
+<a class="jxr_linenumber" name="3584" href="#3584">3584</a> <em class="jxr_javadoccomment">         * sub-node for that substring is retrieved. The process continues until the</em>
+<a class="jxr_linenumber" name="3585" href="#3585">3585</a> <em class="jxr_javadoccomment">         * substring is no longer found, at which point the matched text is checked</em>
+<a class="jxr_linenumber" name="3586" href="#3586">3586</a> <em class="jxr_javadoccomment">         * against the real time-zones.</em>
+<a class="jxr_linenumber" name="3587" href="#3587">3587</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="3588" href="#3588">3588</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> {
+<a class="jxr_linenumber" name="3589" href="#3589">3589</a>             <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3590" href="#3590">3590</a> <em class="jxr_javadoccomment">             * The length of the substring this node of the tree contains.</em>
+<a class="jxr_linenumber" name="3591" href="#3591">3591</a> <em class="jxr_javadoccomment">             * Subtrees will have a longer length.</em>
+<a class="jxr_linenumber" name="3592" href="#3592">3592</a> <em class="jxr_javadoccomment">             */</em>
+<a class="jxr_linenumber" name="3593" href="#3593">3593</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length;
+<a class="jxr_linenumber" name="3594" href="#3594">3594</a>             <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3595" href="#3595">3595</a> <em class="jxr_javadoccomment">             * Map of a substring to a set of substrings that contain the key.</em>
+<a class="jxr_linenumber" name="3596" href="#3596">3596</a> <em class="jxr_javadoccomment">             */</em>
+<a class="jxr_linenumber" name="3597" href="#3597">3597</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;CharSequence, SubstringTree&gt; substringMap = <strong class="jxr_keyword">new</strong> HashMap&lt;CharSequence, SubstringTree&gt;();
+<a class="jxr_linenumber" name="3598" href="#3598">3598</a>             <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3599" href="#3599">3599</a> <em class="jxr_javadoccomment">             * Map of a substring to a set of substrings that contain the key.</em>
+<a class="jxr_linenumber" name="3600" href="#3600">3600</a> <em class="jxr_javadoccomment">             */</em>
+<a class="jxr_linenumber" name="3601" href="#3601">3601</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;String, SubstringTree&gt; substringMapCI = <strong class="jxr_keyword">new</strong> HashMap&lt;String, SubstringTree&gt;();
+<a class="jxr_linenumber" name="3602" href="#3602">3602</a> 
+<a class="jxr_linenumber" name="3603" href="#3603">3603</a>             <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3604" href="#3604">3604</a> <em class="jxr_javadoccomment">             * Constructor.</em>
+<a class="jxr_linenumber" name="3605" href="#3605">3605</a> <em class="jxr_javadoccomment">             *</em>
+<a class="jxr_linenumber" name="3606" href="#3606">3606</a> <em class="jxr_javadoccomment">             * @param length  the length of this tree</em>
+<a class="jxr_linenumber" name="3607" href="#3607">3607</a> <em class="jxr_javadoccomment">             */</em>
+<a class="jxr_linenumber" name="3608" href="#3608">3608</a>             <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a>(<strong class="jxr_keyword">int</strong> length) {
+<a class="jxr_linenumber" name="3609" href="#3609">3609</a>                 <strong class="jxr_keyword">this</strong>.length = length;
+<a class="jxr_linenumber" name="3610" href="#3610">3610</a>             }
+<a class="jxr_linenumber" name="3611" href="#3611">3611</a> 
+<a class="jxr_linenumber" name="3612" href="#3612">3612</a>             <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> get(CharSequence substring2, <strong class="jxr_keyword">boolean</strong> caseSensitive) {
+<a class="jxr_linenumber" name="3613" href="#3613">3613</a>                 <strong class="jxr_keyword">if</strong> (caseSensitive) {
+<a class="jxr_linenumber" name="3614" href="#3614">3614</a>                     <strong class="jxr_keyword">return</strong> substringMap.get(substring2);
+<a class="jxr_linenumber" name="3615" href="#3615">3615</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="3616" href="#3616">3616</a>                     <strong class="jxr_keyword">return</strong> substringMapCI.get(substring2.toString().toLowerCase(Locale.ENGLISH));
+<a class="jxr_linenumber" name="3617" href="#3617">3617</a>                 }
+<a class="jxr_linenumber" name="3618" href="#3618">3618</a>             }
+<a class="jxr_linenumber" name="3619" href="#3619">3619</a> 
+<a class="jxr_linenumber" name="3620" href="#3620">3620</a>             <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3621" href="#3621">3621</a> <em class="jxr_javadoccomment">             * Values must be added from shortest to longest.</em>
+<a class="jxr_linenumber" name="3622" href="#3622">3622</a> <em class="jxr_javadoccomment">             *</em>
+<a class="jxr_linenumber" name="3623" href="#3623">3623</a> <em class="jxr_javadoccomment">             * @param newSubstring  the substring to add, not null</em>
+<a class="jxr_linenumber" name="3624" href="#3624">3624</a> <em class="jxr_javadoccomment">             */</em>
+<a class="jxr_linenumber" name="3625" href="#3625">3625</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> add(String newSubstring) {
+<a class="jxr_linenumber" name="3626" href="#3626">3626</a>                 <strong class="jxr_keyword">int</strong> idLen = newSubstring.length();
+<a class="jxr_linenumber" name="3627" href="#3627">3627</a>                 <strong class="jxr_keyword">if</strong> (idLen == length) {
+<a class="jxr_linenumber" name="3628" href="#3628">3628</a>                     substringMap.put(newSubstring, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="3629" href="#3629">3629</a>                     substringMapCI.put(newSubstring.toLowerCase(Locale.ENGLISH), <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="3630" href="#3630">3630</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (idLen &gt; length) {
+<a class="jxr_linenumber" name="3631" href="#3631">3631</a>                     String substring = newSubstring.substring(0, length);
+<a class="jxr_linenumber" name="3632" href="#3632">3632</a>                     <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> parserTree = substringMap.get(substring);
+<a class="jxr_linenumber" name="3633" href="#3633">3633</a>                     <strong class="jxr_keyword">if</strong> (parserTree == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3634" href="#3634">3634</a>                         parserTree = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a>(idLen);
+<a class="jxr_linenumber" name="3635" href="#3635">3635</a>                         substringMap.put(substring, parserTree);
+<a class="jxr_linenumber" name="3636" href="#3636">3636</a>                         substringMapCI.put(substring.toLowerCase(Locale.ENGLISH), parserTree);
+<a class="jxr_linenumber" name="3637" href="#3637">3637</a>                     }
+<a class="jxr_linenumber" name="3638" href="#3638">3638</a>                     parserTree.add(newSubstring);
+<a class="jxr_linenumber" name="3639" href="#3639">3639</a>                 }
+<a class="jxr_linenumber" name="3640" href="#3640">3640</a>             }
+<a class="jxr_linenumber" name="3641" href="#3641">3641</a>         }
+<a class="jxr_linenumber" name="3642" href="#3642">3642</a> 
+<a class="jxr_linenumber" name="3643" href="#3643">3643</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3644" href="#3644">3644</a> <em class="jxr_javadoccomment">         * Builds an optimized parsing tree.</em>
+<a class="jxr_linenumber" name="3645" href="#3645">3645</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="3646" href="#3646">3646</a> <em class="jxr_javadoccomment">         * @param availableIDs  the available IDs, not null, not empty</em>
+<a class="jxr_linenumber" name="3647" href="#3647">3647</a> <em class="jxr_javadoccomment">         * @return the tree, not null</em>
+<a class="jxr_linenumber" name="3648" href="#3648">3648</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="3649" href="#3649">3649</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> prepareParser(Set&lt;String&gt; availableIDs) {
+<a class="jxr_linenumber" name="3650" href="#3650">3650</a>             <em class="jxr_comment">// sort by length</em>
+<a class="jxr_linenumber" name="3651" href="#3651">3651</a>             List&lt;String&gt; ids = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(availableIDs);
+<a class="jxr_linenumber" name="3652" href="#3652">3652</a>             Collections.sort(ids, LENGTH_SORT);
+<a class="jxr_linenumber" name="3653" href="#3653">3653</a> 
+<a class="jxr_linenumber" name="3654" href="#3654">3654</a>             <em class="jxr_comment">// build the tree</em>
+<a class="jxr_linenumber" name="3655" href="#3655">3655</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a> tree = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">SubstringTree</a>(ids.get(0).length());
+<a class="jxr_linenumber" name="3656" href="#3656">3656</a>             <strong class="jxr_keyword">for</strong> (String id : ids) {
+<a class="jxr_linenumber" name="3657" href="#3657">3657</a>                 tree.add(id);
+<a class="jxr_linenumber" name="3658" href="#3658">3658</a>             }
+<a class="jxr_linenumber" name="3659" href="#3659">3659</a>             <strong class="jxr_keyword">return</strong> tree;
+<a class="jxr_linenumber" name="3660" href="#3660">3660</a>         }
+<a class="jxr_linenumber" name="3661" href="#3661">3661</a> 
+<a class="jxr_linenumber" name="3662" href="#3662">3662</a>         <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3663" href="#3663">3663</a>         @Override
+<a class="jxr_linenumber" name="3664" href="#3664">3664</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="3665" href="#3665">3665</a>             <strong class="jxr_keyword">return</strong> description;
+<a class="jxr_linenumber" name="3666" href="#3666">3666</a>         }
+<a class="jxr_linenumber" name="3667" href="#3667">3667</a>     }
+<a class="jxr_linenumber" name="3668" href="#3668">3668</a> 
+<a class="jxr_linenumber" name="3669" href="#3669">3669</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3670" href="#3670">3670</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3671" href="#3671">3671</a> <em class="jxr_javadoccomment">     * Prints or parses a chronology.</em>
+<a class="jxr_linenumber" name="3672" href="#3672">3672</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="3673" href="#3673">3673</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ChronoPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
+<a class="jxr_linenumber" name="3674" href="#3674">3674</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> The text style to output, null means the ID. */</em>
+<a class="jxr_linenumber" name="3675" href="#3675">3675</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/format/TextStyle.html">TextStyle</a> textStyle;
+<a class="jxr_linenumber" name="3676" href="#3676">3676</a> 
+<a class="jxr_linenumber" name="3677" href="#3677">3677</a>         <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ChronoPrinterParser</a>(<a href="../../../../org/threeten/bp/format/TextStyle.html">TextStyle</a> textStyle) {
+<a class="jxr_linenumber" name="3678" href="#3678">3678</a>             <em class="jxr_comment">// validated by caller</em>
+<a class="jxr_linenumber" name="3679" href="#3679">3679</a>             <strong class="jxr_keyword">this</strong>.textStyle = textStyle;
+<a class="jxr_linenumber" name="3680" href="#3680">3680</a>         }
+<a class="jxr_linenumber" name="3681" href="#3681">3681</a> 
+<a class="jxr_linenumber" name="3682" href="#3682">3682</a>         @Override
+<a class="jxr_linenumber" name="3683" href="#3683">3683</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
+<a class="jxr_linenumber" name="3684" href="#3684">3684</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = context.getValue(TemporalQueries.chronology());
+<a class="jxr_linenumber" name="3685" href="#3685">3685</a>             <strong class="jxr_keyword">if</strong> (chrono == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3686" href="#3686">3686</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="3687" href="#3687">3687</a>             }
+<a class="jxr_linenumber" name="3688" href="#3688">3688</a>             <strong class="jxr_keyword">if</strong> (textStyle == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3689" href="#3689">3689</a>                 buf.append(chrono.getId());
+<a class="jxr_linenumber" name="3690" href="#3690">3690</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="3691" href="#3691">3691</a>                 ResourceBundle bundle = ResourceBundle.getBundle(
+<a class="jxr_linenumber" name="3692" href="#3692">3692</a>                         <span class="jxr_string">"org.threeten.bp.format.ChronologyText"</span>, context.getLocale(), DateTimeFormatterBuilder.<strong class="jxr_keyword">class</strong>.getClassLoader());
+<a class="jxr_linenumber" name="3693" href="#3693">3693</a>                 <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="3694" href="#3694">3694</a>                     String text = bundle.getString(chrono.getId());
+<a class="jxr_linenumber" name="3695" href="#3695">3695</a>                     buf.append(text);
+<a class="jxr_linenumber" name="3696" href="#3696">3696</a>                 } <strong class="jxr_keyword">catch</strong> (MissingResourceException ex) {
+<a class="jxr_linenumber" name="3697" href="#3697">3697</a>                     buf.append(chrono.getId());
+<a class="jxr_linenumber" name="3698" href="#3698">3698</a>                 }
+<a class="jxr_linenumber" name="3699" href="#3699">3699</a>             }
+<a class="jxr_linenumber" name="3700" href="#3700">3700</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="3701" href="#3701">3701</a>         }
+<a class="jxr_linenumber" name="3702" href="#3702">3702</a> 
+<a class="jxr_linenumber" name="3703" href="#3703">3703</a>         @Override
+<a class="jxr_linenumber" name="3704" href="#3704">3704</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="3705" href="#3705">3705</a>             <em class="jxr_comment">// simple looping parser to find the chronology</em>
+<a class="jxr_linenumber" name="3706" href="#3706">3706</a>             <strong class="jxr_keyword">if</strong> (position &lt; 0 || position &gt; text.length()) {
+<a class="jxr_linenumber" name="3707" href="#3707">3707</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IndexOutOfBoundsException();
+<a class="jxr_linenumber" name="3708" href="#3708">3708</a>             }
+<a class="jxr_linenumber" name="3709" href="#3709">3709</a>             Set&lt;Chronology&gt; chronos = Chronology.getAvailableChronologies();
+<a class="jxr_linenumber" name="3710" href="#3710">3710</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> bestMatch = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="3711" href="#3711">3711</a>             <strong class="jxr_keyword">int</strong> matchLen = -1;
+<a class="jxr_linenumber" name="3712" href="#3712">3712</a>             <strong class="jxr_keyword">for</strong> (Chronology chrono : chronos) {
+<a class="jxr_linenumber" name="3713" href="#3713">3713</a>                 String id = chrono.getId();
+<a class="jxr_linenumber" name="3714" href="#3714">3714</a>                 <strong class="jxr_keyword">int</strong> idLen = id.length();
+<a class="jxr_linenumber" name="3715" href="#3715">3715</a>                 <strong class="jxr_keyword">if</strong> (idLen &gt; matchLen &amp;&amp; context.subSequenceEquals(text, position, id, 0, idLen)) {
+<a class="jxr_linenumber" name="3716" href="#3716">3716</a>                     bestMatch = chrono;
+<a class="jxr_linenumber" name="3717" href="#3717">3717</a>                     matchLen = idLen;
+<a class="jxr_linenumber" name="3718" href="#3718">3718</a>                 }
+<a class="jxr_linenumber" name="3719" href="#3719">3719</a>             }
+<a class="jxr_linenumber" name="3720" href="#3720">3720</a>             <strong class="jxr_keyword">if</strong> (bestMatch == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="3721" href="#3721">3721</a>                 <strong class="jxr_keyword">return</strong> ~position;
+<a class="jxr_linenumber" name="3722" href="#3722">3722</a>             }
+<a class="jxr_linenumber" name="3723" href="#3723">3723</a>             context.setParsed(bestMatch);
+<a class="jxr_linenumber" name="3724" href="#3724">3724</a>             <strong class="jxr_keyword">return</strong> position + matchLen;
+<a class="jxr_linenumber" name="3725" href="#3725">3725</a>         }
+<a class="jxr_linenumber" name="3726" href="#3726">3726</a>     }
+<a class="jxr_linenumber" name="3727" href="#3727">3727</a> 
+<a class="jxr_linenumber" name="3728" href="#3728">3728</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3729" href="#3729">3729</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3730" href="#3730">3730</a> <em class="jxr_javadoccomment">     * Prints or parses a localized pattern.</em>
+<a class="jxr_linenumber" name="3731" href="#3731">3731</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="3732" href="#3732">3732</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">LocalizedPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
+<a class="jxr_linenumber" name="3733" href="#3733">3733</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> dateStyle;
+<a class="jxr_linenumber" name="3734" href="#3734">3734</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> timeStyle;
+<a class="jxr_linenumber" name="3735" href="#3735">3735</a> 
+<a class="jxr_linenumber" name="3736" href="#3736">3736</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3737" href="#3737">3737</a> <em class="jxr_javadoccomment">         * Constructor.</em>
+<a class="jxr_linenumber" name="3738" href="#3738">3738</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="3739" href="#3739">3739</a> <em class="jxr_javadoccomment">         * @param dateStyle  the date style to use, may be null</em>
+<a class="jxr_linenumber" name="3740" href="#3740">3740</a> <em class="jxr_javadoccomment">         * @param timeStyle  the time style to use, may be null</em>
+<a class="jxr_linenumber" name="3741" href="#3741">3741</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="3742" href="#3742">3742</a>         <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">LocalizedPrinterParser</a>(<a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> dateStyle, <a href="../../../../org/threeten/bp/format/FormatStyle.html">FormatStyle</a> timeStyle) {
+<a class="jxr_linenumber" name="3743" href="#3743">3743</a>             <em class="jxr_comment">// validated by caller</em>
+<a class="jxr_linenumber" name="3744" href="#3744">3744</a>             <strong class="jxr_keyword">this</strong>.dateStyle = dateStyle;
+<a class="jxr_linenumber" name="3745" href="#3745">3745</a>             <strong class="jxr_keyword">this</strong>.timeStyle = timeStyle;
+<a class="jxr_linenumber" name="3746" href="#3746">3746</a>         }
+<a class="jxr_linenumber" name="3747" href="#3747">3747</a> 
+<a class="jxr_linenumber" name="3748" href="#3748">3748</a>         @Override
+<a class="jxr_linenumber" name="3749" href="#3749">3749</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
+<a class="jxr_linenumber" name="3750" href="#3750">3750</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = Chronology.from(context.getTemporal());
+<a class="jxr_linenumber" name="3751" href="#3751">3751</a>             <strong class="jxr_keyword">return</strong> formatter(context.getLocale(), chrono).toPrinterParser(false).print(context, buf);
+<a class="jxr_linenumber" name="3752" href="#3752">3752</a>         }
+<a class="jxr_linenumber" name="3753" href="#3753">3753</a> 
+<a class="jxr_linenumber" name="3754" href="#3754">3754</a>         @Override
+<a class="jxr_linenumber" name="3755" href="#3755">3755</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="3756" href="#3756">3756</a>             <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono = context.getEffectiveChronology();
+<a class="jxr_linenumber" name="3757" href="#3757">3757</a>             <strong class="jxr_keyword">return</strong> formatter(context.getLocale(), chrono).toPrinterParser(false).parse(context, text, position);
+<a class="jxr_linenumber" name="3758" href="#3758">3758</a>         }
+<a class="jxr_linenumber" name="3759" href="#3759">3759</a> 
+<a class="jxr_linenumber" name="3760" href="#3760">3760</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3761" href="#3761">3761</a> <em class="jxr_javadoccomment">         * Gets the formatter to use.</em>
+<a class="jxr_linenumber" name="3762" href="#3762">3762</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="3763" href="#3763">3763</a> <em class="jxr_javadoccomment">         * @param locale  the locale to use, not null</em>
+<a class="jxr_linenumber" name="3764" href="#3764">3764</a> <em class="jxr_javadoccomment">         * @return the formatter, not null</em>
+<a class="jxr_linenumber" name="3765" href="#3765">3765</a> <em class="jxr_javadoccomment">         * @throws IllegalArgumentException if the formatter cannot be found</em>
+<a class="jxr_linenumber" name="3766" href="#3766">3766</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="3767" href="#3767">3767</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatter.html">DateTimeFormatter</a> formatter(Locale locale, <a href="../../../../org/threeten/bp/chrono/Chronology.html">Chronology</a> chrono) {
+<a class="jxr_linenumber" name="3768" href="#3768">3768</a>             <strong class="jxr_keyword">return</strong> DateTimeFormatStyleProvider.getInstance()
+<a class="jxr_linenumber" name="3769" href="#3769">3769</a>                     .getFormatter(dateStyle, timeStyle, chrono, locale);
+<a class="jxr_linenumber" name="3770" href="#3770">3770</a>         }
+<a class="jxr_linenumber" name="3771" href="#3771">3771</a> 
+<a class="jxr_linenumber" name="3772" href="#3772">3772</a>         @Override
+<a class="jxr_linenumber" name="3773" href="#3773">3773</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="3774" href="#3774">3774</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Localized("</span> + (dateStyle != <strong class="jxr_keyword">null</strong> ? dateStyle : <span class="jxr_string">""</span>) + <span class="jxr_string">","</span> +
+<a class="jxr_linenumber" name="3775" href="#3775">3775</a>                 (timeStyle != <strong class="jxr_keyword">null</strong> ? timeStyle : <span class="jxr_string">""</span>) + <span class="jxr_string">")"</span>;
+<a class="jxr_linenumber" name="3776" href="#3776">3776</a>         }
+<a class="jxr_linenumber" name="3777" href="#3777">3777</a>     }
+<a class="jxr_linenumber" name="3778" href="#3778">3778</a> 
+<a class="jxr_linenumber" name="3779" href="#3779">3779</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3780" href="#3780">3780</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3781" href="#3781">3781</a> <em class="jxr_javadoccomment">     * Prints or parses a localized pattern.</em>
+<a class="jxr_linenumber" name="3782" href="#3782">3782</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="3783" href="#3783">3783</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">WeekFieldsPrinterParser</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> {
+<a class="jxr_linenumber" name="3784" href="#3784">3784</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong> letter;
+<a class="jxr_linenumber" name="3785" href="#3785">3785</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count;
+<a class="jxr_linenumber" name="3786" href="#3786">3786</a> 
+<a class="jxr_linenumber" name="3787" href="#3787">3787</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">WeekFieldsPrinterParser</a>(<strong class="jxr_keyword">char</strong> letter, <strong class="jxr_keyword">int</strong> count) {
+<a class="jxr_linenumber" name="3788" href="#3788">3788</a>             <strong class="jxr_keyword">this</strong>.letter = letter;
+<a class="jxr_linenumber" name="3789" href="#3789">3789</a>             <strong class="jxr_keyword">this</strong>.count = count;
+<a class="jxr_linenumber" name="3790" href="#3790">3790</a>         }
+<a class="jxr_linenumber" name="3791" href="#3791">3791</a> 
+<a class="jxr_linenumber" name="3792" href="#3792">3792</a>         @Override
+<a class="jxr_linenumber" name="3793" href="#3793">3793</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> print(<a href="../../../../org/threeten/bp/format/DateTimePrintContext.html">DateTimePrintContext</a> context, StringBuilder buf) {
+<a class="jxr_linenumber" name="3794" href="#3794">3794</a>             <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekFields = WeekFields.of(context.getLocale());
+<a class="jxr_linenumber" name="3795" href="#3795">3795</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> pp = evaluate(weekFields);
+<a class="jxr_linenumber" name="3796" href="#3796">3796</a>             <strong class="jxr_keyword">return</strong> pp.print(context, buf);
+<a class="jxr_linenumber" name="3797" href="#3797">3797</a>         }
+<a class="jxr_linenumber" name="3798" href="#3798">3798</a> 
+<a class="jxr_linenumber" name="3799" href="#3799">3799</a>         @Override
+<a class="jxr_linenumber" name="3800" href="#3800">3800</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> parse(<a href="../../../../org/threeten/bp/format/DateTimeParseContext.html">DateTimeParseContext</a> context, CharSequence text, <strong class="jxr_keyword">int</strong> position) {
+<a class="jxr_linenumber" name="3801" href="#3801">3801</a>             <a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekFields = WeekFields.of(context.getLocale());
+<a class="jxr_linenumber" name="3802" href="#3802">3802</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> pp = evaluate(weekFields);
+<a class="jxr_linenumber" name="3803" href="#3803">3803</a>             <strong class="jxr_keyword">return</strong> pp.parse(context, text, position);
+<a class="jxr_linenumber" name="3804" href="#3804">3804</a>         }
+<a class="jxr_linenumber" name="3805" href="#3805">3805</a>         
+<a class="jxr_linenumber" name="3806" href="#3806">3806</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> evaluate(<a href="../../../../org/threeten/bp/temporal/WeekFields.html">WeekFields</a> weekFields) {
+<a class="jxr_linenumber" name="3807" href="#3807">3807</a>             <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">DateTimePrinterParser</a> pp = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="3808" href="#3808">3808</a>             <strong class="jxr_keyword">switch</strong> (letter) {
+<a class="jxr_linenumber" name="3809" href="#3809">3809</a>                 <strong class="jxr_keyword">case</strong> 'e':  <em class="jxr_comment">// day-of-week</em>
+<a class="jxr_linenumber" name="3810" href="#3810">3810</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.dayOfWeek(), count, 2, SignStyle.NOT_NEGATIVE);
+<a class="jxr_linenumber" name="3811" href="#3811">3811</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="3812" href="#3812">3812</a>                 <strong class="jxr_keyword">case</strong> 'c':  <em class="jxr_comment">// day-of-week</em>
+<a class="jxr_linenumber" name="3813" href="#3813">3813</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.dayOfWeek(), count, 2, SignStyle.NOT_NEGATIVE);
+<a class="jxr_linenumber" name="3814" href="#3814">3814</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="3815" href="#3815">3815</a>                 <strong class="jxr_keyword">case</strong> 'w':  <em class="jxr_comment">// week-of-year</em>
+<a class="jxr_linenumber" name="3816" href="#3816">3816</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.weekOfWeekBasedYear(), count, 2, SignStyle.NOT_NEGATIVE);
+<a class="jxr_linenumber" name="3817" href="#3817">3817</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="3818" href="#3818">3818</a>                 <strong class="jxr_keyword">case</strong> 'W':  <em class="jxr_comment">// week-of-month</em>
+<a class="jxr_linenumber" name="3819" href="#3819">3819</a>                     pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.weekOfMonth(), 1, 2, SignStyle.NOT_NEGATIVE);
+<a class="jxr_linenumber" name="3820" href="#3820">3820</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="3821" href="#3821">3821</a>                 <strong class="jxr_keyword">case</strong> 'Y':  <em class="jxr_comment">// weekyear</em>
+<a class="jxr_linenumber" name="3822" href="#3822">3822</a>                     <strong class="jxr_keyword">if</strong> (count == 2) {
+<a class="jxr_linenumber" name="3823" href="#3823">3823</a>                         pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">ReducedPrinterParser</a>(weekFields.weekBasedYear(), 2, 2, 0, ReducedPrinterParser.BASE_DATE);
+<a class="jxr_linenumber" name="3824" href="#3824">3824</a>                     } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="3825" href="#3825">3825</a>                         pp = <strong class="jxr_keyword">new</strong> <a href="../../../../org/threeten/bp/format/DateTimeFormatterBuilder.html">NumberPrinterParser</a>(weekFields.weekBasedYear(), count, 19,
+<a class="jxr_linenumber" name="3826" href="#3826">3826</a>                                 (count &lt; 4) ? SignStyle.NORMAL : SignStyle.EXCEEDS_PAD, -1);
+<a class="jxr_linenumber" name="3827" href="#3827">3827</a>                     }
+<a class="jxr_linenumber" name="3828" href="#3828">3828</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="3829" href="#3829">3829</a>             }
+<a class="jxr_linenumber" name="3830" href="#3830">3830</a>             <strong class="jxr_keyword">return</strong> pp;
+<a class="jxr_linenumber" name="3831" href="#3831">3831</a>         }
+<a class="jxr_linenumber" name="3832" href="#3832">3832</a> 
+<a class="jxr_linenumber" name="3833" href="#3833">3833</a>         @Override
+<a class="jxr_linenumber" name="3834" href="#3834">3834</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="3835" href="#3835">3835</a>             StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(30);
+<a class="jxr_linenumber" name="3836" href="#3836">3836</a>             sb.append(<span class="jxr_string">"Localized("</span>);
+<a class="jxr_linenumber" name="3837" href="#3837">3837</a>             <strong class="jxr_keyword">if</strong> (letter == 'Y') {
+<a class="jxr_linenumber" name="3838" href="#3838">3838</a>                 <strong class="jxr_keyword">if</strong> (count == 1) {
+<a class="jxr_linenumber" name="3839" href="#3839">3839</a>                     sb.append(<span class="jxr_string">"WeekBasedYear"</span>);
+<a class="jxr_linenumber" name="3840" href="#3840">3840</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (count == 2) {
+<a class="jxr_linenumber" name="3841" href="#3841">3841</a>                     sb.append(<span class="jxr_string">"ReducedValue(WeekBasedYear,2,2,2000-01-01)"</span>);
+<a class="jxr_linenumber" name="3842" href="#3842">3842</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="3843" href="#3843">3843</a>                     sb.append(<span class="jxr_string">"WeekBasedYear,"</span>).append(count).append(<span class="jxr_string">","</span>)
+<a class="jxr_linenumber" name="3844" href="#3844">3844</a>                             .append(19).append(<span class="jxr_string">","</span>)
+<a class="jxr_linenumber" name="3845" href="#3845">3845</a>                             .append((count &lt; 4) ? SignStyle.NORMAL : SignStyle.EXCEEDS_PAD);
+<a class="jxr_linenumber" name="3846" href="#3846">3846</a>                 }
+<a class="jxr_linenumber" name="3847" href="#3847">3847</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="3848" href="#3848">3848</a>                 <strong class="jxr_keyword">if</strong> (letter == 'c' || letter == 'e') {
+<a class="jxr_linenumber" name="3849" href="#3849">3849</a>                     sb.append(<span class="jxr_string">"DayOfWeek"</span>);
+<a class="jxr_linenumber" name="3850" href="#3850">3850</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (letter == 'w') {
+<a class="jxr_linenumber" name="3851" href="#3851">3851</a>                     sb.append(<span class="jxr_string">"WeekOfWeekBasedYear"</span>);
+<a class="jxr_linenumber" name="3852" href="#3852">3852</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (letter == 'W') {
+<a class="jxr_linenumber" name="3853" href="#3853">3853</a>                     sb.append(<span class="jxr_string">"WeekOfMonth"</span>);
+<a class="jxr_linenumber" name="3854" href="#3854">3854</a>                 }
+<a class="jxr_linenumber" name="3855" href="#3855">3855</a>                 sb.append(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="3856" href="#3856">3856</a>                 sb.append(count);
+<a class="jxr_linenumber" name="3857" href="#3857">3857</a>             }
+<a class="jxr_linenumber" name="3858" href="#3858">3858</a>             sb.append(<span class="jxr_string">")"</span>);
+<a class="jxr_linenumber" name="3859" href="#3859">3859</a>             <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="3860" href="#3860">3860</a>         }
+<a class="jxr_linenumber" name="3861" href="#3861">3861</a>     }
+<a class="jxr_linenumber" name="3862" href="#3862">3862</a> 
+<a class="jxr_linenumber" name="3863" href="#3863">3863</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="3864" href="#3864">3864</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="3865" href="#3865">3865</a> <em class="jxr_javadoccomment">     * Length comparator.</em>
+<a class="jxr_linenumber" name="3866" href="#3866">3866</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="3867" href="#3867">3867</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Comparator&lt;String&gt; LENGTH_SORT = <strong class="jxr_keyword">new</strong> Comparator&lt;String&gt;() {
+<a class="jxr_linenumber" name="3868" href="#3868">3868</a>         @Override
+<a class="jxr_linenumber" name="3869" href="#3869">3869</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(String str1, String str2) {
+<a class="jxr_linenumber" name="3870" href="#3870">3870</a>             <strong class="jxr_keyword">return</strong> str1.length() == str2.length() ? str1.compareTo(str2) : str1.length() - str2.length();
+<a class="jxr_linenumber" name="3871" href="#3871">3871</a>         }
+<a class="jxr_linenumber" name="3872" href="#3872">3872</a>     };
+<a class="jxr_linenumber" name="3873" href="#3873">3873</a> 
+<a class="jxr_linenumber" name="3874" href="#3874">3874</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
