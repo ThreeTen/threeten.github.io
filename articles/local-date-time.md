@@ -7,7 +7,7 @@ categories:
 tags: local date time hour minute second nano schedule
 ---
 
-The `LocalDateTime` class represents the date-time,often viewed as year-month-day-hour-minute-second and has got no representation of time-zone or offset from UTC/Greewich. 
+The `LocalDateTime` class represents the date-time,often viewed as year-month-day-hour-minute-second and has got no representation of time-zone or offset from UTC/Greenwich. 
 
 The "local" part of the name refers to the local time-line. `LocalDateTime` class supports nanosecond precision. For example, the value "2nd October 2007 at 13:45.30.123456789" can be stored in a LocalDateTime.
 

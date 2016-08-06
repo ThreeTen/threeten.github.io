@@ -14,7 +14,7 @@ LocalTime supports nanosecond precision. The minimum value for LocalTime is midn
  
 
 The "local" part of the name refers to the local time-line.
-Specifically, a `LocalTime` has no reference to a time-zone or offset from UTC/Greewich. 
+Specifically, a `LocalTime` has no reference to a time-zone or offset from UTC/Greenwich. 
 
 #### Creating a LocalTime
 

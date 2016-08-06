@@ -13,7 +13,7 @@ It is an ideal object for representing birth dates, or dates on a wall calendar.
 For example, the date "18th January 2013" could be stored in a `LocalDate`.
 
 The "local" part of the name refers to the local time-line.
-Specifically, a `LocalDate` has no reference to a time-zone or offset from UTC/Greewich.
+Specifically, a `LocalDate` has no reference to a time-zone or offset from UTC/Greenwich.
 
 #### Creating a LocalDate
 
