@@ -548,210 +548,212 @@
 <a class="jxr_linenumber" name="L540" href="#L540">540</a>                             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L541" href="#L541">541</a>                         }
 <a class="jxr_linenumber" name="L542" href="#L542">542</a>                         <strong class="jxr_keyword">return</strong> DiscordianDate.create(prolepticYear, 0, 0);
-<a class="jxr_linenumber" name="L543" href="#L543">543</a>                 }
-<a class="jxr_linenumber" name="L544" href="#L544">544</a>             }
-<a class="jxr_linenumber" name="L545" href="#L545">545</a>             <em class="jxr_comment">// currently on St Tibs</em>
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>             <strong class="jxr_keyword">if</strong> (month == 0) {
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>                 <strong class="jxr_keyword">switch</strong> (f) {
-<a class="jxr_linenumber" name="L548" href="#L548">548</a>                     <strong class="jxr_keyword">case</strong> YEAR:
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>                     <strong class="jxr_keyword">case</strong> YEAR_OF_ERA:
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>                         <strong class="jxr_keyword">if</strong> (DiscordianChronology.INSTANCE.isLeapYear(nvalue)) {
-<a class="jxr_linenumber" name="L551" href="#L551">551</a>                             <strong class="jxr_keyword">return</strong> DiscordianDate.create(nvalue, 0, 0);
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>                         }
-<a class="jxr_linenumber" name="L553" href="#L553">553</a>                         <em class="jxr_comment">// fall through</em>
-<a class="jxr_linenumber" name="L554" href="#L554">554</a>                     <strong class="jxr_keyword">default</strong>:
-<a class="jxr_linenumber" name="L555" href="#L555">555</a>                         <strong class="jxr_keyword">return</strong> DiscordianDate.create(prolepticYear, 1, 60).with(field, newValue);
-<a class="jxr_linenumber" name="L556" href="#L556">556</a>                 }
-<a class="jxr_linenumber" name="L557" href="#L557">557</a>             }
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>             <em class="jxr_comment">// validate range (generally excluding zero value)</em>
-<a class="jxr_linenumber" name="L559" href="#L559">559</a>             range(f).checkValidValue(newValue, f);
-<a class="jxr_linenumber" name="L560" href="#L560">560</a>             <strong class="jxr_keyword">switch</strong> (f) {
-<a class="jxr_linenumber" name="L561" href="#L561">561</a>                 <strong class="jxr_keyword">case</strong> DAY_OF_WEEK:
-<a class="jxr_linenumber" name="L562" href="#L562">562</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_DAY_OF_WEEK_IN_MONTH:
-<a class="jxr_linenumber" name="L563" href="#L563">563</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_DAY_OF_WEEK_IN_YEAR:
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>                     <strong class="jxr_keyword">if</strong> (month == 1
-<a class="jxr_linenumber" name="L565" href="#L565">565</a>                             &amp;&amp; day &gt;= ST_TIBS_OFFSET - DAYS_IN_WEEK + 1 &amp;&amp; day &lt; ST_TIBS_OFFSET + 1
-<a class="jxr_linenumber" name="L566" href="#L566">566</a>                             &amp;&amp; isLeapYear()) {
-<a class="jxr_linenumber" name="L567" href="#L567">567</a>                         <strong class="jxr_keyword">int</strong> currentDayOfWeek = getDayOfWeek();
-<a class="jxr_linenumber" name="L568" href="#L568">568</a>                         <em class="jxr_comment">// St. Tib's Day is between the 4th and 5th days of the week...</em>
-<a class="jxr_linenumber" name="L569" href="#L569">569</a>                         <strong class="jxr_keyword">if</strong> (currentDayOfWeek &lt; DAYS_IN_WEEK &amp;&amp; nvalue == DAYS_IN_WEEK) {
-<a class="jxr_linenumber" name="L570" href="#L570">570</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays(nvalue - currentDayOfWeek + 1);
-<a class="jxr_linenumber" name="L571" href="#L571">571</a>                         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (currentDayOfWeek == DAYS_IN_WEEK &amp;&amp; nvalue &lt; DAYS_IN_WEEK) {
-<a class="jxr_linenumber" name="L572" href="#L572">572</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays(nvalue - currentDayOfWeek - 1);
-<a class="jxr_linenumber" name="L573" href="#L573">573</a>                         }
-<a class="jxr_linenumber" name="L574" href="#L574">574</a>                     }
-<a class="jxr_linenumber" name="L575" href="#L575">575</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L576" href="#L576">576</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_WEEK_OF_MONTH:
-<a class="jxr_linenumber" name="L577" href="#L577">577</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_WEEK_OF_YEAR:
-<a class="jxr_linenumber" name="L578" href="#L578">578</a>                     <strong class="jxr_keyword">if</strong> ((month == 1 || field == ALIGNED_WEEK_OF_YEAR) &amp;&amp; isLeapYear()) {
-<a class="jxr_linenumber" name="L579" href="#L579">579</a>                         <em class="jxr_comment">// St. Tib's Day is in the middle of the 12th week...</em>
-<a class="jxr_linenumber" name="L580" href="#L580">580</a>                         <strong class="jxr_keyword">int</strong> alignedWeek = (<strong class="jxr_keyword">int</strong>) getLong(field);
-<a class="jxr_linenumber" name="L581" href="#L581">581</a>                         <strong class="jxr_keyword">int</strong> currentDayOfWeek = getDayOfWeek();
-<a class="jxr_linenumber" name="L582" href="#L582">582</a>                         <strong class="jxr_keyword">if</strong> ((alignedWeek &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))
-<a class="jxr_linenumber" name="L583" href="#L583">583</a>                                 &amp;&amp; (nvalue &lt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek &lt; DAYS_IN_WEEK))) {
-<a class="jxr_linenumber" name="L584" href="#L584">584</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays((newValue - alignedWeek) * DAYS_IN_WEEK - 1);
-<a class="jxr_linenumber" name="L585" href="#L585">585</a>                         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> ((nvalue &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))
-<a class="jxr_linenumber" name="L586" href="#L586">586</a>                                 &amp;&amp; (alignedWeek &lt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek &lt; DAYS_IN_WEEK))) {
-<a class="jxr_linenumber" name="L587" href="#L587">587</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays((newValue - alignedWeek) * lengthOfWeek() + 1);
-<a class="jxr_linenumber" name="L588" href="#L588">588</a>                         }
-<a class="jxr_linenumber" name="L589" href="#L589">589</a>                     }
-<a class="jxr_linenumber" name="L590" href="#L590">590</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L591" href="#L591">591</a>                 <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>                     <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>                         <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L545" href="#L545">545</a>                 }
+<a class="jxr_linenumber" name="L546" href="#L546">546</a>             }
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>             <em class="jxr_comment">// currently on St Tibs</em>
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>             <strong class="jxr_keyword">if</strong> (month == 0) {
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>                 <strong class="jxr_keyword">switch</strong> (f) {
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>                     <strong class="jxr_keyword">case</strong> YEAR:
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>                     <strong class="jxr_keyword">case</strong> YEAR_OF_ERA:
+<a class="jxr_linenumber" name="L552" href="#L552">552</a>                         <strong class="jxr_keyword">if</strong> (DiscordianChronology.INSTANCE.isLeapYear(nvalue)) {
+<a class="jxr_linenumber" name="L553" href="#L553">553</a>                             <strong class="jxr_keyword">return</strong> DiscordianDate.create(nvalue, 0, 0);
+<a class="jxr_linenumber" name="L554" href="#L554">554</a>                         }
+<a class="jxr_linenumber" name="L555" href="#L555">555</a>                         <em class="jxr_comment">// fall through</em>
+<a class="jxr_linenumber" name="L556" href="#L556">556</a>                     <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L557" href="#L557">557</a>                         <strong class="jxr_keyword">return</strong> DiscordianDate.create(prolepticYear, 1, 60).with(field, newValue);
+<a class="jxr_linenumber" name="L558" href="#L558">558</a>                 }
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>             }
+<a class="jxr_linenumber" name="L560" href="#L560">560</a>             <em class="jxr_comment">// validate range (generally excluding zero value)</em>
+<a class="jxr_linenumber" name="L561" href="#L561">561</a>             range(f).checkValidValue(newValue, f);
+<a class="jxr_linenumber" name="L562" href="#L562">562</a>             <strong class="jxr_keyword">switch</strong> (f) {
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>                 <strong class="jxr_keyword">case</strong> DAY_OF_WEEK:
+<a class="jxr_linenumber" name="L564" href="#L564">564</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_DAY_OF_WEEK_IN_MONTH:
+<a class="jxr_linenumber" name="L565" href="#L565">565</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_DAY_OF_WEEK_IN_YEAR:
+<a class="jxr_linenumber" name="L566" href="#L566">566</a>                     <strong class="jxr_keyword">if</strong> (month == 1
+<a class="jxr_linenumber" name="L567" href="#L567">567</a>                             &amp;&amp; day &gt;= ST_TIBS_OFFSET - DAYS_IN_WEEK + 1 &amp;&amp; day &lt; ST_TIBS_OFFSET + 1
+<a class="jxr_linenumber" name="L568" href="#L568">568</a>                             &amp;&amp; isLeapYear()) {
+<a class="jxr_linenumber" name="L569" href="#L569">569</a>                         <strong class="jxr_keyword">int</strong> currentDayOfWeek = getDayOfWeek();
+<a class="jxr_linenumber" name="L570" href="#L570">570</a>                         <em class="jxr_comment">// St. Tib's Day is between the 4th and 5th days of the week...</em>
+<a class="jxr_linenumber" name="L571" href="#L571">571</a>                         <strong class="jxr_keyword">if</strong> (currentDayOfWeek &lt; DAYS_IN_WEEK &amp;&amp; nvalue == DAYS_IN_WEEK) {
+<a class="jxr_linenumber" name="L572" href="#L572">572</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays(nvalue - currentDayOfWeek + 1);
+<a class="jxr_linenumber" name="L573" href="#L573">573</a>                         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (currentDayOfWeek == DAYS_IN_WEEK &amp;&amp; nvalue &lt; DAYS_IN_WEEK) {
+<a class="jxr_linenumber" name="L574" href="#L574">574</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays(nvalue - currentDayOfWeek - 1);
+<a class="jxr_linenumber" name="L575" href="#L575">575</a>                         }
+<a class="jxr_linenumber" name="L576" href="#L576">576</a>                     }
+<a class="jxr_linenumber" name="L577" href="#L577">577</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L578" href="#L578">578</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_WEEK_OF_MONTH:
+<a class="jxr_linenumber" name="L579" href="#L579">579</a>                 <strong class="jxr_keyword">case</strong> ALIGNED_WEEK_OF_YEAR:
+<a class="jxr_linenumber" name="L580" href="#L580">580</a>                     <strong class="jxr_keyword">if</strong> ((month == 1 || field == ALIGNED_WEEK_OF_YEAR) &amp;&amp; isLeapYear()) {
+<a class="jxr_linenumber" name="L581" href="#L581">581</a>                         <em class="jxr_comment">// St. Tib's Day is in the middle of the 12th week...</em>
+<a class="jxr_linenumber" name="L582" href="#L582">582</a>                         <strong class="jxr_keyword">int</strong> alignedWeek = (<strong class="jxr_keyword">int</strong>) getLong(field);
+<a class="jxr_linenumber" name="L583" href="#L583">583</a>                         <strong class="jxr_keyword">int</strong> currentDayOfWeek = getDayOfWeek();
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>                         <strong class="jxr_keyword">if</strong> ((alignedWeek &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))
+<a class="jxr_linenumber" name="L585" href="#L585">585</a>                                 &amp;&amp; (nvalue &lt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek &lt; DAYS_IN_WEEK))) {
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays((newValue - alignedWeek) * DAYS_IN_WEEK - 1);
+<a class="jxr_linenumber" name="L587" href="#L587">587</a>                         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> ((nvalue &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))
+<a class="jxr_linenumber" name="L588" href="#L588">588</a>                                 &amp;&amp; (alignedWeek &lt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek &lt; DAYS_IN_WEEK))) {
+<a class="jxr_linenumber" name="L589" href="#L589">589</a>                             <strong class="jxr_keyword">return</strong> (DiscordianDate) plusDays((newValue - alignedWeek) * lengthOfWeek() + 1);
+<a class="jxr_linenumber" name="L590" href="#L590">590</a>                         }
+<a class="jxr_linenumber" name="L591" href="#L591">591</a>                     }
 <a class="jxr_linenumber" name="L592" href="#L592">592</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L593" href="#L593">593</a>             }
-<a class="jxr_linenumber" name="L594" href="#L594">594</a>         }
-<a class="jxr_linenumber" name="L595" href="#L595">595</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) <strong class="jxr_keyword">super</strong>.with(field, newValue);
-<a class="jxr_linenumber" name="L596" href="#L596">596</a>     }
-<a class="jxr_linenumber" name="L597" href="#L597">597</a> 
-<a class="jxr_linenumber" name="L598" href="#L598">598</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="L599" href="#L599">599</a>     @Override
-<a class="jxr_linenumber" name="L600" href="#L600">600</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plus(TemporalAmount amount) {
-<a class="jxr_linenumber" name="L601" href="#L601">601</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) amount.addTo(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="L602" href="#L602">602</a>     }
-<a class="jxr_linenumber" name="L603" href="#L603">603</a> 
-<a class="jxr_linenumber" name="L604" href="#L604">604</a>     @Override
-<a class="jxr_linenumber" name="L605" href="#L605">605</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plus(<strong class="jxr_keyword">long</strong> amountToAdd, TemporalUnit unit) {
-<a class="jxr_linenumber" name="L606" href="#L606">606</a>         <strong class="jxr_keyword">if</strong> (unit instanceof ChronoUnit) {
-<a class="jxr_linenumber" name="L607" href="#L607">607</a>             ChronoUnit f = (ChronoUnit) unit;
-<a class="jxr_linenumber" name="L608" href="#L608">608</a>             <strong class="jxr_keyword">switch</strong> (f) {
-<a class="jxr_linenumber" name="L609" href="#L609">609</a>                 <strong class="jxr_keyword">case</strong> WEEKS:
-<a class="jxr_linenumber" name="L610" href="#L610">610</a>                     <strong class="jxr_keyword">return</strong> plusWeeks(amountToAdd);
-<a class="jxr_linenumber" name="L611" href="#L611">611</a>                 <strong class="jxr_keyword">case</strong> MONTHS:
-<a class="jxr_linenumber" name="L612" href="#L612">612</a>                     <strong class="jxr_keyword">return</strong> plusMonths(amountToAdd);
-<a class="jxr_linenumber" name="L613" href="#L613">613</a>                 <strong class="jxr_keyword">default</strong>:
-<a class="jxr_linenumber" name="L614" href="#L614">614</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L615" href="#L615">615</a>             }
-<a class="jxr_linenumber" name="L616" href="#L616">616</a>         }
-<a class="jxr_linenumber" name="L617" href="#L617">617</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) <strong class="jxr_keyword">super</strong>.plus(amountToAdd, unit);
-<a class="jxr_linenumber" name="L618" href="#L618">618</a>     }
-<a class="jxr_linenumber" name="L619" href="#L619">619</a> 
-<a class="jxr_linenumber" name="L620" href="#L620">620</a>     @Override
-<a class="jxr_linenumber" name="L621" href="#L621">621</a>     <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plusMonths(<strong class="jxr_keyword">long</strong> months) {
-<a class="jxr_linenumber" name="L622" href="#L622">622</a>         <strong class="jxr_keyword">if</strong> (months == 0) {
-<a class="jxr_linenumber" name="L623" href="#L623">623</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
-<a class="jxr_linenumber" name="L624" href="#L624">624</a>         }
-<a class="jxr_linenumber" name="L625" href="#L625">625</a>         <strong class="jxr_keyword">long</strong> calcEm = Math.addExact(getProlepticMonth(), months);
-<a class="jxr_linenumber" name="L626" href="#L626">626</a>         <strong class="jxr_keyword">int</strong> newYear = Math.toIntExact(Math.floorDiv(calcEm, MONTHS_IN_YEAR));
-<a class="jxr_linenumber" name="L627" href="#L627">627</a>         <strong class="jxr_keyword">int</strong> newMonth = (<strong class="jxr_keyword">int</strong>) (Math.floorMod(calcEm, MONTHS_IN_YEAR) + 1);
-<a class="jxr_linenumber" name="L628" href="#L628">628</a>         <em class="jxr_comment">// If the starting date was St. Tib's Day, attempt to retain that status.</em>
-<a class="jxr_linenumber" name="L629" href="#L629">629</a>         <strong class="jxr_keyword">if</strong> (month == 0 &amp;&amp; newMonth == 1) {
-<a class="jxr_linenumber" name="L630" href="#L630">630</a>             newMonth = 0;
-<a class="jxr_linenumber" name="L631" href="#L631">631</a>         }
-<a class="jxr_linenumber" name="L632" href="#L632">632</a>         <strong class="jxr_keyword">return</strong> resolvePrevious(newYear, newMonth, day);
-<a class="jxr_linenumber" name="L633" href="#L633">633</a>     }
-<a class="jxr_linenumber" name="L634" href="#L634">634</a> 
-<a class="jxr_linenumber" name="L635" href="#L635">635</a>     @Override
-<a class="jxr_linenumber" name="L636" href="#L636">636</a>     <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plusWeeks(<strong class="jxr_keyword">long</strong> weeks) {
-<a class="jxr_linenumber" name="L637" href="#L637">637</a>         <strong class="jxr_keyword">if</strong> (weeks == 0) {
-<a class="jxr_linenumber" name="L638" href="#L638">638</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
-<a class="jxr_linenumber" name="L639" href="#L639">639</a>         }
-<a class="jxr_linenumber" name="L640" href="#L640">640</a>         <strong class="jxr_keyword">long</strong> calcEm = Math.addExact(getProlepticWeek(), weeks);
-<a class="jxr_linenumber" name="L641" href="#L641">641</a>         <strong class="jxr_keyword">int</strong> newYear = Math.toIntExact(Math.floorDiv(calcEm, WEEKS_IN_YEAR));
-<a class="jxr_linenumber" name="L642" href="#L642">642</a>         <em class="jxr_comment">// Give St. Tib's Day the same day-of-week as the day after it.</em>
-<a class="jxr_linenumber" name="L643" href="#L643">643</a>         <strong class="jxr_keyword">int</strong> newDayOfYear = (<strong class="jxr_keyword">int</strong>) (Math.floorMod(calcEm, WEEKS_IN_YEAR)) * DAYS_IN_WEEK + (month == 0 ? DAYS_IN_WEEK : get(DAY_OF_WEEK));
-<a class="jxr_linenumber" name="L644" href="#L644">644</a>         <em class="jxr_comment">// Need to offset day-of-year if leap year, and not heading to St. Tib's Day again.</em>
-<a class="jxr_linenumber" name="L645" href="#L645">645</a>         <strong class="jxr_keyword">if</strong> (DiscordianChronology.INSTANCE.isLeapYear(newYear)
-<a class="jxr_linenumber" name="L646" href="#L646">646</a>                 &amp;&amp; (newDayOfYear &gt; ST_TIBS_OFFSET || (newDayOfYear == ST_TIBS_OFFSET &amp;&amp; month != 0))) {
-<a class="jxr_linenumber" name="L647" href="#L647">647</a>             newDayOfYear++;
-<a class="jxr_linenumber" name="L648" href="#L648">648</a>         }
-<a class="jxr_linenumber" name="L649" href="#L649">649</a>         <strong class="jxr_keyword">return</strong> ofYearDay(newYear, newDayOfYear);
-<a class="jxr_linenumber" name="L650" href="#L650">650</a>     }
-<a class="jxr_linenumber" name="L651" href="#L651">651</a> 
-<a class="jxr_linenumber" name="L652" href="#L652">652</a>     @Override
-<a class="jxr_linenumber" name="L653" href="#L653">653</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> minus(TemporalAmount amount) {
-<a class="jxr_linenumber" name="L654" href="#L654">654</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) amount.subtractFrom(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="L655" href="#L655">655</a>     }
-<a class="jxr_linenumber" name="L656" href="#L656">656</a> 
-<a class="jxr_linenumber" name="L657" href="#L657">657</a>     @Override
-<a class="jxr_linenumber" name="L658" href="#L658">658</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> minus(<strong class="jxr_keyword">long</strong> amountToSubtract, TemporalUnit unit) {
-<a class="jxr_linenumber" name="L659" href="#L659">659</a>         <strong class="jxr_keyword">return</strong> (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));
-<a class="jxr_linenumber" name="L660" href="#L660">660</a>     }
-<a class="jxr_linenumber" name="L661" href="#L661">661</a> 
-<a class="jxr_linenumber" name="L662" href="#L662">662</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="L663" href="#L663">663</a>     @Override  <em class="jxr_comment">// for covariant return type</em>
-<a class="jxr_linenumber" name="L664" href="#L664">664</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
-<a class="jxr_linenumber" name="L665" href="#L665">665</a>     <strong class="jxr_keyword">public</strong> ChronoLocalDateTime&lt;DiscordianDate&gt; atTime(LocalTime localTime) {
-<a class="jxr_linenumber" name="L666" href="#L666">666</a>         <strong class="jxr_keyword">return</strong> (ChronoLocalDateTime&lt;DiscordianDate&gt;) ChronoLocalDate.<strong class="jxr_keyword">super</strong>.atTime(localTime);
-<a class="jxr_linenumber" name="L667" href="#L667">667</a>     }
-<a class="jxr_linenumber" name="L668" href="#L668">668</a> 
-<a class="jxr_linenumber" name="L669" href="#L669">669</a>     @Override
-<a class="jxr_linenumber" name="L670" href="#L670">670</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> until(Temporal endExclusive, TemporalUnit unit) {
-<a class="jxr_linenumber" name="L671" href="#L671">671</a>         <strong class="jxr_keyword">return</strong> until(DiscordianDate.from(endExclusive), unit);
-<a class="jxr_linenumber" name="L672" href="#L672">672</a>     }
-<a class="jxr_linenumber" name="L673" href="#L673">673</a> 
-<a class="jxr_linenumber" name="L674" href="#L674">674</a>     @Override
-<a class="jxr_linenumber" name="L675" href="#L675">675</a>     <strong class="jxr_keyword">long</strong> until(<a href="../../../../org/threeten/extra/chrono/AbstractDate.html">AbstractDate</a> end, TemporalUnit unit) {
-<a class="jxr_linenumber" name="L676" href="#L676">676</a>         <strong class="jxr_keyword">if</strong> (unit instanceof ChronoUnit) {
-<a class="jxr_linenumber" name="L677" href="#L677">677</a>             <strong class="jxr_keyword">switch</strong> ((ChronoUnit) unit) {
-<a class="jxr_linenumber" name="L678" href="#L678">678</a>                 <strong class="jxr_keyword">case</strong> WEEKS:
-<a class="jxr_linenumber" name="L679" href="#L679">679</a>                     <strong class="jxr_keyword">return</strong> weeksUntil(DiscordianDate.from(end));
-<a class="jxr_linenumber" name="L680" href="#L680">680</a>                 <strong class="jxr_keyword">default</strong>:
-<a class="jxr_linenumber" name="L681" href="#L681">681</a>                     <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L682" href="#L682">682</a>             }
-<a class="jxr_linenumber" name="L683" href="#L683">683</a>         }
-<a class="jxr_linenumber" name="L684" href="#L684">684</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.until(end, unit);
-<a class="jxr_linenumber" name="L685" href="#L685">685</a>     }
-<a class="jxr_linenumber" name="L686" href="#L686">686</a> 
-<a class="jxr_linenumber" name="L687" href="#L687">687</a>     <strong class="jxr_keyword">long</strong> weeksUntil(<a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> end) {
-<a class="jxr_linenumber" name="L688" href="#L688">688</a>         <strong class="jxr_keyword">long</strong> weekStart = <strong class="jxr_keyword">this</strong>.getProlepticWeek() * 8L;
-<a class="jxr_linenumber" name="L689" href="#L689">689</a>         <strong class="jxr_keyword">long</strong> weekEnd = end.getProlepticWeek() * 8L;
-<a class="jxr_linenumber" name="L690" href="#L690">690</a>         <em class="jxr_comment">// Toggle offset for St. Tib's Day based on the direction traveled.</em>
-<a class="jxr_linenumber" name="L691" href="#L691">691</a>         <strong class="jxr_keyword">long</strong> packed1 = weekStart + (<strong class="jxr_keyword">this</strong>.month == 0 &amp;&amp; end.month != 0 ? (weekEnd &gt; weekStart ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : <strong class="jxr_keyword">this</strong>.getDayOfWeek());  <em class="jxr_comment">// no overflow</em>
-<a class="jxr_linenumber" name="L692" href="#L692">692</a>         <strong class="jxr_keyword">long</strong> packed2 = weekEnd + (end.month == 0 &amp;&amp; <strong class="jxr_keyword">this</strong>.month != 0 ? (weekStart &gt; weekEnd ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : end.getDayOfWeek());  <em class="jxr_comment">// no overflow</em>
-<a class="jxr_linenumber" name="L693" href="#L693">693</a>         <strong class="jxr_keyword">return</strong> (packed2 - packed1) / 8L;
-<a class="jxr_linenumber" name="L694" href="#L694">694</a>     }
-<a class="jxr_linenumber" name="L695" href="#L695">695</a> 
-<a class="jxr_linenumber" name="L696" href="#L696">696</a>     @Override
-<a class="jxr_linenumber" name="L697" href="#L697">697</a>     <strong class="jxr_keyword">long</strong> monthsUntil(<a href="../../../../org/threeten/extra/chrono/AbstractDate.html">AbstractDate</a> end) {
-<a class="jxr_linenumber" name="L698" href="#L698">698</a>         <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> discordianEnd = DiscordianDate.from(end);
-<a class="jxr_linenumber" name="L699" href="#L699">699</a>         <strong class="jxr_keyword">long</strong> monthStart = <strong class="jxr_keyword">this</strong>.getProlepticMonth() * 128L;
-<a class="jxr_linenumber" name="L700" href="#L700">700</a>         <strong class="jxr_keyword">long</strong> monthEnd = discordianEnd.getProlepticMonth() * 128L;
-<a class="jxr_linenumber" name="L701" href="#L701">701</a>         <em class="jxr_comment">// Toggle offset for St. Tib's Day based on the direction traveled.</em>
-<a class="jxr_linenumber" name="L702" href="#L702">702</a>         <strong class="jxr_keyword">long</strong> packed1 = monthStart + (<strong class="jxr_keyword">this</strong>.month == 0 &amp;&amp; discordianEnd.month != 0 ? (monthEnd &gt; monthStart ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : <strong class="jxr_keyword">this</strong>.getDayOfMonth());  <em class="jxr_comment">// no overflow</em>
-<a class="jxr_linenumber" name="L703" href="#L703">703</a>         <strong class="jxr_keyword">long</strong> packed2 = monthEnd + (discordianEnd.month == 0 &amp;&amp; <strong class="jxr_keyword">this</strong>.month != 0 ? (monthStart &gt; monthEnd ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : end.getDayOfMonth());  <em class="jxr_comment">// no overflow</em>
-<a class="jxr_linenumber" name="L704" href="#L704">704</a>         <strong class="jxr_keyword">return</strong> (packed2 - packed1) / 128L;
-<a class="jxr_linenumber" name="L705" href="#L705">705</a>     }
-<a class="jxr_linenumber" name="L706" href="#L706">706</a> 
-<a class="jxr_linenumber" name="L707" href="#L707">707</a>     @Override
-<a class="jxr_linenumber" name="L708" href="#L708">708</a>     <strong class="jxr_keyword">public</strong> ChronoPeriod until(ChronoLocalDate endDateExclusive) {
-<a class="jxr_linenumber" name="L709" href="#L709">709</a>         <strong class="jxr_keyword">long</strong> monthsUntil = monthsUntil(DiscordianDate.from(endDateExclusive));
-<a class="jxr_linenumber" name="L710" href="#L710">710</a> 
-<a class="jxr_linenumber" name="L711" href="#L711">711</a>         <strong class="jxr_keyword">int</strong> years = Math.toIntExact(monthsUntil / MONTHS_IN_YEAR);
-<a class="jxr_linenumber" name="L712" href="#L712">712</a>         <strong class="jxr_keyword">int</strong> months = (<strong class="jxr_keyword">int</strong>) (monthsUntil % MONTHS_IN_YEAR);
-<a class="jxr_linenumber" name="L713" href="#L713">713</a>         <strong class="jxr_keyword">int</strong> days = (<strong class="jxr_keyword">int</strong>) <strong class="jxr_keyword">this</strong>.plusMonths(monthsUntil).daysUntil(endDateExclusive);
-<a class="jxr_linenumber" name="L714" href="#L714">714</a> 
-<a class="jxr_linenumber" name="L715" href="#L715">715</a>         <strong class="jxr_keyword">return</strong> DiscordianChronology.INSTANCE.period(years, months, days);
-<a class="jxr_linenumber" name="L716" href="#L716">716</a>     }
-<a class="jxr_linenumber" name="L717" href="#L717">717</a> 
-<a class="jxr_linenumber" name="L718" href="#L718">718</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="L719" href="#L719">719</a>     @Override
-<a class="jxr_linenumber" name="L720" href="#L720">720</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> toEpochDay() {
-<a class="jxr_linenumber" name="L721" href="#L721">721</a>         <strong class="jxr_keyword">long</strong> year = prolepticYear;
-<a class="jxr_linenumber" name="L722" href="#L722">722</a>         <strong class="jxr_keyword">long</strong> discordianEpochDay = ((year - OFFSET_FROM_ISO_0000 - 1) * 365) + getLeapYearsBefore(year) + (getDayOfYear() - 1);
-<a class="jxr_linenumber" name="L723" href="#L723">723</a>         <strong class="jxr_keyword">return</strong> discordianEpochDay - DISCORDIAN_1167_TO_ISO_1970;
-<a class="jxr_linenumber" name="L724" href="#L724">724</a>     }
-<a class="jxr_linenumber" name="L725" href="#L725">725</a> 
-<a class="jxr_linenumber" name="L726" href="#L726">726</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
-<a class="jxr_linenumber" name="L727" href="#L727">727</a>     @Override
-<a class="jxr_linenumber" name="L728" href="#L728">728</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="L729" href="#L729">729</a>         StringBuilder buf = <strong class="jxr_keyword">new</strong> StringBuilder(30);
-<a class="jxr_linenumber" name="L730" href="#L730">730</a>         buf.append(DiscordianChronology.INSTANCE.toString())
-<a class="jxr_linenumber" name="L731" href="#L731">731</a>                 .append(<span class="jxr_string">" "</span>)
-<a class="jxr_linenumber" name="L732" href="#L732">732</a>                 .append(DiscordianEra.YOLD)
+<a class="jxr_linenumber" name="L593" href="#L593">593</a>                 <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L594" href="#L594">594</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L595" href="#L595">595</a>             }
+<a class="jxr_linenumber" name="L596" href="#L596">596</a>         }
+<a class="jxr_linenumber" name="L597" href="#L597">597</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) <strong class="jxr_keyword">super</strong>.with(field, newValue);
+<a class="jxr_linenumber" name="L598" href="#L598">598</a>     }
+<a class="jxr_linenumber" name="L599" href="#L599">599</a> 
+<a class="jxr_linenumber" name="L600" href="#L600">600</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="L601" href="#L601">601</a>     @Override
+<a class="jxr_linenumber" name="L602" href="#L602">602</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plus(TemporalAmount amount) {
+<a class="jxr_linenumber" name="L603" href="#L603">603</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) amount.addTo(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L604" href="#L604">604</a>     }
+<a class="jxr_linenumber" name="L605" href="#L605">605</a> 
+<a class="jxr_linenumber" name="L606" href="#L606">606</a>     @Override
+<a class="jxr_linenumber" name="L607" href="#L607">607</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plus(<strong class="jxr_keyword">long</strong> amountToAdd, TemporalUnit unit) {
+<a class="jxr_linenumber" name="L608" href="#L608">608</a>         <strong class="jxr_keyword">if</strong> (unit instanceof ChronoUnit) {
+<a class="jxr_linenumber" name="L609" href="#L609">609</a>             ChronoUnit f = (ChronoUnit) unit;
+<a class="jxr_linenumber" name="L610" href="#L610">610</a>             <strong class="jxr_keyword">switch</strong> (f) {
+<a class="jxr_linenumber" name="L611" href="#L611">611</a>                 <strong class="jxr_keyword">case</strong> WEEKS:
+<a class="jxr_linenumber" name="L612" href="#L612">612</a>                     <strong class="jxr_keyword">return</strong> plusWeeks(amountToAdd);
+<a class="jxr_linenumber" name="L613" href="#L613">613</a>                 <strong class="jxr_keyword">case</strong> MONTHS:
+<a class="jxr_linenumber" name="L614" href="#L614">614</a>                     <strong class="jxr_keyword">return</strong> plusMonths(amountToAdd);
+<a class="jxr_linenumber" name="L615" href="#L615">615</a>                 <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L616" href="#L616">616</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L617" href="#L617">617</a>             }
+<a class="jxr_linenumber" name="L618" href="#L618">618</a>         }
+<a class="jxr_linenumber" name="L619" href="#L619">619</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) <strong class="jxr_keyword">super</strong>.plus(amountToAdd, unit);
+<a class="jxr_linenumber" name="L620" href="#L620">620</a>     }
+<a class="jxr_linenumber" name="L621" href="#L621">621</a> 
+<a class="jxr_linenumber" name="L622" href="#L622">622</a>     @Override
+<a class="jxr_linenumber" name="L623" href="#L623">623</a>     <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plusMonths(<strong class="jxr_keyword">long</strong> months) {
+<a class="jxr_linenumber" name="L624" href="#L624">624</a>         <strong class="jxr_keyword">if</strong> (months == 0) {
+<a class="jxr_linenumber" name="L625" href="#L625">625</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L626" href="#L626">626</a>         }
+<a class="jxr_linenumber" name="L627" href="#L627">627</a>         <strong class="jxr_keyword">long</strong> calcEm = Math.addExact(getProlepticMonth(), months);
+<a class="jxr_linenumber" name="L628" href="#L628">628</a>         <strong class="jxr_keyword">int</strong> newYear = Math.toIntExact(Math.floorDiv(calcEm, MONTHS_IN_YEAR));
+<a class="jxr_linenumber" name="L629" href="#L629">629</a>         <strong class="jxr_keyword">int</strong> newMonth = (<strong class="jxr_keyword">int</strong>) (Math.floorMod(calcEm, MONTHS_IN_YEAR) + 1);
+<a class="jxr_linenumber" name="L630" href="#L630">630</a>         <em class="jxr_comment">// If the starting date was St. Tib's Day, attempt to retain that status.</em>
+<a class="jxr_linenumber" name="L631" href="#L631">631</a>         <strong class="jxr_keyword">if</strong> (month == 0 &amp;&amp; newMonth == 1) {
+<a class="jxr_linenumber" name="L632" href="#L632">632</a>             newMonth = 0;
+<a class="jxr_linenumber" name="L633" href="#L633">633</a>         }
+<a class="jxr_linenumber" name="L634" href="#L634">634</a>         <strong class="jxr_keyword">return</strong> resolvePrevious(newYear, newMonth, day);
+<a class="jxr_linenumber" name="L635" href="#L635">635</a>     }
+<a class="jxr_linenumber" name="L636" href="#L636">636</a> 
+<a class="jxr_linenumber" name="L637" href="#L637">637</a>     @Override
+<a class="jxr_linenumber" name="L638" href="#L638">638</a>     <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> plusWeeks(<strong class="jxr_keyword">long</strong> weeks) {
+<a class="jxr_linenumber" name="L639" href="#L639">639</a>         <strong class="jxr_keyword">if</strong> (weeks == 0) {
+<a class="jxr_linenumber" name="L640" href="#L640">640</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L641" href="#L641">641</a>         }
+<a class="jxr_linenumber" name="L642" href="#L642">642</a>         <strong class="jxr_keyword">long</strong> calcEm = Math.addExact(getProlepticWeek(), weeks);
+<a class="jxr_linenumber" name="L643" href="#L643">643</a>         <strong class="jxr_keyword">int</strong> newYear = Math.toIntExact(Math.floorDiv(calcEm, WEEKS_IN_YEAR));
+<a class="jxr_linenumber" name="L644" href="#L644">644</a>         <em class="jxr_comment">// Give St. Tib's Day the same day-of-week as the day after it.</em>
+<a class="jxr_linenumber" name="L645" href="#L645">645</a>         <strong class="jxr_keyword">int</strong> newDayOfYear = (<strong class="jxr_keyword">int</strong>) (Math.floorMod(calcEm, WEEKS_IN_YEAR)) * DAYS_IN_WEEK + (month == 0 ? DAYS_IN_WEEK : get(DAY_OF_WEEK));
+<a class="jxr_linenumber" name="L646" href="#L646">646</a>         <em class="jxr_comment">// Need to offset day-of-year if leap year, and not heading to St. Tib's Day again.</em>
+<a class="jxr_linenumber" name="L647" href="#L647">647</a>         <strong class="jxr_keyword">if</strong> (DiscordianChronology.INSTANCE.isLeapYear(newYear)
+<a class="jxr_linenumber" name="L648" href="#L648">648</a>                 &amp;&amp; (newDayOfYear &gt; ST_TIBS_OFFSET || (newDayOfYear == ST_TIBS_OFFSET &amp;&amp; month != 0))) {
+<a class="jxr_linenumber" name="L649" href="#L649">649</a>             newDayOfYear++;
+<a class="jxr_linenumber" name="L650" href="#L650">650</a>         }
+<a class="jxr_linenumber" name="L651" href="#L651">651</a>         <strong class="jxr_keyword">return</strong> ofYearDay(newYear, newDayOfYear);
+<a class="jxr_linenumber" name="L652" href="#L652">652</a>     }
+<a class="jxr_linenumber" name="L653" href="#L653">653</a> 
+<a class="jxr_linenumber" name="L654" href="#L654">654</a>     @Override
+<a class="jxr_linenumber" name="L655" href="#L655">655</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> minus(TemporalAmount amount) {
+<a class="jxr_linenumber" name="L656" href="#L656">656</a>         <strong class="jxr_keyword">return</strong> (DiscordianDate) amount.subtractFrom(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L657" href="#L657">657</a>     }
+<a class="jxr_linenumber" name="L658" href="#L658">658</a> 
+<a class="jxr_linenumber" name="L659" href="#L659">659</a>     @Override
+<a class="jxr_linenumber" name="L660" href="#L660">660</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> minus(<strong class="jxr_keyword">long</strong> amountToSubtract, TemporalUnit unit) {
+<a class="jxr_linenumber" name="L661" href="#L661">661</a>         <strong class="jxr_keyword">return</strong> (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));
+<a class="jxr_linenumber" name="L662" href="#L662">662</a>     }
+<a class="jxr_linenumber" name="L663" href="#L663">663</a> 
+<a class="jxr_linenumber" name="L664" href="#L664">664</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="L665" href="#L665">665</a>     @Override  <em class="jxr_comment">// for covariant return type</em>
+<a class="jxr_linenumber" name="L666" href="#L666">666</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
+<a class="jxr_linenumber" name="L667" href="#L667">667</a>     <strong class="jxr_keyword">public</strong> ChronoLocalDateTime&lt;DiscordianDate&gt; atTime(LocalTime localTime) {
+<a class="jxr_linenumber" name="L668" href="#L668">668</a>         <strong class="jxr_keyword">return</strong> (ChronoLocalDateTime&lt;DiscordianDate&gt;) ChronoLocalDate.<strong class="jxr_keyword">super</strong>.atTime(localTime);
+<a class="jxr_linenumber" name="L669" href="#L669">669</a>     }
+<a class="jxr_linenumber" name="L670" href="#L670">670</a> 
+<a class="jxr_linenumber" name="L671" href="#L671">671</a>     @Override
+<a class="jxr_linenumber" name="L672" href="#L672">672</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> until(Temporal endExclusive, TemporalUnit unit) {
+<a class="jxr_linenumber" name="L673" href="#L673">673</a>         <strong class="jxr_keyword">return</strong> until(DiscordianDate.from(endExclusive), unit);
+<a class="jxr_linenumber" name="L674" href="#L674">674</a>     }
+<a class="jxr_linenumber" name="L675" href="#L675">675</a> 
+<a class="jxr_linenumber" name="L676" href="#L676">676</a>     @Override
+<a class="jxr_linenumber" name="L677" href="#L677">677</a>     <strong class="jxr_keyword">long</strong> until(<a href="../../../../org/threeten/extra/chrono/AbstractDate.html">AbstractDate</a> end, TemporalUnit unit) {
+<a class="jxr_linenumber" name="L678" href="#L678">678</a>         <strong class="jxr_keyword">if</strong> (unit instanceof ChronoUnit) {
+<a class="jxr_linenumber" name="L679" href="#L679">679</a>             <strong class="jxr_keyword">switch</strong> ((ChronoUnit) unit) {
+<a class="jxr_linenumber" name="L680" href="#L680">680</a>                 <strong class="jxr_keyword">case</strong> WEEKS:
+<a class="jxr_linenumber" name="L681" href="#L681">681</a>                     <strong class="jxr_keyword">return</strong> weeksUntil(DiscordianDate.from(end));
+<a class="jxr_linenumber" name="L682" href="#L682">682</a>                 <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L683" href="#L683">683</a>                     <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L684" href="#L684">684</a>             }
+<a class="jxr_linenumber" name="L685" href="#L685">685</a>         }
+<a class="jxr_linenumber" name="L686" href="#L686">686</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">super</strong>.until(end, unit);
+<a class="jxr_linenumber" name="L687" href="#L687">687</a>     }
+<a class="jxr_linenumber" name="L688" href="#L688">688</a> 
+<a class="jxr_linenumber" name="L689" href="#L689">689</a>     <strong class="jxr_keyword">long</strong> weeksUntil(<a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> end) {
+<a class="jxr_linenumber" name="L690" href="#L690">690</a>         <strong class="jxr_keyword">long</strong> weekStart = <strong class="jxr_keyword">this</strong>.getProlepticWeek() * 8L;
+<a class="jxr_linenumber" name="L691" href="#L691">691</a>         <strong class="jxr_keyword">long</strong> weekEnd = end.getProlepticWeek() * 8L;
+<a class="jxr_linenumber" name="L692" href="#L692">692</a>         <em class="jxr_comment">// Toggle offset for St. Tib's Day based on the direction traveled.</em>
+<a class="jxr_linenumber" name="L693" href="#L693">693</a>         <strong class="jxr_keyword">long</strong> packed1 = weekStart + (<strong class="jxr_keyword">this</strong>.month == 0 &amp;&amp; end.month != 0 ? (weekEnd &gt; weekStart ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : <strong class="jxr_keyword">this</strong>.getDayOfWeek());  <em class="jxr_comment">// no overflow</em>
+<a class="jxr_linenumber" name="L694" href="#L694">694</a>         <strong class="jxr_keyword">long</strong> packed2 = weekEnd + (end.month == 0 &amp;&amp; <strong class="jxr_keyword">this</strong>.month != 0 ? (weekStart &gt; weekEnd ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : end.getDayOfWeek());  <em class="jxr_comment">// no overflow</em>
+<a class="jxr_linenumber" name="L695" href="#L695">695</a>         <strong class="jxr_keyword">return</strong> (packed2 - packed1) / 8L;
+<a class="jxr_linenumber" name="L696" href="#L696">696</a>     }
+<a class="jxr_linenumber" name="L697" href="#L697">697</a> 
+<a class="jxr_linenumber" name="L698" href="#L698">698</a>     @Override
+<a class="jxr_linenumber" name="L699" href="#L699">699</a>     <strong class="jxr_keyword">long</strong> monthsUntil(<a href="../../../../org/threeten/extra/chrono/AbstractDate.html">AbstractDate</a> end) {
+<a class="jxr_linenumber" name="L700" href="#L700">700</a>         <a href="../../../../org/threeten/extra/chrono/DiscordianDate.html">DiscordianDate</a> discordianEnd = DiscordianDate.from(end);
+<a class="jxr_linenumber" name="L701" href="#L701">701</a>         <strong class="jxr_keyword">long</strong> monthStart = <strong class="jxr_keyword">this</strong>.getProlepticMonth() * 128L;
+<a class="jxr_linenumber" name="L702" href="#L702">702</a>         <strong class="jxr_keyword">long</strong> monthEnd = discordianEnd.getProlepticMonth() * 128L;
+<a class="jxr_linenumber" name="L703" href="#L703">703</a>         <em class="jxr_comment">// Toggle offset for St. Tib's Day based on the direction traveled.</em>
+<a class="jxr_linenumber" name="L704" href="#L704">704</a>         <strong class="jxr_keyword">long</strong> packed1 = monthStart + (<strong class="jxr_keyword">this</strong>.month == 0 &amp;&amp; discordianEnd.month != 0 ? (monthEnd &gt; monthStart ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : <strong class="jxr_keyword">this</strong>.getDayOfMonth());  <em class="jxr_comment">// no overflow</em>
+<a class="jxr_linenumber" name="L705" href="#L705">705</a>         <strong class="jxr_keyword">long</strong> packed2 = monthEnd + (discordianEnd.month == 0 &amp;&amp; <strong class="jxr_keyword">this</strong>.month != 0 ? (monthStart &gt; monthEnd ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : end.getDayOfMonth());  <em class="jxr_comment">// no overflow</em>
+<a class="jxr_linenumber" name="L706" href="#L706">706</a>         <strong class="jxr_keyword">return</strong> (packed2 - packed1) / 128L;
+<a class="jxr_linenumber" name="L707" href="#L707">707</a>     }
+<a class="jxr_linenumber" name="L708" href="#L708">708</a> 
+<a class="jxr_linenumber" name="L709" href="#L709">709</a>     @Override
+<a class="jxr_linenumber" name="L710" href="#L710">710</a>     <strong class="jxr_keyword">public</strong> ChronoPeriod until(ChronoLocalDate endDateExclusive) {
+<a class="jxr_linenumber" name="L711" href="#L711">711</a>         <strong class="jxr_keyword">long</strong> monthsUntil = monthsUntil(DiscordianDate.from(endDateExclusive));
+<a class="jxr_linenumber" name="L712" href="#L712">712</a> 
+<a class="jxr_linenumber" name="L713" href="#L713">713</a>         <strong class="jxr_keyword">int</strong> years = Math.toIntExact(monthsUntil / MONTHS_IN_YEAR);
+<a class="jxr_linenumber" name="L714" href="#L714">714</a>         <strong class="jxr_keyword">int</strong> months = (<strong class="jxr_keyword">int</strong>) (monthsUntil % MONTHS_IN_YEAR);
+<a class="jxr_linenumber" name="L715" href="#L715">715</a>         <strong class="jxr_keyword">int</strong> days = (<strong class="jxr_keyword">int</strong>) <strong class="jxr_keyword">this</strong>.plusMonths(monthsUntil).daysUntil(endDateExclusive);
+<a class="jxr_linenumber" name="L716" href="#L716">716</a> 
+<a class="jxr_linenumber" name="L717" href="#L717">717</a>         <strong class="jxr_keyword">return</strong> DiscordianChronology.INSTANCE.period(years, months, days);
+<a class="jxr_linenumber" name="L718" href="#L718">718</a>     }
+<a class="jxr_linenumber" name="L719" href="#L719">719</a> 
+<a class="jxr_linenumber" name="L720" href="#L720">720</a>     <em class="jxr_comment">//-----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="L721" href="#L721">721</a>     @Override
+<a class="jxr_linenumber" name="L722" href="#L722">722</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> toEpochDay() {
+<a class="jxr_linenumber" name="L723" href="#L723">723</a>         <strong class="jxr_keyword">long</strong> year = prolepticYear;
+<a class="jxr_linenumber" name="L724" href="#L724">724</a>         <strong class="jxr_keyword">long</strong> discordianEpochDay = ((year - OFFSET_FROM_ISO_0000 - 1) * 365) + getLeapYearsBefore(year) + (getDayOfYear() - 1);
+<a class="jxr_linenumber" name="L725" href="#L725">725</a>         <strong class="jxr_keyword">return</strong> discordianEpochDay - DISCORDIAN_1167_TO_ISO_1970;
+<a class="jxr_linenumber" name="L726" href="#L726">726</a>     }
+<a class="jxr_linenumber" name="L727" href="#L727">727</a> 
+<a class="jxr_linenumber" name="L728" href="#L728">728</a>     <em class="jxr_comment">//-------------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="L729" href="#L729">729</a>     @Override
+<a class="jxr_linenumber" name="L730" href="#L730">730</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="L731" href="#L731">731</a>         StringBuilder buf = <strong class="jxr_keyword">new</strong> StringBuilder(30);
+<a class="jxr_linenumber" name="L732" href="#L732">732</a>         buf.append(DiscordianChronology.INSTANCE.toString())
 <a class="jxr_linenumber" name="L733" href="#L733">733</a>                 .append(<span class="jxr_string">" "</span>)
-<a class="jxr_linenumber" name="L734" href="#L734">734</a>                 .append(prolepticYear);
-<a class="jxr_linenumber" name="L735" href="#L735">735</a>         <strong class="jxr_keyword">if</strong> (month == 0) {
-<a class="jxr_linenumber" name="L736" href="#L736">736</a>             buf.append(<span class="jxr_string">" St. Tib's Day"</span>);
-<a class="jxr_linenumber" name="L737" href="#L737">737</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L738" href="#L738">738</a>             buf.append(<span class="jxr_string">"-"</span>).append(month)
-<a class="jxr_linenumber" name="L739" href="#L739">739</a>                     .append(day &lt; 10 ? <span class="jxr_string">"-0"</span> : <span class="jxr_string">"-"</span>).append(day);
-<a class="jxr_linenumber" name="L740" href="#L740">740</a>         }
-<a class="jxr_linenumber" name="L741" href="#L741">741</a>         <strong class="jxr_keyword">return</strong> buf.toString();
-<a class="jxr_linenumber" name="L742" href="#L742">742</a>     }
-<a class="jxr_linenumber" name="L743" href="#L743">743</a> 
-<a class="jxr_linenumber" name="L744" href="#L744">744</a> }
+<a class="jxr_linenumber" name="L734" href="#L734">734</a>                 .append(DiscordianEra.YOLD)
+<a class="jxr_linenumber" name="L735" href="#L735">735</a>                 .append(<span class="jxr_string">" "</span>)
+<a class="jxr_linenumber" name="L736" href="#L736">736</a>                 .append(prolepticYear);
+<a class="jxr_linenumber" name="L737" href="#L737">737</a>         <strong class="jxr_keyword">if</strong> (month == 0) {
+<a class="jxr_linenumber" name="L738" href="#L738">738</a>             buf.append(<span class="jxr_string">" St. Tib's Day"</span>);
+<a class="jxr_linenumber" name="L739" href="#L739">739</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L740" href="#L740">740</a>             buf.append(<span class="jxr_string">"-"</span>).append(month)
+<a class="jxr_linenumber" name="L741" href="#L741">741</a>                     .append(day &lt; 10 ? <span class="jxr_string">"-0"</span> : <span class="jxr_string">"-"</span>).append(day);
+<a class="jxr_linenumber" name="L742" href="#L742">742</a>         }
+<a class="jxr_linenumber" name="L743" href="#L743">743</a>         <strong class="jxr_keyword">return</strong> buf.toString();
+<a class="jxr_linenumber" name="L744" href="#L744">744</a>     }
+<a class="jxr_linenumber" name="L745" href="#L745">745</a> 
+<a class="jxr_linenumber" name="L746" href="#L746">746</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2010&#x2013;2016 <a href="http://www.threeten.org">ThreeTen.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2010&#x2013;2017 <a href="http://www.threeten.org">ThreeTen.org</a>. All rights reserved.</div>
 </body>
 </html>

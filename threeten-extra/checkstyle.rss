@@ -20,19 +20,19 @@ under the License.
 <rss version="0.91">
   <channel>
     <title>ThreeTen-Extra - Checkstyle report</title>
-    <link>https://www.threeten.org/threeten-extra</link>
+    <link>http://www.threeten.org/threeten-extra</link>
     <description>ThreeTen-Extra - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2010 - 2016 ThreeTen.org</copyright>
+    <copyright>&#169;2010 - 2017 ThreeTen.org</copyright>
     <item>
-      <title>File: 56,
+      <title>File: 57,
              Errors: 0,
-             Warnings: 2,
+             Warnings: 0,
              Infos: 0
       </title>
-            <link>https://www.threeten.org/threeten-extra/checkstyle.html</link>
+            <link>http://www.threeten.org/threeten-extra/checkstyle.html</link>
       <description>
-        <p>Click <a href="https://www.threeten.org/threeten-extra/checkstyle.html">here</a> for the full Checkstyle report.</p>
+        <p>Click <a href="http://www.threeten.org/threeten-extra/checkstyle.html">here</a> for the full Checkstyle report.</p>
 
         <table summary="Files" boder="1">
           <thead>
@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.DiscordianDate.java">org/threeten/extra/chrono/DiscordianDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.DiscordianDate.java">org/threeten/extra/chrono/DiscordianDate.java</a>
                 </td>
                 <td>
                   0
@@ -60,7 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.JulianDate.java">org/threeten/extra/chrono/JulianDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.JulianDate.java">org/threeten/extra/chrono/JulianDate.java</a>
                 </td>
                 <td>
                   0
@@ -74,7 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AbstractNileDate.java">org/threeten/extra/chrono/AbstractNileDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AbstractNileDate.java">org/threeten/extra/chrono/AbstractNileDate.java</a>
                 </td>
                 <td>
                   0
@@ -88,7 +88,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.InternationalFixedChronology.java">org/threeten/extra/chrono/InternationalFixedChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.InternationalFixedChronology.java">org/threeten/extra/chrono/InternationalFixedChronology.java</a>
                 </td>
                 <td>
                   0
@@ -102,7 +102,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingChronology.java">org/threeten/extra/chrono/AccountingChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Quarter.java">org/threeten/extra/Quarter.java</a>
                 </td>
                 <td>
                   0
@@ -116,7 +116,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Quarter.java">org/threeten/extra/Quarter.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingChronology.java">org/threeten/extra/chrono/AccountingChronology.java</a>
                 </td>
                 <td>
                   0
@@ -130,7 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry010Chronology.java">org/threeten/extra/chrono/Symmetry010Chronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry010Chronology.java">org/threeten/extra/chrono/Symmetry010Chronology.java</a>
                 </td>
                 <td>
                   0
@@ -144,7 +144,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.EthiopicEra.java">org/threeten/extra/chrono/EthiopicEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.EthiopicEra.java">org/threeten/extra/chrono/EthiopicEra.java</a>
                 </td>
                 <td>
                   0
@@ -158,21 +158,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#build.testng.old.Default suite.Default test.properties">build/testng/old/Default suite/Default test.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.JulianEra.java">org/threeten/extra/chrono/JulianEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.PackedFields.java">org/threeten/extra/PackedFields.java</a>
                 </td>
                 <td>
                   0
@@ -186,7 +172,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.PackedFields.java">org/threeten/extra/PackedFields.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.JulianEra.java">org/threeten/extra/chrono/JulianEra.java</a>
                 </td>
                 <td>
                   0
@@ -200,7 +186,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.BritishCutoverChronology.java">org/threeten/extra/chrono/BritishCutoverChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.BritishCutoverChronology.java">org/threeten/extra/chrono/BritishCutoverChronology.java</a>
                 </td>
                 <td>
                   0
@@ -214,7 +200,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.EthiopicChronology.java">org/threeten/extra/chrono/EthiopicChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.EthiopicChronology.java">org/threeten/extra/chrono/EthiopicChronology.java</a>
                 </td>
                 <td>
                   0
@@ -228,7 +214,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Hours.java">org/threeten/extra/Hours.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Hours.java">org/threeten/extra/Hours.java</a>
                 </td>
                 <td>
                   0
@@ -242,7 +228,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.YearWeek.java">org/threeten/extra/YearWeek.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.YearWeek.java">org/threeten/extra/YearWeek.java</a>
                 </td>
                 <td>
                   0
@@ -256,7 +242,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.BritishCutoverDate.java">org/threeten/extra/chrono/BritishCutoverDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.BritishCutoverDate.java">org/threeten/extra/chrono/BritishCutoverDate.java</a>
                 </td>
                 <td>
                   0
@@ -270,7 +256,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingYearDivision.java">org/threeten/extra/chrono/AccountingYearDivision.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingYearDivision.java">org/threeten/extra/chrono/AccountingYearDivision.java</a>
                 </td>
                 <td>
                   0
@@ -284,7 +270,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.PaxEra.java">org/threeten/extra/chrono/PaxEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.PaxEra.java">org/threeten/extra/chrono/PaxEra.java</a>
                 </td>
                 <td>
                   0
@@ -298,7 +284,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.InternationalFixedDate.java">org/threeten/extra/chrono/InternationalFixedDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.InternationalFixedDate.java">org/threeten/extra/chrono/InternationalFixedDate.java</a>
                 </td>
                 <td>
                   0
@@ -312,7 +298,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.CopticEra.java">org/threeten/extra/chrono/CopticEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.CopticEra.java">org/threeten/extra/chrono/CopticEra.java</a>
                 </td>
                 <td>
                   0
@@ -326,7 +312,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.CopticChronology.java">org/threeten/extra/chrono/CopticChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.CopticChronology.java">org/threeten/extra/chrono/CopticChronology.java</a>
                 </td>
                 <td>
                   0
@@ -340,7 +326,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.UtcInstant.java">org/threeten/extra/scale/UtcInstant.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.UtcInstant.java">org/threeten/extra/scale/UtcInstant.java</a>
                 </td>
                 <td>
                   0
@@ -354,7 +340,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.EthiopicDate.java">org/threeten/extra/chrono/EthiopicDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.EthiopicDate.java">org/threeten/extra/chrono/EthiopicDate.java</a>
                 </td>
                 <td>
                   0
@@ -368,7 +354,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#LICENSE.txt">LICENSE.txt</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#LICENSE.txt">LICENSE.txt</a>
                 </td>
                 <td>
                   0
@@ -382,7 +368,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.SystemUtcRules.java">org/threeten/extra/scale/SystemUtcRules.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.SystemUtcRules.java">org/threeten/extra/scale/SystemUtcRules.java</a>
                 </td>
                 <td>
                   0
@@ -396,7 +382,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.UtcRules.java">org/threeten/extra/scale/UtcRules.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.UtcRules.java">org/threeten/extra/scale/UtcRules.java</a>
                 </td>
                 <td>
                   0
@@ -410,7 +396,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.DayOfMonth.java">org/threeten/extra/DayOfMonth.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.DayOfMonth.java">org/threeten/extra/DayOfMonth.java</a>
                 </td>
                 <td>
                   0
@@ -424,7 +410,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Months.java">org/threeten/extra/Months.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Months.java">org/threeten/extra/Months.java</a>
                 </td>
                 <td>
                   0
@@ -438,21 +424,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#build.testng.old.threeten-extra by packages.threeten-extra by packages.properties">build/testng/old/threeten-extra by packages/threeten-extra by packages.properties</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.JulianChronology.java">org/threeten/extra/chrono/JulianChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.JulianChronology.java">org/threeten/extra/chrono/JulianChronology.java</a>
                 </td>
                 <td>
                   0
@@ -466,7 +438,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AbstractDate.java">org/threeten/extra/chrono/AbstractDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AbstractDate.java">org/threeten/extra/chrono/AbstractDate.java</a>
                 </td>
                 <td>
                   0
@@ -480,7 +452,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.CopticDate.java">org/threeten/extra/chrono/CopticDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.CopticDate.java">org/threeten/extra/chrono/CopticDate.java</a>
                 </td>
                 <td>
                   0
@@ -494,7 +466,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingDate.java">org/threeten/extra/chrono/AccountingDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingDate.java">org/threeten/extra/chrono/AccountingDate.java</a>
                 </td>
                 <td>
                   0
@@ -508,7 +480,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.DiscordianChronology.java">org/threeten/extra/chrono/DiscordianChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.DiscordianChronology.java">org/threeten/extra/chrono/DiscordianChronology.java</a>
                 </td>
                 <td>
                   0
@@ -522,7 +494,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.YearQuarter.java">org/threeten/extra/YearQuarter.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.YearQuarter.java">org/threeten/extra/YearQuarter.java</a>
                 </td>
                 <td>
                   0
@@ -536,7 +508,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry010Date.java">org/threeten/extra/chrono/Symmetry010Date.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry010Date.java">org/threeten/extra/chrono/Symmetry010Date.java</a>
                 </td>
                 <td>
                   0
@@ -550,7 +522,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#target.maven-archiver.pom.properties">target/maven-archiver/pom.properties</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#target.maven-archiver.pom.properties">target/maven-archiver/pom.properties</a>
                 </td>
                 <td>
                   0
@@ -564,7 +536,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry454Date.java">org/threeten/extra/chrono/Symmetry454Date.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Years.java">org/threeten/extra/Years.java</a>
                 </td>
                 <td>
                   0
@@ -578,7 +550,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Years.java">org/threeten/extra/Years.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry454Date.java">org/threeten/extra/chrono/Symmetry454Date.java</a>
                 </td>
                 <td>
                   0
@@ -592,7 +564,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.DiscordianEra.java">org/threeten/extra/chrono/DiscordianEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.LocalDateRange.java">org/threeten/extra/LocalDateRange.java</a>
                 </td>
                 <td>
                   0
@@ -606,7 +578,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Temporals.java">org/threeten/extra/Temporals.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Temporals.java">org/threeten/extra/Temporals.java</a>
                 </td>
                 <td>
                   0
@@ -620,7 +592,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.TimeSource.java">org/threeten/extra/scale/TimeSource.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.DiscordianEra.java">org/threeten/extra/chrono/DiscordianEra.java</a>
                 </td>
                 <td>
                   0
@@ -634,7 +606,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AbstractNileChronology.java">org/threeten/extra/chrono/AbstractNileChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.TimeSource.java">org/threeten/extra/scale/TimeSource.java</a>
                 </td>
                 <td>
                   0
@@ -648,7 +620,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Days.java">org/threeten/extra/Days.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Seconds.java">org/threeten/extra/Seconds.java</a>
                 </td>
                 <td>
                   0
@@ -662,7 +634,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.PaxDate.java">org/threeten/extra/chrono/PaxDate.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AbstractNileChronology.java">org/threeten/extra/chrono/AbstractNileChronology.java</a>
                 </td>
                 <td>
                   0
@@ -676,7 +648,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry454Chronology.java">org/threeten/extra/chrono/Symmetry454Chronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.PeriodDuration.java">org/threeten/extra/PeriodDuration.java</a>
                 </td>
                 <td>
                   0
@@ -690,7 +662,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Interval.java">org/threeten/extra/Interval.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Days.java">org/threeten/extra/Days.java</a>
                 </td>
                 <td>
                   0
@@ -704,7 +676,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Minutes.java">org/threeten/extra/Minutes.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.PaxDate.java">org/threeten/extra/chrono/PaxDate.java</a>
                 </td>
                 <td>
                   0
@@ -718,7 +690,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingEra.java">org/threeten/extra/chrono/AccountingEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.Symmetry454Chronology.java">org/threeten/extra/chrono/Symmetry454Chronology.java</a>
                 </td>
                 <td>
                   0
@@ -732,7 +704,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.InternationalFixedEra.java">org/threeten/extra/chrono/InternationalFixedEra.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Interval.java">org/threeten/extra/Interval.java</a>
                 </td>
                 <td>
                   0
@@ -746,7 +718,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.PaxChronology.java">org/threeten/extra/chrono/PaxChronology.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Minutes.java">org/threeten/extra/Minutes.java</a>
                 </td>
                 <td>
                   0
@@ -760,7 +732,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Weeks.java">org/threeten/extra/Weeks.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingEra.java">org/threeten/extra/chrono/AccountingEra.java</a>
                 </td>
                 <td>
                   0
@@ -774,7 +746,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.AmPm.java">org/threeten/extra/AmPm.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.InternationalFixedEra.java">org/threeten/extra/chrono/InternationalFixedEra.java</a>
                 </td>
                 <td>
                   0
@@ -788,7 +760,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.DayOfYear.java">org/threeten/extra/DayOfYear.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.Weeks.java">org/threeten/extra/Weeks.java</a>
                 </td>
                 <td>
                   0
@@ -802,7 +774,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingChronologyBuilder.java">org/threeten/extra/chrono/AccountingChronologyBuilder.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.PaxChronology.java">org/threeten/extra/chrono/PaxChronology.java</a>
                 </td>
                 <td>
                   0
@@ -816,7 +788,49 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.TaiInstant.java">org/threeten/extra/scale/TaiInstant.java</a>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.AmPm.java">org/threeten/extra/AmPm.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.DayOfYear.java">org/threeten/extra/DayOfYear.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.chrono.AccountingChronologyBuilder.java">org/threeten/extra/chrono/AccountingChronologyBuilder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.threeten.org/threeten-extra/checkstyle.html#org.threeten.extra.scale.TaiInstant.java">org/threeten/extra/scale/TaiInstant.java</a>
                 </td>
                 <td>
                   0
