@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayOfYear.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">DayOfYear.java</span></div><h1>DayOfYear.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoField.DAY_OF_YEAR;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.ZoneId;
+import java.time.chrono.Chronology;
+import java.time.chrono.IsoChronology;
+import java.time.temporal.ChronoField;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalQueries;
+import java.time.temporal.TemporalQuery;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.time.temporal.ValueRange;
+import java.util.Objects;
+
+/**
+ * A day-of-year in the ISO-8601 calendar system.
+ * &lt;p&gt;
+ * {@code DayOfYear} is an immutable date-time object that represents a day-of-year.
+ * It is a type-safe way of representing a day-of-year in an application.
+ * Any field that can be derived from a day-of-year can be obtained.
+ * &lt;p&gt;
+ * This class does not store or represent a year, month, time or time-zone.
+ * For example, the value &quot;51&quot; can be stored in a {@code DayOfYear} and
+ * would represent the 51st day of any year.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class DayOfYear
+        implements TemporalAccessor, TemporalAdjuster, Comparable&lt;DayOfYear&gt;, Serializable {
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -8789692114017384034L;
+    /**
+     * Cache of singleton instances.
+     */
+<span class="fc" id="L82">    private static final DayOfYear[] VALUES = new DayOfYear[366];</span>
+    static {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (int i = 0; i &lt; 366; i++) {</span>
+<span class="fc" id="L85">            VALUES[i] = new DayOfYear(i + 1);</span>
+        }
+<span class="fc" id="L87">    }</span>
+
+    /**
+     * The day-of-year being represented, from 1 to 366.
+     */
+    private final int day;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains the current day-of-year from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link java.time.Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current day-of-year.
+     * The zone and offset will be set based on the time-zone in the clock.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current day-of-year using the system clock and default time-zone, not null
+     */
+    public static DayOfYear now() {
+<span class="nc" id="L108">        return now(Clock.systemDefaultZone());</span>
+    }
+
+    /**
+     * Obtains the current day-of-year from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(java.time.ZoneId) system clock} to obtain the current day-of-year.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the zone ID to use, not null
+     * @return the current day-of-year using the system clock, not null
+     */
+    public static DayOfYear now(ZoneId zone) {
+<span class="nc" id="L124">        return now(Clock.system(zone));</span>
+    }
+
+    /**
+     * Obtains the current day-of-year from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current day-of-year.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current day-of-year, not null
+     */
+    public static DayOfYear now(Clock clock) {
+<span class="fc" id="L138">        final LocalDate now = LocalDate.now(clock);  // called once</span>
+<span class="fc" id="L139">        return DayOfYear.of(now.getDayOfYear());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code DayOfYear}.
+     * &lt;p&gt;
+     * A day-of-year object represents one of the 366 days of the year, from 1 to 366.
+     *
+     * @param dayOfYear  the day-of-year to represent, from 1 to 366
+     * @return the day-of-year, not null
+     * @throws DateTimeException if the day-of-year is invalid
+     */
+    public static DayOfYear of(int dayOfYear) {
+        try {
+<span class="fc" id="L154">            return VALUES[dayOfYear - 1];</span>
+<span class="fc" id="L155">        } catch (IndexOutOfBoundsException ex) {</span>
+<span class="fc" id="L156">            throw new DateTimeException(&quot;Invalid value for DayOfYear: &quot; + dayOfYear);</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code DayOfYear} from a date-time object.
+     * &lt;p&gt;
+     * This obtains a day-of-year based on the specified temporal.
+     * A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+     * which this factory converts to an instance of {@code DayOfYear}.
+     * &lt;p&gt;
+     * The conversion extracts the {@link ChronoField#DAY_OF_YEAR day-of-year} field.
+     * The extraction is only permitted if the temporal object has an ISO
+     * chronology, or can be converted to a {@code LocalDate}.
+     * &lt;p&gt;
+     * This method matches the signature of the functional interface {@link TemporalQuery}
+     * allowing it to be used in queries via method reference, {@code DayOfYear::from}.
+     *
+     * @param temporal  the temporal object to convert, not null
+     * @return the day-of-year, not null
+     * @throws DateTimeException if unable to convert to a {@code DayOfYear}
+     */
+    public static DayOfYear from(TemporalAccessor temporal) {
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (temporal instanceof DayOfYear) {</span>
+<span class="nc" id="L181">            return (DayOfYear) temporal;</span>
+        }
+<span class="fc" id="L183">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
+        try {
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
+<span class="nc" id="L186">                temporal = LocalDate.from(temporal);</span>
+            }
+<span class="fc" id="L188">            return of(temporal.get(DAY_OF_YEAR));</span>
+<span class="fc" id="L189">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L190">            throw new DateTimeException(&quot;Unable to obtain DayOfYear from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L191">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructor.
+     *
+     * @param dayOfYear  the day-of-year to represent
+     */
+<span class="fc" id="L201">    private DayOfYear(int dayOfYear) {</span>
+<span class="fc" id="L202">        this.day = dayOfYear;</span>
+<span class="fc" id="L203">    }</span>
+
+    /**
+     * Validates the input.
+     *
+     * @return the valid object, not null
+     */
+    private Object readResolve() {
+<span class="fc" id="L211">        return of(day);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the day-of-year value.
+     *
+     * @return the day-of-year, from 1 to 366
+     */
+    public int getValue() {
+<span class="fc" id="L221">        return day;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified field is supported.
+     * &lt;p&gt;
+     * This checks if this day-of-year can be queried for the specified field.
+     * If false, then calling the {@link #range(TemporalField) range},
+     * {@link #get(TemporalField) get} and {@link #getLong(TemporalField) getLong}
+     * methods will throw an exception.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The supported fields are:
+     * &lt;ul&gt;
+     * &lt;li&gt;{@code DAY_OF_YEAR}
+     * &lt;/ul&gt;
+     * All other {@code ChronoField} instances will return false.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.isSupportedBy(TemporalAccessor)}
+     * passing {@code this} as the argument.
+     * Whether the field is supported is determined by the field.
+     *
+     * @param field  the field to check, null returns false
+     * @return true if the field is supported on this day-of-year, false if not
+     */
+    @Override
+    public boolean isSupported(TemporalField field) {
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">            return field == DAY_OF_YEAR;</span>
+        }
+<span class="pc bpc" id="L253" title="3 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the range of valid values for the specified field.
+     * &lt;p&gt;
+     * The range object expresses the minimum and maximum valid values for a field.
+     * This day-of-year is used to enhance the accuracy of the returned range.
+     * If it is not possible to return the range, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The {@link #isSupported(TemporalField) supported fields} will return
+     * appropriate range instances.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.rangeRefinedBy(TemporalAccessor)}
+     * passing {@code this} as the argument.
+     * Whether the range can be obtained is determined by the field.
+     *
+     * @param field  the field to query the range for, not null
+     * @return the range of valid values for the field, not null
+     * @throws DateTimeException if the range for the field cannot be obtained
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     */
+    @Override
+    public ValueRange range(TemporalField field) {
+<span class="fc" id="L282">        return TemporalAccessor.super.range(field);</span>
+    }
+
+    /**
+     * Gets the value of the specified field from this day-of-year as an {@code int}.
+     * &lt;p&gt;
+     * This queries this day-of-year for the value for the specified field.
+     * The returned value will always be within the valid range of values for the field.
+     * If it is not possible to return the value, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The {@link #isSupported(TemporalField) supported fields} will return valid
+     * values based on this day-of-year.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.getFrom(TemporalAccessor)}
+     * passing {@code this} as the argument. Whether the value can be obtained,
+     * and what the value represents, is determined by the field.
+     *
+     * @param field  the field to get, not null
+     * @return the value for the field
+     * @throws DateTimeException if a value for the field cannot be obtained or
+     *  the value is outside the range of valid values for the field
+     * @throws UnsupportedTemporalTypeException if the field is not supported or
+     *  the range of values exceeds an {@code int}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public int get(TemporalField field) {
+<span class="fc" id="L313">        return TemporalAccessor.super.get(field);</span>
+    }
+
+    /**
+     * Gets the value of the specified field from this day-of-year as a {@code long}.
+     * &lt;p&gt;
+     * This queries this day-of-year for the value for the specified field.
+     * If it is not possible to return the value, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The {@link #isSupported(TemporalField) supported fields} will return valid
+     * values based on this day-of-year.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.getFrom(TemporalAccessor)}
+     * passing {@code this} as the argument. Whether the value can be obtained,
+     * and what the value represents, is determined by the field.
+     *
+     * @param field  the field to get, not null
+     * @return the value for the field
+     * @throws DateTimeException if a value for the field cannot be obtained
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public long getLong(TemporalField field) {
+<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (field == DAY_OF_YEAR) {</span>
+<span class="fc" id="L342">            return day;</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L344">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+        }
+<span class="nc" id="L346">        return field.getFrom(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the year is valid for this day-of-year.
+     * &lt;p&gt;
+     * This method checks whether this day-of-yearand the input year form
+     * a valid date. This can only return false for day-of-year 366.
+     *
+     * @param year  the year to validate
+     * @return true if the year is valid for this day-of-year
+     */
+    public boolean isValidYear(int year) {
+<span class="fc bfc" id="L360" title="All 4 branches covered.">        return (day &lt; 366 || Year.isLeap(year));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Queries this day-of-year using the specified query.
+     * &lt;p&gt;
+     * This queries this day-of-year using the specified query strategy object.
+     * The {@code TemporalQuery} object defines the logic to be used to
+     * obtain the result. Read the documentation of the query to understand
+     * what the result of this method will be.
+     * &lt;p&gt;
+     * The result of this method is obtained by invoking the
+     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
+     * specified query passing {@code this} as the argument.
+     *
+     * @param &lt;R&gt; the type of the result
+     * @param query  the query to invoke, not null
+     * @return the query result, null may be returned (defined by the query)
+     * @throws DateTimeException if unable to query (defined by the query)
+     * @throws ArithmeticException if numeric overflow occurs (defined by the query)
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L385" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L386">            return (R) IsoChronology.INSTANCE;</span>
+        }
+<span class="fc" id="L388">        return TemporalAccessor.super.query(query);</span>
+    }
+
+    /**
+     * Adjusts the specified temporal object to have this day-of-year.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with the day-of-year changed to be the same as this.
+     * &lt;p&gt;
+     * The adjustment is equivalent to using {@link Temporal#with(TemporalField, long)}
+     * passing {@link ChronoField#DAY_OF_YEAR} as the field.
+     * If the specified temporal object does not use the ISO calendar system then
+     * a {@code DateTimeException} is thrown.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#with(TemporalAdjuster)}:
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   temporal = thisDay.adjustInto(temporal);
+     *   temporal = temporal.with(thisDay);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the target object to be adjusted, not null
+     * @return the adjusted object, not null
+     * @throws DateTimeException if unable to make the adjustment
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal adjustInto(Temporal temporal) {
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="nc" id="L420">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+        }
+<span class="fc" id="L422">        return temporal.with(DAY_OF_YEAR, day);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Combines this day-of-year with a year to create a {@code LocalDate}.
+     * &lt;p&gt;
+     * This returns a {@code LocalDate} formed from this day and the specified year.
+     * &lt;p&gt;
+     * This method can be used as part of a chain to produce a date:
+     * &lt;pre&gt;
+     *  LocalDate date = day.atYear(year);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * The day-of-year value 366 is only valid in a leap year.
+     *
+     * @param year  the year to use, not null
+     * @return the local date formed from this day and the specified year, not null
+     * @throws DateTimeException if the year is invalid or this is day 366 and the year is not a leap year
+     */
+    public LocalDate atYear(Year year) {
+<span class="fc" id="L443">        Objects.requireNonNull(year, &quot;year&quot;);</span>
+<span class="fc" id="L444">        return year.atDay(day);</span>
+    }
+
+    /**
+     * Combines this day-of-year with a year to create a {@code LocalDate}.
+     * &lt;p&gt;
+     * This returns a {@code LocalDate} formed from this day and the specified year.
+     * &lt;p&gt;
+     * This method can be used as part of a chain to produce a date:
+     * &lt;pre&gt;
+     *  LocalDate date = day.atYear(year);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * The day-of-year value 366 is only valid in a leap year.
+     *
+     * @param year  the year to use, from MIN_YEAR to MAX_YEAR
+     * @return the local date formed from this day and the specified year, not null
+     * @throws DateTimeException if the year is invalid or this is day 366 and the year is not a leap year
+     */
+    public LocalDate atYear(int year) {
+<span class="fc" id="L464">        return LocalDate.ofYearDay(year, day);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this day-of-year to another.
+     * &lt;p&gt;
+     * The comparison is based on the value of the day.
+     * It is &quot;consistent with equals&quot;, as defined by {@link Comparable}.
+     *
+     * @param other  the other day-of-year instance, not null
+     * @return the comparator value, negative if less, positive if greater
+     */
+    @Override
+    public int compareTo(DayOfYear other) {
+<span class="fc" id="L479">        return day - other.day;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this day-of-year is equal to another day-of-year.
+     *
+     * @param obj  the other day-of-year instance, null returns false
+     * @return true if the day-of-year is the same
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L491" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L492">            return true;</span>
+        }
+<span class="fc bfc" id="L494" title="All 2 branches covered.">        if (obj instanceof DayOfYear) {</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">            return day == ((DayOfYear) obj).day;</span>
+        }
+<span class="fc" id="L497">        return false;</span>
+    }
+
+    /**
+     * A hash code for this day-of-year.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L507">        return day;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Outputs this day-of-year as a {@code String}.
+     *
+     * @return a string representation of this day-of-year, not null
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L518">        return &quot;DayOfYear:&quot; + day;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

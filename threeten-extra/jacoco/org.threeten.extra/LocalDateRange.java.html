@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocalDateRange.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">LocalDateRange.java</span></div><h1>LocalDateRange.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAdjuster;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+/**
+ * A range of local dates.
+ * &lt;p&gt;
+ * A {@code LocalDateRange} represents a range of dates, from a start date to an end date.
+ * Instances can be constructed from either a half-open or a closed range of dates.
+ * Internally, the class stores the start and end dates, with the start inclusive and the end exclusive.
+ * The end date is always greater than or equal to the start date.
+ * &lt;p&gt;
+ * The constants {@link LocalDate#MIN} and {@link LocalDate#MAX} can be used
+ * to indicate an unbounded far-past or far-future. Note that there is no difference
+ * between a half-open and a closed range when the end is {@link LocalDate#MAX}.
+ * &lt;p&gt;
+ * Date ranges are not comparable. To compare the length of two ranges, it is
+ * generally recommended to compare the number of days the contain.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class LocalDateRange
+        implements Serializable {
+
+    /**
+     * A range over the whole time-line.
+     */
+<span class="fc" id="L74">    public static final LocalDateRange ALL = new LocalDateRange(LocalDate.MIN, LocalDate.MAX);</span>
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = 3358656715467L;
+
+    /**
+     * The start date (inclusive).
+     */
+    private final LocalDate start;
+    /**
+     * The end date (exclusive).
+     */
+    private final LocalDate end;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a half-open range of dates, including the start and excluding the end.
+     * &lt;p&gt;
+     * The range includes the start date and excludes the end date, unless the end
+     * is {@link LocalDate#MAX}.
+     * The end date must be equal to or after the start date.
+     * This definition permits an empty range located at a specific date.
+     *
+     * @param startInclusive  the start date, inclusive, LocalDate.MIN treated as unbounded, not null
+     * @param endExclusive  the end date, exclusive, LocalDate.MAX treated as unbounded, not null
+     * @return the half-open range, not null
+     * @throws DateTimeException if the end is before the start
+     */
+    public static LocalDateRange of(LocalDate startInclusive, LocalDate endExclusive) {
+<span class="fc" id="L105">        Objects.requireNonNull(startInclusive, &quot;startInclusive&quot;);</span>
+<span class="fc" id="L106">        Objects.requireNonNull(endExclusive, &quot;endExclusive&quot;);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (endExclusive.isBefore(startInclusive)) {</span>
+<span class="fc" id="L108">            throw new DateTimeException(&quot;End date must on or after start date&quot;);</span>
+        }
+<span class="fc" id="L110">        return new LocalDateRange(startInclusive, endExclusive);</span>
+    }
+
+    /**
+     * Obtains a closed range of dates, including the start and end.
+     * &lt;p&gt;
+     * The range includes the start date and the end date.
+     * The end date must be equal to or after the start date.
+     * 
+     * @param startInclusive  the inclusive start date, LocalDate.MIN treated as unbounded, not null
+     * @param endInclusive  the inclusive end date, LocalDate.MAX treated as unbounded, not null
+     * @return the closed range
+     * @throws DateTimeException if the end is before the start
+     */
+    public static LocalDateRange ofClosed(LocalDate startInclusive, LocalDate endInclusive) {
+<span class="fc" id="L125">        Objects.requireNonNull(startInclusive, &quot;startInclusive&quot;);</span>
+<span class="fc" id="L126">        Objects.requireNonNull(endInclusive, &quot;endInclusive&quot;);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (endInclusive.isBefore(startInclusive)) {</span>
+<span class="fc" id="L128">            throw new DateTimeException(&quot;Start date must on or before end date&quot;);</span>
+        }
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        LocalDate end = (endInclusive.equals(LocalDate.MAX) ? LocalDate.MAX : endInclusive.plusDays(1));</span>
+<span class="fc" id="L131">        return new LocalDateRange(startInclusive, end);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code LocalDateRange} from the start and a period.
+     * &lt;p&gt;
+     * The end date is calculated as the start plus the duration.
+     * The period must not be negative.
+     *
+     * @param startInclusive  the start date, inclusive, not null
+     * @param period  the period from the start to the end, not null
+     * @return the range, not null
+     * @throws DateTimeException if the end is before the start,
+     *  or if the period addition cannot be made
+     * @throws ArithmeticException if numeric overflow occurs when adding the period
+     */
+    public static LocalDateRange of(LocalDate startInclusive, Period period) {
+<span class="fc" id="L148">        Objects.requireNonNull(startInclusive, &quot;startInclusive&quot;);</span>
+<span class="fc" id="L149">        Objects.requireNonNull(period, &quot;period&quot;);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (period.isNegative()) {</span>
+<span class="fc" id="L151">            throw new DateTimeException(&quot;Period must not be zero or negative&quot;);</span>
+        }
+<span class="fc" id="L153">        return new LocalDateRange(startInclusive, startInclusive.plus(period));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code LocalDateRange} from a text string such as
+     * {@code 2007-12-03/2007-12-04}, where the end date is exclusive.
+     * &lt;p&gt;
+     * The string must consist of one of the following three formats:
+     * &lt;ul&gt;
+     * &lt;li&gt;a representations of an {@link LocalDate}, followed by a forward slash,
+     *  followed by a representation of a {@link LocalDate}
+     * &lt;li&gt;a representation of an {@link LocalDate}, followed by a forward slash,
+     *  followed by a representation of a {@link Period}
+     * &lt;li&gt;a representation of a {@link Period}, followed by a forward slash,
+     *  followed by a representation of an {@link LocalDate}
+     * &lt;/ul&gt;
+     *
+     * @param text  the text to parse, not null
+     * @return the parsed range, not null
+     * @throws DateTimeParseException if the text cannot be parsed
+     */
+    public static LocalDateRange parse(CharSequence text) {
+<span class="fc" id="L176">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            if (text.charAt(i) == '/') {</span>
+<span class="fc" id="L179">                char firstChar = text.charAt(0);</span>
+<span class="fc bfc" id="L180" title="All 4 branches covered.">                if (firstChar == 'P' || firstChar == 'p') {</span>
+                    // period followed by date
+<span class="fc" id="L182">                    Period duration = Period.parse(text.subSequence(0, i));</span>
+<span class="fc" id="L183">                    LocalDate end = LocalDate.parse(text.subSequence(i + 1, text.length()));</span>
+<span class="fc" id="L184">                    return LocalDateRange.of(end.minus(duration), end);</span>
+                } else {
+                    // date followed by date or period
+<span class="fc" id="L187">                    LocalDate start = LocalDate.parse(text.subSequence(0, i));</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">                    if (i + 1 &lt; text.length()) {</span>
+<span class="fc" id="L189">                        char c = text.charAt(i + 1);</span>
+<span class="fc bfc" id="L190" title="All 4 branches covered.">                        if (c == 'P' || c == 'p') {</span>
+<span class="fc" id="L191">                            Period duration = Period.parse(text.subSequence(i + 1, text.length()));</span>
+<span class="fc" id="L192">                            return LocalDateRange.of(start, start.plus(duration));</span>
+                        }
+                    }
+<span class="fc" id="L195">                    LocalDate end = LocalDate.parse(text.subSequence(i + 1, text.length()));</span>
+<span class="fc" id="L196">                    return LocalDateRange.of(start, end);</span>
+                }
+            }
+        }
+<span class="fc" id="L200">        throw new DateTimeParseException(&quot;LocalDateRange cannot be parsed, no forward slash found&quot;, text, 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructor.
+     *
+     * @param startInclusive  the start date, inclusive, validated not null
+     * @param endExclusive  the end date, exclusive, validated not null
+     */
+<span class="fc" id="L210">    private LocalDateRange(LocalDate startInclusive, LocalDate endExclusive) {</span>
+<span class="fc" id="L211">        this.start = startInclusive;</span>
+<span class="fc" id="L212">        this.end = endExclusive;</span>
+<span class="fc" id="L213">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the start date of this range, inclusive.
+     * &lt;p&gt;
+     * This will return {@link LocalDate#MIN} if the range is unbounded at the start.
+     * In this case, the range includes all dates into the far-past.
+     *
+     * @return the start date
+     */
+    public LocalDate getStart() {
+<span class="fc" id="L225">        return start;</span>
+    }
+
+    /**
+     * Gets the end date of this range, exclusive.
+     * &lt;p&gt;
+     * This will return {@link LocalDate#MAX} if the range is unbounded at the end.
+     * In this case, the range includes all dates into the far-future.
+     *
+     * @return the end date, exclusive
+     */
+    public LocalDate getEnd() {
+<span class="fc" id="L237">        return end;</span>
+    }
+
+    /**
+     * Gets the end date of this range, inclusive.
+     * &lt;p&gt;
+     * This will return {@link LocalDate#MAX} if the range is unbounded at the end.
+     * In this case, the range includes all dates into the far-future.
+     * 
+     * @return the end date, inclusive
+     */
+    public LocalDate getEndInclusive() {
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (isUnboundedEnd()) {</span>
+<span class="fc" id="L250">            return LocalDate.MAX;</span>
+        }
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (end.equals(LocalDate.MIN)) {</span>
+<span class="fc" id="L253">            return LocalDate.MIN;</span>
+        }
+<span class="fc" id="L255">        return end.minusDays(1);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the range is empty.
+     * &lt;p&gt;
+     * An empty range occurs when the start date equals the inclusive end date.
+     * 
+     * @return true if the range is empty
+     */
+    public boolean isEmpty() {
+<span class="fc" id="L267">        return start.equals(end);</span>
+    }
+
+    /**
+     * Checks if the start of the range is unbounded.
+     * 
+     * @return true if start is unbounded
+     */
+    public boolean isUnboundedStart() {
+<span class="fc" id="L276">        return start.equals(LocalDate.MIN);</span>
+    }
+
+    /**
+     * Checks if the end of the range is unbounded.
+     * 
+     * @return true if end is unbounded
+     */
+    public boolean isUnboundedEnd() {
+<span class="fc" id="L285">        return end.equals(LocalDate.MAX);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this range with the start date adjusted.
+     * &lt;p&gt;
+     * This returns a new instance with the start date altered.
+     * Since {@code LocalDate} implements {@code TemporalAdjuster} any
+     * local date can simply be passed in.
+     * &lt;p&gt;
+     * For example, to adjust the start to one week earlier:
+     * &lt;pre&gt;
+     *  range = range.withStart(date -&gt; date.minus(1, ChronoUnit.WEEKS));
+     * &lt;/pre&gt;
+     * 
+     * @param adjuster  the adjuster to use, not null
+     * @return a copy of this range with the start date adjusted
+     * @throws DateTimeException if the new start date is after the current end date
+     */
+    public LocalDateRange withStart(TemporalAdjuster adjuster) {
+<span class="fc" id="L306">        return LocalDateRange.of(start.with(adjuster), end);</span>
+    }
+
+    /**
+     * Returns a copy of this range with the end date adjusted.
+     * &lt;p&gt;
+     * This returns a new instance with the exclusive end date altered.
+     * Since {@code LocalDate} implements {@code TemporalAdjuster} any
+     * local date can simply be passed in.
+     * &lt;p&gt;
+     * For example, to adjust the end to one week later:
+     * &lt;pre&gt;
+     *  range = range.withEnd(date -&gt; date.plus(1, ChronoUnit.WEEKS));
+     * &lt;/pre&gt;
+     * 
+     * @param adjuster  the adjuster to use, not null
+     * @return a copy of this range with the end date adjusted
+     * @throws DateTimeException if the new end date is before the current start date
+     */
+    public LocalDateRange withEnd(TemporalAdjuster adjuster) {
+<span class="fc" id="L326">        return LocalDateRange.of(start, end.with(adjuster));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this range contains the specified date.
+     * &lt;p&gt;
+     * This checks if the specified date is within the bounds of this range.
+     * If this range has an unbounded start then {@code contains(LocalDate#MIN)} returns true.
+     * If this range has an unbounded end then {@code contains(LocalDate#MAX)} returns true.
+     * If this range is empty then this method always returns false.
+     * 
+     * @param date  the date to check for, not null
+     * @return true if this range contains the date
+     */
+    public boolean contains(LocalDate date) {
+<span class="fc" id="L342">        Objects.requireNonNull(date, &quot;date&quot;);</span>
+<span class="fc bfc" id="L343" title="All 6 branches covered.">        return start.compareTo(date) &lt;= 0 &amp;&amp; (date.compareTo(end) &lt; 0 || isUnboundedEnd());</span>
+    }
+
+    /**
+     * Checks if this range encloses the specified range.
+     * &lt;p&gt;
+     * This checks if the bounds of the specified range are within the bounds of this range.
+     * An empty range encloses itself.
+     * 
+     * @param other  the other range to check for, not null
+     * @return true if this range contains all dates in the other range
+     */
+    public boolean encloses(LocalDateRange other) {
+<span class="fc" id="L356">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L357" title="All 4 branches covered.">        return start.compareTo(other.start) &lt;= 0 &amp;&amp; other.end.compareTo(end) &lt;= 0;</span>
+    }
+
+    /**
+     * Checks if this range abuts the specified range.
+     * &lt;p&gt;
+     * The result is true if the end of this range is the start of the other, or vice versa.
+     * An empty range does not abut itself.
+     *
+     * @param other  the other range, not null
+     * @return true if this range abuts the other range
+     */
+    public boolean abuts(LocalDateRange other) {
+<span class="fc" id="L370">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L371">        return end.equals(other.start) ^ start.equals(other.end);</span>
+    }
+
+    /**
+     * Checks if this range is connected to the specified range.
+     * &lt;p&gt;
+     * The result is true if the two ranges have an enclosed range in common, even if that range is empty.
+     * An empty range is connected to itself.
+     * &lt;p&gt;
+     * This is equivalent to {@code (overlaps(other) || abuts(other))}.
+     *
+     * @param other  the other range, not null
+     * @return true if this range is connected to the other range
+     */
+    public boolean isConnected(LocalDateRange other) {
+<span class="fc" id="L386">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L387" title="All 6 branches covered.">        return this.equals(other) || (start.compareTo(other.end) &lt;= 0 &amp;&amp; other.start.compareTo(end) &lt;= 0);</span>
+    }
+
+    /**
+     * Checks if this range overlaps the specified range.
+     * &lt;p&gt;
+     * The result is true if the the two ranges share some part of the time-line.
+     * An empty range overlaps itself.
+     * &lt;p&gt;
+     * This is equivalent to {@code (isConnected(other) &amp;&amp; !abuts(other))}.
+     *
+     * @param other  the time range to compare to, null means a zero length range now
+     * @return true if the time ranges overlap
+     */
+    public boolean overlaps(LocalDateRange other) {
+<span class="fc" id="L402">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L403" title="All 6 branches covered.">        return other.equals(this) || (start.compareTo(other.end) &lt; 0 &amp;&amp; other.start.compareTo(end) &lt; 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Calculates the range that is the intersection of this range and the specified range.
+     * &lt;p&gt;
+     * This finds the intersection of two ranges.
+     * This throws an exception if the two ranges are not {@linkplain #isConnected(LocalDateRange) connected}.
+     * 
+     * @param other  the other range to check for, not null
+     * @return the range that is the intersection of the two ranges
+     * @throws DateTimeException if the ranges do not connect
+     */
+    public LocalDateRange intersection(LocalDateRange other) {
+<span class="fc" id="L418">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (isConnected(other) == false) {</span>
+<span class="fc" id="L420">            throw new DateTimeException(&quot;Ranges do not connect: &quot; + this + &quot; and &quot; + other);</span>
+        }
+<span class="fc" id="L422">        int cmpStart = start.compareTo(other.start);</span>
+<span class="fc" id="L423">        int cmpEnd = end.compareTo(other.end);</span>
+<span class="fc bfc" id="L424" title="All 4 branches covered.">        if (cmpStart &gt;= 0 &amp;&amp; cmpEnd &lt;= 0) {</span>
+<span class="fc" id="L425">            return this;</span>
+<span class="fc bfc" id="L426" title="All 4 branches covered.">        } else if (cmpStart &lt;= 0 &amp;&amp; cmpEnd &gt;= 0) {</span>
+<span class="fc" id="L427">            return other;</span>
+        } else {
+<span class="fc bfc" id="L429" title="All 2 branches covered.">            LocalDate newStart = (cmpStart &gt;= 0 ? start : other.start);</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">            LocalDate newEnd = (cmpEnd &lt;= 0 ? end : other.end);</span>
+<span class="fc" id="L431">            return LocalDateRange.of(newStart, newEnd);</span>
+        }
+    }
+
+    /**
+     * Calculates the range that is the union of this range and the specified range.
+     * &lt;p&gt;
+     * This finds the union of two ranges.
+     * This throws an exception if the two ranges are not {@linkplain #isConnected(LocalDateRange) connected}.
+     * 
+     * @param other  the other range to check for, not null
+     * @return the range that is the union of the two ranges
+     * @throws DateTimeException if the ranges do not connect
+     */
+    public LocalDateRange union(LocalDateRange other) {
+<span class="fc" id="L446">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L447" title="All 2 branches covered.">        if (isConnected(other) == false) {</span>
+<span class="fc" id="L448">            throw new DateTimeException(&quot;Ranges do not connect: &quot; + this + &quot; and &quot; + other);</span>
+        }
+<span class="fc" id="L450">        int cmpStart = start.compareTo(other.start);</span>
+<span class="fc" id="L451">        int cmpEnd = end.compareTo(other.end);</span>
+<span class="fc bfc" id="L452" title="All 4 branches covered.">        if (cmpStart &gt;= 0 &amp;&amp; cmpEnd &lt;= 0) {</span>
+<span class="fc" id="L453">            return other;</span>
+<span class="fc bfc" id="L454" title="All 4 branches covered.">        } else if (cmpStart &lt;= 0 &amp;&amp; cmpEnd &gt;= 0) {</span>
+<span class="fc" id="L455">            return this;</span>
+        } else {
+<span class="fc bfc" id="L457" title="All 2 branches covered.">            LocalDate newStart = (cmpStart &gt;= 0 ? other.start : start);</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">            LocalDate newEnd = (cmpEnd &lt;= 0 ? other.end : end);</span>
+<span class="fc" id="L459">            return LocalDateRange.of(newStart, newEnd);</span>
+        }
+    }
+
+    /**
+     * Calculates the smallest range that encloses this range and the specified range.
+     * &lt;p&gt;
+     * The result of this method will {@linkplain #encloses(LocalDateRange) enclose}
+     * this range and the specified range.
+     * 
+     * @param other  the other range to check for, not null
+     * @return the range that spans the two ranges
+     */
+    public LocalDateRange span(LocalDateRange other) {
+<span class="fc" id="L473">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L474">        int cmpStart = start.compareTo(other.start);</span>
+<span class="fc" id="L475">        int cmpEnd = end.compareTo(other.end);</span>
+<span class="fc bfc" id="L476" title="All 2 branches covered.">        LocalDate newStart = (cmpStart &gt;= 0 ? other.start : start);</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">        LocalDate newEnd = (cmpEnd &lt;= 0 ? other.end : end);</span>
+<span class="fc" id="L478">        return LocalDateRange.of(newStart, newEnd);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Streams the set of dates included in the range.
+     * &lt;p&gt;
+     * This returns a stream consisting of each date in the range.
+     * The stream is ordered.
+     * 
+     * @return the stream of dates from the start to the end
+     */
+    public Stream&lt;LocalDate&gt; stream() {
+<span class="fc" id="L491">        Iterator&lt;LocalDate&gt; it = new Iterator&lt;LocalDate&gt;() {</span>
+<span class="fc" id="L492">            private LocalDate current = start;</span>
+
+            @Override
+            public LocalDate next() {
+<span class="fc" id="L496">                LocalDate result = current;</span>
+<span class="fc" id="L497">                current = current.plusDays(1);</span>
+<span class="fc" id="L498">                return result;</span>
+            }
+
+            @Override
+            public boolean hasNext() {
+<span class="fc" id="L503">                return current.isBefore(end);</span>
+            }
+        };
+<span class="fc" id="L506">        long count = end.toEpochDay() - start.toEpochDay() + 1;</span>
+<span class="fc" id="L507">        Spliterator&lt;LocalDate&gt; spliterator = Spliterators.spliterator(it, count,</span>
+                Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.DISTINCT | Spliterator.ORDERED |
+                        Spliterator.SORTED | Spliterator.SIZED | Spliterator.SUBSIZED);
+<span class="fc" id="L510">        return StreamSupport.stream(spliterator, false);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this range is after the specified date.
+     * &lt;p&gt;
+     * The result is true if every date in this range is after the specified date.
+     * An empty range behaves as though it is a date for comparison purposes.
+     *
+     * @param date  the other date to compare to, not null
+     * @return true if the start of this range is after the specified date
+     */
+    public boolean isAfter(LocalDate date) {
+<span class="fc bfc" id="L524" title="All 2 branches covered.">        return start.compareTo(date) &gt; 0;</span>
+    }
+
+    /**
+     * Checks if this range is before the specified date.
+     * &lt;p&gt;
+     * The result is true if every date in this range is before the specified date.
+     * An empty range behaves as though it is a date for comparison purposes.
+     *
+     * @param date  the other date to compare to, not null
+     * @return true if the start of this range is before the specified date
+     */
+    public boolean isBefore(LocalDate date) {
+<span class="fc bfc" id="L537" title="All 4 branches covered.">        return end.compareTo(date) &lt;= 0 &amp;&amp; start.compareTo(date) &lt; 0;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this range is after the specified range.
+     * &lt;p&gt;
+     * The result is true if every date in this range is after every date in the specified range.
+     * An empty range behaves as though it is a date for comparison purposes.
+     *
+     * @param other  the other range to compare to, not null
+     * @return true if every date in this range is after every date in the other range
+     */
+    public boolean isAfter(LocalDateRange other) {
+<span class="fc bfc" id="L551" title="All 4 branches covered.">        return start.compareTo(other.end) &gt;= 0 &amp;&amp; !other.equals(this);</span>
+    }
+
+    /**
+     * Checks if this range is before the specified range.
+     * &lt;p&gt;
+     * The result is true if every date in this range is before every date in the specified range.
+     * An empty range behaves as though it is a date for comparison purposes.
+     *
+     * @param range  the other range to compare to, not null
+     * @return true if every date in this range is before every date in the other range
+     */
+    public boolean isBefore(LocalDateRange range) {
+<span class="fc bfc" id="L564" title="All 4 branches covered.">        return end.compareTo(range.start) &lt;= 0 &amp;&amp; !range.equals(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains the length of this range in days.
+     * &lt;p&gt;
+     * This returns the number of days between the start and end dates.
+     *
+     * @return the length in days
+     * @throws ArithmeticException if the length exceeds the capacity of an {@code int}
+     */
+    public int lengthInDays() {
+<span class="fc" id="L577">        return Math.toIntExact(end.toEpochDay() - start.toEpochDay());</span>
+    }
+
+    /**
+     * Obtains the length of this range as a period.
+     * &lt;p&gt;
+     * This returns the {@link Period} between the start and end dates.
+     *
+     * @return the period of the range
+     * @throws ArithmeticException if the calculation exceeds the capacity of {@code Period}
+     */
+    public Period toPeriod() {
+<span class="fc" id="L589">        return Period.between(start, end);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this range is equal to another range.
+     * &lt;p&gt;
+     * Compares this {@code LocalDateRange} with another ensuring that the two dates are the same.
+     * Only objects of type {@code LocalDateRange} are compared, other types return false.
+     *
+     * @param obj  the object to check, null returns false
+     * @return true if this is equal to the other range
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L604" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L605">            return true;</span>
+        }
+<span class="fc bfc" id="L607" title="All 2 branches covered.">        if (obj instanceof LocalDateRange) {</span>
+<span class="fc" id="L608">            LocalDateRange other = (LocalDateRange) obj;</span>
+<span class="fc bfc" id="L609" title="All 4 branches covered.">            return start.equals(other.start) &amp;&amp; end.equals(other.end);</span>
+        }
+<span class="fc" id="L611">        return false;</span>
+    }
+
+    /**
+     * A hash code for this range.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L621">        return start.hashCode() ^ end.hashCode();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Outputs this range as a {@code String}, such as {@code 2007-12-03/2007-12-04}.
+     * &lt;p&gt;
+     * The output will be the ISO-8601 format formed by combining the
+     * {@code toString()} methods of the two dates, separated by a forward slash.
+     *
+     * @return a string representation of this date, not null
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L635">        return start.toString() + '/' + end.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

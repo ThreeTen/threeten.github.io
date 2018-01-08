@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Weeks.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">Weeks.java</span></div><h1>Weeks.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoUnit.WEEKS;
+
+import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.Period;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * A week-based amount of time, such as '12 weeks'.
+ * &lt;p&gt;
+ * This class models a quantity or amount of time in terms of weeks.
+ * It is a type-safe way of representing a number of weeks in an application.
+ * &lt;p&gt;
+ * The model is of a directed amount, meaning that the amount may be negative.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class Weeks
+        implements TemporalAmount, Comparable&lt;Weeks&gt;, Serializable {
+
+    /**
+     * A constant for zero weeks.
+     */
+<span class="fc" id="L71">    public static final Weeks ZERO = new Weeks(0);</span>
+    /**
+     * A constant for one week.
+     */
+<span class="fc" id="L75">    public static final Weeks ONE = new Weeks(1);</span>
+
+    /**
+     * A serialization identifier for this class.
+     */
+    private static final long serialVersionUID = -8903767091325669093L;
+    /**
+     * The pattern for parsing.
+     */
+<span class="fc" id="L84">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L85">            Pattern.compile(&quot;([-+]?)P([-+]?[0-9]+)W&quot;, Pattern.CASE_INSENSITIVE);</span>
+
+    /**
+     * The number of weeks.
+     */
+    private final int weeks;
+
+    /**
+     * Obtains a {@code Weeks} representing a number of weeks.
+     * &lt;p&gt;
+     * The resulting amount will have the specified weeks.
+     *
+     * @param weeks  the number of weeks, positive or negative
+     * @return the number of weeks, not null
+     */
+    public static Weeks of(int weeks) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (weeks == 0) {</span>
+<span class="fc" id="L102">            return ZERO;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        } else if (weeks == 1) {</span>
+<span class="fc" id="L104">            return ONE;</span>
+        }
+<span class="fc" id="L106">        return new Weeks(weeks);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code Weeks} from a temporal amount.
+     * &lt;p&gt;
+     * This obtains an instance based on the specified amount.
+     * A {@code TemporalAmount} represents an amount of time, which may be
+     * date-based or time-based, which this factory extracts to a {@code Weeks}.
+     * &lt;p&gt;
+     * The result is calculated by looping around each unit in the specified amount.
+     * Each amount is converted to weeks using {@link Temporals#convertAmount}.
+     * If the conversion yields a remainder, an exception is thrown.
+     * If the amount is zero, the unit is ignored.
+     * For example, &quot;7 days&quot; can be converted to weeks but &quot;6 days&quot; cannot.
+     *
+     * @param amount  the temporal amount to convert, not null
+     * @return the equivalent amount, not null
+     * @throws DateTimeException if unable to convert to a {@code Weeks}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Weeks from(TemporalAmount amount) {
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (amount instanceof Weeks) {</span>
+<span class="fc" id="L130">            return (Weeks) amount;</span>
+        }
+<span class="fc" id="L132">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L133">        int weeks = 0;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L135">            long value = amount.get(unit);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            if (value != 0) {</span>
+<span class="fc" id="L137">                long[] converted = Temporals.convertAmount(value, unit, WEEKS);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">                if (converted[1] != 0) {</span>
+<span class="fc" id="L139">                    throw new DateTimeException(</span>
+                            &quot;Amount could not be converted to a whole number of weeks: &quot; + value + &quot; &quot; + unit);
+                }
+<span class="fc" id="L142">                weeks = Math.addExact(weeks, Math.toIntExact(converted[0]));</span>
+            }
+<span class="fc" id="L144">        }</span>
+<span class="fc" id="L145">        return of(weeks);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Weeks} from a text string such as {@code PnW}.
+     * &lt;p&gt;
+     * This will parse the string produced by {@code toString()} which is
+     * based on the ISO-8601 period formats {@code PnW}.
+     * &lt;p&gt;
+     * The string starts with an optional sign, denoted by the ASCII negative
+     * or positive symbol. If negative, the whole amount is negated.
+     * The ASCII letter &quot;P&quot; is next in upper or lower case.
+     * The ASCII integer amount is next, which may be negative.
+     * The ASCII letter &quot;W&quot; is next in upper or lower case.
+     * &lt;p&gt;
+     * The leading plus/minus sign, and negative values for weeks are
+     * not part of the ISO-8601 standard.
+     * &lt;p&gt;
+     * For example, the following are valid inputs:
+     * &lt;pre&gt;
+     *   &quot;P2W&quot;             -- Weeks.of(2)
+     *   &quot;P-2W&quot;            -- Weeks.of(-2)
+     *   &quot;-P2W&quot;            -- Weeks.of(-2)
+     *   &quot;-P-2W&quot;           -- Weeks.of(2)
+     * &lt;/pre&gt;
+     *
+     * @param text  the text to parse, not null
+     * @return the parsed period, not null
+     * @throws DateTimeParseException if the text cannot be parsed to a period
+     */
+    public static Weeks parse(CharSequence text) {
+<span class="fc" id="L177">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L178">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            int negate = (&quot;-&quot;.equals(matcher.group(1)) ? -1 : 1);</span>
+<span class="fc" id="L181">            String str = matcher.group(2);</span>
+            try {
+<span class="fc" id="L183">                int val = Integer.parseInt(str);</span>
+<span class="fc" id="L184">                return of(Math.multiplyExact(val, negate));</span>
+<span class="nc" id="L185">            } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L186">                throw new DateTimeParseException(&quot;Text cannot be parsed to a Weeks&quot;, text, 0, ex);</span>
+            }
+        }
+<span class="fc" id="L189">        throw new DateTimeParseException(&quot;Text cannot be parsed to a Weeks&quot;, text, 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Weeks} consisting of the number of weeks between two dates.
+     * &lt;p&gt;
+     * The start date is included, but the end date is not.
+     * The result of this method can be negative if the end is before the start.
+     *
+     * @param startDateInclusive  the start date, inclusive, not null
+     * @param endDateExclusive  the end date, exclusive, not null
+     * @return the number of weeks between this date and the end date, not null
+     */
+    public static Weeks between(Temporal startDateInclusive, Temporal endDateExclusive) {
+<span class="nc" id="L204">        return of(Math.toIntExact(WEEKS.between(startDateInclusive, endDateExclusive)));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs an instance using a specific number of weeks.
+     *
+     * @param weeks  the weeks to use
+     */
+    private Weeks(int weeks) {
+<span class="fc" id="L214">        super();</span>
+<span class="fc" id="L215">        this.weeks = weeks;</span>
+<span class="fc" id="L216">    }</span>
+
+    /**
+     * Resolves singletons.
+     *
+     * @return the singleton instance
+     */
+    private Object readResolve() {
+<span class="fc" id="L224">        return Weeks.of(weeks);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the requested unit.
+     * &lt;p&gt;
+     * This returns a value for the supported unit - {@link ChronoUnit#WEEKS WEEKS}.
+     * All other units throw an exception.
+     *
+     * @param unit  the {@code TemporalUnit} for which to return the value
+     * @return the long value of the unit
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     */
+    @Override
+    public long get(TemporalUnit unit) {
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">        if (unit == ChronoUnit.WEEKS) {</span>
+<span class="fc" id="L241">            return weeks;</span>
+        }
+<span class="nc" id="L243">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+    }
+
+    /**
+     * Gets the set of units supported by this amount.
+     * &lt;p&gt;
+     * The single supported unit is {@link ChronoUnit#WEEKS WEEKS}.
+     * &lt;p&gt;
+     * This set can be used in conjunction with {@link #get(TemporalUnit)}
+     * to access the entire state of the amount.
+     *
+     * @return a list containing the weeks unit, not null
+     */
+    @Override
+    public List&lt;TemporalUnit&gt; getUnits() {
+<span class="fc" id="L258">        return Collections.singletonList(WEEKS);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the number of weeks in this amount.
+     *
+     * @return the number of weeks
+     */
+    public int getAmount() {
+<span class="fc" id="L268">        return weeks;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount added.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Weeks#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Weeks} based on this instance with the requested amount added, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Weeks plus(TemporalAmount amountToAdd) {
+<span class="fc" id="L285">        return plus(Weeks.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of weeks added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param weeks  the amount of weeks to add, may be negative
+     * @return a {@code Weeks} based on this instance with the requested amount added, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Weeks plus(int weeks) {
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        if (weeks == 0) {</span>
+<span class="fc" id="L299">            return this;</span>
+        }
+<span class="fc" id="L301">        return of(Math.addExact(this.weeks, weeks));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount subtracted.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Weeks#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Weeks} based on this instance with the requested amount subtracted, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Weeks minus(TemporalAmount amountToAdd) {
+<span class="fc" id="L318">        return minus(Weeks.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of weeks subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param weeks  the amount of weeks to add, may be negative
+     * @return a {@code Weeks} based on this instance with the requested amount subtracted, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Weeks minus(int weeks) {
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        if (weeks == 0) {</span>
+<span class="fc" id="L332">            return this;</span>
+        }
+<span class="fc" id="L334">        return of(Math.subtractExact(this.weeks, weeks));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an instance with the amount multiplied by the specified scalar.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param scalar  the scalar to multiply by, not null
+     * @return the amount multiplied by the specified scalar, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Weeks multipliedBy(int scalar) {
+<span class="fc bfc" id="L348" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L349">            return this;</span>
+        }
+<span class="fc" id="L351">        return of(Math.multiplyExact(weeks, scalar));</span>
+    }
+
+    /**
+     * Returns an instance with the amount divided by the specified divisor.
+     * &lt;p&gt;
+     * The calculation uses integer division, thus 3 divided by 2 is 1.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param divisor  the amount to divide by, may be negative
+     * @return the amount divided by the specified divisor, not null
+     * @throws ArithmeticException if the divisor is zero
+     */
+    public Weeks dividedBy(int divisor) {
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L367">            return this;</span>
+        }
+<span class="fc" id="L369">        return of(weeks / divisor);</span>
+    }
+
+    /**
+     * Returns an instance with the amount negated.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the negated amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Weeks negated() {
+<span class="fc" id="L382">        return multipliedBy(-1);</span>
+    }
+
+    /**
+     * Returns a copy of this duration with a positive length.
+     * &lt;p&gt;
+     * This method returns a positive duration by effectively removing the sign from any negative total length.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the absolute amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Weeks abs() {
+<span class="fc bfc" id="L397" title="All 2 branches covered.">        return weeks &lt; 0 ? negated() : this;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the number of weeks as a {@code Period}.
+     * &lt;p&gt;
+     * This returns a period with the same number of weeks.
+     *
+     * @return the equivalent period, not null
+     */
+    public Period toPeriod() {
+<span class="fc" id="L409">        return Period.ofWeeks(weeks);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds this amount to the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount added.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#plus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.addTo(dateTime);
+     *   dateTime = dateTime.plus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to add
+     * @throws UnsupportedTemporalTypeException if the WEEKS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal addTo(Temporal temporal) {
+<span class="nc bnc" id="L439" title="All 2 branches missed.">        if (weeks != 0) {</span>
+<span class="nc" id="L440">            temporal = temporal.plus(weeks, WEEKS);</span>
+        }
+<span class="nc" id="L442">        return temporal;</span>
+    }
+
+    /**
+     * Subtracts this amount from the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount subtracted.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#minus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.subtractFrom(dateTime);
+     *   dateTime = dateTime.minus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to subtract
+     * @throws UnsupportedTemporalTypeException if the WEEKS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal subtractFrom(Temporal temporal) {
+<span class="nc bnc" id="L471" title="All 2 branches missed.">        if (weeks != 0) {</span>
+<span class="nc" id="L472">            temporal = temporal.minus(weeks, WEEKS);</span>
+        }
+<span class="nc" id="L474">        return temporal;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this amount to the specified {@code Weeks}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the amounts.
+     * It is &quot;consistent with equals&quot;, as defined by {@link Comparable}.
+     *
+     * @param otherAmount  the other amount, not null
+     * @return the comparator value, negative if less, positive if greater
+     */
+    @Override
+    public int compareTo(Weeks otherAmount) {
+<span class="fc" id="L489">        int thisValue = this.weeks;</span>
+<span class="fc" id="L490">        int otherValue = otherAmount.weeks;</span>
+<span class="fc" id="L491">        return Integer.compare(thisValue, otherValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this amount is equal to the specified {@code Weeks}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the durations.
+     *
+     * @param otherAmount  the other amount, null returns false
+     * @return true if the other amount is equal to this one
+     */
+    @Override
+    public boolean equals(Object otherAmount) {
+<span class="fc bfc" id="L505" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L506">            return true;</span>
+        }
+<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (otherAmount instanceof Weeks) {</span>
+<span class="fc" id="L509">            Weeks other = (Weeks) otherAmount;</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">            return this.weeks == other.weeks;</span>
+        }
+<span class="fc" id="L512">        return false;</span>
+    }
+
+    /**
+     * A hash code for this amount.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L522">        return weeks;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string representation of the number of weeks.
+     * This will be in the format 'PnW' where n is the number of weeks.
+     *
+     * @return the number of weeks in ISO-8601 string format
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L534">        return &quot;P&quot; + weeks + &quot;W&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

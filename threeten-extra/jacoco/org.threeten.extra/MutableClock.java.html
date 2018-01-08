@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MutableClock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">MutableClock.java</span></div><h1>MutableClock.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.Instant.EPOCH;
+import static java.time.ZoneOffset.UTC;
+
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Objects;
+
+/**
+ * A clock that does not advance on its own and that must be updated manually.
+ * &lt;p&gt;
+ * This class is designed for testing clock-sensitive components by simulating
+ * the passage of time. This class differs from {@link
+ * Clock#fixed(Instant, ZoneId)} and {@link Clock#offset(Clock, Duration)} in
+ * that it permits arbitrary, unrestricted updates to its instant. This allows
+ * for testing patterns that are not well-supported by the {@code fixed} and
+ * {@code offset} clocks such as the following pattern:
+ * &lt;ol&gt;
+ * &lt;li&gt;Create the clock-sensitive component to be tested
+ * &lt;li&gt;Verify some behavior of the component in the initial state
+ * &lt;li&gt;Advance the clock &lt;em&gt;without recreating the component&lt;/em&gt;
+ * &lt;li&gt;Verify that the component behaves as expected given the (artificial)
+ *     delta in clock time since the initial state
+ * &lt;/ol&gt;
+ * &lt;p&gt;
+ * This class is mutable. The time-zone of the clock is fixed, but the instant
+ * may be updated at will.
+ * &lt;p&gt;
+ * The instant may be set to any value even if that new value is less than the
+ * previous value. Caution should be exercised when moving the clock backwards,
+ * since clock-sensitive components are likely to assume that time is
+ * monotonically increasing.
+ * &lt;p&gt;
+ * Update semantics are expressed in terms of {@link ZonedDateTime}. The steps
+ * of each update are as follows:
+ * &lt;ol&gt;
+ * &lt;li&gt;The clock captures its own state in a {@code ZonedDateTime} via {@link
+ *     ZonedDateTime#now(Clock)} (or the equivalent thereof)
+ * &lt;li&gt;The update operation is applied to that {@code ZonedDateTime}, producing
+ *     a new {@code ZonedDateTime}
+ * &lt;li&gt;The resulting {@code ZonedDateTime} is converted to an instant via {@link
+ *     ZonedDateTime#toInstant()} (or the equivalent thereof)
+ * &lt;li&gt;The clock's instant is set to that new instant
+ * &lt;/ol&gt;
+ * &lt;p&gt;
+ * Therefore, whenever there is a question about what argument types, units,
+ * fields, or values an update operation supports, or what the result will be,
+ * refer to the corresponding method of {@code ZonedDateTime}. Links are
+ * provided from the documentation of each update operation of this class to the
+ * corresponding method of {@code ZonedDateTime}.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is thread-safe. Updates are atomic and synchronized.
+ * &lt;p&gt;
+ * While update semantics are expressed in terms of {@code ZonedDateTime}, that
+ * imposes no requirements on implementation details. The implementation may
+ * avoid using {@code ZonedDateTime} completely or only sometimes, for
+ * convenience, efficiency, or any other reason.
+ *
+ * @serial exclude
+ */
+public final class MutableClock
+        extends Clock
+        implements Serializable {
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -6152029959790119695L;
+
+    /**
+     * The mutable instant of this clock.
+     */
+    private transient final InstantHolder instantHolder;
+
+    /**
+     * The fixed time-zone of this clock.
+     */
+    private transient final ZoneId zone;
+
+    /**
+     * Obtains a new {@code MutableClock} set to the epoch of
+     * 1970-01-01T00:00:00Z, converting to date and time using the UTC
+     * time-zone.
+     * &lt;p&gt;
+     * Use this method when a {@code MutableClock} is needed and neither its
+     * initial value nor its time-zone are important. This is often true when
+     * testing behavior that depends on elapsed &lt;em&gt;relative&lt;/em&gt; time rather
+     * than &lt;em&gt;absolute&lt;/em&gt; time.
+     *
+     * @return a new {@code MutableClock}, not null
+     */
+    public static MutableClock epochUTC() {
+<span class="fc" id="L138">        return MutableClock.of(EPOCH, UTC);</span>
+    }
+
+    /**
+     * Obtains a new {@code MutableClock} set to the specified instant,
+     * converting to date and time using the specified time-zone.
+     *
+     * @param instant the initial value for the clock, not null
+     * @param zone the time-zone to use, not null
+     * @return a new {@code MutableClock}, not null
+     */
+    public static MutableClock of(Instant instant, ZoneId zone) {
+<span class="fc" id="L150">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc" id="L151">        Objects.requireNonNull(zone, &quot;zone&quot;);</span>
+<span class="fc" id="L152">        return new MutableClock(new InstantHolder(instant), zone);</span>
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param instantHolder the mutable instant, validated not null
+     * @param zone the fixed time-zone, validated not null
+     */
+<span class="fc" id="L161">    private MutableClock(InstantHolder instantHolder, ZoneId zone) {</span>
+<span class="fc" id="L162">        this.instantHolder = instantHolder;</span>
+<span class="fc" id="L163">        this.zone = zone;</span>
+<span class="fc" id="L164">    }</span>
+
+    /**
+     * Overrides the instant of this clock with the specified value.
+     *
+     * @param instant the new instant for this clock, not null
+     */
+    public void setInstant(Instant instant) {
+<span class="fc" id="L172">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc" id="L173">        instantHolder.set(instant);</span>
+<span class="fc" id="L174">    }</span>
+
+    /**
+     * Adds the specified amount to this clock.
+     * &lt;p&gt;
+     * Atomically updates this clock to the value of the following expression:
+     * &lt;pre&gt;
+     *   ZonedDateTime.now(thisClock)
+     *                .plus(amountToAdd)
+     *                .toInstant()
+     * &lt;/pre&gt;
+     *
+     * @param amountToAdd the amount to add, not null
+     * @throws DateTimeException if the addition cannot be made
+     * @throws ArithmeticException if numeric overflow occurs
+     * @see ZonedDateTime#plus(TemporalAmount)
+     */
+    public void add(TemporalAmount amountToAdd) {
+<span class="fc" id="L192">        Objects.requireNonNull(amountToAdd, &quot;amountToAdd&quot;);</span>
+<span class="fc" id="L193">        synchronized (instantHolder) {</span>
+<span class="fc" id="L194">            ZonedDateTime current = ZonedDateTime.ofInstant(instantHolder.get(), zone);</span>
+<span class="fc" id="L195">            ZonedDateTime result = current.plus(amountToAdd);</span>
+<span class="fc" id="L196">            instantHolder.set(result.toInstant());</span>
+<span class="fc" id="L197">        }</span>
+<span class="fc" id="L198">    }</span>
+
+    /**
+     * Adds the specified amount to this clock.
+     * &lt;p&gt;
+     * Atomically updates this clock to the value of the following expression:
+     * &lt;pre&gt;
+     *   ZonedDateTime.now(thisClock)
+     *                .plus(amountToAdd, unit)
+     *                .toInstant()
+     * &lt;/pre&gt;
+     *
+     * @param amountToAdd the amount of the specified unit to add, may be negative
+     * @param unit the unit of the amount to add, not null
+     * @throws DateTimeException if the unit cannot be added
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     * @see ZonedDateTime#plus(long, TemporalUnit)
+     */
+    public void add(long amountToAdd, TemporalUnit unit) {
+<span class="fc" id="L218">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
+<span class="fc" id="L219">        synchronized (instantHolder) {</span>
+<span class="fc" id="L220">            ZonedDateTime current = ZonedDateTime.ofInstant(instantHolder.get(), zone);</span>
+<span class="fc" id="L221">            ZonedDateTime result = current.plus(amountToAdd, unit);</span>
+<span class="fc" id="L222">            instantHolder.set(result.toInstant());</span>
+<span class="fc" id="L223">        }</span>
+<span class="fc" id="L224">    }</span>
+
+    /**
+     * Adjusts this clock.
+     * &lt;p&gt;
+     * Atomically updates this clock to the value of the following expression:
+     * &lt;pre&gt;
+     *   ZonedDateTime.now(thisClock)
+     *                .with(adjuster)
+     *                .toInstant()
+     * &lt;/pre&gt;
+     *
+     * @param adjuster the adjuster to use, not null
+     * @throws DateTimeException if the adjustment cannot be made
+     * @throws ArithmeticException if numeric overflow occurs
+     * @see ZonedDateTime#with(TemporalAdjuster)
+     */
+    public void set(TemporalAdjuster adjuster) {
+<span class="fc" id="L242">        Objects.requireNonNull(adjuster, &quot;adjuster&quot;);</span>
+<span class="fc" id="L243">        synchronized (instantHolder) {</span>
+<span class="fc" id="L244">            ZonedDateTime current = ZonedDateTime.ofInstant(instantHolder.get(), zone);</span>
+<span class="fc" id="L245">            ZonedDateTime result = current.with(adjuster);</span>
+<span class="fc" id="L246">            instantHolder.set(result.toInstant());</span>
+<span class="fc" id="L247">        }</span>
+<span class="fc" id="L248">    }</span>
+
+    /**
+     * Alters the specified field of this clock.
+     * &lt;p&gt;
+     * Atomically updates this clock to the value of the following expression:
+     * &lt;pre&gt;
+     *   ZonedDateTime.now(thisClock)
+     *                .with(field, newValue)
+     *                .toInstant()
+     * &lt;/pre&gt;
+     *
+     * @param field the field to set, not null
+     * @param newValue the new value of the field
+     * @throws DateTimeException if the field cannot be set
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     * @see ZonedDateTime#with(TemporalField, long)
+     */
+    public void set(TemporalField field, long newValue) {
+<span class="fc" id="L268">        Objects.requireNonNull(field, &quot;field&quot;);</span>
+<span class="fc" id="L269">        synchronized (instantHolder) {</span>
+<span class="fc" id="L270">            ZonedDateTime current = ZonedDateTime.ofInstant(instantHolder.get(), zone);</span>
+<span class="fc" id="L271">            ZonedDateTime result = current.with(field, newValue);</span>
+<span class="fc" id="L272">            instantHolder.set(result.toInstant());</span>
+<span class="fc" id="L273">        }</span>
+<span class="fc" id="L274">    }</span>
+
+    @Override
+    public ZoneId getZone() {
+<span class="fc" id="L278">        return zone;</span>
+    }
+
+    /**
+     * Returns a {@code MutableClock} that uses the specified time-zone and that
+     * has shared updates with this clock.
+     * &lt;p&gt;
+     * Two clocks with shared updates always have the same instant, and all
+     * updates applied to either clock affect both clocks.
+     *
+     * @param zone the time-zone to use for the returned clock, not null
+     * @return a view of this clock in the specified time-zone, not null
+     */
+    @Override
+    public MutableClock withZone(ZoneId zone) {
+<span class="fc" id="L293">        Objects.requireNonNull(zone, &quot;zone&quot;);</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">        if (zone.equals(this.zone)) {</span>
+<span class="nc" id="L295">            return this;</span>
+        }
+<span class="fc" id="L297">        return new MutableClock(instantHolder, zone);</span>
+    }
+
+    @Override
+    public Instant instant() {
+<span class="fc" id="L302">        return instantHolder.get();</span>
+    }
+
+    /**
+     * Returns {@code true} if {@code obj} is a {@code MutableClock} that uses
+     * the same time-zone as this clock and has shared updates with this clock.
+     * &lt;p&gt;
+     * Two clocks with shared updates always have the same instant, and all
+     * updates applied to either clock affect both clocks.
+     * &lt;p&gt;
+     * A deserialized {@code MutableClock} is not equal to the original clock
+     * that was serialized, since the two clocks do not have shared updates.
+     *
+     * @param obj the object to check, null returns {@code false}
+     * @return {@code true} if this is equal to the other clock
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L320" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L321">            return true;</span>
+        }
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">        if (obj instanceof MutableClock) {</span>
+<span class="fc" id="L324">            MutableClock other = (MutableClock) obj;</span>
+<span class="fc bfc" id="L325" title="All 4 branches covered.">            return instantHolder == other.instantHolder &amp;&amp; zone.equals(other.zone);</span>
+        }
+<span class="nc" id="L327">        return false;</span>
+    }
+
+    /**
+     * A hash code for this clock, which is constant for this instance.
+     *
+     * @return a constant hash code for this instance
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L337">        return System.identityHashCode(instantHolder) ^ zone.hashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L342">        return &quot;MutableClock[&quot; + instant() + &quot;,&quot; + getZone() + &quot;]&quot;;</span>
+    }
+
+    /**
+     * Returns the serialization proxy to replace this {@code MutableClock}.
+     *
+     * @return the serialization proxy, not null
+     */
+    private Object writeReplace() {
+<span class="fc" id="L351">        return new SerializationProxy(this);</span>
+    }
+
+    /**
+     * Throws {@link InvalidObjectException}.
+     *
+     * @param s ignored
+     * @throws InvalidObjectException always
+     */
+    private void readObject(ObjectInputStream s) throws InvalidObjectException {
+<span class="nc" id="L361">        throw new InvalidObjectException(&quot;Proxy required&quot;);</span>
+    }
+
+    /**
+     * The serialized form of a {@code MutableClock}.
+     *
+     * @serial include
+     */
+    private static final class SerializationProxy
+            implements Serializable {
+
+        /**
+         * Serialization version.
+         */
+        private static final long serialVersionUID = 8602110640241828260L;
+
+        /**
+         * A snapshot of the instant of the {@code MutableClock}, taken when the
+         * clock was serialized, not null.
+         *
+         * @serial
+         */
+        private final Instant instant;
+
+        /**
+         * The time-zone of the {@code MutableClock}, not null.
+         *
+         * @serial
+         */
+        private final ZoneId zone;
+
+        /**
+         * Constructor.
+         *
+         * @param clock the {@code MutableClock} to be serialized, not null
+         */
+<span class="fc" id="L397">        SerializationProxy(MutableClock clock) {</span>
+<span class="fc" id="L398">            instant = clock.instant();</span>
+<span class="fc" id="L399">            zone = clock.getZone();</span>
+<span class="fc" id="L400">        }</span>
+
+        /**
+         * Returns the {@code MutableClock} to replace this serialization proxy.
+         *
+         * @return the {@code MutableClock}, not null
+         * @throws InvalidObjectException if the instant or time-zone is null
+         */
+        private Object readResolve() throws InvalidObjectException {
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">            if (instant == null) {</span>
+<span class="nc" id="L410">                throw new InvalidObjectException(&quot;null instant&quot;);</span>
+            }
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">            if (zone == null) {</span>
+<span class="nc" id="L413">                throw new InvalidObjectException(&quot;null zone&quot;);</span>
+            }
+<span class="fc" id="L415">            return MutableClock.of(instant, zone);</span>
+        }
+    }
+
+    /**
+     * An identity-having holder object for a mutable instant value.
+     * &lt;p&gt;
+     * Clocks have shared updates when they share a holder object. Clocks rely
+     * on the identity of the holder object in their {@code equals} and {@code
+     * hashCode} methods.
+     * &lt;p&gt;
+     * Reads of the value are volatile and are never stale. Blind writes to the
+     * value are volatile and do not need to synchronize. Atomic read-and-write
+     * operations must synchronize on the holder object instance.
+     */
+    private static final class InstantHolder {
+        /**
+         * The current value.
+         */
+        private volatile Instant value;
+
+        /**
+         * Constructor.
+         *
+         * @param value the initial value, validated not null
+         */
+<span class="fc" id="L441">        InstantHolder(Instant value) {</span>
+<span class="fc" id="L442">            this.value = value;</span>
+<span class="fc" id="L443">        }</span>
+
+        /**
+         * Reads the value.
+         *
+         * @return the current value, not null
+         */
+        Instant get() {
+<span class="fc" id="L451">            return value;</span>
+        }
+
+        /**
+         * Writes the value.
+         *
+         * @param value the new value, validated not null
+         */
+        void set(Instant value) {
+<span class="fc" id="L460">            this.value = value;</span>
+<span class="fc" id="L461">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BritishCutoverChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">BritishCutoverChronology.java</span></div><h1>BritishCutoverChronology.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.chrono.AbstractChronology;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.time.chrono.Chronology;
+import java.time.chrono.Era;
+import java.time.chrono.IsoChronology;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.time.temporal.ValueRange;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * The British Julian-Gregorian cutover calendar system.
+ * &lt;p&gt;
+ * The British calendar system follows the rules of the Julian calendar
+ * until 1752 and the rules of the Gregorian (ISO) calendar since then.
+ * The Julian differs from the Gregorian only in terms of the leap year rule.
+ * &lt;p&gt;
+ * The Julian and Gregorian calendar systems are linked to Rome and the Vatican
+ * with the Julian preceding the Gregorian. The Gregorian was introduced to
+ * handle the drift of the seasons through the year due to the inaccurate
+ * Julian leap year rules. When first introduced by the Vatican in 1582,
+ * the cutover resulted in a &quot;gap&quot; of 10 days.
+ * &lt;p&gt;
+ * While the calendar was introduced in 1582, it was not adopted everywhere.
+ * Britain did not adopt it until the 1752, when Wednesday 2nd September 1752
+ * was followed by Thursday 14th September 1752.
+ * &lt;p&gt;
+ * This chronology implements the proleptic Julian calendar system followed by
+ * the proleptic Gregorian calendar system (identical to the ISO calendar system).
+ * Dates are aligned such that {@code 0001-01-01 (British)} is {@code 0000-12-30 (ISO)}.
+ * &lt;p&gt;
+ * This class implements a calendar where January 1st is the start of the year.
+ * The history of the start of the year is complex and using the current standard
+ * is the most consistent.
+ * &lt;p&gt;
+ * The eras of this calendar system are defined by {@link JulianEra} to avoid unnecessary duplication.
+ * &lt;p&gt;
+ * The fields are defined as follows:
+ * &lt;ul&gt;
+ * &lt;li&gt;era - There are two eras, the current 'Anno Domini' (AD) and the previous era 'Before Christ' (BC).
+ * &lt;li&gt;year-of-era - The year-of-era for the current era increases uniformly from the epoch at year one.
+ *  For the previous era the year increases from one as time goes backwards.
+ * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the
+ *  current era. For the previous era, years have zero, then negative values.
+ * &lt;li&gt;month-of-year - There are 12 months in a year, numbered from 1 to 12.
+ * &lt;li&gt;day-of-month - There are between 28 and 31 days in each month, numbered from 1 to 31.
+ *  Months 4, 6, 9 and 11 have 30 days, Months 1, 3, 5, 7, 8, 10 and 12 have 31 days.
+ *  Month 2 has 28 days, or 29 in a leap year.
+ *  The cutover month, September 1752, has a value range from 1 to 30, but a length of 19.
+ * &lt;li&gt;day-of-year - There are 365 days in a standard year and 366 in a leap year.
+ *  The days are numbered from 1 to 365 or 1 to 366.
+ *  The cutover year 1752 has values from 1 to 355 and a length of 355 days.
+ * &lt;/ul&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class BritishCutoverChronology
+        extends AbstractChronology
+        implements Serializable {
+
+    /**
+     * Singleton instance for the Coptic chronology.
+     */
+<span class="fc" id="L109">    public static final BritishCutoverChronology INSTANCE = new BritishCutoverChronology();</span>
+    /**
+     * The cutover date, Thursday 14th September 1752.
+     */
+<span class="fc" id="L113">    public static final LocalDate CUTOVER = LocalDate.of(1752, 9, 14);</span>
+    /**
+     * The number of cutover days.
+     */
+    static final int CUTOVER_DAYS = 11;
+    /**
+     * The cutover year.
+     */
+    static final int CUTOVER_YEAR = 1752;
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = 87235724675472657L;
+    /**
+     * Range of day-of-year.
+     */
+<span class="fc" id="L130">    static final ValueRange DOY_RANGE = ValueRange.of(1, 355, 366);</span>
+    /**
+     * Range of aligned-week-of-month.
+     */
+<span class="fc" id="L134">    static final ValueRange ALIGNED_WOM_RANGE = ValueRange.of(1, 3, 5);</span>
+    /**
+     * Range of aligned-week-of-year.
+     */
+<span class="fc" id="L138">    static final ValueRange ALIGNED_WOY_RANGE = ValueRange.of(1, 51, 53);</span>
+    /**
+     * Range of proleptic-year.
+     */
+<span class="fc" id="L142">    static final ValueRange YEAR_RANGE = ValueRange.of(-999_998, 999_999);</span>
+    /**
+     * Range of year.
+     */
+<span class="fc" id="L146">    static final ValueRange YOE_RANGE = ValueRange.of(1, 999_999);</span>
+    /**
+     * Range of proleptic month.
+     */
+<span class="fc" id="L150">    static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-999_998 * 12L, 999_999 * 12L + 11);</span>
+
+    /**
+     * Private constructor, that is public to satisfy the {@code ServiceLoader}.
+     * @deprecated Use the singleton {@link #INSTANCE} instead.
+     */
+    @Deprecated
+<span class="fc" id="L157">    public BritishCutoverChronology() {</span>
+<span class="fc" id="L158">    }</span>
+
+    /**
+     * Resolve singleton.
+     *
+     * @return the singleton instance, not null
+     */
+    private Object readResolve() {
+<span class="nc" id="L166">        return INSTANCE;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the cutover date between the Julian and Gregorian calendar.
+     * &lt;p&gt;
+     * The date returned is the first date that the Gregorian (ISO) calendar applies,
+     * which is Thursday 14th September 1752.
+     *
+     * @return the first date after the cutover, not null
+     */
+    public LocalDate getCutover() {
+<span class="fc" id="L179">        return CUTOVER;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the ID of the chronology - 'BritishCutover'.
+     * &lt;p&gt;
+     * The ID uniquely identifies the {@code Chronology}.
+     * It can be used to lookup the {@code Chronology} using {@link Chronology#of(String)}.
+     *
+     * @return the chronology ID - 'BritishCutover'
+     * @see #getCalendarType()
+     */
+    @Override
+    public String getId() {
+<span class="fc" id="L194">        return &quot;BritishCutover&quot;;</span>
+    }
+
+    /**
+     * Gets the calendar type of the underlying calendar system, which returns null.
+     * &lt;p&gt;
+     * The &lt;em&gt;Unicode Locale Data Markup Language (LDML)&lt;/em&gt; specification
+     * does not define an identifier for this calendar system, thus null is returned.
+     *
+     * @return the calendar system type, null
+     * @see #getId()
+     */
+    @Override
+    public String getCalendarType() {
+<span class="fc" id="L208">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a local date in British Cutover calendar system from the
+     * era, year-of-era, month-of-year and day-of-month fields.
+     * &lt;p&gt;
+     * Dates in the middle of the cutover gap, such as the 10th September 1752,
+     * will not throw an exception. Instead, the date will be treated as a Julian date
+     * and converted to an ISO date, with the day of month shifted by 11 days.
+     *
+     * @param era  the British Cutover era, not null
+     * @param yearOfEra  the year-of-era
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code JulianEra}
+     */
+    @Override
+    public BritishCutoverDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
+<span class="fc" id="L230">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in British Cutover calendar system from the
+     * proleptic-year, month-of-year and day-of-month fields.
+     * &lt;p&gt;
+     * Dates in the middle of the cutover gap, such as the 10th September 1752,
+     * will not throw an exception. Instead, the date will be treated as a Julian date
+     * and converted to an ISO date, with the day of month shifted by 11 days.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public BritishCutoverDate date(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L249">        return BritishCutoverDate.of(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in British Cutover calendar system from the
+     * era, year-of-era and day-of-year fields.
+     * &lt;p&gt;
+     * The day-of-year takes into account the cutover, thus there are only 355 days in 1752.
+     *
+     * @param era  the British Cutover era, not null
+     * @param yearOfEra  the year-of-era
+     * @param dayOfYear  the day-of-year
+     * @return the British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code JulianEra}
+     */
+    @Override
+    public BritishCutoverDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
+<span class="fc" id="L267">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in British Cutover calendar system from the
+     * proleptic-year and day-of-year fields.
+     * &lt;p&gt;
+     * The day-of-year takes into account the cutover, thus there are only 355 days in 1752.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param dayOfYear  the day-of-year
+     * @return the British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public BritishCutoverDate dateYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L283">        return BritishCutoverDate.ofYearDay(prolepticYear, dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the British Cutover calendar system from the epoch-day.
+     *
+     * @param epochDay  the epoch day
+     * @return the British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public BritishCutoverDate dateEpochDay(long epochDay) {
+<span class="fc" id="L295">        return BritishCutoverDate.ofEpochDay(epochDay);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains the current British Cutover local date from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current British Cutover local date using the system clock and default time-zone, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public BritishCutoverDate dateNow() {
+<span class="nc" id="L313">        return BritishCutoverDate.now();</span>
+    }
+
+    /**
+     * Obtains the current British Cutover local date from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone the zone ID to use, not null
+     * @return the current British Cutover local date using the system clock, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public BritishCutoverDate dateNow(ZoneId zone) {
+<span class="nc" id="L331">        return BritishCutoverDate.now(zone);</span>
+    }
+
+    /**
+     * Obtains the current British Cutover local date from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public BritishCutoverDate dateNow(Clock clock) {
+<span class="nc" id="L347">        return BritishCutoverDate.now(clock);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a British Cutover local date from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the British Cutover local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public BritishCutoverDate date(TemporalAccessor temporal) {
+<span class="fc" id="L360">        return BritishCutoverDate.from(temporal);</span>
+    }
+
+    /**
+     * Obtains a British Cutover local date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the British Cutover local date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;BritishCutoverDate&gt; localDateTime(TemporalAccessor temporal) {
+<span class="fc" id="L373">        return (ChronoLocalDateTime&lt;BritishCutoverDate&gt;) super.localDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a British Cutover zoned date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the British Cutover zoned date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;BritishCutoverDate&gt; zonedDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L386">        return (ChronoZonedDateTime&lt;BritishCutoverDate&gt;) super.zonedDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a British Cutover zoned date-time in this chronology from an {@code Instant}.
+     *
+     * @param instant  the instant to create the date-time from, not null
+     * @param zone  the time-zone, not null
+     * @return the British Cutover zoned date-time, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;BritishCutoverDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
+<span class="nc" id="L400">        return (ChronoZonedDateTime&lt;BritishCutoverDate&gt;) super.zonedDateTime(instant, zone);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified year is a leap year.
+     * &lt;p&gt;
+     * The result will return the same as {@link JulianChronology#isLeapYear(long)} for
+     * year 1752 and earlier, and {@link IsoChronology#isLeapYear(long)} otherwise.
+     * This method does not validate the year passed in, and only has a
+     * well-defined result for years in the supported range.
+     *
+     * @param prolepticYear  the proleptic-year to check, not validated for range
+     * @return true if the year is a leap year
+     */
+    @Override
+    public boolean isLeapYear(long prolepticYear) {
+<span class="fc bfc" id="L417" title="All 2 branches covered.">        if (prolepticYear &lt;= CUTOVER_YEAR) {</span>
+<span class="fc" id="L418">            return JulianChronology.INSTANCE.isLeapYear(prolepticYear);</span>
+        }
+<span class="fc" id="L420">        return IsoChronology.INSTANCE.isLeapYear(prolepticYear);</span>
+    }
+
+    @Override
+    public int prolepticYear(Era era, int yearOfEra) {
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        if (era instanceof JulianEra == false) {</span>
+<span class="fc" id="L426">            throw new ClassCastException(&quot;Era must be JulianEra&quot;);</span>
+        }
+<span class="fc bfc" id="L428" title="All 2 branches covered.">        return (era == JulianEra.AD ? yearOfEra : 1 - yearOfEra);</span>
+    }
+
+    @Override
+    public JulianEra eraOf(int eraValue) {
+<span class="fc" id="L433">        return JulianEra.of(eraValue);</span>
+    }
+
+    @Override
+    public List&lt;Era&gt; eras() {
+<span class="fc" id="L438">        return Arrays.&lt;Era&gt;asList(JulianEra.values());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ValueRange range(ChronoField field) {
+<span class="pc bfc" id="L444" title="All 7 branches covered.">        switch (field) {</span>
+            case DAY_OF_YEAR:
+<span class="fc" id="L446">                return DOY_RANGE;</span>
+            case ALIGNED_WEEK_OF_MONTH:
+<span class="fc" id="L448">                return ALIGNED_WOM_RANGE;</span>
+            case ALIGNED_WEEK_OF_YEAR:
+<span class="fc" id="L450">                return ALIGNED_WOY_RANGE;</span>
+            case PROLEPTIC_MONTH:
+<span class="fc" id="L452">                return PROLEPTIC_MONTH_RANGE;</span>
+            case YEAR_OF_ERA:
+<span class="fc" id="L454">                return YOE_RANGE;</span>
+            case YEAR:
+<span class="fc" id="L456">                return YEAR_RANGE;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L460">        return field.range();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override  // override for return type
+    public BritishCutoverDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L466">        return (BritishCutoverDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

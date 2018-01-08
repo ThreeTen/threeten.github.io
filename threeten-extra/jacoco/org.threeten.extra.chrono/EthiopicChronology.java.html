@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EthiopicChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">EthiopicChronology.java</span></div><h1>EthiopicChronology.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.time.chrono.Chronology;
+import java.time.chrono.Era;
+import java.time.format.ResolverStyle;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * The Ethiopic calendar system.
+ * &lt;p&gt;
+ * This chronology defines the rules of the Ethiopic calendar system.
+ * This calendar system is primarily used in Ethiopia.
+ * Dates are aligned such that {@code 0001-01-01 (Ethiopic)} is {@code 0284-08-29 (ISO)}.
+ * &lt;p&gt;
+ * The fields are defined as follows:
+ * &lt;ul&gt;
+ * &lt;li&gt;era - There are two eras, the current 'Incarnation Era' (INCARNATION) and the previous era (BEFORE_INCARNATION).
+ * &lt;li&gt;year-of-era - The year-of-era for the current era increases uniformly from the epoch at year one.
+ *  For the previous era the year increases from one as time goes backwards.
+ * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the
+ *  current era. For the previous era, years have zero, then negative values.
+ * &lt;li&gt;month-of-year - There are 13 months in a Ethiopic year, numbered from 1 to 13.
+ * &lt;li&gt;day-of-month - There are 30 days in each of the first 12 Ethiopic months, numbered 1 to 30.
+ *  The 13th month has 5 days, or 6 in a leap year, numbered 1 to 5 or 1 to 6.
+ * &lt;li&gt;day-of-year - There are 365 days in a standard Ethiopic year and 366 in a leap year.
+ *  The days are numbered from 1 to 365 or 1 to 366.
+ * &lt;li&gt;leap-year - Leap years occur every 4 years.
+ * &lt;/ul&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class EthiopicChronology
+        extends AbstractNileChronology
+        implements Serializable {
+
+    /**
+     * Singleton instance for the Ethiopic chronology.
+     */
+<span class="fc" id="L83">    public static final EthiopicChronology INSTANCE = new EthiopicChronology();</span>
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = 53287687268768L;
+
+    /**
+     * Private constructor, that is public to satisfy the {@code ServiceLoader}.
+     * @deprecated Use the singleton {@link #INSTANCE} instead.
+     */
+    @Deprecated
+<span class="fc" id="L95">    public EthiopicChronology() {</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Resolve singleton.
+     *
+     * @return the singleton instance, not null
+     */
+    private Object readResolve() {
+<span class="nc" id="L104">        return INSTANCE;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the ID of the chronology - 'Ethiopic'.
+     * &lt;p&gt;
+     * The ID uniquely identifies the {@code Chronology}.
+     * It can be used to lookup the {@code Chronology} using {@link Chronology#of(String)}.
+     *
+     * @return the chronology ID - 'Ethiopic'
+     * @see #getCalendarType()
+     */
+    @Override
+    public String getId() {
+<span class="fc" id="L119">        return &quot;Ethiopic&quot;;</span>
+    }
+
+    /**
+     * Gets the calendar type of the underlying calendar system - 'ethiopic'.
+     * &lt;p&gt;
+     * The calendar type is an identifier defined by the
+     * &lt;em&gt;Unicode Locale Data Markup Language (LDML)&lt;/em&gt; specification.
+     * It can be used to lookup the {@code Chronology} using {@link Chronology#of(String)}.
+     * It can also be used as part of a locale, accessible via
+     * {@link Locale#getUnicodeLocaleType(String)} with the key 'ca'.
+     *
+     * @return the calendar system type - 'ethiopic'
+     * @see #getId()
+     */
+    @Override
+    public String getCalendarType() {
+<span class="fc" id="L136">        return &quot;ethiopic&quot;;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a local date in Ethiopic calendar system from the
+     * era, year-of-era, month-of-year and day-of-month fields.
+     *
+     * @param era  the Ethiopic era, not null
+     * @param yearOfEra  the year-of-era
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code EthiopicEra}
+     */
+    @Override
+    public EthiopicDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
+<span class="fc" id="L154">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Ethiopic calendar system from the
+     * proleptic-year, month-of-year and day-of-month fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public EthiopicDate date(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L169">        return EthiopicDate.of(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Ethiopic calendar system from the
+     * era, year-of-era and day-of-year fields.
+     *
+     * @param era  the Ethiopic era, not null
+     * @param yearOfEra  the year-of-era
+     * @param dayOfYear  the day-of-year
+     * @return the Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code EthiopicEra}
+     */
+    @Override
+    public EthiopicDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
+<span class="fc" id="L185">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in Ethiopic calendar system from the
+     * proleptic-year and day-of-year fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param dayOfYear  the day-of-year
+     * @return the Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public EthiopicDate dateYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L199">        return EthiopicDate.ofYearDay(prolepticYear, dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the Ethiopic calendar system from the epoch-day.
+     *
+     * @param epochDay  the epoch day
+     * @return the Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public EthiopicDate dateEpochDay(long epochDay) {
+<span class="fc" id="L211">        return EthiopicDate.ofEpochDay(epochDay);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains the current Ethiopic local date from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current Ethiopic local date using the system clock and default time-zone, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public EthiopicDate dateNow() {
+<span class="nc" id="L229">        return EthiopicDate.now();</span>
+    }
+
+    /**
+     * Obtains the current Ethiopic local date from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone the zone ID to use, not null
+     * @return the current Ethiopic local date using the system clock, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public EthiopicDate dateNow(ZoneId zone) {
+<span class="nc" id="L247">        return EthiopicDate.now(zone);</span>
+    }
+
+    /**
+     * Obtains the current Ethiopic local date from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public EthiopicDate dateNow(Clock clock) {
+<span class="nc" id="L263">        return EthiopicDate.now(clock);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a Ethiopic local date from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Ethiopic local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public EthiopicDate date(TemporalAccessor temporal) {
+<span class="fc" id="L276">        return EthiopicDate.from(temporal);</span>
+    }
+
+    /**
+     * Obtains a Ethiopic local date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Ethiopic local date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;EthiopicDate&gt; localDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L289">        return (ChronoLocalDateTime&lt;EthiopicDate&gt;) super.localDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Ethiopic zoned date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Ethiopic zoned date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;EthiopicDate&gt; zonedDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L302">        return (ChronoZonedDateTime&lt;EthiopicDate&gt;) super.zonedDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Ethiopic zoned date-time in this chronology from an {@code Instant}.
+     *
+     * @param instant  the instant to create the date-time from, not null
+     * @param zone  the time-zone, not null
+     * @return the Ethiopic zoned date-time, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;EthiopicDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
+<span class="nc" id="L316">        return (ChronoZonedDateTime&lt;EthiopicDate&gt;) super.zonedDateTime(instant, zone);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public int prolepticYear(Era era, int yearOfEra) {
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        if (era instanceof EthiopicEra == false) {</span>
+<span class="nc" id="L323">            throw new ClassCastException(&quot;Era must be EthiopicEra&quot;);</span>
+        }
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        return (era == EthiopicEra.INCARNATION ? yearOfEra : 1 - yearOfEra);</span>
+    }
+
+    @Override
+    public EthiopicEra eraOf(int eraValue) {
+<span class="fc" id="L330">        return EthiopicEra.of(eraValue);</span>
+    }
+
+    @Override
+    public List&lt;Era&gt; eras() {
+<span class="fc" id="L335">        return Arrays.&lt;Era&gt;asList(EthiopicEra.values());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override  // override for return type
+    public EthiopicDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L341">        return (EthiopicDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

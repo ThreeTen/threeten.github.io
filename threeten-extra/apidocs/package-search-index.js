@@ -1,0 +1,1 @@
+packageSearchIndex = [{"m":"org.threeten.extra","l":"org.threeten.extra"},{"m":"org.threeten.extra","l":"org.threeten.extra.chrono"},{"m":"org.threeten.extra","l":"org.threeten.extra.scale"}]

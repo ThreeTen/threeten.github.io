@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountingYearDivision.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">AccountingYearDivision.java</span></div><h1>AccountingYearDivision.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.time.DateTimeException;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ValueRange;
+import java.util.Arrays;
+
+/**
+ * How an Accounting year is divided.
+ * &lt;p&gt;
+ * An Accounting calendar system generally divides a year into smaller periods, similar in length to regular calendar months.
+ * The most common divisions either use 12 such 'months' (requiring one every quarter to be 5 weeks instead of 4),
+ * or use 13 of 4 weeks each (making one quarter have an extra month, or each quarter have partial months).
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This is an immutable and thread-safe enum.
+ */
+<span class="fc" id="L49">public enum AccountingYearDivision {</span>
+
+    /**
+     * The singleton instance for a year divided into 4 quarters, 
+     * each having 3 months with lengths of 4, 4, and 5 weeks, respectively.
+     */
+<span class="fc" id="L55">    QUARTERS_OF_PATTERN_4_4_5_WEEKS(new int[] {4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 4, 5}),</span>
+    /**
+     * The singleton instance for a year divided into 4 quarters, 
+     * each having 3 months with lengths of 4, 5, and 4 weeks, respectively.
+     */
+<span class="fc" id="L60">    QUARTERS_OF_PATTERN_4_5_4_WEEKS(new int[] {4, 5, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4}),</span>
+    /**
+     * The singleton instance for a year divided into 4 quarters, 
+     * each having 3 months with lengths of 5, 4, and 4 weeks, respectively.
+     */
+<span class="fc" id="L65">    QUARTERS_OF_PATTERN_5_4_4_WEEKS(new int[] {5, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 4}),</span>
+    /**
+     * The singleton instance for a year divided into 13 even months,
+     * each having 4 weeks.
+     */
+<span class="fc" id="L70">    THIRTEEN_EVEN_MONTHS_OF_4_WEEKS(new int[] {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4});</span>
+
+    /**
+     * The number of weeks in each month.
+     */
+    private final int[] weeksInMonths;
+    /**
+     * The range of months in each year.
+     */
+    private final ValueRange monthsInYearRange;
+    /**
+     * The elapsed number of weeks at the start of each month.
+     */
+    private final int[] elapsedWeeks;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Private constructor for enum, for creating cached info.
+     * 
+     * @param weeksInMonths The number of weeks in each month (period).
+     */
+<span class="fc" id="L91">    private AccountingYearDivision(int[] weeksInMonths) {</span>
+<span class="fc" id="L92">        this.weeksInMonths = weeksInMonths;</span>
+
+<span class="fc" id="L94">        this.monthsInYearRange = ValueRange.of(1, weeksInMonths.length);</span>
+
+<span class="fc" id="L96">        this.elapsedWeeks = new int[weeksInMonths.length];</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (int i = 1; i &lt; weeksInMonths.length; i++) {</span>
+<span class="fc" id="L98">            elapsedWeeks[i] = elapsedWeeks[i - 1] + weeksInMonths[i - 1];</span>
+        }
+<span class="fc" id="L100">    }</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the range of months in a year.
+     * &lt;p&gt;
+     * &lt;ul&gt;
+     * &lt;li&gt;The AccountingYearDivision {@code QUARTERS_OF_PATTERN_4_4_5_WEEKS} range is [1, 12].
+     * &lt;li&gt;The AccountingYearDivision {@code QUARTERS_OF_PATTERN_4_5_4_WEEKS} range is [1, 12].
+     * &lt;li&gt;The AccountingYearDivision {@code QUARTERS_OF_PATTERN_5_4_4_WEEKS} range is [1, 12].
+     * &lt;li&gt;The AccountingYearDivision {@code THIRTEEN_EVEN_MONTHS_OF_4_WEEKS} range is [1, 13].
+     * &lt;/ul&gt;
+     *
+     * @return the range of months (periods) in a year.
+     */
+    ValueRange getMonthsInYearRange() {
+<span class="fc" id="L116">        return monthsInYearRange;</span>
+    }
+
+    /**
+     * Gets the length of the year in months.
+     * 
+     * @return The length of the year in months.
+     */
+    int lengthOfYearInMonths() {
+<span class="fc" id="L125">        return weeksInMonths.length;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Get the number of weeks in the given month (period). 
+     * 
+     * @param month  The month for which to get the count of weeks.
+     * @return The count of weeks in the given month.
+     * @throws DateTimeException if the month isn't in the valid range of months.
+     */
+    int getWeeksInMonth(int month) {
+<span class="fc" id="L137">        return getWeeksInMonth(month, 0);</span>
+    }
+
+    /**
+     * Get the number of weeks in the given month (period), with the leap year in the indicated month.
+     * 
+     * @param month  The month for which to get the count of weeks.
+     * @param leapWeekInMonth  The month in which the leap-week resides
+     * @return The count of weeks in the given month, including any leap week.
+     * @throws DateTimeException if the month isn't in the valid range of months.
+     */
+    int getWeeksInMonth(int month, int leapWeekInMonth) {
+<span class="fc" id="L149">        month = monthsInYearRange.checkValidIntValue(month, ChronoField.MONTH_OF_YEAR);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        leapWeekInMonth = (leapWeekInMonth == 0 ? 0 : monthsInYearRange.checkValidIntValue(leapWeekInMonth, ChronoField.MONTH_OF_YEAR));</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        return weeksInMonths[month - 1] + (month == leapWeekInMonth ? 1 : 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Get the number of weeks elapsed before the start of the month.
+     * 
+     * @param month The month
+     * @return The number of weeks elapsed before the start of the month.
+     * @throws DateTimeException if the month isn't in the valid range of months.
+     */
+    int getWeeksAtStartOfMonth(int month) {
+<span class="fc" id="L163">        return getWeeksAtStartOfMonth(month, 0);</span>
+    }
+
+    /**
+     * Get the number of weeks elapsed before the start of the month.
+     * 
+     * @param month The month
+     * @param leapWeekInMonth  The month in which the leap-week resides
+     * @return The number of weeks elapsed before the start of the month, including any leap week.
+     * @throws DateTimeException if the month isn't in the valid range of months.
+     */
+    int getWeeksAtStartOfMonth(int month, int leapWeekInMonth) {
+<span class="fc" id="L175">        month = monthsInYearRange.checkValidIntValue(month, ChronoField.MONTH_OF_YEAR);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        leapWeekInMonth = (leapWeekInMonth == 0 ? 0 : monthsInYearRange.checkValidIntValue(leapWeekInMonth, ChronoField.MONTH_OF_YEAR));</span>
+<span class="fc bfc" id="L177" title="All 4 branches covered.">        return elapsedWeeks[month - 1] + (leapWeekInMonth != 0 &amp;&amp; month &gt; leapWeekInMonth ? 1 : 0);</span>
+    }
+
+    /**
+     * Get the month from a count of elapsed weeks.
+     * 
+     * @param weeksElapsed The weeks elapsed since the start of the year.
+     * @return the month
+     * @throws DateTimeException if the month isn't in the valid range of months, 
+     *   or the week isn't in the valid range.
+     */
+    int getMonthFromElapsedWeeks(int weeksElapsed) {
+<span class="fc" id="L189">        return getMonthFromElapsedWeeks(weeksElapsed, 0);</span>
+    }
+
+    /**
+     * Get the month from a count of elapsed weeks.
+     * 
+     * @param weeksElapsed The weeks elapsed since the start of the year.
+     * @param leapWeekInMonth  The month in which the leap-week resides
+     * @return the month
+     * @throws DateTimeException if the month isn't in the valid range of months, 
+     *   or the week isn't in the valid range.
+     */
+    int getMonthFromElapsedWeeks(int weeksElapsed, int leapWeekInMonth) {
+<span class="fc bfc" id="L202" title="All 6 branches covered.">        if (weeksElapsed &lt; 0 || weeksElapsed &gt;= (leapWeekInMonth == 0 ? 52 : 53)) {</span>
+<span class="fc" id="L203">            throw new DateTimeException(&quot;Count of '&quot; + elapsedWeeks + &quot;' elapsed weeks not valid,&quot;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                    + &quot; should be in the range [0, &quot; + (leapWeekInMonth == 0 ? 52 : 53) + &quot;)&quot;);</span>
+        }
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        leapWeekInMonth = (leapWeekInMonth == 0 ? 0 : monthsInYearRange.checkValidIntValue(leapWeekInMonth, ChronoField.MONTH_OF_YEAR));</span>
+
+<span class="fc" id="L208">        int month = Arrays.binarySearch(elapsedWeeks, weeksElapsed);</span>
+        // Binary search returns 0-indexed if found, negative - 1 for insert position if not.
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        month = (month &gt;= 0 ? month + 1 : 0 - month - 1);</span>
+        // Need to move to previous month if there was a leap week and in the first week.
+<span class="fc bfc" id="L212" title="All 6 branches covered.">        return leapWeekInMonth == 0 || month &lt;= leapWeekInMonth || weeksElapsed &gt; elapsedWeeks[month - 1] ? month : month - 1;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

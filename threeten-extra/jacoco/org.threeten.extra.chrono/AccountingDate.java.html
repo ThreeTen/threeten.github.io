@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountingDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">AccountingDate.java</span></div><h1>AccountingDate.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import static java.time.temporal.ChronoField.DAY_OF_YEAR;
+import static java.time.temporal.ChronoField.EPOCH_DAY;
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+import static java.time.temporal.ChronoField.YEAR;
+import static org.threeten.extra.chrono.AccountingChronology.DAY_OF_YEAR_RANGE;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoPeriod;
+import java.time.temporal.ChronoField;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalQuery;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.ValueRange;
+import java.util.Objects;
+
+/**
+ * A date in an Accounting calendar system.
+ * &lt;p&gt;
+ * This date operates using a given {@linkplain AccountingChronology Accounting calendar}.
+ * An Accounting calendar differs greatly from the ISO calendar.
+ * The start of the Accounting calendar will vary against the ISO calendar.
+ * Depending on options chosen, it can start as early as {@code 0000-01-26 (ISO)} or as late as {@code 0001-01-04 (ISO)}.
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class AccountingDate extends AbstractDate implements ChronoLocalDate, Serializable {
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -126140328940081914L;
+    /**
+     * Number of days in a week.
+     */
+    private static final int DAYS_IN_WEEK = 7;
+    /** 
+     * Number of weeks in a regular (non-leap) year.
+     */
+    private static final int WEEKS_IN_YEAR = 52;
+    /**
+     * Number of days in a long (400-year) cycle.
+     */
+    private static final int DAYS_PER_LONG_CYCLE = 400 * 365 + 3 * 24 + 1 * 25;
+
+    /**
+     * The chronology for manipulating this date.
+     */
+    private final AccountingChronology chronology;
+    /**
+     * The proleptic year.
+     */
+    private final int prolepticYear;
+    /**
+     * The month (period).
+     */
+    private final short month;
+    /**
+     * The day.
+     */
+    private final short day;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains the current {@code AccountingDate} from the system clock in the default time-zone,
+     * translated with the given AccountingChronology.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     * 
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @return the current date using the system clock and default time-zone, not null
+     * @throws DateTimeException if the current date cannot be obtained,
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    public static AccountingDate now(AccountingChronology chronology) {
+<span class="nc" id="L127">        return now(chronology, Clock.systemDefaultZone());</span>
+    }
+
+    /**
+     * Obtains the current {@code AccountingDate} from the system clock in the specified time-zone,
+     * translated with the given AccountingChronology.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     * 
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param zone  the zone ID to use, not null
+     * @return the current date using the system clock, not null
+     * @throws DateTimeException if the current date cannot be obtained,
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    public static AccountingDate now(AccountingChronology chronology, ZoneId zone) {
+<span class="nc" id="L147">        return now(chronology, Clock.system(zone));</span>
+    }
+
+    /**
+     * Obtains the current {@code AccountingDate} from the specified clock,
+     * translated with the given AccountingChronology.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@linkplain Clock dependency injection}.
+     *
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param clock  the clock to use, not null
+     * @return the current date, not null
+     * @throws DateTimeException if the current date cannot be obtained,
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    public static AccountingDate now(AccountingChronology chronology, Clock clock) {
+<span class="fc" id="L165">        LocalDate now = LocalDate.now(clock);</span>
+<span class="nc" id="L166">        return ofEpochDay(chronology, now.toEpochDay());</span>
+    }
+
+    /**
+     * Obtains a {@code AccountingDate} representing a date in the given accounting calendar
+     * system from the proleptic-year, month-of-year and day-of-month fields.
+     * &lt;p&gt;
+     * This returns a {@code AccountingDate} with the specified fields.
+     * The day must be valid for the year and month, otherwise an exception will be thrown.
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param prolepticYear  the Accounting proleptic-year
+     * @param month  the Accounting month-of-year, from 1 to 12 or 1 to 13
+     * @param dayOfMonth  the Accounting day-of-month, from 1 to 35 or 1 to 42
+     * @return the date in the given Accounting calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  if the day-of-month is invalid for the month-year,
+     *  or if an AccountingChronology was not provided
+     */
+    public static AccountingDate of(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L185">        return create(chronology, prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains an {@code AccountingDate} from a temporal object.
+     * &lt;p&gt;
+     * This obtains a date in the specified Accounting calendar system based on the specified temporal.
+     * A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+     * which this factory converts to an instance of {@code AccountingDate}.
+     * &lt;p&gt;
+     * The conversion typically uses the {@link ChronoField#EPOCH_DAY EPOCH_DAY}
+     * field, which is standardized across calendar systems.
+     * &lt;p&gt;
+     * This method almost matches the signature of the functional interface {@link TemporalQuery}
+     * and must be used as a query via something that supplies the missing parameter,
+     * such as a curried method reference, {@code temporal -&gt; AccountingDate.from(chronology, temporal)}
+     * (where {@code chronology} resolves to a set up {@code AccountingChronology}).
+     *
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param temporal  the temporal object to convert, not null
+     * @return the date in Accounting calendar system, not null
+     * @throws DateTimeException if unable to convert to an {@code AccountingDate},
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    public static AccountingDate from(AccountingChronology chronology, TemporalAccessor temporal) {
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">        if (temporal instanceof AccountingDate &amp;&amp; ((AccountingDate) temporal).getChronology().equals(chronology)) {</span>
+<span class="fc" id="L211">            return (AccountingDate) temporal;</span>
+        }
+<span class="fc" id="L213">        return ofEpochDay(chronology, temporal.getLong(EPOCH_DAY));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an {@code AccountingDate} representing a date in the given Accounting calendar
+     * system from the proleptic-year and day-of-year fields.
+     * &lt;p&gt;
+     * This returns an {@code AccountingDate} with the specified fields.
+     * The day must be valid for the year, otherwise an exception will be thrown.
+     *
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param prolepticYear  the Accounting proleptic-year
+     * @param dayOfYear  the Accounting day-of-year, from 1 to 371
+     * @return the date in Accounting calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-year is invalid for the year,
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    static AccountingDate ofYearDay(AccountingChronology chronology, int prolepticYear, int dayOfYear) {
+<span class="fc" id="L233">        Objects.requireNonNull(chronology, &quot;A previously setup chronology is required.&quot;);</span>
+<span class="fc" id="L234">        YEAR.checkValidValue(prolepticYear);</span>
+<span class="fc" id="L235">        DAY_OF_YEAR_RANGE.checkValidValue(dayOfYear, DAY_OF_YEAR);</span>
+<span class="fc" id="L236">        boolean leap = chronology.isLeapYear(prolepticYear);</span>
+<span class="fc bfc" id="L237" title="All 4 branches covered.">        if (dayOfYear &gt; WEEKS_IN_YEAR * DAYS_IN_WEEK &amp;&amp; !leap) {</span>
+<span class="fc" id="L238">            throw new DateTimeException(&quot;Invalid date 'DayOfYear &quot; + dayOfYear + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+        }
+
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        int month = (leap ? chronology.getDivision().getMonthFromElapsedWeeks((dayOfYear - 1) / DAYS_IN_WEEK, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L242">                : chronology.getDivision().getMonthFromElapsedWeeks((dayOfYear - 1) / DAYS_IN_WEEK));</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        int dayOfMonth = dayOfYear - (leap ? chronology.getDivision().getWeeksAtStartOfMonth(month, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L244">                : chronology.getDivision().getWeeksAtStartOfMonth(month)) * DAYS_IN_WEEK;</span>
+
+<span class="fc" id="L246">        return new AccountingDate(chronology, prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains an {@code AccountingDate} representing a date in the given Accounting calendar
+     * system from the epoch-day.
+     *
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param epochDay  the epoch day to convert based on 1970-01-01 (ISO)
+     * @return the date in given Accounting calendar system, not null
+     * @throws DateTimeException if the epoch-day is out of range,
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    static AccountingDate ofEpochDay(AccountingChronology chronology, long epochDay) {
+<span class="fc" id="L260">        EPOCH_DAY.range().checkValidValue(epochDay, EPOCH_DAY);  // validate outer bounds</span>
+        // Use Accounting 1 to help with 0-counts.  Leap years can occur at any time.
+<span class="fc" id="L262">        long accountingEpochDay = epochDay + chronology.getDays0001ToIso1970();</span>
+
+<span class="fc" id="L264">        int longCycle = (int) Math.floorDiv(accountingEpochDay, DAYS_PER_LONG_CYCLE);</span>
+<span class="fc" id="L265">        int daysInLongCycle = (int) Math.floorMod(accountingEpochDay, DAYS_PER_LONG_CYCLE);</span>
+
+        // Value is an estimate, as the floating leap-years make this difficult.
+<span class="fc" id="L268">        int year = (daysInLongCycle - (daysInLongCycle / 365 + daysInLongCycle / (4 * 365 + 1) - daysInLongCycle / (100 * 365 + 24)) / 7) / (DAYS_IN_WEEK * WEEKS_IN_YEAR);</span>
+<span class="fc" id="L269">        int yearStart = (int) (WEEKS_IN_YEAR * (year - 1) + chronology.previousLeapYears(year)) * DAYS_IN_WEEK;</span>
+
+        // Despite the year being an estimate, the effect should still be within a few days.
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (yearStart &gt; daysInLongCycle) {</span>
+<span class="fc" id="L273">            year--;</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">            yearStart -= (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK;</span>
+<span class="fc bfc" id="L275" title="All 4 branches covered.">        } else if (daysInLongCycle - yearStart &gt;= (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK) {</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">            yearStart += (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK;</span>
+<span class="fc" id="L277">            year++;</span>
+        }
+
+<span class="fc" id="L280">        return ofYearDay(chronology, year + 400 * longCycle, daysInLongCycle - yearStart + 1);</span>
+    }
+
+    private static AccountingDate resolvePreviousValid(AccountingChronology chronology, int prolepticYear, int month, int day) {
+<span class="fc" id="L284">        day = Math.min(day, lengthOfMonth(chronology, prolepticYear, month));</span>
+<span class="fc" id="L285">        return new AccountingDate(chronology, prolepticYear, month, day);</span>
+    }
+
+    private static int lengthOfMonth(AccountingChronology chronology, int prolepticYear, int month) {
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        return (chronology.isLeapYear(prolepticYear) ? chronology.getDivision().getWeeksInMonth(month, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L290">                : chronology.getDivision().getWeeksInMonth(month)) * DAYS_IN_WEEK;</span>
+    }
+
+    /**
+     * Creates an {@code AccountingDate} validating the input.
+     *
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param prolepticYear  the Accounting proleptic-year
+     * @return the date in Accounting calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-year is invalid for the month-year,
+     *  NullPointerException if an AccountingChronology was not provided
+     */
+    static AccountingDate create(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L304">        Objects.requireNonNull(chronology, &quot;A previously setup chronology is required.&quot;);</span>
+<span class="fc" id="L305">        YEAR.checkValidValue(prolepticYear);</span>
+<span class="fc" id="L306">        chronology.range(MONTH_OF_YEAR).checkValidValue(month, MONTH_OF_YEAR);</span>
+
+<span class="fc bfc" id="L308" title="All 4 branches covered.">        if (dayOfMonth &lt; 1 || dayOfMonth &gt; lengthOfMonth(chronology, prolepticYear, month)) {</span>
+<span class="fc bfc" id="L309" title="All 4 branches covered.">            if (month == chronology.getLeapWeekInMonth() &amp;&amp; dayOfMonth &lt; (chronology.getDivision().getWeeksInMonth(month) + 1) * DAYS_IN_WEEK</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">                    &amp;&amp; !chronology.isLeapYear(prolepticYear)) {</span>
+<span class="fc" id="L311">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot;/&quot; + dayOfMonth + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+            } else {
+<span class="fc" id="L313">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot;/&quot; + dayOfMonth + &quot;'&quot;);</span>
+            }
+        }
+
+<span class="fc" id="L317">        return new AccountingDate(chronology, prolepticYear, month, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance from validated data.
+     *
+     * @param chronology  the Accounting chronology to base the date on, not null
+     * @param prolepticYear  the Accounting proleptic-year
+     * @param month  the Accounting month (period), from 1 to 12 or 1 to 13
+     * @param dayOfMonth  the Accounting day-of-month, from 1 to 35 or 1 to 42
+     */
+<span class="fc" id="L329">    private AccountingDate(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {</span>
+<span class="fc" id="L330">        this.chronology = chronology;</span>
+<span class="fc" id="L331">        this.prolepticYear = prolepticYear;</span>
+<span class="fc" id="L332">        this.month = (short) month;</span>
+<span class="fc" id="L333">        this.day = (short) dayOfMonth;</span>
+<span class="fc" id="L334">    }</span>
+
+    /**
+     * Validates the object.
+     *
+     * @return the resolved date, not null
+     */
+    private Object readResolve() {
+<span class="nc" id="L342">        return AccountingDate.create(chronology, prolepticYear, month, day);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    int getProlepticYear() {
+<span class="fc" id="L348">        return prolepticYear;</span>
+    }
+
+    @Override
+    int getMonth() {
+<span class="fc" id="L353">        return month;</span>
+    }
+
+    @Override
+    int getDayOfMonth() {
+<span class="fc" id="L358">        return day;</span>
+    }
+
+    @Override
+    int getDayOfYear() {
+<span class="fc bfc" id="L363" title="All 2 branches covered.">        int weeksAtStartOfMonth = (isLeapYear() ? chronology.getDivision().getWeeksAtStartOfMonth(month, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L364">                : chronology.getDivision().getWeeksAtStartOfMonth(month));</span>
+<span class="fc" id="L365">        return weeksAtStartOfMonth * DAYS_IN_WEEK + day;</span>
+    }
+
+    @Override
+    AbstractDate withDayOfYear(int value) {
+<span class="fc" id="L370">        return plusDays(value - getDayOfYear());</span>
+    }
+
+    @Override
+    int lengthOfYearInMonths() {
+<span class="fc" id="L375">        return chronology.getDivision().lengthOfYearInMonths();</span>
+    }
+
+    @Override
+    ValueRange rangeAlignedWeekOfMonth() {
+<span class="fc" id="L380">        return ValueRange.of(1, (lengthOfMonth() - 1) / DAYS_IN_WEEK + 1);</span>
+    }
+
+    @Override
+    AccountingDate resolvePrevious(int newYear, int newMonth, int dayOfMonth) {
+<span class="fc" id="L385">        return resolvePreviousValid(chronology, newYear, newMonth, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the chronology of this date, which is an Accounting calendar system.
+     * &lt;p&gt;
+     * The {@code Chronology} represents the calendar system in use.
+     * The era and other fields in {@link ChronoField} are defined by the chronology.
+     *
+     * @return the Accounting chronology, not null
+     */
+    @Override
+    public AccountingChronology getChronology() {
+<span class="fc" id="L399">        return chronology;</span>
+    }
+
+    @Override
+    public int lengthOfMonth() {
+<span class="fc" id="L404">        return lengthOfMonth(chronology, prolepticYear, month);</span>
+    }
+
+    @Override
+    public int lengthOfYear() {
+<span class="fc bfc" id="L409" title="All 2 branches covered.">        return (WEEKS_IN_YEAR + (isLeapYear() ? 1 : 0)) * DAYS_IN_WEEK;</span>
+    };
+
+    //-------------------------------------------------------------------------
+    @Override
+    public AccountingDate with(TemporalAdjuster adjuster) {
+<span class="fc" id="L415">        return (AccountingDate) adjuster.adjustInto(this);</span>
+    }
+
+    @Override
+    public AccountingDate with(TemporalField field, long newValue) {
+<span class="fc" id="L420">        return (AccountingDate) super.with(field, newValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public AccountingDate plus(TemporalAmount amount) {
+<span class="fc" id="L426">        return (AccountingDate) amount.addTo(this);</span>
+    }
+
+    @Override
+    public AccountingDate plus(long amountToAdd, TemporalUnit unit) {
+<span class="fc" id="L431">        return (AccountingDate) super.plus(amountToAdd, unit);</span>
+    }
+
+    @Override
+    public AccountingDate minus(TemporalAmount amount) {
+<span class="fc" id="L436">        return (AccountingDate) amount.subtractFrom(this);</span>
+    }
+
+    @Override
+    public AccountingDate minus(long amountToSubtract, TemporalUnit unit) {
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+    }
+
+    //-------------------------------------------------------------------------
+    @Override  // for covariant return type
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;AccountingDate&gt; atTime(LocalTime localTime) {
+<span class="nc" id="L448">        return (ChronoLocalDateTime&lt;AccountingDate&gt;) super.atTime(localTime);</span>
+    }
+
+    @Override
+    public long until(Temporal endExclusive, TemporalUnit unit) {
+<span class="fc" id="L453">        return super.until(AccountingDate.from(chronology, endExclusive), unit);</span>
+    }
+
+    @Override
+    public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
+<span class="fc" id="L458">        return super.doUntil(AccountingDate.from(chronology, endDateExclusive));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public long toEpochDay() {
+<span class="fc" id="L464">        long year = prolepticYear;</span>
+<span class="fc" id="L465">        long accountingEpochDay = ((year - 1) * WEEKS_IN_YEAR + chronology.previousLeapYears(year)) * DAYS_IN_WEEK + (getDayOfYear() - 1);</span>
+<span class="fc" id="L466">        return accountingEpochDay - chronology.getDays0001ToIso1970();</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Compares this date to another date, including the chronology.
+     * &lt;p&gt;
+     * Compares this date with another ensuring that the date is the same.
+     * &lt;p&gt;
+     * Only objects of this concrete type are compared, other types return false.
+     * To compare the dates of two {@code TemporalAccessor} instances, including dates
+     * in two different chronologies, use {@link ChronoField#EPOCH_DAY} as a comparator.
+     *
+     * @param obj  the object to check, null returns false
+     * @return true if this is equal to the other date
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L484" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L485">            return true;</span>
+        }
+<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (obj instanceof AccountingDate) {</span>
+<span class="fc" id="L488">            AccountingDate other = (AccountingDate) obj;</span>
+<span class="fc bfc" id="L489" title="All 6 branches covered.">            return this.prolepticYear == other.prolepticYear &amp;&amp;</span>
+                    this.month == other.month &amp;&amp;
+                    this.day == other.day &amp;&amp;
+<span class="fc bfc" id="L492" title="All 2 branches covered.">                    this.chronology.equals(other.chronology);</span>
+        }
+<span class="fc" id="L494">        return false;</span>
+    }
+
+    /**
+     * A hash code for this date.
+     *
+     * @return a suitable hash code based only on the Chronology and the date
+     */
+    @Override  // override for performance
+    public int hashCode() {
+<span class="fc" id="L504">        return chronology.hashCode() ^</span>
+                ((prolepticYear &amp; 0xFFFFF800) ^ ((prolepticYear &lt;&lt; 11) + (month &lt;&lt; 6) + (day)));
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PackedFields.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">PackedFields.java</span></div><h1>PackedFields.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoField.EPOCH_DAY;
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoField.SECOND_OF_DAY;
+import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.FOREVER;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.SECONDS;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.Chronology;
+import java.time.format.ResolverStyle;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.ValueRange;
+import java.util.Map;
+
+/**
+ * Temporal fields based on a packed representation.
+ * &lt;p&gt;
+ * This provides three fields that use a packed integer representation for dates and times.
+ */
+public final class PackedFields {
+
+    /**
+     * Packed date field.
+     * &lt;p&gt;
+     * This returns the date as a single integer value.
+     * Only dates from year 1000 to year 9999 are supported.
+     * The output is always an 8 digit integer.
+     * For example, the date 2015-12-03 is packed to the integer 20151203.
+     * &lt;p&gt;
+     * This field has invalid values within the range of value values.
+     * For example, 20121301 is invalid as it implies month 13.
+     * &lt;p&gt;
+     * When parsing in {@linkplain ResolverStyle#LENIENT lenient mode}, invalid
+     * dates will be accepted. For example, 20121301 will result in 2013-01-01.
+     */
+<span class="fc" id="L78">    public static final TemporalField PACKED_DATE = PackedDate.INSTANCE;</span>
+    /**
+     * Packed hour-minute time field.
+     * &lt;p&gt;
+     * This returns the time as a single integer value.
+     * The output is an integer from 0 to 2359.
+     * For example, the date 11:30 is packed to the integer 1130.
+     * &lt;p&gt;
+     * This field has invalid values within the range of value values.
+     * For example, 1073 is invalid as it implies the minute is 73.
+     * &lt;p&gt;
+     * When parsing in {@linkplain ResolverStyle#LENIENT lenient mode}, invalid
+     * times will be accepted. For example, 1073 will result in 11:13.
+     */
+<span class="fc" id="L92">    public static final TemporalField PACKED_HOUR_MIN = PackedHourMin.INSTANCE;</span>
+    /**
+     * Packed hour-minute-second time field.
+     * &lt;p&gt;
+     * This returns the time as a single integer value.
+     * The output is an integer from 0 to 235959.
+     * For example, the date 11:30:52 is packed to the integer 113052.
+     * &lt;p&gt;
+     * This field has invalid values within the range of value values.
+     * For example, 107310 is invalid as it implies the minute is 73.
+     * &lt;p&gt;
+     * When parsing in {@linkplain ResolverStyle#LENIENT lenient mode}, invalid
+     * times will be accepted. For example, 107310 will result in 11:13:10.
+     */
+<span class="fc" id="L106">    public static final TemporalField PACKED_TIME = PackedTime.INSTANCE;</span>
+
+    /**
+     * Restricted constructor.
+     */
+    private PackedFields() {
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Implementation of packed date.
+     */
+<span class="fc" id="L118">    private static enum PackedDate implements TemporalField {</span>
+<span class="fc" id="L119">        INSTANCE;</span>
+
+<span class="fc" id="L121">        private static final ValueRange RANGE = ValueRange.of(10000101, 99991231);</span>
+        private static final long serialVersionUID = -38752465672576L;
+
+        //-----------------------------------------------------------------------
+        @Override
+        public TemporalUnit getBaseUnit() {
+<span class="fc" id="L127">            return DAYS;</span>
+        }
+
+        @Override
+        public TemporalUnit getRangeUnit() {
+<span class="fc" id="L132">            return FOREVER;</span>
+        }
+
+        @Override
+        public boolean isDateBased() {
+<span class="fc" id="L137">            return true;</span>
+        }
+
+        @Override
+        public boolean isTimeBased() {
+<span class="fc" id="L142">            return false;</span>
+        }
+
+        @Override
+        public ValueRange range() {
+<span class="fc" id="L147">            return RANGE;</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public boolean isSupportedBy(TemporalAccessor temporal) {
+<span class="fc" id="L153">            return temporal.isSupported(EPOCH_DAY);</span>
+        }
+
+        @Override
+        public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            if (!temporal.isSupported(this)) {</span>
+<span class="fc" id="L159">                throw new DateTimeException(&quot;Unsupported field: &quot; + this);</span>
+            }
+<span class="fc" id="L161">            return range();</span>
+        }
+
+        @Override
+        public long getFrom(TemporalAccessor temporal) {
+<span class="fc" id="L166">            LocalDate date = LocalDate.ofEpochDay(temporal.getLong(EPOCH_DAY));</span>
+<span class="fc" id="L167">            int year = date.getYear();</span>
+<span class="fc bfc" id="L168" title="All 4 branches covered.">            if (year &lt; 1000 || year &gt; 9999) {</span>
+<span class="fc" id="L169">                throw new DateTimeException(&quot;Unable to obtain PackedDate from LocalDate: &quot; + date);</span>
+            }
+<span class="fc" id="L171">            int moy = date.getMonthValue();</span>
+<span class="fc" id="L172">            int dom = date.getDayOfMonth();</span>
+<span class="fc" id="L173">            return year * 10000 + moy * 100 + dom;</span>
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        @Override
+        public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
+<span class="fc" id="L179">            LocalDate date = toDate(newValue);</span>
+<span class="fc" id="L180">            return (R) temporal.with(date);</span>
+        }
+
+        private LocalDate toDate(long newValue) {
+<span class="fc bfc" id="L184" title="All 2 branches covered.">            if (range().isValidValue(newValue) == false) {</span>
+<span class="fc" id="L185">                throw new DateTimeException(&quot;Invalid value: PackedDate &quot; + newValue);</span>
+            }
+<span class="fc" id="L187">            int val = (int) newValue;</span>
+<span class="fc" id="L188">            int year = val / 10000;</span>
+<span class="fc" id="L189">            int moy = (val % 10000) / 100;</span>
+<span class="fc" id="L190">            int dom = val % 100;</span>
+<span class="fc" id="L191">            return LocalDate.of(year, moy, dom);</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public ChronoLocalDate resolve(
+                Map&lt;TemporalField, Long&gt; fieldValues, TemporalAccessor partialTemporal, ResolverStyle resolverStyle) {
+<span class="fc" id="L198">            long value = fieldValues.remove(this);</span>
+            LocalDate date;
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            if (resolverStyle == ResolverStyle.LENIENT) {</span>
+<span class="fc" id="L201">                int year = Math.toIntExact(value / 10000);</span>
+<span class="fc" id="L202">                int moy = (int) ((value % 10000) / 100);</span>
+<span class="fc" id="L203">                long dom = value % 100;</span>
+<span class="fc" id="L204">                date = LocalDate.of(year, 1, 1).plusMonths(moy - 1).plusDays(dom - 1);</span>
+<span class="fc" id="L205">            } else {</span>
+<span class="fc" id="L206">                date = toDate(value);</span>
+            }
+<span class="fc" id="L208">            Chronology chrono = Chronology.from(partialTemporal);</span>
+<span class="fc" id="L209">            return chrono.date(date);</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public String toString() {
+<span class="fc" id="L215">            return &quot;PackedDate&quot;;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Implementation of packed hour-min.
+     */
+<span class="fc" id="L223">    private static enum PackedHourMin implements TemporalField {</span>
+<span class="fc" id="L224">        INSTANCE;</span>
+
+<span class="fc" id="L226">        private static final ValueRange RANGE = ValueRange.of(0, 2359);</span>
+        private static final long serialVersionUID = -871357658587L;
+
+        //-----------------------------------------------------------------------
+        @Override
+        public TemporalUnit getBaseUnit() {
+<span class="fc" id="L232">            return MINUTES;</span>
+        }
+
+        @Override
+        public TemporalUnit getRangeUnit() {
+<span class="fc" id="L237">            return DAYS;</span>
+        }
+
+        @Override
+        public boolean isDateBased() {
+<span class="fc" id="L242">            return false;</span>
+        }
+
+        @Override
+        public boolean isTimeBased() {
+<span class="fc" id="L247">            return true;</span>
+        }
+
+        @Override
+        public ValueRange range() {
+<span class="fc" id="L252">            return RANGE;</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public boolean isSupportedBy(TemporalAccessor temporal) {
+<span class="fc" id="L258">            return temporal.isSupported(MINUTE_OF_DAY);</span>
+        }
+
+        @Override
+        public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
+<span class="fc bfc" id="L263" title="All 2 branches covered.">            if (!temporal.isSupported(this)) {</span>
+<span class="fc" id="L264">                throw new DateTimeException(&quot;Unsupported field: &quot; + this);</span>
+            }
+<span class="fc" id="L266">            return range();</span>
+        }
+
+        @Override
+        public long getFrom(TemporalAccessor temporal) {
+<span class="fc" id="L271">            int mod = temporal.get(MINUTE_OF_DAY);</span>
+<span class="fc" id="L272">            int hour = mod / 60;</span>
+<span class="fc" id="L273">            int min = mod % 60;</span>
+<span class="fc" id="L274">            return hour * 100 + min;</span>
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        @Override
+        public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
+<span class="fc" id="L280">            long hour = newValue / 100;</span>
+<span class="fc" id="L281">            long min = newValue % 100;</span>
+<span class="fc" id="L282">            HOUR_OF_DAY.checkValidValue(hour);</span>
+<span class="fc" id="L283">            MINUTE_OF_HOUR.checkValidValue(min);</span>
+<span class="fc" id="L284">            return (R) temporal.with(HOUR_OF_DAY, hour).with(MINUTE_OF_HOUR, min);</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public ChronoLocalDate resolve(
+                Map&lt;TemporalField, Long&gt; fieldValues, TemporalAccessor partialTemporal, ResolverStyle resolverStyle) {
+<span class="fc" id="L291">            long value = fieldValues.remove(this);</span>
+<span class="fc" id="L292">            long hour = value / 100;</span>
+<span class="fc" id="L293">            long min = value % 100;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">            if (resolverStyle != ResolverStyle.LENIENT) {</span>
+<span class="fc" id="L295">                HOUR_OF_DAY.checkValidValue(hour);</span>
+<span class="fc" id="L296">                MINUTE_OF_HOUR.checkValidValue(min);</span>
+            }
+<span class="fc" id="L298">            long mod = hour * 60 + min;</span>
+<span class="fc" id="L299">            updateCheckConflict(fieldValues, this, MINUTE_OF_DAY, mod);</span>
+<span class="fc" id="L300">            return null;</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public String toString() {
+<span class="fc" id="L306">            return &quot;PackedHourMin&quot;;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Implementation of packed hour-min-sec.
+     */
+<span class="fc" id="L314">    private static enum PackedTime implements TemporalField {</span>
+<span class="fc" id="L315">        INSTANCE;</span>
+
+<span class="fc" id="L317">        private static final ValueRange RANGE = ValueRange.of(0, 235959);</span>
+        private static final long serialVersionUID = -98266827687L;
+
+        //-----------------------------------------------------------------------
+        @Override
+        public TemporalUnit getBaseUnit() {
+<span class="fc" id="L323">            return SECONDS;</span>
+        }
+
+        @Override
+        public TemporalUnit getRangeUnit() {
+<span class="fc" id="L328">            return DAYS;</span>
+        }
+
+        @Override
+        public boolean isDateBased() {
+<span class="fc" id="L333">            return false;</span>
+        }
+
+        @Override
+        public boolean isTimeBased() {
+<span class="fc" id="L338">            return true;</span>
+        }
+
+        @Override
+        public ValueRange range() {
+<span class="fc" id="L343">            return RANGE;</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public boolean isSupportedBy(TemporalAccessor temporal) {
+<span class="fc" id="L349">            return temporal.isSupported(SECOND_OF_DAY);</span>
+        }
+
+        @Override
+        public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
+<span class="fc bfc" id="L354" title="All 2 branches covered.">            if (!temporal.isSupported(this)) {</span>
+<span class="fc" id="L355">                throw new DateTimeException(&quot;Unsupported field: &quot; + this);</span>
+            }
+<span class="fc" id="L357">            return range();</span>
+        }
+
+        @Override
+        public long getFrom(TemporalAccessor temporal) {
+<span class="fc" id="L362">            int sod = temporal.get(SECOND_OF_DAY);</span>
+<span class="fc" id="L363">            int hour = sod / 3600;</span>
+<span class="fc" id="L364">            int min = (sod / 60) % 60;</span>
+<span class="fc" id="L365">            int sec = sod % 60;</span>
+<span class="fc" id="L366">            return hour * 10000 + min * 100 + sec;</span>
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        @Override
+        public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
+<span class="fc" id="L372">            RANGE.checkValidValue(newValue, INSTANCE);</span>
+<span class="fc" id="L373">            long hour = newValue / 10000;</span>
+<span class="fc" id="L374">            long min = (newValue % 10000) / 100;</span>
+<span class="fc" id="L375">            long sec = newValue % 100;</span>
+<span class="fc" id="L376">            HOUR_OF_DAY.checkValidValue(hour);</span>
+<span class="fc" id="L377">            MINUTE_OF_HOUR.checkValidValue(min);</span>
+<span class="fc" id="L378">            SECOND_OF_MINUTE.checkValidValue(sec);</span>
+<span class="fc" id="L379">            long sod = 3600 * hour + 60 * min + sec;</span>
+<span class="fc" id="L380">            return (R) temporal.with(SECOND_OF_DAY, sod);</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public ChronoLocalDate resolve(
+                Map&lt;TemporalField, Long&gt; fieldValues, TemporalAccessor partialTemporal, ResolverStyle resolverStyle) {
+<span class="fc" id="L387">            long value = fieldValues.remove(this);</span>
+<span class="fc" id="L388">            long hour = value / 10000;</span>
+<span class="fc" id="L389">            long min = (value % 10000) / 100;</span>
+<span class="fc" id="L390">            long sec = value % 100;</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">            if (resolverStyle != ResolverStyle.LENIENT) {</span>
+<span class="fc" id="L392">                HOUR_OF_DAY.checkValidValue(hour);</span>
+<span class="fc" id="L393">                MINUTE_OF_HOUR.checkValidValue(min);</span>
+<span class="fc" id="L394">                SECOND_OF_MINUTE.checkValidValue(sec);</span>
+            }
+<span class="fc" id="L396">            long sod = 3600 * hour + 60 * min + sec;</span>
+<span class="fc" id="L397">            updateCheckConflict(fieldValues, this, SECOND_OF_DAY, sod);</span>
+<span class="fc" id="L398">            return null;</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public String toString() {
+<span class="fc" id="L404">            return &quot;PackedTime&quot;;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    private static void updateCheckConflict(
+            Map&lt;TemporalField, Long&gt; fieldValues,
+            TemporalField targetField,
+            TemporalField changeField,
+            long changeValue) {
+        
+<span class="fc" id="L415">        Long old = fieldValues.put(changeField, changeValue);</span>
+<span class="pc bpc" id="L416" title="3 of 4 branches missed.">        if (old != null &amp;&amp; changeValue != old.longValue()) {</span>
+<span class="nc" id="L417">            throw new DateTimeException(</span>
+                    &quot;Conflict found: &quot; + changeField + &quot; &quot; + old +
+                    &quot; differs from &quot; + changeField + &quot; &quot; + changeValue +
+                    &quot; while resolving  &quot; + targetField);
+        }
+<span class="fc" id="L422">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

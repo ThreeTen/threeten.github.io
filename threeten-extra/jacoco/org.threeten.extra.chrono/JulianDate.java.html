@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JulianDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">JulianDate.java</span></div><h1>JulianDate.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import static java.time.temporal.ChronoField.DAY_OF_MONTH;
+import static java.time.temporal.ChronoField.DAY_OF_YEAR;
+import static java.time.temporal.ChronoField.EPOCH_DAY;
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+import static java.time.temporal.ChronoField.YEAR;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoPeriod;
+import java.time.temporal.ChronoField;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalQuery;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.ValueRange;
+
+/**
+ * A date in the Julian calendar system.
+ * &lt;p&gt;
+ * This date operates using the {@linkplain JulianChronology Julian calendar}.
+ * This calendar system is the forerunner to the modern Gregorian and ISO calendars.
+ * The Julian differs from the Gregorian only in terms of the leap year rule.
+ * Dates are aligned such that {@code 0001-01-01 (Julian)} is {@code 0000-12-30 (ISO)}.
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class JulianDate
+        extends AbstractDate
+        implements ChronoLocalDate, Serializable {
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -7920528871688876868L;
+    /**
+     * The difference between the ISO and Julian epoch day count (Julian 0001-01-01 to ISO 1970-01-01).
+     */
+    private static final int JULIAN_0001_TO_ISO_1970 = 678577 + 40587;  // MJD values
+    /**
+     * The days per 4 year cycle.
+     */
+    private static final int DAYS_PER_CYCLE = (365 * 4) + 1;
+
+    /**
+     * The proleptic year.
+     */
+    private final int prolepticYear;
+    /**
+     * The month.
+     */
+    private final short month;
+    /**
+     * The day.
+     */
+    private final short day;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains the current {@code JulianDate} from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current date using the system clock and default time-zone, not null
+     */
+    public static JulianDate now() {
+<span class="nc" id="L117">        return now(Clock.systemDefaultZone());</span>
+    }
+
+    /**
+     * Obtains the current {@code JulianDate} from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the zone ID to use, not null
+     * @return the current date using the system clock, not null
+     */
+    public static JulianDate now(ZoneId zone) {
+<span class="nc" id="L133">        return now(Clock.system(zone));</span>
+    }
+
+    /**
+     * Obtains the current {@code JulianDate} from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@linkplain Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current date, not null
+     * @throws DateTimeException if the current date cannot be obtained
+     */
+    public static JulianDate now(Clock clock) {
+<span class="nc" id="L148">        LocalDate now = LocalDate.now(clock);</span>
+<span class="nc" id="L149">        return JulianDate.ofEpochDay(now.toEpochDay());</span>
+    }
+
+    /**
+     * Obtains a {@code JulianDate} representing a date in the Julian calendar
+     * system from the proleptic-year, month-of-year and day-of-month fields.
+     * &lt;p&gt;
+     * This returns a {@code JulianDate} with the specified fields.
+     * The day must be valid for the year and month, otherwise an exception will be thrown.
+     *
+     * @param prolepticYear  the Julian proleptic-year
+     * @param month  the Julian month-of-year, from 1 to 12
+     * @param dayOfMonth  the Julian day-of-month, from 1 to 31
+     * @return the date in Julian calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-month is invalid for the month-year
+     */
+    public static JulianDate of(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L167">        return JulianDate.create(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a {@code JulianDate} from a temporal object.
+     * &lt;p&gt;
+     * This obtains a date in the Julian calendar system based on the specified temporal.
+     * A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+     * which this factory converts to an instance of {@code JulianDate}.
+     * &lt;p&gt;
+     * The conversion typically uses the {@link ChronoField#EPOCH_DAY EPOCH_DAY}
+     * field, which is standardized across calendar systems.
+     * &lt;p&gt;
+     * This method matches the signature of the functional interface {@link TemporalQuery}
+     * allowing it to be used as a query via method reference, {@code JulianDate::from}.
+     *
+     * @param temporal  the temporal object to convert, not null
+     * @return the date in Julian calendar system, not null
+     * @throws DateTimeException if unable to convert to a {@code JulianDate}
+     */
+    public static JulianDate from(TemporalAccessor temporal) {
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (temporal instanceof JulianDate) {</span>
+<span class="fc" id="L189">            return (JulianDate) temporal;</span>
+        }
+<span class="fc" id="L191">        return JulianDate.ofEpochDay(temporal.getLong(EPOCH_DAY));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code JulianDate} representing a date in the Julian calendar
+     * system from the proleptic-year and day-of-year fields.
+     * &lt;p&gt;
+     * This returns a {@code JulianDate} with the specified fields.
+     * The day must be valid for the year, otherwise an exception will be thrown.
+     *
+     * @param prolepticYear  the Julian proleptic-year
+     * @param dayOfYear  the Julian day-of-year, from 1 to 366
+     * @return the date in Julian calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-year is invalid for the year
+     */
+    static JulianDate ofYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L209">        JulianChronology.YEAR_RANGE.checkValidValue(prolepticYear, YEAR);</span>
+<span class="fc" id="L210">        DAY_OF_YEAR.checkValidValue(dayOfYear);</span>
+<span class="fc" id="L211">        boolean leap = JulianChronology.INSTANCE.isLeapYear(prolepticYear);</span>
+<span class="fc bfc" id="L212" title="All 4 branches covered.">        if (dayOfYear == 366 &amp;&amp; leap == false) {</span>
+<span class="fc" id="L213">            throw new DateTimeException(&quot;Invalid date 'DayOfYear 366' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+        }
+<span class="fc" id="L215">        Month moy = Month.of((dayOfYear - 1) / 31 + 1);</span>
+<span class="fc" id="L216">        int monthEnd = moy.firstDayOfYear(leap) + moy.length(leap) - 1;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (dayOfYear &gt; monthEnd) {</span>
+<span class="fc" id="L218">            moy = moy.plus(1);</span>
+        }
+<span class="fc" id="L220">        int dom = dayOfYear - moy.firstDayOfYear(leap) + 1;</span>
+<span class="fc" id="L221">        return new JulianDate(prolepticYear, moy.getValue(), dom);</span>
+    }
+
+    /**
+     * Obtains a {@code JulianDate} representing a date in the Julian calendar
+     * system from the epoch-day.
+     *
+     * @param epochDay  the epoch day to convert based on 1970-01-01 (ISO)
+     * @return the date in Julian calendar system, not null
+     * @throws DateTimeException if the epoch-day is out of range
+     */
+    static JulianDate ofEpochDay(final long epochDay) {
+<span class="fc" id="L233">        EPOCH_DAY.range().checkValidValue(epochDay, EPOCH_DAY);  // validate outer bounds</span>
+        // use of Julian 0001 makes leap year at end of cycle
+<span class="fc" id="L235">        long julianEpochDay = epochDay + JULIAN_0001_TO_ISO_1970;</span>
+<span class="fc" id="L236">        long cycle = Math.floorDiv(julianEpochDay, DAYS_PER_CYCLE);</span>
+<span class="fc" id="L237">        long daysInCycle = Math.floorMod(julianEpochDay, DAYS_PER_CYCLE);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        if (daysInCycle == DAYS_PER_CYCLE - 1) {</span>
+<span class="fc" id="L239">            int year = (int) ((cycle * 4 + 3) + 1);</span>
+<span class="fc" id="L240">            return ofYearDay(year, 366);</span>
+        }
+<span class="fc" id="L242">        int year = (int) ((cycle * 4 + daysInCycle / 365) + 1);</span>
+<span class="fc" id="L243">        int doy = (int) ((daysInCycle % 365) + 1);</span>
+<span class="fc" id="L244">        return ofYearDay(year, doy);</span>
+    }
+
+    private static JulianDate resolvePreviousValid(int prolepticYear, int month, int day) {
+<span class="fc bfc" id="L248" title="All 3 branches covered.">        switch (month) {</span>
+            case 2:
+<span class="fc bfc" id="L250" title="All 2 branches covered.">                day = Math.min(day, JulianChronology.INSTANCE.isLeapYear(prolepticYear) ? 29 : 28);</span>
+<span class="fc" id="L251">                break;</span>
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+<span class="fc" id="L256">                day = Math.min(day, 30);</span>
+<span class="fc" id="L257">                break;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L261">        return new JulianDate(prolepticYear, month, day);</span>
+    }
+
+    /**
+     * Creates a {@code JulianDate} validating the input.
+     *
+     * @param prolepticYear  the Julian proleptic-year
+     * @param month  the Julian month-of-year, from 1 to 12
+     * @param dayOfMonth  the Julian day-of-month, from 1 to 31
+     * @return the date in Julian calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-year is invalid for the month-year
+     */
+    static JulianDate create(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L275">        JulianChronology.YEAR_RANGE.checkValidValue(prolepticYear, YEAR);</span>
+<span class="fc" id="L276">        MONTH_OF_YEAR.checkValidValue(month);</span>
+<span class="fc" id="L277">        DAY_OF_MONTH.checkValidValue(dayOfMonth);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        if (dayOfMonth &gt; 28) {</span>
+<span class="fc" id="L279">            int dom = 31;</span>
+<span class="fc bfc" id="L280" title="All 3 branches covered.">            switch (month) {</span>
+                case 2:
+<span class="fc bfc" id="L282" title="All 2 branches covered.">                    dom = (JulianChronology.INSTANCE.isLeapYear(prolepticYear) ? 29 : 28);</span>
+<span class="fc" id="L283">                    break;</span>
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+<span class="fc" id="L288">                    dom = 30;</span>
+<span class="fc" id="L289">                    break;</span>
+                default:
+                    break;
+            }
+<span class="fc bfc" id="L293" title="All 2 branches covered.">            if (dayOfMonth &gt; dom) {</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">                if (dayOfMonth == 29) {</span>
+<span class="fc" id="L295">                    throw new DateTimeException(&quot;Invalid date 'February 29' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+                } else {
+<span class="fc" id="L297">                    throw new DateTimeException(&quot;Invalid date '&quot; + Month.of(month).name() + &quot; &quot; + dayOfMonth + &quot;'&quot;);</span>
+                }
+            }
+        }
+<span class="fc" id="L301">        return new JulianDate(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance from validated data.
+     *
+     * @param prolepticYear  the Julian proleptic-year
+     * @param month  the Julian month, from 1 to 12
+     * @param dayOfMonth  the Julian day-of-month, from 1 to 31
+     */
+<span class="fc" id="L312">    private JulianDate(int prolepticYear, int month, int dayOfMonth) {</span>
+<span class="fc" id="L313">        this.prolepticYear = prolepticYear;</span>
+<span class="fc" id="L314">        this.month = (short) month;</span>
+<span class="fc" id="L315">        this.day = (short) dayOfMonth;</span>
+<span class="fc" id="L316">    }</span>
+
+    /**
+     * Validates the object.
+     *
+     * @return the resolved date, not null
+     */
+    private Object readResolve() {
+<span class="nc" id="L324">        return JulianDate.create(prolepticYear, month, day);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    int getProlepticYear() {
+<span class="fc" id="L330">        return prolepticYear;</span>
+    }
+
+    @Override
+    int getMonth() {
+<span class="fc" id="L335">        return month;</span>
+    }
+
+    @Override
+    int getDayOfMonth() {
+<span class="fc" id="L340">        return day;</span>
+    }
+
+    @Override
+    int getDayOfYear() {
+<span class="fc" id="L345">        return Month.of(month).firstDayOfYear(isLeapYear()) + day - 1;</span>
+    }
+
+    @Override
+    ValueRange rangeAlignedWeekOfMonth() {
+<span class="fc bfc" id="L350" title="All 4 branches covered.">        return ValueRange.of(1, month == 2 &amp;&amp; isLeapYear() == false ? 4 : 5);</span>
+    }
+
+    @Override
+    JulianDate resolvePrevious(int newYear, int newMonth, int dayOfMonth) {
+<span class="fc" id="L355">        return resolvePreviousValid(newYear, newMonth, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the chronology of this date, which is the Julian calendar system.
+     * &lt;p&gt;
+     * The {@code Chronology} represents the calendar system in use.
+     * The era and other fields in {@link ChronoField} are defined by the chronology.
+     *
+     * @return the Julian chronology, not null
+     */
+    @Override
+    public JulianChronology getChronology() {
+<span class="fc" id="L369">        return JulianChronology.INSTANCE;</span>
+    }
+
+    /**
+     * Gets the era applicable at this date.
+     * &lt;p&gt;
+     * The Julian calendar system has two eras, 'AD' and 'BC',
+     * defined by {@link JulianEra}.
+     *
+     * @return the era applicable at this date, not null
+     */
+    @Override
+    public JulianEra getEra() {
+<span class="fc bfc" id="L382" title="All 2 branches covered.">        return (prolepticYear &gt;= 1 ? JulianEra.AD : JulianEra.BC);</span>
+    }
+
+    /**
+     * Returns the length of the month represented by this date.
+     * &lt;p&gt;
+     * This returns the length of the month in days.
+     * Month lengths match those of the ISO calendar system.
+     *
+     * @return the length of the month in days, from 28 to 31
+     */
+    @Override
+    public int lengthOfMonth() {
+<span class="fc bfc" id="L395" title="All 3 branches covered.">        switch (month) {</span>
+            case 2:
+<span class="fc bfc" id="L397" title="All 2 branches covered.">                return (isLeapYear() ? 29 : 28);</span>
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+<span class="fc" id="L402">                return 30;</span>
+            default:
+<span class="fc" id="L404">                return 31;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    @Override
+    public JulianDate with(TemporalAdjuster adjuster) {
+<span class="fc" id="L411">        return (JulianDate) adjuster.adjustInto(this);</span>
+    }
+
+    @Override
+    public JulianDate with(TemporalField field, long newValue) {
+<span class="fc" id="L416">        return (JulianDate) super.with(field, newValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public JulianDate plus(TemporalAmount amount) {
+<span class="fc" id="L422">        return (JulianDate) amount.addTo(this);</span>
+    }
+
+    @Override
+    public JulianDate plus(long amountToAdd, TemporalUnit unit) {
+<span class="fc" id="L427">        return (JulianDate) super.plus(amountToAdd, unit);</span>
+    }
+
+    @Override
+    public JulianDate minus(TemporalAmount amount) {
+<span class="fc" id="L432">        return (JulianDate) amount.subtractFrom(this);</span>
+    }
+
+    @Override
+    public JulianDate minus(long amountToSubtract, TemporalUnit unit) {
+<span class="pc bpc" id="L437" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+    }
+
+    //-------------------------------------------------------------------------
+    @Override  // for covariant return type
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;JulianDate&gt; atTime(LocalTime localTime) {
+<span class="nc" id="L444">        return (ChronoLocalDateTime&lt;JulianDate&gt;) super.atTime(localTime);</span>
+    }
+
+    @Override
+    public long until(Temporal endExclusive, TemporalUnit unit) {
+<span class="fc" id="L449">        return super.until(JulianDate.from(endExclusive), unit);</span>
+    }
+
+    @Override
+    public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
+<span class="fc" id="L454">        return super.doUntil(JulianDate.from(endDateExclusive));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public long toEpochDay() {
+<span class="fc" id="L460">        long year = (long) prolepticYear;</span>
+<span class="fc" id="L461">        long julianEpochDay = ((year - 1) * 365) + Math.floorDiv((year - 1), 4) + (getDayOfYear() - 1);</span>
+<span class="fc" id="L462">        return julianEpochDay - JULIAN_0001_TO_ISO_1970;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

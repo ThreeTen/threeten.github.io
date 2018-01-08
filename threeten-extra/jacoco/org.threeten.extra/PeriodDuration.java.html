@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PeriodDuration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">PeriodDuration.java</span></div><h1>PeriodDuration.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.MONTHS;
+import static java.time.temporal.ChronoUnit.NANOS;
+import static java.time.temporal.ChronoUnit.SECONDS;
+import static java.time.temporal.ChronoUnit.YEARS;
+
+import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.chrono.ChronoPeriod;
+import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.IsoFields;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalQueries;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
+/**
+ * An amount of time in the ISO-8601 calendar system that combines a period and a duration.
+ * &lt;p&gt;
+ * This class models a quantity or amount of time in terms of a {@code Period} and {@code Duration}.
+ * A period is a date-based amount of time, consisting of years, months and days.
+ * A duration is a time-based amount of time, consisting of seconds and nanoseconds.
+ * See the {@link Period} and {@link Duration} classes for more details.
+ * &lt;p&gt;
+ * The days in a period take account of daylight saving changes (23 or 25 hour days).
+ * When performing calculations, the period is added first, then the duration.
+ * &lt;p&gt;
+ * The model is of a directed amount, meaning that the amount may be negative.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class PeriodDuration
+        implements TemporalAmount, Serializable {
+
+    /**
+     * A constant for a duration of zero.
+     */
+<span class="fc" id="L87">    public static final PeriodDuration ZERO = new PeriodDuration(Period.ZERO, Duration.ZERO);</span>
+
+    /**
+     * A serialization identifier for this class.
+     */
+    private static final long serialVersionUID = 8815521625671589L;
+    /**
+     * The supported units.
+     */
+<span class="fc" id="L96">    private static final List&lt;TemporalUnit&gt; SUPPORTED_UNITS =</span>
+<span class="fc" id="L97">            Collections.unmodifiableList(Arrays.&lt;TemporalUnit&gt;asList(YEARS, MONTHS, DAYS, SECONDS, NANOS));</span>
+    /**
+     * The number of seconds per day.
+     */
+    private static final long SECONDS_PER_DAY = 86400;
+
+    /**
+     * The period.
+     */
+    private final Period period;
+    /**
+     * The duration.
+     */
+    private final Duration duration;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance based on a period and duration.
+     * &lt;p&gt;
+     * The total amount of time of the resulting instance is the period plus the duration.
+     *
+     * @param period  the period, not null
+     * @param duration  the duration, not null
+     * @return the combined period-duration, not null
+     */
+    public static PeriodDuration of(Period period, Duration duration) {
+<span class="fc" id="L123">        Objects.requireNonNull(period, &quot;The period must not be null&quot;);</span>
+<span class="fc" id="L124">        Objects.requireNonNull(duration, &quot;The duration must not be null&quot;);</span>
+<span class="fc" id="L125">        return new PeriodDuration(period, duration);</span>
+    }
+
+    /**
+     * Obtains an instance based on a period.
+     * &lt;p&gt;
+     * The duration will be zero.
+     *
+     * @param period  the period, not null
+     * @return the combined period-duration, not null
+     */
+    public static PeriodDuration of(Period period) {
+<span class="fc" id="L137">        Objects.requireNonNull(period, &quot;The period must not be null&quot;);</span>
+<span class="fc" id="L138">        return new PeriodDuration(period, Duration.ZERO);</span>
+    }
+
+    /**
+     * Obtains an instance based on a duration.
+     * &lt;p&gt;
+     * The period will be zero.
+     *
+     * @param duration  the duration, not null
+     * @return the combined period-duration, not null
+     */
+    public static PeriodDuration of(Duration duration) {
+<span class="fc" id="L150">        Objects.requireNonNull(duration, &quot;The duration must not be null&quot;);</span>
+<span class="fc" id="L151">        return new PeriodDuration(Period.ZERO, duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance from a temporal amount.
+     * &lt;p&gt;
+     * This obtains an instance based on the specified amount.
+     * A {@code TemporalAmount} represents an amount of time which this factory
+     * extracts to a {@code PeriodDuration}.
+     * &lt;p&gt;
+     * The result is calculated by looping around each unit in the specified amount.
+     * Any amount that is zero is ignore.
+     * If a unit has an exact duration, it will be totalled using {@link Duration#plus(Duration)}.
+     * If the unit is days or weeks, it will be totalled into the days part of the period.
+     * If the unit is months or quarters, it will be totalled into the months part of the period.
+     * If the unit is years, decades, centuries or millennia, it will be totalled into the years part of the period.
+     *
+     * @param amount  the temporal amount to convert, not null
+     * @return the equivalent duration, not null
+     * @throws DateTimeException if unable to convert to a {@code Duration}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static PeriodDuration from(TemporalAmount amount) {
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (amount instanceof PeriodDuration) {</span>
+<span class="fc" id="L176">            return (PeriodDuration) amount;</span>
+        }
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (amount instanceof Period) {</span>
+<span class="fc" id="L179">            return PeriodDuration.of((Period) amount);</span>
+        }
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (amount instanceof Duration) {</span>
+<span class="fc" id="L182">            return PeriodDuration.of((Duration) amount);</span>
+        }
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        if (amount instanceof ChronoPeriod) {</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            if (IsoChronology.INSTANCE.equals(((ChronoPeriod) amount).getChronology()) == false) {</span>
+<span class="nc" id="L186">                throw new DateTimeException(&quot;Period requires ISO chronology: &quot; + amount);</span>
+            }
+        }
+<span class="fc" id="L189">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L190">        int years = 0;</span>
+<span class="fc" id="L191">        int months = 0;</span>
+<span class="fc" id="L192">        int days = 0;</span>
+<span class="fc" id="L193">        Duration duration = Duration.ZERO;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L195">            long value = amount.get(unit);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">            if (value != 0) {</span>
+                // ignore unless non-zero
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                if (unit.isDurationEstimated()) {</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">                    if (unit == ChronoUnit.DAYS) {</span>
+<span class="fc" id="L200">                        days = Math.addExact(days, Math.toIntExact(value));</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                    } else if (unit == ChronoUnit.WEEKS) {</span>
+<span class="fc" id="L202">                        days = Math.addExact(days, Math.toIntExact(Math.multiplyExact(value, 7)));</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">                    } else if (unit == ChronoUnit.MONTHS) {</span>
+<span class="fc" id="L204">                        months = Math.addExact(months, Math.toIntExact(value));</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">                    } else if (unit == IsoFields.QUARTER_YEARS) {</span>
+<span class="nc" id="L206">                        months = Math.addExact(months, Math.toIntExact(Math.multiplyExact(value, 3)));</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">                    } else if (unit == ChronoUnit.YEARS) {</span>
+<span class="fc" id="L208">                        years = Math.addExact(years, Math.toIntExact(value));</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.DECADES) {</span>
+<span class="nc" id="L210">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 10)));</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.CENTURIES) {</span>
+<span class="nc" id="L212">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 100)));</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.MILLENNIA) {</span>
+<span class="nc" id="L214">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 1000)));</span>
+                    } else {
+<span class="nc" id="L216">                        throw new DateTimeException(&quot;Unknown unit: &quot; + unit);</span>
+                    }
+                } else {
+                    // total of exact durations
+<span class="fc" id="L220">                    duration = duration.plus(amount.get(unit), unit);</span>
+                }
+            }
+<span class="fc" id="L223">        }</span>
+<span class="fc" id="L224">        return PeriodDuration.of(Period.of(years, months, days), duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance from a text string such as {@code PnYnMnDTnHnMnS}.
+     * &lt;p&gt;
+     * This will parse the string produced by {@code toString()} which is
+     * based on the ISO-8601 period formats {@code PnYnMnDTnHnMnS} and {@code PnW}.
+     * &lt;p&gt;
+     * The string starts with an optional sign, denoted by the ASCII negative
+     * or positive symbol. If negative, the whole amount is negated.
+     * The ASCII letter &quot;P&quot; is next in upper or lower case.
+     * There are then a number of sections, each consisting of a number and a suffix.
+     * At least one of the sections must be present.
+     * The sections have suffixes in ASCII of &quot;Y&quot; for years, &quot;M&quot; for months,
+     * &quot;W&quot; for weeks, &quot;D&quot; for days, &quot;H&quot; for hours, &quot;M&quot; for minutes, &quot;S&quot; for seconds,
+     * accepted in upper or lower case. Note that the ASCII letter &quot;T&quot; separates
+     * the date and time parts and must be present if any time part is present.
+     * The suffixes must occur in order.
+     * The number part of each section must consist of ASCII digits.
+     * The number may be prefixed by the ASCII negative or positive symbol.
+     * The number must parse to an {@code int}.
+     * Any week-based input is multiplied by 7 and treated as a number of days.
+     * &lt;p&gt;
+     * The leading plus/minus sign, and negative values for weeks and days are
+     * not part of the ISO-8601 standard.
+     * &lt;p&gt;
+     * Note that the date style format {@code PYYYY-MM-DDTHH:MM:SS} is not supported.
+     * &lt;p&gt;
+     * For example, the following are valid inputs:
+     * &lt;pre&gt;
+     *   &quot;P2Y&quot;             -- PeriodDuration.of(Period.ofYears(2))
+     *   &quot;P3M&quot;             -- PeriodDuration.of(Period.ofMonths(3))
+     *   &quot;P4W&quot;             -- PeriodDuration.of(Period.ofWeeks(4))
+     *   &quot;P5D&quot;             -- PeriodDuration.of(Period.ofDays(5))
+     *   &quot;PT6H&quot;            -- PeriodDuration.of(Duration.ofHours(6))
+     *   &quot;P1Y2M3D&quot;         -- PeriodDuration.of(Period.of(1, 2, 3))
+     *   &quot;P1Y2M3W4DT8H&quot;    -- PeriodDuration.of(Period.of(1, 2, 25), Duration.ofHours(8))
+     *   &quot;P-1Y2M&quot;          -- PeriodDuration.of(Period.of(-1, 2, 0))
+     *   &quot;-P1Y2M&quot;          -- PeriodDuration.of(Period.of(-1, -2, 0))
+     * &lt;/pre&gt;
+     *
+     * @param text  the text to parse, not null
+     * @return the parsed period, not null
+     * @throws DateTimeParseException if the text cannot be parsed to a period
+     */
+    public static PeriodDuration parse(CharSequence text) {
+<span class="fc" id="L272">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L273">        String upper = text.toString().toUpperCase(Locale.ENGLISH);</span>
+<span class="fc" id="L274">        String negate = &quot;&quot;;</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        if (upper.startsWith(&quot;+&quot;)) {</span>
+<span class="fc" id="L276">            upper = upper.substring(1);</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        } else if (upper.startsWith(&quot;-&quot;)) {</span>
+<span class="fc" id="L278">            upper = upper.substring(1);</span>
+<span class="fc" id="L279">            negate = &quot;-&quot;;</span>
+        }
+        // duration only, parse original text so it does negation
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        if (upper.startsWith(&quot;PT&quot;)) {</span>
+<span class="fc" id="L283">            return PeriodDuration.of(Duration.parse(text));</span>
+        }
+        // period only, parse original text so it does negation
+<span class="fc" id="L286">        int tpos = upper.indexOf('T');</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        if (tpos &lt; 0) {</span>
+<span class="fc" id="L288">            return PeriodDuration.of(Period.parse(text));</span>
+        }
+        // period and duration
+<span class="fc" id="L291">        Period period = Period.parse(negate + upper.substring(0, tpos));</span>
+<span class="fc" id="L292">        Duration duration = Duration.parse(negate + &quot;P&quot; + upper.substring(tpos));</span>
+<span class="fc" id="L293">        return PeriodDuration.of(period, duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance consisting of the amount of time between two temporals.
+     * &lt;p&gt;
+     * The start is included, but the end is not.
+     * The result of this method can be negative if the end is before the start.
+     * &lt;p&gt;
+     * The calculation examines the temporals and extracts {@link LocalDate} and {@link LocalTime}.
+     * If the time is missing, it will be defaulted to midnight.
+     * If one date is missing, it will be defaulted to the other date.
+     * It then finds the amount of time between the two dates and between the two times.
+     *
+     * @param startInclusive  the start, inclusive, not null
+     * @param endExclusive  the end, exclusive, not null
+     * @return the number of days between this date and the end date, not null
+     */
+    public static PeriodDuration between(Temporal startInclusive, Temporal endExclusive) {
+<span class="fc" id="L313">        LocalDate startDate = startInclusive.query(TemporalQueries.localDate());</span>
+<span class="fc" id="L314">        LocalDate endDate = endExclusive.query(TemporalQueries.localDate());</span>
+<span class="fc" id="L315">        Period period = Period.ZERO;</span>
+<span class="fc bfc" id="L316" title="All 4 branches covered.">        if (startDate != null &amp;&amp; endDate != null) {</span>
+<span class="fc" id="L317">            period = Period.between(startDate, endDate);</span>
+        }
+<span class="fc" id="L319">        LocalTime startTime = startInclusive.query(TemporalQueries.localTime());</span>
+<span class="fc" id="L320">        LocalTime endTime = endExclusive.query(TemporalQueries.localTime());</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        startTime = startTime != null ? startTime : LocalTime.MIDNIGHT;</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">        endTime = endTime != null ? endTime : LocalTime.MIDNIGHT;</span>
+<span class="fc" id="L323">        Duration duration = Duration.between(startTime, endTime);</span>
+<span class="fc" id="L324">        return PeriodDuration.of(period, duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs an instance.
+     *
+     * @param period  the period
+     * @param duration  the duration
+     */
+<span class="fc" id="L334">    private PeriodDuration(Period period, Duration duration) {</span>
+<span class="fc" id="L335">        this.period = period;</span>
+<span class="fc" id="L336">        this.duration = duration;</span>
+<span class="fc" id="L337">    }</span>
+
+    /**
+     * Resolves singletons.
+     *
+     * @return the singleton instance
+     */
+    private Object readResolve() {
+<span class="fc" id="L345">        return PeriodDuration.of(period, duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the requested unit.
+     * &lt;p&gt;
+     * This returns a value for the supported units - {@link ChronoUnit#YEARS},
+     * {@link ChronoUnit#MONTHS}, {@link ChronoUnit#DAYS}, {@link ChronoUnit#SECONDS}
+     * and {@link ChronoUnit#NANOS}.
+     * All other units throw an exception.
+     * Note that hours and minutes throw an exception.
+     *
+     * @param unit  the {@code TemporalUnit} for which to return the value
+     * @return the long value of the unit
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     */
+    @Override
+    public long get(TemporalUnit unit) {
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="pc bfc" id="L365" title="All 6 branches covered.">            switch ((ChronoUnit) unit) {</span>
+                case YEARS:
+<span class="fc" id="L367">                    return period.getYears();</span>
+                case MONTHS:
+<span class="fc" id="L369">                    return period.getMonths();</span>
+                case DAYS:
+<span class="fc" id="L371">                    return period.getDays();</span>
+                case SECONDS:
+<span class="fc" id="L373">                    return duration.getSeconds();</span>
+                case NANOS:
+<span class="fc" id="L375">                    return duration.getNano();</span>
+                default:
+                    break;
+            }
+        }
+<span class="fc" id="L380">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+    }
+
+    /**
+     * Gets the set of units supported by this amount.
+     * &lt;p&gt;
+     * This returns the list {@link ChronoUnit#YEARS}, {@link ChronoUnit#MONTHS},
+     * {@link ChronoUnit#DAYS}, {@link ChronoUnit#SECONDS} and {@link ChronoUnit#NANOS}.
+     * &lt;p&gt;
+     * This set can be used in conjunction with {@link #get(TemporalUnit)}
+     * to access the entire state of the amount.
+     *
+     * @return a list containing the days unit, not null
+     */
+    @Override
+    public List&lt;TemporalUnit&gt; getUnits() {
+<span class="fc" id="L396">        return SUPPORTED_UNITS;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the period part.
+     *
+     * @return the period part
+     */
+    public Period getPeriod() {
+<span class="fc" id="L406">        return period;</span>
+    }
+
+    /**
+     * Returns a copy of this period-duration with a different period.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param period  the new period
+     * @return the updated period-duration
+     */
+    public PeriodDuration withPeriod(Period period) {
+<span class="fc" id="L418">        return PeriodDuration.of(period, duration);</span>
+    }
+
+    /**
+     * Gets the duration part.
+     *
+     * @return the duration part
+     */
+    public Duration getDuration() {
+<span class="fc" id="L427">        return duration;</span>
+    }
+
+    /**
+     * Returns a copy of this period-duration with a different duration.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param duration  the new duration
+     * @return the updated period-duration
+     */
+    public PeriodDuration withDuration(Duration duration) {
+<span class="nc" id="L439">        return PeriodDuration.of(period, duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if all parts of this amount are zero.
+     * &lt;p&gt;
+     * This returns true if both {@link Period#isZero()} and {@link Duration#isZero()}
+     * return true.
+     *
+     * @return true if this period is zero-length
+     */
+    public boolean isZero() {
+<span class="fc bfc" id="L452" title="All 4 branches covered.">        return period.isZero() &amp;&amp; duration.isZero();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount added.
+     * &lt;p&gt;
+     * The parameter is converted using {@link PeriodDuration#from(TemporalAmount)}.
+     * The period and duration are combined separately.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Days} based on this instance with the requested amount added, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public PeriodDuration plus(TemporalAmount amountToAdd) {
+<span class="fc" id="L470">        PeriodDuration other = PeriodDuration.from(amountToAdd);</span>
+<span class="fc" id="L471">        return of(period.plus(other.period), duration.plus(other.duration));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount subtracted.
+     * &lt;p&gt;
+     * The parameter is converted using {@link PeriodDuration#from(TemporalAmount)}.
+     * The period and duration are combined separately.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Days} based on this instance with the requested amount subtracted, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public PeriodDuration minus(TemporalAmount amountToAdd) {
+<span class="fc" id="L489">        PeriodDuration other = PeriodDuration.from(amountToAdd);</span>
+<span class="fc" id="L490">        return of(period.minus(other.period), duration.minus(other.duration));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an instance with the amount multiplied by the specified scalar.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param scalar  the scalar to multiply by, not null
+     * @return the amount multiplied by the specified scalar, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public PeriodDuration multipliedBy(int scalar) {
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L505">            return this;</span>
+        }
+<span class="fc" id="L507">        return of(period.multipliedBy(scalar), duration.multipliedBy(scalar));</span>
+    }
+
+    /**
+     * Returns an instance with the amount negated.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the negated amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public PeriodDuration negated() {
+<span class="fc" id="L520">        return multipliedBy(-1);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this instance with the years and months exactly normalized.
+     * &lt;p&gt;
+     * This normalizes the years and months units, leaving the days unit unchanged.
+     * The result is exact, always representing the same amount of time.
+     * &lt;p&gt;
+     * The months unit is adjusted to have an absolute value less than 11,
+     * with the years unit being adjusted to compensate. For example, a period of
+     * &quot;1 year and 15 months&quot; will be normalized to &quot;2 years and 3 months&quot;.
+     * &lt;p&gt;
+     * The sign of the years and months units will be the same after normalization.
+     * For example, a period of &quot;1 year and -25 months&quot; will be normalized to
+     * &quot;-1 year and -1 month&quot;.
+     * &lt;p&gt;
+     * Note that no normalization is performed on the days or duration.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return a {@code PeriodDuration} based on this one with excess months normalized to years, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public PeriodDuration normalizedYears() {
+<span class="fc" id="L546">        return withPeriod(period.normalized());</span>
+    }
+
+    /**
+     * Returns a copy of this instance with the days and duration normalized using the standard day of 24 hours.
+     * &lt;p&gt;
+     * This normalizes the days and duration, leaving the years and months unchanged.
+     * The result uses a standard day length of 24 hours.
+     * &lt;p&gt;
+     * This combines the duration seconds with the number of days and shares the total
+     * seconds between the two fields. For example, a period of
+     * &quot;2 days and 86401 seconds&quot; will be normalized to &quot;3 days and 1 second&quot;.
+     * &lt;p&gt;
+     * The sign of the days and duration will be the same after normalization.
+     * For example, a period of &quot;1 day and -172801 seconds&quot; will be normalized to
+     * &quot;-1 day and -1 second&quot;.
+     * &lt;p&gt;
+     * Note that no normalization is performed on the years or months.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return a {@code PeriodDuration} based on this one with excess duration normalized to days, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public PeriodDuration normalizedStandardDays() {
+<span class="fc" id="L571">        long totalSecs = period.getDays() * SECONDS_PER_DAY + duration.getSeconds();</span>
+<span class="fc" id="L572">        int splitDays = Math.toIntExact(totalSecs / SECONDS_PER_DAY);</span>
+<span class="fc" id="L573">        long splitSecs = totalSecs % SECONDS_PER_DAY;</span>
+<span class="pc bpc" id="L574" title="1 of 4 branches missed.">        if (splitDays == period.getDays() &amp;&amp; splitSecs == duration.getSeconds()) {</span>
+<span class="fc" id="L575">            return this;</span>
+        }
+<span class="fc" id="L577">        return PeriodDuration.of(period.withDays(splitDays), duration.withSeconds(splitSecs));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds this amount to the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount added. This simply adds the period and duration to the temporal.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to add
+     * @throws UnsupportedTemporalTypeException if the DAYS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal addTo(Temporal temporal) {
+<span class="fc" id="L597">        return temporal.plus(period).plus(duration);</span>
+    }
+
+    /**
+     * Subtracts this amount from the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount subtracted. This simply subtracts the period and duration from the temporal.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to subtract
+     * @throws UnsupportedTemporalTypeException if the DAYS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal subtractFrom(Temporal temporal) {
+<span class="fc" id="L616">        return temporal.minus(period).minus(duration);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this amount is equal to the specified {@code PeriodDuration}.
+     * &lt;p&gt;
+     * The comparison is based on the underlying period and duration.
+     *
+     * @param otherAmount  the other amount, null returns false
+     * @return true if the other amount is equal to this one
+     */
+    @Override
+    public boolean equals(Object otherAmount) {
+<span class="fc bfc" id="L630" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L631">            return true;</span>
+        }
+<span class="fc bfc" id="L633" title="All 2 branches covered.">        if (otherAmount instanceof PeriodDuration) {</span>
+<span class="fc" id="L634">            PeriodDuration other = (PeriodDuration) otherAmount;</span>
+<span class="pc bpc" id="L635" title="1 of 4 branches missed.">            return this.period.equals(other.period) &amp;&amp; this.duration.equals(other.duration);</span>
+        }
+<span class="fc" id="L637">        return false;</span>
+    }
+
+    /**
+     * A hash code for this amount.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L647">        return period.hashCode() ^ duration.hashCode();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string representation of the amount.
+     * This will be in the format 'PnYnMnDTnHnMnS', with sections omitted as necessary.
+     * An empty amount will return &quot;PT0S&quot;.
+     *
+     * @return the period in ISO-8601 string format
+     */
+    @Override
+    public String toString() {
+<span class="fc bfc" id="L660" title="All 2 branches covered.">        if (period.isZero()) {</span>
+<span class="fc" id="L661">            return duration.toString();</span>
+        }
+<span class="fc bfc" id="L663" title="All 2 branches covered.">        if (duration.isZero()) {</span>
+<span class="fc" id="L664">            return period.toString();</span>
+        }
+<span class="fc" id="L666">        return period.toString() + duration.toString().substring(1);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

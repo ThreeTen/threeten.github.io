@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountingChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">AccountingChronology.java</span></div><h1>AccountingChronology.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import static org.threeten.extra.chrono.AccountingYearDivision.THIRTEEN_EVEN_MONTHS_OF_4_WEEKS;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.chrono.AbstractChronology;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.time.chrono.Chronology;
+import java.time.chrono.Era;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.ValueRange;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * An Accounting calendar system.
+ * &lt;p&gt;
+ * This chronology defines the rules of a proleptic 52/53-week Accounting calendar system.
+ * This calendar system follows the rules as laid down in &lt;a href=&quot;http://www.irs.gov/publications/p538/ar02.html&quot;&gt;IRS Publication 538&lt;/a&gt;
+ * and the &lt;a href=&quot;http://www.ifrs.org&quot;&gt;International Financial Reporting Standards&lt;/a&gt;.
+ * The start of the Accounting calendar will vary against the ISO calendar.
+ * Depending on options chosen, it can start as early as {@code 0000-01-26 (ISO)} or as late as {@code 0001-01-04 (ISO)}.
+ * &lt;p&gt;
+ * This class is proleptic. It implements Accounting chronology rules for the entire time-line.
+ * &lt;p&gt;
+ * The fields are defined as follows:
+ * &lt;ul&gt;
+ * &lt;li&gt;era - There are two eras, the current 'Current Era' (CE) and the previous era 'Before Current Era' (BCE).
+ * &lt;li&gt;year-of-era - The year-of-era for the current era increases uniformly from the epoch at year one.
+ *  For the previous era the year increases from one as time goes backwards.
+ * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the
+ *  current era. For the previous era, years have zero, then negative values.
+ * &lt;li&gt;month-of-year - There are 12 or 13 months (periods) in an Accounting year, numbered from 1 to 12 or 13.
+ * &lt;li&gt;day-of-month - There are 28 or 35 days in each Accounting month, numbered from 1 to 35.
+ *  Month length depends on how the year has been divided.
+ *  When the Accounting leap year occurs, a week (7 days) is added to a specific month;
+ *  this increases to maximum day-of-month numbering to 35 or 42.
+ * &lt;li&gt;day-of-year - There are 364 days in a standard Accounting year and 371 in a leap year.
+ *  The days are numbered from 1 to 364 or 1 to 371.
+ * &lt;li&gt;leap-year - Leap years usually occur every 5 or 6 years.  Timing depends on settings chosen.
+ * &lt;/ul&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class AccountingChronology extends AbstractChronology implements Serializable {
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = 7291205177830286973L;
+    /**
+     * Range of proleptic month for 12-month (period) year.
+     */
+<span class="fc" id="L97">    private static final ValueRange PROLEPTIC_MONTH_RANGE_12 = ValueRange.of(-999_999 * 12L, 999_999 * 12L + 11);</span>
+    /**
+     * Range of proleptic month for 13-month (period) year.
+     */
+<span class="fc" id="L101">    private static final ValueRange PROLEPTIC_MONTH_RANGE_13 = ValueRange.of(-999_999 * 13L, 999_999 * 13L + 12);</span>
+    /**
+     * Range of weeks in year.
+     */
+<span class="fc" id="L105">    private static final ValueRange ALIGNED_WEEK_OF_YEAR_RANGE = ValueRange.of(1, 52, 53);</span>
+    /**
+     * Range of days in year.
+     */
+<span class="fc" id="L109">    static final ValueRange DAY_OF_YEAR_RANGE = ValueRange.of(1, 364, 371);</span>
+
+    /**
+     * The day of the week on which a given Accounting year ends.
+     */
+    private final DayOfWeek endsOn;
+    /**
+     * Whether the calendar ends in the last week of a given Gregorian/ISO month, 
+     * or nearest to the last day of the month (will sometimes be in the next month).
+     */
+    private final boolean inLastWeek;
+    /**
+     * Which Gregorian/ISO end-of-month the year ends in/is nearest to.
+     */
+    private final Month end;
+    /**
+     * How to divide an accounting year.
+     */
+    private final AccountingYearDivision division;
+    /**
+     * The month which will have the leap-week added.
+     */
+    private final int leapWeekInMonth;
+
+    /**
+     * Difference in days between accounting year end and ISO month end, in ISO year 0.
+     */
+    private final transient int yearZeroDifference;
+    /** 
+     * Number of weeks in a month range.
+     */
+    private final transient ValueRange alignedWeekOfMonthRange;
+    /**
+     * Number of days in a month range.
+     */
+    private final transient ValueRange dayOfMonthRange;
+    /**
+     * Number of days from the start of Accounting year 1 (for this chronology) to the start of ISO 1970
+     */
+    private final transient int days0001ToIso1970;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an {@code AccountingChronology} validating the input.
+     * Package private as only meant to be called from the builder.
+     * 
+     * @param endsOn  The day-of-week a given year ends on.
+     * @param end The  month-end the year is based on.
+     * @param inLastWeek  Whether the year ends in the last week of the month, or nearest the end-of-month.
+     * @param division  How the year is divided.
+     * @param leapWeekInMonth  The month in which the leap-week resides.
+     * @return The created Chronology, not null.
+     * @throws DateTimeException if the chronology cannot be built.
+     */
+    static AccountingChronology create(DayOfWeek endsOn, Month end, boolean inLastWeek, AccountingYearDivision division, int leapWeekInMonth) {
+<span class="fc bfc" id="L164" title="All 8 branches covered.">        if (endsOn == null || end == null || division == null || leapWeekInMonth == 0) {</span>
+<span class="fc" id="L165">            throw new IllegalStateException(&quot;AccountingCronology cannot be built: &quot;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">                    + (endsOn == null ? &quot;| ending day-of-week |&quot; : &quot;&quot;)</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                    + (end == null ? &quot;| month ending in/nearest to |&quot; : &quot;&quot;)</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">                    + (division == null ? &quot;| how year divided |&quot; : &quot;&quot;)</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                    + (leapWeekInMonth == 0 ? &quot;| leap-week month |&quot; : &quot;&quot;)</span>
+                    + &quot; not set.&quot;);
+        }
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (!division.getMonthsInYearRange().isValidValue(leapWeekInMonth)) {</span>
+<span class="fc" id="L173">            throw new IllegalStateException(&quot;Leap week cannot not be placed in non-existant month &quot; + leapWeekInMonth</span>
+<span class="fc" id="L174">                    + &quot;, range is [&quot; + division.getMonthsInYearRange() + &quot;].&quot;);</span>
+        }
+
+        // Derive cached information.
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        LocalDate endingLimit = inLastWeek ? LocalDate.of(0, end, 1).with(TemporalAdjusters.lastDayOfMonth()) :</span>
+<span class="fc" id="L179">                LocalDate.of(0, end, 1).with(TemporalAdjusters.lastDayOfMonth()).plusDays(3);</span>
+<span class="fc" id="L180">        LocalDate yearZeroEnd = endingLimit.with(TemporalAdjusters.previousOrSame(endsOn));</span>
+<span class="fc" id="L181">        int yearZeroDifference = (int) yearZeroEnd.until(endingLimit, ChronoUnit.DAYS);</span>
+        // Longest/shortest month lengths and related
+<span class="fc" id="L183">        int longestMonthLength = 0;</span>
+<span class="fc" id="L184">        int shortestMonthLength = Integer.MAX_VALUE;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        for (int month = 1; month &lt;= division.getMonthsInYearRange().getMaximum(); month++) {</span>
+<span class="fc" id="L186">            int monthLength = division.getWeeksInMonth(month);</span>
+<span class="fc" id="L187">            shortestMonthLength = Math.min(shortestMonthLength, monthLength);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            longestMonthLength = Math.max(longestMonthLength, monthLength + (month == leapWeekInMonth ? 1 : 0));</span>
+        }
+<span class="fc" id="L190">        ValueRange alignedWeekOfMonthRange = ValueRange.of(1, shortestMonthLength, longestMonthLength);</span>
+<span class="fc" id="L191">        ValueRange dayOfMonthRange = ValueRange.of(1, shortestMonthLength * 7, longestMonthLength * 7);</span>
+<span class="fc" id="L192">        int daysToEpoch = Math.toIntExact(0 - yearZeroEnd.plusDays(1).toEpochDay());</span>
+
+<span class="fc" id="L194">        return new AccountingChronology(endsOn, end, inLastWeek, division, leapWeekInMonth, yearZeroDifference, alignedWeekOfMonthRange, dayOfMonthRange, daysToEpoch);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance from validated data, and cached data.
+     * 
+     * @param endsOn  The day-of-week a given year ends on.
+     * @param end  The month-end the year is based on.
+     * @param inLastWeek  Whether the year ends in the last week of the month, or nearest the end-of-month.
+     * @param division  How the year is divided.
+     * @param leapWeekInMonth  The month in which the leap-week resides.
+     * @param yearZeroDifference  Difference in days between accounting year end and ISO month end, in ISO year 0.
+     * @param alignedWeekOfMonthRange  Range of weeks in month.
+     * @param dayOfMonthRange  Range of days in month.
+     * @param daysToEpoch  The number of days between the start of Accounting 1 and ISO 1970.
+     */
+    private AccountingChronology(DayOfWeek endsOn, Month end, boolean inLastWeek, AccountingYearDivision division, int leapWeekInMonth, int yearZeroDifference, ValueRange alignedWeekOfMonthRange,
+<span class="fc" id="L212">            ValueRange dayOfMonthRange, int daysToEpoch) {</span>
+<span class="fc" id="L213">        this.endsOn = endsOn;</span>
+<span class="fc" id="L214">        this.end = end;</span>
+<span class="fc" id="L215">        this.inLastWeek = inLastWeek;</span>
+<span class="fc" id="L216">        this.division = division;</span>
+<span class="fc" id="L217">        this.leapWeekInMonth = leapWeekInMonth;</span>
+<span class="fc" id="L218">        this.yearZeroDifference = yearZeroDifference;</span>
+<span class="fc" id="L219">        this.alignedWeekOfMonthRange = alignedWeekOfMonthRange;</span>
+<span class="fc" id="L220">        this.dayOfMonthRange = dayOfMonthRange;</span>
+<span class="fc" id="L221">        this.days0001ToIso1970 = daysToEpoch;</span>
+<span class="fc" id="L222">    }</span>
+
+    /**
+     * Resolve stored instances.
+     *
+     * @return a built, validated instance.
+     */
+    private Object readResolve() {
+<span class="nc" id="L230">        return AccountingChronology.create(endsOn, end, inLastWeek, getDivision(), leapWeekInMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    AccountingYearDivision getDivision() {
+<span class="fc" id="L235">        return division;</span>
+    }
+
+    int getLeapWeekInMonth() {
+<span class="fc" id="L239">        return leapWeekInMonth;</span>
+    }
+
+    int getDays0001ToIso1970() {
+<span class="fc" id="L243">        return days0001ToIso1970;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the ID of the chronology - 'Accounting'.
+     * &lt;p&gt;
+     * The ID uniquely identifies the {@code Chronology}, 
+     * but does not differentiate between instances of {@code AccountingChronology}.
+     * It cannot be used to lookup the {@code Chronology} using {@link Chronology#of(String)},
+     * because each instance requires setup.
+     *
+     * @return the chronology ID - 'Accounting'
+     * @see #getCalendarType()
+     */
+    @Override
+    public String getId() {
+<span class="fc" id="L260">        return &quot;Accounting&quot;;</span>
+    }
+
+    /**
+     * Gets the calendar type of the underlying calendar system, which is null.
+     * &lt;p&gt;
+     * The &lt;em&gt;Unicode Locale Data Markup Language (LDML)&lt;/em&gt; specification
+     * does not define an identifier for 52/53 week calendars used for accounting purposes,
+     * and given that setup required is unlikely to do so.  
+     * For this reason, the calendar type is null.
+     *
+     * @return null, as the calendar is unlikely to be specified in LDML
+     * @see #getId()
+     */
+    @Override
+    public String getCalendarType() {
+<span class="fc" id="L276">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a local date in Accounting calendar system from the
+     * era, year-of-era, month-of-year and day-of-month fields.
+     *
+     * @param era  the Accounting era, not null
+     * @param yearOfEra  the year-of-era
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code AccountingEra}
+     */
+    @Override
+    public AccountingDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
+<span class="fc" id="L294">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Accounting calendar system from the
+     * proleptic-year, month-of-year and day-of-month fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public AccountingDate date(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L309">        return AccountingDate.of(this, prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Accounting calendar system from the
+     * era, year-of-era and day-of-year fields.
+     *
+     * @param era  the Accounting era, not null
+     * @param yearOfEra  the year-of-era
+     * @param dayOfYear  the day-of-year
+     * @return the Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code AccountingEra}
+     */
+    @Override
+    public AccountingDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
+<span class="fc" id="L325">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in Accounting calendar system from the
+     * proleptic-year and day-of-year fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param dayOfYear  the day-of-year
+     * @return the Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public AccountingDate dateYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L339">        return AccountingDate.ofYearDay(this, prolepticYear, dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the Accounting calendar system from the epoch-day.
+     *
+     * @param epochDay  the epoch day
+     * @return the Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public AccountingDate dateEpochDay(long epochDay) {
+<span class="fc" id="L351">        return AccountingDate.ofEpochDay(this, epochDay);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains the current Accounting local date from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current Accounting local date using the system clock and default time-zone, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public AccountingDate dateNow() {
+<span class="nc" id="L369">        return AccountingDate.now(this);</span>
+    }
+
+    /**
+     * Obtains the current Accounting local date from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone the zone ID to use, not null
+     * @return the current Accounting local date using the system clock, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public AccountingDate dateNow(ZoneId zone) {
+<span class="nc" id="L387">        return AccountingDate.now(this, zone);</span>
+    }
+
+    /**
+     * Obtains the current Accounting local date from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public AccountingDate dateNow(Clock clock) {
+<span class="nc" id="L403">        return AccountingDate.now(this, clock);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a Accounting local date from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Accounting local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public AccountingDate date(TemporalAccessor temporal) {
+<span class="fc" id="L416">        return AccountingDate.from(this, temporal);</span>
+    }
+
+    /**
+     * Obtains a Accounting local date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Accounting local date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;AccountingDate&gt; localDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L429">        return (ChronoLocalDateTime&lt;AccountingDate&gt;) super.localDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Accounting zoned date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Accounting zoned date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;AccountingDate&gt; zonedDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L442">        return (ChronoZonedDateTime&lt;AccountingDate&gt;) super.zonedDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Accounting zoned date-time in this chronology from an {@code Instant}.
+     *
+     * @param instant  the instant to create the date-time from, not null
+     * @param zone  the time-zone, not null
+     * @return the Accounting zoned date-time, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;AccountingDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
+<span class="nc" id="L456">        return (ChronoZonedDateTime&lt;AccountingDate&gt;) super.zonedDateTime(instant, zone);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified year is a leap year.
+     * &lt;p&gt;
+     * An Accounting proleptic-year is leap if the time between the end of the previous year 
+     * and the end of the current year is 371 days.
+     * This method does not validate the year passed in, and only has a
+     * well-defined result for years in the supported range.
+     *
+     * @param prolepticYear  the proleptic-year to check, not validated for range
+     * @return true if the year is a leap year
+     */
+    @Override
+    public boolean isLeapYear(long prolepticYear) {
+<span class="fc bfc" id="L473" title="All 2 branches covered.">        return Math.floorMod(prolepticYear + getISOLeapYearCount(prolepticYear) + yearZeroDifference, 7) == 0</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">                || Math.floorMod(prolepticYear + getISOLeapYearCount(prolepticYear + 1) + yearZeroDifference, 7) == 0;</span>
+    }
+
+    /**
+     * Return the number of ISO Leap Years since Accounting Year 1.
+     * &lt;p&gt;
+     * This method calculates how many ISO leap years have passed since year 1.
+     * The count returned will be negative for years before 1.
+     * This method does not validate the year passed in, and only has a
+     * well-defined result for years in the supported range.
+     * 
+     * @param prolepticYear  the proleptic-year to check, not validated for range
+     * @return the count of leap years since year 1.
+     */
+    private long getISOLeapYearCount(long prolepticYear) {
+<span class="fc bfc" id="L489" title="All 2 branches covered.">        long offsetYear = prolepticYear - (end == Month.JANUARY ? 1 : 0) - 1;</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">        return Math.floorDiv(offsetYear, 4) - Math.floorDiv(offsetYear, 100) + Math.floorDiv(offsetYear, 400) + (end == Month.JANUARY ? 1 : 0);</span>
+    }
+
+    /**
+     * Returns the count of leap years since year 1.
+     * &lt;p&gt;
+     * This method calculates how many Accounting leap years have passed since year 1.
+     * The count returned will be negative for years before 1.
+     * This method does not validate the year passed in, and only has a
+     * well-defined result for years in the supported range.
+     * 
+     * @param prolepticYear  the proleptic-year to check, not validated for range
+     * @return the count of leap years since year 1.
+     */
+    long previousLeapYears(long prolepticYear) {
+<span class="fc" id="L505">        return Math.floorDiv(prolepticYear - 1 + getISOLeapYearCount(prolepticYear) + yearZeroDifference, 7);</span>
+    }
+
+    @Override
+    public int prolepticYear(Era era, int yearOfEra) {
+<span class="fc bfc" id="L510" title="All 2 branches covered.">        if (!(era instanceof AccountingEra)) {</span>
+<span class="fc" id="L511">            throw new ClassCastException(&quot;Era must be AccountingEra&quot;);</span>
+        }
+<span class="fc bfc" id="L513" title="All 2 branches covered.">        return (era == AccountingEra.CE ? yearOfEra : 1 - yearOfEra);</span>
+    }
+
+    @Override
+    public AccountingEra eraOf(int era) {
+<span class="fc" id="L518">        return AccountingEra.of(era);</span>
+    }
+
+    @Override
+    public List&lt;Era&gt; eras() {
+<span class="fc" id="L523">        return Arrays.&lt;Era&gt;asList(AccountingEra.values());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ValueRange range(ChronoField field) {
+<span class="pc bfc" id="L529" title="All 7 branches covered.">        switch (field) {</span>
+            case ALIGNED_WEEK_OF_MONTH:
+<span class="fc" id="L531">                return alignedWeekOfMonthRange;</span>
+            case ALIGNED_WEEK_OF_YEAR:
+<span class="fc" id="L533">                return ALIGNED_WEEK_OF_YEAR_RANGE;</span>
+            case DAY_OF_MONTH:
+<span class="fc" id="L535">                return dayOfMonthRange;</span>
+            case DAY_OF_YEAR:
+<span class="fc" id="L537">                return DAY_OF_YEAR_RANGE;</span>
+            case MONTH_OF_YEAR:
+<span class="fc" id="L539">                return getDivision().getMonthsInYearRange();</span>
+            case PROLEPTIC_MONTH:
+<span class="fc bfc" id="L541" title="All 2 branches covered.">                return getDivision() == THIRTEEN_EVEN_MONTHS_OF_4_WEEKS ? PROLEPTIC_MONTH_RANGE_13 : PROLEPTIC_MONTH_RANGE_12;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L545">        return field.range();</span>
+    }
+
+    //-------------------------------------------------------------------------
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L551" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L552">            return true;</span>
+        }
+<span class="fc bfc" id="L554" title="All 2 branches covered.">        if (obj instanceof AccountingChronology) {</span>
+<span class="fc" id="L555">            AccountingChronology other = (AccountingChronology) obj;</span>
+<span class="pc bpc" id="L556" title="5 of 6 branches missed.">            return this.endsOn == other.endsOn &amp;&amp;</span>
+                    this.inLastWeek == other.inLastWeek &amp;&amp;
+                    this.end == other.end &amp;&amp;
+<span class="pc bnc" id="L559" title="All 4 branches missed.">                    this.getDivision() == other.getDivision() &amp;&amp;</span>
+                    this.leapWeekInMonth == other.leapWeekInMonth;
+        }
+<span class="fc" id="L562">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L567">        final int prime = 31;</span>
+<span class="fc" id="L568">        int result = 0;</span>
+<span class="fc" id="L569">        result = prime * result + endsOn.hashCode();</span>
+<span class="pc bpc" id="L570" title="1 of 2 branches missed.">        result = prime * result + (inLastWeek ? 1231 : 1237);</span>
+<span class="fc" id="L571">        result = prime * result + end.hashCode();</span>
+<span class="fc" id="L572">        result = prime * result + leapWeekInMonth;</span>
+<span class="fc" id="L573">        result = prime * result + getDivision().hashCode();</span>
+<span class="fc" id="L574">        return result;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L579">        StringBuilder bld = new StringBuilder(30);</span>
+<span class="fc" id="L580">        bld.append(getId())</span>
+<span class="fc" id="L581">                .append(&quot; calendar ends on &quot;)</span>
+<span class="fc" id="L582">                .append(endsOn)</span>
+<span class="pc bpc" id="L583" title="1 of 2 branches missed.">                .append(inLastWeek ? &quot; in last week of &quot; : &quot; nearest end of &quot;)</span>
+<span class="fc" id="L584">                .append(end)</span>
+<span class="fc" id="L585">                .append(&quot;, year divided in &quot;)</span>
+<span class="fc" id="L586">                .append(getDivision())</span>
+<span class="fc" id="L587">                .append(&quot; with leap-week in month &quot;)</span>
+<span class="fc" id="L588">                .append(leapWeekInMonth);</span>
+<span class="fc" id="L589">        return bld.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

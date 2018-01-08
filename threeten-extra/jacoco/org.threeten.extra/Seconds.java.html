@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Seconds.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">Seconds.java</span></div><h1>Seconds.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoUnit.SECONDS;
+
+import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * A second-based amount of time, such as '8 seconds'.
+ * &lt;p&gt;
+ * This class models a quantity or amount of time in terms of seconds.
+ * It is a type-safe way of representing a number of seconds in an application.
+ * Note that {@link Duration} also models time in terms of seconds, but that
+ * class allows nanoseconds, which this class does not.
+ * &lt;p&gt;
+ * The model is of a directed amount, meaning that the amount may be negative.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class Seconds
+        implements TemporalAmount, Comparable&lt;Seconds&gt;, Serializable {
+
+    /**
+     * A constant for zero seconds.
+     */
+<span class="fc" id="L73">    public static final Seconds ZERO = new Seconds(0);</span>
+
+    /**
+     * A serialization identifier for this class.
+     */
+    private static final long serialVersionUID = 2602801843170589407L;
+
+    /**
+     * The number of seconds per day.
+     */
+    private static final int SECONDS_PER_DAY = 86400;
+    /**
+     * The number of seconds per hour.
+     */
+    private static final int SECONDS_PER_HOUR = 3600;
+    /**
+     * The number of seconds per minute.
+     */
+    private static final int SECONDS_PER_MINUTE = 60;
+
+    /**
+     * The pattern for parsing.
+     */
+<span class="fc" id="L96">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L97">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+                    + &quot;(?:([-+]?[0-9]+)D)?&quot;
+                    + &quot;(?:T&quot;
+                    + &quot;(?:([-+]?[0-9]+)H)?&quot;
+                    + &quot;(?:([-+]?[0-9]+)M)?&quot;
+                    + &quot;(?:([-+]?[0-9]+)S)?)?&quot;, Pattern.CASE_INSENSITIVE);
+
+    /**
+     * The number of seconds.
+     */
+    private final int seconds;
+
+    /**
+     * Obtains a {@code Seconds} representing a number of seconds.
+     * &lt;p&gt;
+     * The resulting amount will have the specified seconds.
+     *
+     * @param seconds  the number of seconds, positive or negative
+     * @return the number of seconds, not null
+     */
+    public static Seconds of(int seconds) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (seconds == 0) {</span>
+<span class="fc" id="L119">            return ZERO;</span>
+        }
+<span class="fc" id="L121">        return new Seconds(seconds);</span>
+    }
+
+    /**
+     * Obtains a {@code Seconds} representing the number of seconds
+     * equivalent to a number of hours.
+     * &lt;p&gt;
+     * The resulting amount will be second-based, with the number of seconds
+     * equal to the number of hours multiplied by 3600.
+     *
+     * @param hours  the number of hours, positive or negative
+     * @return the amount with the input hours converted to seconds, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Seconds ofHours(int hours) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L137">            return ZERO;</span>
+        }
+<span class="fc" id="L139">        return new Seconds(Math.multiplyExact(hours, SECONDS_PER_HOUR));</span>
+    }
+
+    /**
+     * Obtains a {@code Seconds} representing the number of seconds
+     * equivalent to a number of hours.
+     * &lt;p&gt;
+     * The resulting amount will be second-based, with the number of seconds
+     * equal to the number of minutes multiplied by 60.
+     *
+     * @param minutes  the number of minutes, positive or negative
+     * @return the amount with the input minutes converted to seconds, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Seconds ofMinutes(int minutes) {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (minutes == 0) {</span>
+<span class="fc" id="L155">            return ZERO;</span>
+        }
+<span class="fc" id="L157">        return new Seconds(Math.multiplyExact(minutes, SECONDS_PER_MINUTE));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code Seconds} from a temporal amount.
+     * &lt;p&gt;
+     * This obtains an instance based on the specified amount.
+     * A {@code TemporalAmount} represents an amount of time, which may be
+     * date-based or time-based, which this factory extracts to a {@code Seconds}.
+     * &lt;p&gt;
+     * The result is calculated by looping around each unit in the specified amount.
+     * Each amount is converted to seconds using {@link Temporals#convertAmount}.
+     * If the conversion yields a remainder, an exception is thrown.
+     * If the amount is zero, the unit is ignored.
+     *
+     * @param amount  the temporal amount to convert, not null
+     * @return the equivalent amount, not null
+     * @throws DateTimeException if unable to convert to a {@code Seconds}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Seconds from(TemporalAmount amount) {
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        if (amount instanceof Seconds) {</span>
+<span class="fc" id="L180">            return (Seconds) amount;</span>
+        }
+<span class="nc" id="L182">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="nc" id="L183">        int seconds = 0;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="nc" id="L185">            long value = amount.get(unit);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            if (value != 0) {</span>
+<span class="nc" id="L187">                long[] converted = Temporals.convertAmount(value, unit, SECONDS);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">                if (converted[1] != 0) {</span>
+<span class="nc" id="L189">                    throw new DateTimeException(</span>
+                            &quot;Amount could not be converted to a whole number of seconds: &quot; + value + &quot; &quot; + unit);
+                }
+<span class="nc" id="L192">                seconds = Math.addExact(seconds, Math.toIntExact(converted[0]));</span>
+            }
+<span class="nc" id="L194">        }</span>
+<span class="nc" id="L195">        return of(seconds);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Seconds} from a text string such as {@code PTnS}.
+     * &lt;p&gt;
+     * This will parse the string produced by {@code toString()} and other
+     * related formats based on ISO-8601 {@code PnDTnHnMnS}.
+     * &lt;p&gt;
+     * The string starts with an optional sign, denoted by the ASCII negative
+     * or positive symbol. If negative, the whole amount is negated.
+     * The ASCII letter &quot;P&quot; is next in upper or lower case.
+     * There are four sections consisting of a number and a suffix.
+     * There is one section for days suffixed by &quot;D&quot;,
+     * followed by one section for hours suffixed by &quot;H&quot;,
+     * followed by one section for minutes suffixed by &quot;M&quot;,
+     * followed by one section for seconds suffixed by &quot;S&quot;.
+     * At least one section must be present.
+     * If the hours, minutes or seconds section is present it must be prefixed by &quot;T&quot;.
+     * If the hours, minutes or seconds section is omitted the &quot;T&quot; must be omitted.
+     * Letters must be in ASCII upper or lower case.
+     * The number part of each section must consist of ASCII digits.
+     * The number may be prefixed by the ASCII negative or positive symbol.
+     * The number must parse to an {@code int}.
+     * &lt;p&gt;
+     * The leading plus/minus sign, and negative values for days, hours, minutes
+     * and seconds are not part of the ISO-8601 standard.
+     * &lt;p&gt;
+     * For example, the following are valid inputs:
+     * &lt;pre&gt;
+     *   &quot;PT2S&quot;            -- Seconds.of(2)
+     *   &quot;PT-2S&quot;           -- Seconds.of(-2)
+     *   &quot;-PT2S&quot;           -- Seconds.of(-2)
+     *   &quot;-PT-2S&quot;          -- Seconds.of(2)
+     *   &quot;PT3S&quot;            -- Seconds.of(3 * 60)
+     *   &quot;PT3H-2M7S&quot;       -- Seconds.of(3 * 3600 - 2 * 60 + 7)
+     *   &quot;P2D&quot;             -- Seconds.of(2 * 86400)
+     *   &quot;P2DT3H&quot;          -- Seconds.of(2 * 86400 + 3 * 3600)
+     * &lt;/pre&gt;
+     *
+     * @param text  the text to parse, not null
+     * @return the parsed period, not null
+     * @throws DateTimeParseException if the text cannot be parsed to a period
+     */
+    public static Seconds parse(CharSequence text) {
+<span class="fc" id="L241">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L242">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">            int negate = (&quot;-&quot;.equals(matcher.group(1)) ? -1 : 1);</span>
+<span class="fc" id="L245">            String daysStr = matcher.group(2);</span>
+<span class="fc" id="L246">            String hoursStr = matcher.group(3);</span>
+<span class="fc" id="L247">            String minutesStr = matcher.group(4);</span>
+<span class="fc" id="L248">            String secondsStr = matcher.group(5);</span>
+<span class="pc bpc" id="L249" title="1 of 8 branches missed.">            if (daysStr != null || hoursStr != null || minutesStr != null || secondsStr != null) {</span>
+<span class="fc" id="L250">                int seconds = 0;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">                if (secondsStr != null) {</span>
+                    try {
+<span class="fc" id="L253">                        seconds = Integer.parseInt(secondsStr);</span>
+<span class="nc" id="L254">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L255">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric seconds&quot;, text, 0, ex);</span>
+<span class="fc" id="L256">                    }</span>
+                }
+<span class="fc bfc" id="L258" title="All 2 branches covered.">                if (minutesStr != null) {</span>
+                    try {
+<span class="fc" id="L260">                        int minutesAsSecs = Math.multiplyExact(Integer.parseInt(minutesStr), SECONDS_PER_MINUTE);</span>
+<span class="fc" id="L261">                        seconds = Math.addExact(seconds, minutesAsSecs);</span>
+<span class="nc" id="L262">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L263">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric minutes&quot;, text, 0, ex);</span>
+<span class="fc" id="L264">                    }</span>
+                }
+<span class="fc bfc" id="L266" title="All 2 branches covered.">                if (hoursStr != null) {</span>
+                    try {
+<span class="fc" id="L268">                        int hoursAsSecs = Math.multiplyExact(Integer.parseInt(hoursStr), SECONDS_PER_HOUR);</span>
+<span class="fc" id="L269">                        seconds = Math.addExact(seconds, hoursAsSecs);</span>
+<span class="nc" id="L270">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L271">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric hours&quot;, text, 0, ex);</span>
+<span class="fc" id="L272">                    }</span>
+                }
+<span class="fc bfc" id="L274" title="All 2 branches covered.">                if (daysStr != null) {</span>
+                    try {
+<span class="fc" id="L276">                        int daysAsSecs = Math.multiplyExact(Integer.parseInt(daysStr), SECONDS_PER_DAY);</span>
+<span class="fc" id="L277">                        seconds = Math.addExact(seconds, daysAsSecs);</span>
+<span class="nc" id="L278">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L279">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric days&quot;, text, 0, ex);</span>
+<span class="fc" id="L280">                    }</span>
+                }
+<span class="fc" id="L282">                return of(Math.multiplyExact(seconds, negate));</span>
+            }
+        }
+<span class="fc" id="L285">        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds&quot;, text, 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Seconds} consisting of the number of seconds between two temporals.
+     * &lt;p&gt;
+     * The start temporal is included, but the end temporal is not.
+     * The result of this method can be negative if the end is before the start.
+     *
+     * @param startInclusive  the start temporal, inclusive, not null
+     * @param endExclusive  the end temporal, exclusive, not null
+     * @return the number of seconds between the start and end temporals, not null
+     */
+    public static Seconds between(Temporal startInclusive, Temporal endExclusive) {
+<span class="nc" id="L300">        return of(Math.toIntExact(SECONDS.between(startInclusive, endExclusive)));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs an instance using a specific number of seconds.
+     *
+     * @param seconds  the amount of seconds
+     */
+<span class="fc" id="L309">    private Seconds(int seconds) {</span>
+<span class="fc" id="L310">        this.seconds = seconds;</span>
+<span class="fc" id="L311">    }</span>
+
+    /**
+     * Resolves singletons.
+     *
+     * @return the singleton instance
+     */
+    private Object readResolve() {
+<span class="fc" id="L319">        return Seconds.of(seconds);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the requested unit.
+     * &lt;p&gt;
+     * This returns a value for the supported unit - {@link ChronoUnit#SECONDS SECONDS}.
+     * All other units throw an exception.
+     *
+     * @param unit  the {@code TemporalUnit} for which to return the value
+     * @return the long value of the unit
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     */
+    @Override
+    public long get(TemporalUnit unit) {
+<span class="nc bnc" id="L335" title="All 2 branches missed.">        if (unit == SECONDS) {</span>
+<span class="nc" id="L336">            return seconds;</span>
+        }
+<span class="nc" id="L338">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+    }
+
+    /**
+     * Gets the set of units supported by this amount.
+     * &lt;p&gt;
+     * The single supported unit is {@link ChronoUnit#SECONDS SECONDS}.
+     * &lt;p&gt;
+     * This set can be used in conjunction with {@link #get(TemporalUnit)} to
+     * access the entire state of the amount.
+     *
+     * @return a list containing the seconds unit, not null
+     */
+    @Override
+    public List&lt;TemporalUnit&gt; getUnits() {
+<span class="nc" id="L353">        return Collections.singletonList(SECONDS);</span>
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the number of seconds in this amount.
+     *
+     * @return the number of seconds
+     */
+    public int getAmount() {
+<span class="fc" id="L363">        return seconds;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount added.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Seconds#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Seconds} based on this instance with the requested amount added, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Seconds plus(TemporalAmount amountToAdd) {
+<span class="fc" id="L380">        return plus(Seconds.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of seconds added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param seconds  the amount of seconds to add, may be negative
+     * @return a {@code Seconds} based on this instance with the requested amount added, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Seconds plus(int seconds) {
+<span class="fc bfc" id="L393" title="All 2 branches covered.">        if (seconds == 0) {</span>
+<span class="fc" id="L394">            return this;</span>
+        }
+<span class="fc" id="L396">        return of(Math.addExact(this.seconds, seconds));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount subtracted.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Seconds#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Seconds} based on this instance with the requested amount subtracted, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Seconds minus(TemporalAmount amountToAdd) {
+<span class="fc" id="L413">        return minus(Seconds.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of seconds subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param seconds  the amount of seconds to add, may be negative
+     * @return a {@code Seconds} based on this instance with the requested amount subtracted, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Seconds minus(int seconds) {
+<span class="fc bfc" id="L426" title="All 2 branches covered.">        if (seconds == 0) {</span>
+<span class="fc" id="L427">            return this;</span>
+        }
+<span class="fc" id="L429">        return of(Math.subtractExact(this.seconds, seconds));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an instance with the amount multiplied by the specified scalar.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param scalar  the scalar to multiply by, not null
+     * @return the amount multiplied by the specified scalar, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Seconds multipliedBy(int scalar) {
+<span class="fc bfc" id="L443" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L444">            return this;</span>
+        }
+<span class="fc" id="L446">        return of(Math.multiplyExact(seconds, scalar));</span>
+    }
+
+    /**
+     * Returns an instance with the amount divided by the specified divisor.
+     * &lt;p&gt;
+     * The calculation uses integer division, thus 3 divided by 2 is 1.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param divisor  the amount to divide by, may be negative
+     * @return the amount divided by the specified divisor, not null
+     * @throws ArithmeticException if the divisor is zero
+     */
+    public Seconds dividedBy(int divisor) {
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L462">            return this;</span>
+        }
+<span class="fc" id="L464">        return of(seconds / divisor);</span>
+    }
+
+    /**
+     * Returns an instance with the amount negated.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the negated amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Seconds negated() {
+<span class="fc" id="L477">        return multipliedBy(-1);</span>
+    }
+
+    /**
+     * Returns a copy of this duration with a positive length.
+     * &lt;p&gt;
+     * This method returns a positive duration by effectively removing the sign from any negative total length.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the absolute amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Seconds abs() {
+<span class="fc bfc" id="L492" title="All 2 branches covered.">        return seconds &lt; 0 ? negated() : this;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the number of seconds as a {@code Duration}.
+     * &lt;p&gt;
+     * This returns a duration with the same number of seconds.
+     *
+     * @return the equivalent duration, not null
+     */
+    public Duration toDuration() {
+<span class="fc" id="L504">        return Duration.ofSeconds(seconds);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds this amount to the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount added.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#plus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.addTo(dateTime);
+     *   dateTime = dateTime.plus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to add
+     * @throws UnsupportedTemporalTypeException if the SECONDS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal addTo(Temporal temporal) {
+<span class="fc bfc" id="L534" title="All 2 branches covered.">        if (seconds != 0) {</span>
+<span class="fc" id="L535">            temporal = temporal.plus(seconds, SECONDS);</span>
+        }
+<span class="fc" id="L537">        return temporal;</span>
+    }
+
+    /**
+     * Subtracts this amount from the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount subtracted.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#minus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.subtractFrom(dateTime);
+     *   dateTime = dateTime.minus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to subtract
+     * @throws UnsupportedTemporalTypeException if the SECONDS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal subtractFrom(Temporal temporal) {
+<span class="fc bfc" id="L566" title="All 2 branches covered.">        if (seconds != 0) {</span>
+<span class="fc" id="L567">            temporal = temporal.minus(seconds, SECONDS);</span>
+        }
+<span class="fc" id="L569">        return temporal;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this amount to the specified {@code Seconds}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the amounts.
+     * It is &quot;consistent with equals&quot;, as defined by {@link Comparable}.
+     *
+     * @param otherAmount  the other amount, not null
+     * @return the comparator value, negative if less, positive if greater
+     */
+    @Override
+    public int compareTo(Seconds otherAmount) {
+<span class="fc" id="L584">        int thisValue = this.seconds;</span>
+<span class="fc" id="L585">        int otherValue = otherAmount.seconds;</span>
+<span class="fc" id="L586">        return Integer.compare(thisValue, otherValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this amount is equal to the specified {@code Seconds}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the durations.
+     *
+     * @param otherAmount  the other amount, null returns false
+     * @return true if the other amount is equal to this one
+     */
+    @Override
+    public boolean equals(Object otherAmount) {
+<span class="fc bfc" id="L600" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L601">            return true;</span>
+        }
+<span class="fc bfc" id="L603" title="All 2 branches covered.">        if (otherAmount instanceof Seconds) {</span>
+<span class="fc" id="L604">            Seconds other = (Seconds) otherAmount;</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">            return this.seconds == other.seconds;</span>
+        }
+<span class="fc" id="L607">        return false;</span>
+    }
+
+    /**
+     * A hash code for this amount.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L617">        return seconds;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string representation of the number of seconds.
+     * This will be in the format 'PTnS' where n is the number of seconds.
+     *
+     * @return the number of seconds in ISO-8601 string format
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L629">        return &quot;PT&quot; + seconds + &quot;S&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

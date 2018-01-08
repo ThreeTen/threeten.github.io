@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiscordianChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">DiscordianChronology.java</span></div><h1>DiscordianChronology.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.chrono.AbstractChronology;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.time.chrono.Chronology;
+import java.time.chrono.Era;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.time.temporal.ValueRange;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * The Discordian calendar system.
+ * &lt;p&gt;
+ * This chronology defines the rules of the proleptic Discordian calendar system.
+ * The Discordian differs from the Gregorian in terms of month and week lengths, with an offset year.
+ * Dates are aligned such that each Discordian year starts with each ISO year, with an offset index.
+ * &lt;p&gt;
+ * This class is not proleptic. It implements Discordian rules only since YOLD 1 (ISO BCE 1166).
+ * &lt;p&gt;
+ * The fields are defined as follows:
+ * &lt;ul&gt;
+ * &lt;li&gt;era - There is one era, the current 'Year of Our Lady of Discord' (YOLD).
+ * &lt;li&gt;year-of-era - The year-of-era for the current era increases uniformly from the epoch at year one.
+ * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the current era.
+ * &lt;li&gt;month-of-year - There are 5 months in a Discordian year, numbered from 1 to 5.
+ * &lt;li&gt;day-of-week - There are 5 days in a Discordian week, numbered from 1 to 5.
+ * &lt;li&gt;day-of-month - There are 73 days in each Discordian month, numbered from 1 to 73.
+ * &lt;li&gt;day-of-year - There are 365 days in a standard Discordian year and 366 in a leap year.
+ *  The days are numbered from 1 to 365 or 1 to 366.
+ * &lt;li&gt;leap-year - Leap years occur in sync with ISO leap-years; that is, they occur every 4 ISO years, excepting when that ISO year is divisible by 100 but not 400.
+ * &lt;li&gt;St. Tib's Day - St. Tib's Day occurs each leap-year, and is inserted between the 59th and 60th day of the first month.
+ * St. Tib's Day is not part of any month, nor is it part of the Discordian week.  It is aligned with the ISO calendar leap-day (February 29th).
+ * &lt;/ul&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class DiscordianChronology
+        extends AbstractChronology
+        implements Serializable {
+
+    /**
+     * Singleton instance for the Discordian chronology.
+     */
+<span class="fc" id="L87">    public static final DiscordianChronology INSTANCE = new DiscordianChronology();</span>
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = 1075529146344250850L;
+    /**
+     * Offset from ISO 0
+     */
+    static final int OFFSET_FROM_ISO_0000 = 1166;
+    /**
+     * Days in a regular month.
+     */
+    static final int DAYS_IN_MONTH = 73;
+    /**
+     * Days in a regular week.
+     */
+    static final int DAYS_IN_WEEK = 5;
+    /**
+     * Months in a regular year.
+     */
+    static final int MONTHS_IN_YEAR = 5;
+    /**
+     * Weeks in a regular year.
+     */
+    static final int WEEKS_IN_YEAR = 73;
+    /**
+     * Range of proleptic-year.
+     */
+<span class="fc" id="L116">    static final ValueRange YEAR_RANGE = ValueRange.of(1, 999_999);</span>
+    /**
+     * Range of month-of-year.
+     */
+<span class="fc" id="L120">    static final ValueRange MONTH_OF_YEAR_RANGE = ValueRange.of(0, 1, MONTHS_IN_YEAR, MONTHS_IN_YEAR);</span>
+    /**
+     * Range of day-of-month.
+     */
+<span class="fc" id="L124">    static final ValueRange DAY_OF_MONTH_RANGE = ValueRange.of(0, 1, 0, DAYS_IN_MONTH);</span>
+    /**
+     * Range of epoch day.
+     */
+<span class="fc" id="L128">    static final ValueRange EPOCH_DAY_RANGE = ValueRange.of(-1_145_400, 999_999 * 365L + 242_499);</span>
+    /**
+     * Range of proleptic month.
+     */
+<span class="fc" id="L132">    private static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(0, (long) 999_999 * MONTHS_IN_YEAR + MONTHS_IN_YEAR - 1);</span>
+    /**
+     * Range of day-of-week.
+     */
+<span class="fc" id="L136">    private static final ValueRange DAY_OF_WEEK_RANGE = ValueRange.of(0, 1, 0, DAYS_IN_WEEK);</span>
+    /**
+     * Range of aligned day-of-week of year.
+     */
+<span class="fc" id="L140">    private static final ValueRange ALIGNED_DOW_OF_YEAR_RANGE = ValueRange.of(0, 1, DAYS_IN_WEEK, DAYS_IN_WEEK);</span>
+    /**
+     * Range of week-of-month.
+     */
+<span class="fc" id="L144">    private static final ValueRange WEEK_OF_MONTH_RANGE = ValueRange.of(0, 1, 0, 15);</span>
+    /**
+     * Range of week-of-year.
+     */
+<span class="fc" id="L148">    private static final ValueRange WEEK_OF_YEAR_RANGE = ValueRange.of(0, 1, WEEKS_IN_YEAR, WEEKS_IN_YEAR);</span>
+    /**
+     * Range of eras.
+     */
+<span class="fc" id="L152">    private static final ValueRange ERA_RANGE = ValueRange.of(1, 1);</span>
+
+    /**
+     * Private constructor, that is public to satisfy the {@code ServiceLoader}.
+     * @deprecated Use the singleton {@link #INSTANCE} instead.
+     */
+    @Deprecated
+<span class="fc" id="L159">    public DiscordianChronology() {</span>
+<span class="fc" id="L160">    }</span>
+
+    /**
+     * Resolve singleton.
+     *
+     * @return the singleton instance, not null
+     */
+    private Object readResolve() {
+<span class="nc" id="L168">        return INSTANCE;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the ID of the chronology - 'Discordian'.
+     * &lt;p&gt;
+     * The ID uniquely identifies the {@code Chronology}.
+     * It can be used to lookup the {@code Chronology} using {@link Chronology#of(String)}.
+     *
+     * @return the chronology ID - 'Discordian'
+     * @see #getCalendarType()
+     */
+    @Override
+    public String getId() {
+<span class="fc" id="L183">        return &quot;Discordian&quot;;</span>
+    }
+
+    /**
+     * Gets the calendar type of the underlying calendar system - 'discordian'.
+     * &lt;p&gt;
+     * The &lt;em&gt;Unicode Locale Data Markup Language (LDML)&lt;/em&gt; specification
+     * does not define an identifier for the Discordian calendar, but were it to
+     * do so, 'discordian' is highly likely to be chosen.
+     *
+     * @return the calendar system type - 'discordian'
+     * @see #getId()
+     */
+    @Override
+    public String getCalendarType() {
+<span class="fc" id="L198">        return &quot;discordian&quot;;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a local date in Discordian calendar system from the
+     * era, year-of-era, month-of-year and day-of-month fields.
+     *
+     * @param era  the Discordian era, not null
+     * @param yearOfEra  the year-of-era
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code DiscordianEra}
+     */
+    @Override
+    public DiscordianDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
+<span class="fc" id="L216">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Discordian calendar system from the
+     * proleptic-year, month-of-year and day-of-month fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public DiscordianDate date(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L231">        return DiscordianDate.of(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Discordian calendar system from the
+     * era, year-of-era and day-of-year fields.
+     *
+     * @param era  the Discordian era, not null
+     * @param yearOfEra  the year-of-era
+     * @param dayOfYear  the day-of-year
+     * @return the Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code DiscordianEra}
+     */
+    @Override
+    public DiscordianDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
+<span class="fc" id="L247">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the Discordian calendar system from the
+     * proleptic-year and day-of-year fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param dayOfYear  the day-of-year
+     * @return the Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public DiscordianDate dateYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L261">        return DiscordianDate.ofYearDay(prolepticYear, dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the Discordian calendar system from the epoch-day.
+     *
+     * @param epochDay  the epoch day
+     * @return the Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public DiscordianDate dateEpochDay(long epochDay) {
+<span class="fc" id="L273">        return DiscordianDate.ofEpochDay(epochDay);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains the current Discordian local date from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current Discordian local date using the system clock and default time-zone, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public DiscordianDate dateNow() {
+<span class="nc" id="L291">        return DiscordianDate.now();</span>
+    }
+
+    /**
+     * Obtains the current Discordian local date from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the zone ID to use, not null
+     * @return the current Discordian local date using the system clock, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public DiscordianDate dateNow(ZoneId zone) {
+<span class="nc" id="L309">        return DiscordianDate.now(zone);</span>
+    }
+
+    /**
+     * Obtains the current Discordian local date from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public DiscordianDate dateNow(Clock clock) {
+<span class="nc" id="L325">        return DiscordianDate.now(clock);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a Discordian local date from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Discordian local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public DiscordianDate date(TemporalAccessor temporal) {
+<span class="fc" id="L338">        return DiscordianDate.from(temporal);</span>
+    }
+
+    /**
+     * Obtains a Discordian local date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Discordian local date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;DiscordianDate&gt; localDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L351">        return (ChronoLocalDateTime&lt;DiscordianDate&gt;) super.localDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Discordian zoned date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Discordian zoned date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;DiscordianDate&gt; zonedDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L364">        return (ChronoZonedDateTime&lt;DiscordianDate&gt;) super.zonedDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Discordian zoned date-time in this chronology from an {@code Instant}.
+     *
+     * @param instant  the instant to create the date-time from, not null
+     * @param zone  the time-zone, not null
+     * @return the Discordian zoned date-time, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;DiscordianDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
+<span class="nc" id="L378">        return (ChronoZonedDateTime&lt;DiscordianDate&gt;) super.zonedDateTime(instant, zone);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified year is a leap year.
+     * &lt;p&gt;
+     * A Discordian proleptic-year is leap if the remainder after division by four equals zero.
+     * There are two special cases.
+     * If the year minus 1166 is divisible by 100 it is not a leap year, unless
+     * it is also divisible by 400, when it is a leap year.
+     * These rules produce leap days on the same dates as the ISO-8601 calendar system.
+     *
+     * @param prolepticYear  the proleptic-year to check, not validated for range
+     * @return true if the year is a leap year
+     */
+    @Override
+    public boolean isLeapYear(long prolepticYear) {
+<span class="fc" id="L396">        long offsetYear = prolepticYear - OFFSET_FROM_ISO_0000;</span>
+<span class="fc bfc" id="L397" title="All 6 branches covered.">        return (offsetYear % 4 == 0) &amp;&amp; ((offsetYear % 400 == 0) || (offsetYear % 100 != 0));</span>
+    }
+
+    @Override
+    public int prolepticYear(Era era, int yearOfEra) {
+<span class="fc bfc" id="L402" title="All 2 branches covered.">        if (!DiscordianEra.YOLD.equals(era)) {</span>
+<span class="fc" id="L403">            throw new ClassCastException(&quot;Era must be DiscordianEra.YOLD&quot;);</span>
+        }
+<span class="fc" id="L405">        return YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
+    }
+
+    @Override
+    public DiscordianEra eraOf(int era) {
+<span class="fc" id="L410">        return DiscordianEra.of(era);</span>
+    }
+
+    @Override
+    public List&lt;Era&gt; eras() {
+<span class="fc" id="L415">        return Arrays.&lt;Era&gt;asList(DiscordianEra.values());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ValueRange range(ChronoField field) {
+<span class="pc bfc" id="L421" title="All 11 branches covered.">        switch (field) {</span>
+            case ALIGNED_DAY_OF_WEEK_IN_YEAR:
+<span class="fc" id="L423">                return ALIGNED_DOW_OF_YEAR_RANGE;</span>
+            case ALIGNED_DAY_OF_WEEK_IN_MONTH:
+            case DAY_OF_WEEK:
+<span class="fc" id="L426">                return DAY_OF_WEEK_RANGE;</span>
+            case ALIGNED_WEEK_OF_MONTH:
+<span class="fc" id="L428">                return WEEK_OF_MONTH_RANGE;</span>
+            case ALIGNED_WEEK_OF_YEAR:
+<span class="fc" id="L430">                return WEEK_OF_YEAR_RANGE;</span>
+            case DAY_OF_MONTH:
+<span class="fc" id="L432">                return DAY_OF_MONTH_RANGE;</span>
+            case EPOCH_DAY:
+<span class="fc" id="L434">                return EPOCH_DAY_RANGE;</span>
+            case ERA:
+<span class="fc" id="L436">                return ERA_RANGE;</span>
+            case MONTH_OF_YEAR:
+<span class="fc" id="L438">                return MONTH_OF_YEAR_RANGE;</span>
+            case PROLEPTIC_MONTH:
+<span class="fc" id="L440">                return PROLEPTIC_MONTH_RANGE;</span>
+            case YEAR_OF_ERA:
+            case YEAR:
+<span class="fc" id="L443">                return YEAR_RANGE;</span>
+            default:
+                break;
+        }
+<span class="fc" id="L447">        return field.range();</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override  // override for return type
+    public DiscordianDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L453">        return (DiscordianDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractNileDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">AbstractNileDate.java</span></div><h1>AbstractNileDate.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.time.temporal.ValueRange;
+
+/**
+ * A date in one of the Nile river calendar systems.
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * Implementations must be immutable and thread-safe.
+ */
+abstract class AbstractNileDate
+        extends AbstractDate {
+
+    /**
+     * Creates an instance.
+     */
+<span class="fc" id="L48">    AbstractNileDate() {</span>
+<span class="fc" id="L49">    }</span>
+
+    //-----------------------------------------------------------------------
+    abstract int getEpochDayDifference();
+
+    @Override
+    int getDayOfYear() {
+<span class="fc" id="L56">        return (getMonth() - 1) * 30 + getDayOfMonth();</span>
+    }
+
+    @Override
+    AbstractDate withDayOfYear(int value) {
+<span class="fc" id="L61">        return resolvePrevious(getProlepticYear(), ((value - 1) / 30) + 1, ((value - 1) % 30) + 1);</span>
+    }
+
+    @Override
+    int lengthOfYearInMonths() {
+<span class="fc" id="L66">        return 13;</span>
+    }
+
+    @Override
+    ValueRange rangeAlignedWeekOfMonth() {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        return ValueRange.of(1, getMonth() == 13 ? 1 : 5);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the length of the month represented by this date.
+     * &lt;p&gt;
+     * This returns the length of the month in days.
+     * Months 1 to 12 have 30 days. Month 13 has 5 or 6 days.
+     *
+     * @return the length of the month in days, from 5 to 30
+     */
+    @Override
+    public int lengthOfMonth() {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (getMonth() == 13) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            return (isLeapYear() ? 6 : 5);</span>
+        }
+<span class="fc" id="L88">        return 30;</span>
+    }
+
+    @Override
+    public long toEpochDay() {
+<span class="fc" id="L93">        long year = (long) getProlepticYear();</span>
+<span class="fc" id="L94">        long calendarEpochDay = ((year - 1) * 365) + Math.floorDiv(year, 4) + (getDayOfYear() - 1);</span>
+<span class="fc" id="L95">        return calendarEpochDay - getEpochDayDifference();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

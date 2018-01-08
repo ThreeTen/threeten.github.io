@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Symmetry010Date.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">Symmetry010Date.java</span></div><h1>Symmetry010Date.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_0001_TO_1970;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_IN_MONTH;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_IN_MONTH_LONG;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_IN_QUARTER;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_IN_WEEK;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_IN_YEAR;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_IN_YEAR_LONG;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAYS_PER_CYCLE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAY_OF_MONTH_RANGE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.DAY_OF_YEAR_RANGE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.EPOCH_DAY_RANGE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.ERA_RANGE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.INSTANCE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.MONTHS_IN_YEAR;
+import static org.threeten.extra.chrono.Symmetry010Chronology.MONTH_OF_YEAR_RANGE;
+import static org.threeten.extra.chrono.Symmetry010Chronology.WEEKS_IN_MONTH;
+import static org.threeten.extra.chrono.Symmetry010Chronology.WEEKS_IN_YEAR;
+import static org.threeten.extra.chrono.Symmetry010Chronology.YEAR_RANGE;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoPeriod;
+import java.time.chrono.IsoEra;
+import java.time.temporal.ChronoField;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalQuery;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.time.temporal.ValueRange;
+
+/**
+ * A date in the Symmetry010 calendar system.
+ * &lt;p&gt;
+ * This date operates using the {@linkplain Symmetry010Chronology Symmetry010 calendar}.
+ * This calendar system is a proposed reform calendar system, and is not in common use.
+ * The Symmetry010 differs from the Gregorian in terms of month length, and the leap year rule.
+ * Dates are aligned such that {@code 0001/01/01 (Sym010)} is {@code 0001-01-01 (ISO)}.
+ * The alignment of January 1st happens 40 times within a 293 years cycle, skipping 5, 6, 11 or 12 years in between:
+ *   1,   7,  18,  24,  29,  35,  46,  52,  57,  63,  74,  80,  85,  91, 103, 114, 120, 125, 131, 142,
+ * 148, 153, 159, 170, 176, 181, 187, 198, 210, 216, 221, 227, 238, 244, 249, 255, 266, 272, 277, 283.
+ * &lt;p&gt;
+ * The implementation is a pure Symmetry010 calendar, as proposed by Dr. Irv Bromberg.
+ * The year shares the 12 months with the Gregorian calendar.
+ * The months February, May, August, November span 31 days, all other months consist of 30 days.
+ * In leap years, December is extended with a full week, the so-called &quot;leap week&quot;.
+ * Thus December in a leap year has 37.
+ * Since each month is made of full weeks, the calendar is perennial, with every date fixed always on the same weekday.
+ * Each month starts on a Monday and ends on a Sunday; so does each year.
+ * The 13th day of a month is always a Saturday.
+ * &lt;p&gt;
+ * More information is available on Wikipedia at
+ * &lt;a href='https://http://en.wikipedia.org/wiki/Symmetry010'&gt;Symmetry010&lt;/a&gt; or on the calendar's
+ * &lt;a href='http://individual.utoronto.ca/kalendis/classic.htm'&gt;home page&lt;/a&gt;.
+ * &lt;p&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class Symmetry010Date
+        extends AbstractDate
+        implements ChronoLocalDate, Serializable {
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -8275627894629629L;
+    /**
+     * The proleptic year.
+     */
+    private final int prolepticYear;
+    /**
+     * The month of the year.
+     */
+    private final int month;
+    /**
+     * The day of the month.
+     */
+    private final int day;
+    /**
+     * The day of year.
+     */
+    private final transient int dayOfYear;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains the current {@code Symmetry010Date} from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current date using the system clock and default time-zone, not null
+     */
+    public static Symmetry010Date now() {
+<span class="nc" id="L143">        return now(Clock.systemDefaultZone());</span>
+    }
+
+    /**
+     * Obtains the current {@code Symmetry010Date} from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the zone ID to use, not null
+     * @return the current date using the system clock, not null
+     */
+    public static Symmetry010Date now(ZoneId zone) {
+<span class="nc" id="L159">        return now(Clock.system(zone));</span>
+    }
+
+    /**
+     * Obtains the current {@code Symmetry010Date} from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@linkplain Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current date, not null
+     * @throws DateTimeException if the current date cannot be obtained
+     */
+    public static Symmetry010Date now(Clock clock) {
+<span class="nc" id="L174">        LocalDate now = LocalDate.now(clock);</span>
+<span class="nc" id="L175">        return Symmetry010Date.ofEpochDay(now.toEpochDay());</span>
+    }
+
+    /**
+     * Obtains a {@code Symmetry010Date} representing a date in the Symmetry010 calendar
+     * system from the proleptic-year, month-of-year and day-of-month fields.
+     * &lt;p&gt;
+     * This returns a {@code Symmetry010Date} with the specified fields.
+     * The day must be valid for the year and month, otherwise an exception will be thrown.
+     *
+     * @param prolepticYear  the Symmetry010 proleptic-year
+     * @param month  the Symmetry010 month-of-year, from 1 to 12
+     * @param dayOfMonth  the Symmetry010 day-of-month, from 1 to 30, or 1 to 31 in February, May, August, November,
+     *  or 1 to 37 in December in a Leap Year
+     * @return the date in Symmetry010 calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-month is invalid for the month-year
+     */
+    public static Symmetry010Date of(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L194">        return create(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Symmetry010Date} from a temporal object.
+     * &lt;p&gt;
+     * This obtains a date in the Symmetry010 calendar system based on the specified temporal.
+     * A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+     * which this factory converts to an instance of {@code Symmetry010Date}.
+     * &lt;p&gt;
+     * The conversion typically uses the {@link ChronoField#EPOCH_DAY EPOCH_DAY}
+     * field, which is standardized across calendar systems.
+     * &lt;p&gt;
+     * This method matches the signature of the functional interface {@link TemporalQuery}
+     * allowing it to be used as a query via method reference, {@code Symmetry010Date::from}.
+     *
+     * @param temporal  the temporal object to convert, not null
+     * @return the date in the Symmetry010 calendar system, not null
+     * @throws DateTimeException if unable to convert to a {@code Symmetry010Date}
+     */
+    public static Symmetry010Date from(TemporalAccessor temporal) {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (temporal instanceof Symmetry010Date) {</span>
+<span class="fc" id="L217">            return (Symmetry010Date) temporal;</span>
+        }
+<span class="fc" id="L219">        return Symmetry010Date.ofEpochDay(temporal.getLong(ChronoField.EPOCH_DAY));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Symmetry010Date} representing a date in the Symmetry010 calendar
+     * system from the proleptic-year and day-of-year fields.
+     * &lt;p&gt;
+     * This returns a {@code Symmetry010Date} with the specified fields.
+     * The day must be valid for the year, otherwise an exception will be thrown.
+     *
+     * @param prolepticYear  the Symmetry010 proleptic-year
+     * @param dayOfYear  the Symmetry010 day-of-year, from 1 to 364/371
+     * @return the date in Symmetry010 calendar system, not null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-year is invalid for the year
+     */
+    static Symmetry010Date ofYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L237">        YEAR_RANGE.checkValidValue(prolepticYear, ChronoField.YEAR_OF_ERA);</span>
+<span class="fc" id="L238">        DAY_OF_YEAR_RANGE.checkValidValue(dayOfYear, ChronoField.DAY_OF_YEAR);</span>
+<span class="fc" id="L239">        boolean leap = INSTANCE.isLeapYear(prolepticYear);</span>
+<span class="fc bfc" id="L240" title="All 4 branches covered.">        if (dayOfYear &gt; DAYS_IN_YEAR &amp;&amp; !leap) {</span>
+<span class="fc" id="L241">            throw new DateTimeException(&quot;Invalid date 'DayOfYear &quot; + dayOfYear + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+        }
+
+<span class="fc" id="L244">        int offset = Math.min(dayOfYear, DAYS_IN_YEAR) - 1;</span>
+<span class="fc" id="L245">        int quarter = offset / DAYS_IN_QUARTER;</span>
+<span class="fc" id="L246">        int day = ((dayOfYear - 1) - quarter * DAYS_IN_QUARTER) + 1;</span>
+<span class="fc" id="L247">        int month = 1 + quarter * 3;</span>
+
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (day &gt; DAYS_IN_MONTH + DAYS_IN_MONTH + 1) {</span>
+<span class="fc" id="L250">            month += 2;</span>
+<span class="fc" id="L251">            day -= DAYS_IN_MONTH + DAYS_IN_MONTH + 1;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        } else if (day &gt; DAYS_IN_MONTH) {</span>
+<span class="fc" id="L253">            month += 1;</span>
+<span class="fc" id="L254">            day -= DAYS_IN_MONTH;</span>
+        }
+<span class="fc" id="L256">        return new Symmetry010Date(prolepticYear, month, day);</span>
+    }
+
+    /**
+     * Obtains a {@code Symmetry010Date} representing a date in the Symmetry010 calendar
+     * system from the epoch-day.
+     *
+     * @param epochDay  the epoch day to convert based on 1970-01-01 (ISO), corresponds to 1970-01-04 (Sym010)
+     * @return the date in Symmetry010 calendar system, not null
+     * @throws DateTimeException if the epoch-day is out of range
+     */
+    static Symmetry010Date ofEpochDay(long epochDay) {
+<span class="fc" id="L268">        EPOCH_DAY_RANGE.checkValidValue(epochDay + 3, ChronoField.EPOCH_DAY);</span>
+<span class="fc" id="L269">        long zeroDay = epochDay + DAYS_0001_TO_1970 + 1;</span>
+<span class="fc" id="L270">        long year = 1 + ((293 * zeroDay) / DAYS_PER_CYCLE);</span>
+<span class="fc" id="L271">        long doy = zeroDay - (DAYS_IN_YEAR * (year - 1) + Symmetry010Chronology.getLeapYearsBefore(year) * DAYS_IN_WEEK);</span>
+
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        if (doy &lt; 1) {</span>
+<span class="fc" id="L274">            year--;</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">            doy += INSTANCE.isLeapYear(year) ? DAYS_IN_YEAR_LONG : DAYS_IN_YEAR;</span>
+        }
+
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        int diy = INSTANCE.isLeapYear(year) ? DAYS_IN_YEAR_LONG : DAYS_IN_YEAR;</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        if (doy &gt; diy) {</span>
+<span class="fc" id="L280">            doy -= diy;</span>
+<span class="fc" id="L281">            year++;</span>
+        }
+<span class="fc" id="L283">        return ofYearDay((int) year, (int) doy);</span>
+    }
+
+    /**
+     * Consistency check for dates manipulations after calls to
+     *   {@link #plus(long, TemporalUnit)},
+     *   {@link #minus(long, TemporalUnit)},
+     *   {@link #until(AbstractDate, TemporalUnit)} or
+     *   {@link #with(TemporalField, long)}.
+     *
+     * @param prolepticYear  the Symmetry010 proleptic-year
+     * @param month  the Symmetry010 month, from 1 to 12
+     * @param dayOfMonth  the Symmetry010 day-of-month, from 1 to 30, or 1 to 31 in February, May, August, November,
+     *  or 1 to 37 in December in a Leap Year
+     * @return the resolved date
+     */
+    private static Symmetry010Date resolvePreviousValid(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L300">        int monthR = Math.min(month, MONTHS_IN_YEAR);</span>
+<span class="fc" id="L301">        int dayR = Math.min(dayOfMonth,</span>
+<span class="fc bfc" id="L302" title="All 4 branches covered.">                monthR == 12 &amp;&amp; INSTANCE.isLeapYear(prolepticYear) ? DAYS_IN_MONTH + 7 :</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">                monthR % 3 == 2 ? DAYS_IN_MONTH_LONG : DAYS_IN_MONTH);</span>
+<span class="fc" id="L304">        return create(prolepticYear, monthR, dayR);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Factory method, validates the given triplet year, month and dayOfMonth.
+     *
+     * @param prolepticYear  the Symmetry010 proleptic-year
+     * @param month  the Symmetry010 month, from 1 to 12
+     * @param dayOfMonth  the Symmetry010 day-of-month, from 1 to 30, or 1 to 31 in February, May, August, November,
+     *  or 1 to 37 in December in a Leap Year
+     * @return the Symmetry010 date
+     * @throws DateTimeException if the date is invalid
+     */
+    static Symmetry010Date create(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L319">        YEAR_RANGE.checkValidValue(prolepticYear, ChronoField.YEAR_OF_ERA);</span>
+<span class="fc" id="L320">        MONTH_OF_YEAR_RANGE.checkValidValue(month, ChronoField.MONTH_OF_YEAR);</span>
+<span class="fc" id="L321">        DAY_OF_MONTH_RANGE.checkValidValue(dayOfMonth, ChronoField.DAY_OF_MONTH);</span>
+
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        if (dayOfMonth &gt; DAYS_IN_MONTH) {</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">            if (month == MONTHS_IN_YEAR) {</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">                if (!INSTANCE.isLeapYear(prolepticYear)) {</span>
+<span class="fc" id="L326">                    throw new DateTimeException(&quot;Invalid Leap Day as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+                }
+<span class="fc bfc" id="L328" title="All 6 branches covered.">            } else if (((month % 3 == 2) &amp;&amp; dayOfMonth &gt; DAYS_IN_MONTH_LONG) || (month % 3 != 2)) {</span>
+<span class="fc" id="L329">                throw new DateTimeException(&quot;Invalid date: &quot; + prolepticYear + '/' + month + '/' + dayOfMonth);</span>
+            }
+        }
+<span class="fc" id="L332">        return new Symmetry010Date(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates an instance from validated data.
+     *
+     * @param prolepticYear  the Symmetry010 proleptic-year
+     * @param month  the Symmetry010 month, from 1 to 12
+     * @param dayOfMonth  the Symmetry010 day-of-month, from 1 to 30, or 1 to 31 in February, May, August, November,
+     *  or 1 to 37 in December in a Leap Year
+     */
+<span class="fc" id="L344">    private Symmetry010Date(int prolepticYear, int month, int dayOfMonth) {</span>
+<span class="fc" id="L345">        this.prolepticYear = prolepticYear;</span>
+<span class="fc" id="L346">        this.month = month;</span>
+<span class="fc" id="L347">        this.day = dayOfMonth;</span>
+<span class="fc" id="L348">        this.dayOfYear = DAYS_IN_MONTH * (month - 1) + (month / 3) + dayOfMonth;</span>
+<span class="fc" id="L349">    }</span>
+
+    /**
+     * Validates the object.
+     *
+     * @return Symmetry010Date the resolved date, not null
+     */
+    private Object readResolve() {
+<span class="nc" id="L357">        return Symmetry010Date.of(prolepticYear, month, day);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    int getProlepticYear() {
+<span class="fc" id="L363">        return prolepticYear;</span>
+    }
+
+    @Override
+    int getMonth() {
+<span class="fc" id="L368">        return month;</span>
+    }
+
+    @Override
+    int getDayOfMonth() {
+<span class="fc" id="L373">        return day;</span>
+    }
+
+    @Override
+    int getDayOfYear() {
+<span class="fc" id="L378">        return dayOfYear;</span>
+    }
+
+    @Override
+    int lengthOfYearInMonths() {
+<span class="fc" id="L383">        return MONTHS_IN_YEAR;</span>
+    }
+
+    @Override
+    int getDayOfWeek() {
+<span class="fc" id="L388">        return ((dayOfYear - 1 + getDayOfMonthOffset()) % DAYS_IN_WEEK) + 1;</span>
+    }
+
+    long getProlepticWeek() {
+<span class="fc" id="L392">        return prolepticYear * WEEKS_IN_YEAR +</span>
+<span class="fc" id="L393">               Symmetry010Chronology.getLeapYearsBefore(prolepticYear) +</span>
+               ((dayOfYear - 1) / DAYS_IN_WEEK) - 1;
+    }
+
+    /**
+     * Each 1st month of a quarter (month % 3 == 1) starts on a Monday,    offset is 0.
+     * Each 2nd month of a quarter (month % 3 == 2) starts on a Wednesday, offset is 2.
+     * Each 3rd month of a quarter (month % 3 == 0) starts on a Saturday,  offset is 5.
+     */
+<span class="fc" id="L402">    private static final int[] dayOfMonthOffset = {5, 0, 2};</span>
+
+    private int getDayOfMonthOffset() {
+<span class="fc" id="L405">        return dayOfMonthOffset[month % 3];</span>
+    }
+
+    /**
+     * Checks if the date is within the leap week.
+     * 
+     * @return true if this date is in the leap week
+     */
+    public boolean isLeapWeek() {
+<span class="pc bpc" id="L414" title="2 of 4 branches missed.">        return isLeapYear() &amp;&amp; this.dayOfYear &gt; DAYS_IN_YEAR;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ValueRange range(TemporalField field) {
+<span class="pc bpc" id="L420" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">            if (isSupported(field)) {</span>
+<span class="fc" id="L422">                ChronoField f = (ChronoField) field;</span>
+<span class="pc bpc" id="L423" title="2 of 9 branches missed.">                switch (f) {</span>
+                    case ALIGNED_DAY_OF_WEEK_IN_MONTH:
+                    case ALIGNED_DAY_OF_WEEK_IN_YEAR:
+                    case DAY_OF_WEEK:
+<span class="fc" id="L427">                        return ValueRange.of(1, DAYS_IN_WEEK);</span>
+                    case ALIGNED_WEEK_OF_MONTH:
+<span class="fc" id="L429">                        return ValueRange.of(1, lengthOfMonth() / DAYS_IN_WEEK);</span>
+                    case ALIGNED_WEEK_OF_YEAR:
+<span class="fc bfc" id="L431" title="All 2 branches covered.">                        return ValueRange.of(1, WEEKS_IN_YEAR + (isLeapYear() ? 1 : 0));</span>
+                    case DAY_OF_MONTH:
+<span class="fc" id="L433">                        return ValueRange.of(1, lengthOfMonth());</span>
+                    case DAY_OF_YEAR:
+<span class="fc" id="L435">                        return ValueRange.of(1, lengthOfYear());</span>
+                    case EPOCH_DAY:
+<span class="nc" id="L437">                        return EPOCH_DAY_RANGE;</span>
+                    case ERA:
+<span class="nc" id="L439">                        return ERA_RANGE;</span>
+                    case MONTH_OF_YEAR:
+<span class="fc" id="L441">                        return MONTH_OF_YEAR_RANGE;</span>
+                    default:
+                        break;
+                }
+<span class="fc" id="L445">            } else {</span>
+<span class="fc" id="L446">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+            }
+        }
+<span class="fc" id="L449">        return super.range(field);</span>
+    }
+
+    @Override
+    ValueRange rangeAlignedWeekOfMonth() {
+        // never invoked
+<span class="nc" id="L455">        return ValueRange.of(1, WEEKS_IN_MONTH);</span>
+    }
+
+    @Override
+    Symmetry010Date resolvePrevious(int newYear, int newMonth, int dayOfMonth) {
+<span class="fc" id="L460">        return resolvePreviousValid(newYear, newMonth, dayOfMonth);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the chronology of this date, which is the Symmetry010 calendar system.
+     * &lt;p&gt;
+     * The {@code Chronology} represents the calendar system in use.
+     * The era and other fields in {@link ChronoField} are defined by the chronology.
+     *
+     * @return the Symmetry010 chronology, not null
+     */
+    @Override
+    public Symmetry010Chronology getChronology() {
+<span class="fc" id="L474">        return INSTANCE;</span>
+    }
+
+    /**
+     * Gets the era applicable at this date.
+     * &lt;p&gt;
+     * The Symmetry454 calendar system uses {@link IsoEra}.
+     *
+     * @return the era applicable at this date, not null
+     */
+    @Override
+    public IsoEra getEra() {
+<span class="fc bfc" id="L486" title="All 2 branches covered.">        return (prolepticYear &gt;= 1 ? IsoEra.CE : IsoEra.BCE);</span>
+    }
+
+    /**
+     * Returns the length of the month represented by this date.
+     * &lt;p&gt;
+     * This returns the length of the month in days.
+     * Month lengths do not match those of the ISO calendar system.
+     * &lt;p&gt;
+     * Most months have 30 days, except for February, May, August, November each have 31 days.
+     * December in a leap year has 37 days.
+     *
+     * @return the length of the month in days
+     */
+    @Override
+    public int lengthOfMonth() {
+<span class="pc bpc" id="L502" title="1 of 4 branches missed.">        return this.isLeapYear() &amp;&amp; this.month == MONTHS_IN_YEAR ? DAYS_IN_MONTH + 7 :</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">               this.month % 3 == 2 ? DAYS_IN_MONTH_LONG : DAYS_IN_MONTH;</span>
+    }
+
+    /**
+     * Returns the length of the year represented by this date.
+     * &lt;p&gt;
+     * This returns the length of the year in days.
+     * Year lengths do NOT match those of the ISO calendar system.
+     *
+     * @return the length of the year in days: 364 or 371
+     */
+    @Override
+    public int lengthOfYear() {
+<span class="fc bfc" id="L516" title="All 2 branches covered.">        return isLeapYear() ? DAYS_IN_YEAR_LONG : DAYS_IN_YEAR;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    @Override
+    public Symmetry010Date with(TemporalAdjuster adjuster) {
+<span class="fc" id="L522">        return (Symmetry010Date) adjuster.adjustInto(this);</span>
+    }
+
+    @Override
+    public Symmetry010Date with(TemporalField field, long newValue) {
+<span class="pc bpc" id="L527" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">            if (newValue == 0) {</span>
+<span class="fc" id="L529">                return this;</span>
+            }
+<span class="fc" id="L531">            ChronoField f = (ChronoField) field;</span>
+<span class="fc" id="L532">            getChronology().range(f).checkValidValue(newValue, f);</span>
+<span class="fc" id="L533">            int nval = (int) newValue;</span>
+<span class="fc bfc" id="L534" title="All 3 branches covered.">            switch (f) {</span>
+                case DAY_OF_MONTH:
+<span class="fc" id="L536">                    return create(prolepticYear, month, nval);</span>
+                case DAY_OF_WEEK:
+<span class="fc" id="L538">                    int week = (this.dayOfYear - 1) / 7;</span>
+<span class="fc" id="L539">                    int yd = 7 * week + nval;</span>
+<span class="fc" id="L540">                    return ofYearDay(prolepticYear, yd);</span>
+                default:
+                    break;
+            }
+        }
+<span class="fc" id="L545">        return (Symmetry010Date) super.with(field, newValue);</span>
+    }
+
+    @Override
+    Symmetry010Date withDayOfYear(int value) {
+<span class="fc" id="L550">        return ofYearDay(prolepticYear, value);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public Symmetry010Date plus(TemporalAmount amount) {
+<span class="fc" id="L556">        return (Symmetry010Date) amount.addTo(this);</span>
+    }
+
+    @Override
+    public Symmetry010Date plus(long amountToAdd, TemporalUnit unit) {
+<span class="fc" id="L561">        return (Symmetry010Date) super.plus(amountToAdd, unit);</span>
+    }
+
+    @Override
+    public Symmetry010Date minus(TemporalAmount amount) {
+<span class="fc" id="L566">        return (Symmetry010Date) amount.subtractFrom(this);</span>
+    }
+
+    @Override
+    public Symmetry010Date minus(long amountToSubtract, TemporalUnit unit) {
+<span class="fc" id="L571">        return (Symmetry010Date) super.minus(amountToSubtract, unit);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    @Override  // for covariant return type
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;Symmetry010Date&gt; atTime(LocalTime localTime) {
+<span class="nc" id="L578">        return (ChronoLocalDateTime&lt;Symmetry010Date&gt;) super.atTime(localTime);</span>
+    }
+
+    @Override
+    public long until(Temporal endExclusive, TemporalUnit unit) {
+<span class="fc" id="L583">        return until(Symmetry010Date.from(endExclusive), unit);</span>
+    }
+
+    /**
+     * Get the number of years from this date to the given day.
+     *
+     * @param end The end date.
+     * @return The number of years from this date to the given day.
+     */
+    long yearsUntil(Symmetry010Date end) {
+<span class="fc" id="L593">        long startYear = this.prolepticYear * 512L + this.getDayOfYear();</span>
+<span class="fc" id="L594">        long endYear = end.prolepticYear * 512L + end.getDayOfYear();</span>
+<span class="fc" id="L595">        return (endYear - startYear) / 512L;</span>
+    }
+
+    @Override
+    public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
+<span class="fc" id="L600">        Symmetry010Date end = Symmetry010Date.from(endDateExclusive);</span>
+<span class="fc" id="L601">        int years = Math.toIntExact(yearsUntil(end));</span>
+        // Get to the same &quot;whole&quot; year.
+<span class="fc" id="L603">        Symmetry010Date sameYearEnd = (Symmetry010Date) plusYears(years);</span>
+<span class="fc" id="L604">        int months = (int) sameYearEnd.monthsUntil(end);</span>
+<span class="fc" id="L605">        int days = (int) sameYearEnd.plusMonths(months).daysUntil(end);</span>
+<span class="fc" id="L606">        return getChronology().period(years, months, days);</span>
+    }
+
+    @Override
+    long weeksUntil(AbstractDate end) {
+<span class="fc" id="L611">        Symmetry010Date endDate = Symmetry010Date.from(end);</span>
+<span class="fc" id="L612">        long startWeek = this.getProlepticWeek() * 8L + this.getDayOfWeek();</span>
+<span class="fc" id="L613">        long endWeek = endDate.getProlepticWeek() * 8L + endDate.getDayOfWeek();</span>
+<span class="fc" id="L614">        return (endWeek - startWeek) / 8L;</span>
+    }
+
+    @Override
+    long monthsUntil(AbstractDate end) {
+<span class="fc" id="L619">        Symmetry010Date date = Symmetry010Date.from(end);</span>
+<span class="fc" id="L620">        long monthStart = this.getProlepticMonth() * 64L + this.getDayOfMonth();</span>
+<span class="fc" id="L621">        long monthEnd = date.getProlepticMonth() * 64L + date.getDayOfMonth();</span>
+<span class="fc" id="L622">        return (monthEnd - monthStart) / 64L;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public long toEpochDay() {
+<span class="fc" id="L628">        long epochDay =</span>
+                (long) (this.prolepticYear - 1) * DAYS_IN_YEAR +
+<span class="fc" id="L630">                Symmetry010Chronology.getLeapYearsBefore(this.prolepticYear) * DAYS_IN_WEEK +</span>
+                this.dayOfYear -
+                DAYS_0001_TO_1970 - 1;
+
+<span class="fc" id="L634">        return epochDay;</span>
+    }
+
+    /**
+     * Display the date in human-readable format.
+     *
+     * @return the string representation
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L644">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L645">        return buf.append(getChronology().toString())</span>
+<span class="fc" id="L646">                .append(' ')</span>
+<span class="fc" id="L647">                .append(getEra())</span>
+<span class="fc" id="L648">                .append(' ')</span>
+<span class="fc" id="L649">                .append(getYearOfEra())</span>
+<span class="pc bpc" id="L650" title="1 of 4 branches missed.">                .append(this.month &lt; 10 &amp;&amp; this.month &gt; 0 ? &quot;/0&quot; : '/')</span>
+<span class="fc" id="L651">                .append(this.month)</span>
+<span class="fc bfc" id="L652" title="All 2 branches covered.">                .append(this.day &lt; 10 ? &quot;/0&quot; : '/')</span>
+<span class="fc" id="L653">                .append(this.day)</span>
+<span class="fc" id="L654">                .toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

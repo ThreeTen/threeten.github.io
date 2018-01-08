@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Days.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">Days.java</span></div><h1>Days.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.Period;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * A day-based amount of time, such as '12 days'.
+ * &lt;p&gt;
+ * This class models a quantity or amount of time in terms of days.
+ * It is a type-safe way of representing a number of days in an application.
+ * &lt;p&gt;
+ * The model is of a directed amount, meaning that the amount may be negative.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class Days
+        implements TemporalAmount, Comparable&lt;Days&gt;, Serializable {
+
+    /**
+     * A constant for zero days.
+     */
+<span class="fc" id="L71">    public static final Days ZERO = new Days(0);</span>
+    /**
+     * A constant for one day.
+     */
+<span class="fc" id="L75">    public static final Days ONE = new Days(1);</span>
+
+    /**
+     * A serialization identifier for this class.
+     */
+    private static final long serialVersionUID = -8903767091325669093L;
+    /**
+     * The number of days per week.
+     */
+    private static final int DAYS_PER_WEEK = 7;
+    /**
+     * The pattern for parsing.
+     */
+<span class="fc" id="L88">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L89">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+                    + &quot;(?:([-+]?[0-9]+)W)?&quot;
+                    + &quot;(?:([-+]?[0-9]+)D)?&quot;, Pattern.CASE_INSENSITIVE);
+
+    /**
+     * The number of days.
+     */
+    private final int days;
+
+    /**
+     * Obtains a {@code Days} representing a number of days.
+     * &lt;p&gt;
+     * The resulting amount will have the specified days.
+     *
+     * @param days  the number of days, positive or negative
+     * @return the number of days, not null
+     */
+    public static Days of(int days) {
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L108">            return ZERO;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        } else if (days == 1) {</span>
+<span class="fc" id="L110">            return ONE;</span>
+        }
+<span class="fc" id="L112">        return new Days(days);</span>
+    }
+
+    /**
+     * Obtains a {@code Days} representing the number of days
+     * equivalent to a number of weeks.
+     * &lt;p&gt;
+     * The resulting amount will be day-based, with the number of days
+     * equal to the number of weeks multiplied by 7.
+     *
+     * @param weeks  the number of weeks, positive or negative
+     * @return the amount with the input weeks converted to days, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Days ofWeeks(int weeks) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (weeks == 0) {</span>
+<span class="fc" id="L128">            return ZERO;</span>
+        }
+<span class="fc" id="L130">        return new Days(Math.multiplyExact(weeks, DAYS_PER_WEEK));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code Days} from a temporal amount.
+     * &lt;p&gt;
+     * This obtains an instance based on the specified amount.
+     * A {@code TemporalAmount} represents an amount of time, which may be
+     * date-based or time-based, which this factory extracts to a {@code Days}.
+     * &lt;p&gt;
+     * The result is calculated by looping around each unit in the specified amount.
+     * Each amount is converted to days using {@link Temporals#convertAmount}.
+     * If the conversion yields a remainder, an exception is thrown.
+     * If the amount is zero, the unit is ignored.
+     *
+     * @param amount  the temporal amount to convert, not null
+     * @return the equivalent amount, not null
+     * @throws DateTimeException if unable to convert to a {@code Days}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Days from(TemporalAmount amount) {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (amount instanceof Days) {</span>
+<span class="fc" id="L153">            return (Days) amount;</span>
+        }
+<span class="fc" id="L155">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L156">        int days = 0;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L158">            long value = amount.get(unit);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (value != 0) {</span>
+<span class="fc" id="L160">                long[] converted = Temporals.convertAmount(value, unit, DAYS);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                if (converted[1] != 0) {</span>
+<span class="fc" id="L162">                    throw new DateTimeException(</span>
+                            &quot;Amount could not be converted to a whole number of days: &quot; + value + &quot; &quot; + unit);
+                }
+<span class="fc" id="L165">                days = Math.addExact(days, Math.toIntExact(converted[0]));</span>
+            }
+<span class="fc" id="L167">        }</span>
+<span class="fc" id="L168">        return of(days);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Days} from a text string such as {@code PnD}.
+     * &lt;p&gt;
+     * This will parse the string produced by {@code toString()} which is
+     * based on the ISO-8601 period formats {@code PnD} and {@code PnW}.
+     * &lt;p&gt;
+     * The string starts with an optional sign, denoted by the ASCII negative
+     * or positive symbol. If negative, the whole amount is negated.
+     * The ASCII letter &quot;P&quot; is next in upper or lower case.
+     * There are then two sections, each consisting of a number and a suffix.
+     * At least one of the two sections must be present.
+     * The sections have suffixes in ASCII of &quot;W&quot; and &quot;D&quot; for weeks and days,
+     * accepted in upper or lower case. The suffixes must occur in order.
+     * The number part of each section must consist of ASCII digits.
+     * The number may be prefixed by the ASCII negative or positive symbol.
+     * The number must parse to an {@code int}.
+     * &lt;p&gt;
+     * The leading plus/minus sign, and negative values for weeks and days are
+     * not part of the ISO-8601 standard.
+     * &lt;p&gt;
+     * For example, the following are valid inputs:
+     * &lt;pre&gt;
+     *   &quot;P2D&quot;             -- Days.of(2)
+     *   &quot;P-2D&quot;            -- Days.of(-2)
+     *   &quot;-P2D&quot;            -- Days.of(-2)
+     *   &quot;-P-2D&quot;           -- Days.of(2)
+     *   &quot;P3W&quot;             -- Days.of(3 * 7)
+     *   &quot;P3W-2D&quot;          -- Days.of(3 * 7 - 2)
+     * &lt;/pre&gt;
+     *
+     * @param text  the text to parse, not null
+     * @return the parsed period, not null
+     * @throws DateTimeParseException if the text cannot be parsed to a period
+     */
+    public static Days parse(CharSequence text) {
+<span class="fc" id="L207">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L208">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">            int negate = (&quot;-&quot;.equals(matcher.group(1)) ? -1 : 1);</span>
+<span class="fc" id="L211">            String weeksStr = matcher.group(2);</span>
+<span class="fc" id="L212">            String daysStr = matcher.group(3);</span>
+<span class="fc bfc" id="L213" title="All 4 branches covered.">            if (weeksStr != null || daysStr != null) {</span>
+<span class="fc" id="L214">                int days = 0;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">                if (daysStr != null) {</span>
+                    try {
+<span class="fc" id="L217">                        days = Integer.parseInt(daysStr);</span>
+<span class="nc" id="L218">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L219">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days, non-numeric days&quot;, text, 0, ex);</span>
+<span class="fc" id="L220">                    }</span>
+                }
+<span class="fc bfc" id="L222" title="All 2 branches covered.">                if (weeksStr != null) {</span>
+                    try {
+<span class="fc" id="L224">                        int weeks = Math.multiplyExact(Integer.parseInt(weeksStr), DAYS_PER_WEEK);</span>
+<span class="fc" id="L225">                        days = Math.addExact(days, weeks);</span>
+<span class="nc" id="L226">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L227">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days, non-numeric weeks&quot;, text, 0, ex);</span>
+<span class="fc" id="L228">                    }</span>
+                }
+<span class="fc" id="L230">                return of(Math.multiplyExact(days, negate));</span>
+            }
+        }
+<span class="fc" id="L233">        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days&quot;, text, 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Days} consisting of the number of days between two dates.
+     * &lt;p&gt;
+     * The start date is included, but the end date is not.
+     * The result of this method can be negative if the end is before the start.
+     *
+     * @param startDateInclusive  the start date, inclusive, not null
+     * @param endDateExclusive  the end date, exclusive, not null
+     * @return the number of days between this date and the end date, not null
+     */
+    public static Days between(Temporal startDateInclusive, Temporal endDateExclusive) {
+<span class="nc" id="L248">        return of(Math.toIntExact(DAYS.between(startDateInclusive, endDateExclusive)));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs an instance using a specific number of days.
+     *
+     * @param days  the days to use
+     */
+    private Days(int days) {
+<span class="fc" id="L258">        super();</span>
+<span class="fc" id="L259">        this.days = days;</span>
+<span class="fc" id="L260">    }</span>
+
+    /**
+     * Resolves singletons.
+     *
+     * @return the singleton instance
+     */
+    private Object readResolve() {
+<span class="fc" id="L268">        return Days.of(days);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the requested unit.
+     * &lt;p&gt;
+     * This returns a value for the supported unit - {@link ChronoUnit#DAYS DAYS}.
+     * All other units throw an exception.
+     *
+     * @param unit  the {@code TemporalUnit} for which to return the value
+     * @return the long value of the unit
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     */
+    @Override
+    public long get(TemporalUnit unit) {
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">        if (unit == ChronoUnit.DAYS) {</span>
+<span class="fc" id="L285">            return days;</span>
+        }
+<span class="nc" id="L287">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+    }
+
+    /**
+     * Gets the set of units supported by this amount.
+     * &lt;p&gt;
+     * The single supported unit is {@link ChronoUnit#DAYS DAYS}.
+     * &lt;p&gt;
+     * This set can be used in conjunction with {@link #get(TemporalUnit)}
+     * to access the entire state of the amount.
+     *
+     * @return a list containing the days unit, not null
+     */
+    @Override
+    public List&lt;TemporalUnit&gt; getUnits() {
+<span class="fc" id="L302">        return Collections.singletonList(DAYS);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the number of days in this amount.
+     *
+     * @return the number of days
+     */
+    public int getAmount() {
+<span class="fc" id="L312">        return days;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount added.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Days#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Days} based on this instance with the requested amount added, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Days plus(TemporalAmount amountToAdd) {
+<span class="fc" id="L329">        return plus(Days.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of days added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param days  the amount of days to add, may be negative
+     * @return a {@code Days} based on this instance with the requested amount added, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Days plus(int days) {
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L343">            return this;</span>
+        }
+<span class="fc" id="L345">        return of(Math.addExact(this.days, days));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount subtracted.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Days#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Days} based on this instance with the requested amount subtracted, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Days minus(TemporalAmount amountToAdd) {
+<span class="fc" id="L362">        return minus(Days.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of days subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param days  the amount of days to add, may be negative
+     * @return a {@code Days} based on this instance with the requested amount subtracted, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Days minus(int days) {
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L376">            return this;</span>
+        }
+<span class="fc" id="L378">        return of(Math.subtractExact(this.days, days));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an instance with the amount multiplied by the specified scalar.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param scalar  the scalar to multiply by, not null
+     * @return the amount multiplied by the specified scalar, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Days multipliedBy(int scalar) {
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L393">            return this;</span>
+        }
+<span class="fc" id="L395">        return of(Math.multiplyExact(days, scalar));</span>
+    }
+
+    /**
+     * Returns an instance with the amount divided by the specified divisor.
+     * &lt;p&gt;
+     * The calculation uses integer division, thus 3 divided by 2 is 1.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param divisor  the amount to divide by, may be negative
+     * @return the amount divided by the specified divisor, not null
+     * @throws ArithmeticException if the divisor is zero
+     */
+    public Days dividedBy(int divisor) {
+<span class="fc bfc" id="L410" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L411">            return this;</span>
+        }
+<span class="fc" id="L413">        return of(days / divisor);</span>
+    }
+
+    /**
+     * Returns an instance with the amount negated.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the negated amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Days negated() {
+<span class="fc" id="L426">        return multipliedBy(-1);</span>
+    }
+
+    /**
+     * Returns a copy of this duration with a positive length.
+     * &lt;p&gt;
+     * This method returns a positive duration by effectively removing the sign from any negative total length.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the absolute amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Days abs() {
+<span class="fc bfc" id="L441" title="All 2 branches covered.">        return days &lt; 0 ? negated() : this;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the number of days as a {@code Period}.
+     * &lt;p&gt;
+     * This returns a period with the same number of days.
+     *
+     * @return the equivalent period, not null
+     */
+    public Period toPeriod() {
+<span class="fc" id="L453">        return Period.ofDays(days);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds this amount to the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount added.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#plus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.addTo(dateTime);
+     *   dateTime = dateTime.plus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to add
+     * @throws UnsupportedTemporalTypeException if the DAYS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal addTo(Temporal temporal) {
+<span class="nc bnc" id="L483" title="All 2 branches missed.">        if (days != 0) {</span>
+<span class="nc" id="L484">            temporal = temporal.plus(days, DAYS);</span>
+        }
+<span class="nc" id="L486">        return temporal;</span>
+    }
+
+    /**
+     * Subtracts this amount from the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount subtracted.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#minus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.subtractFrom(dateTime);
+     *   dateTime = dateTime.minus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to subtract
+     * @throws UnsupportedTemporalTypeException if the DAYS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal subtractFrom(Temporal temporal) {
+<span class="nc bnc" id="L515" title="All 2 branches missed.">        if (days != 0) {</span>
+<span class="nc" id="L516">            temporal = temporal.minus(days, DAYS);</span>
+        }
+<span class="nc" id="L518">        return temporal;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this amount to the specified {@code Days}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the amounts.
+     * It is &quot;consistent with equals&quot;, as defined by {@link Comparable}.
+     *
+     * @param otherAmount  the other amount, not null
+     * @return the comparator value, negative if less, positive if greater
+     */
+    @Override
+    public int compareTo(Days otherAmount) {
+<span class="fc" id="L533">        int thisValue = this.days;</span>
+<span class="fc" id="L534">        int otherValue = otherAmount.days;</span>
+<span class="fc" id="L535">        return Integer.compare(thisValue, otherValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this amount is equal to the specified {@code Days}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the durations.
+     *
+     * @param otherAmount  the other amount, null returns false
+     * @return true if the other amount is equal to this one
+     */
+    @Override
+    public boolean equals(Object otherAmount) {
+<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L550">            return true;</span>
+        }
+<span class="fc bfc" id="L552" title="All 2 branches covered.">        if (otherAmount instanceof Days) {</span>
+<span class="fc" id="L553">            Days other = (Days) otherAmount;</span>
+<span class="fc bfc" id="L554" title="All 2 branches covered.">            return this.days == other.days;</span>
+        }
+<span class="fc" id="L556">        return false;</span>
+    }
+
+    /**
+     * A hash code for this amount.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L566">        return days;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string representation of the number of days.
+     * This will be in the format 'PnD' where n is the number of days.
+     *
+     * @return the number of days in ISO-8601 string format
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L578">        return &quot;P&quot; + days + &quot;D&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

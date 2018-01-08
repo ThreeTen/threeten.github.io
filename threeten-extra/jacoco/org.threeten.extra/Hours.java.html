@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Hours.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">Hours.java</span></div><h1>Hours.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoUnit.HOURS;
+
+import java.io.Serializable;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * A hour-based amount of time, such as '4 hours'.
+ * &lt;p&gt;
+ * This class models a quantity or amount of time in terms of hours.
+ * It is a type-safe way of representing a number of hours in an application.
+ * &lt;p&gt;
+ * The model is of a directed amount, meaning that the amount may be negative.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class Hours
+        implements TemporalAmount, Comparable&lt;Hours&gt;, Serializable {
+
+    /**
+     * A constant for zero hours.
+     */
+<span class="fc" id="L71">    public static final Hours ZERO = new Hours(0);</span>
+
+    /**
+     * A serialization identifier for this class.
+     */
+    private static final long serialVersionUID = -8494096666041369608L;
+
+    /**
+     * The number of hours per day.
+     */
+    private static final int HOURS_PER_DAY = 24;
+
+    /**
+     * The pattern for parsing.
+     */
+<span class="fc" id="L86">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L87">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+                    + &quot;(?:([-+]?[0-9]+)D)?&quot;
+                    + &quot;(?:T&quot;
+                    + &quot;(?:([-+]?[0-9]+)H)?)?&quot;, Pattern.CASE_INSENSITIVE);
+
+    /**
+     * The number of hours.
+     */
+    private final int hours;
+
+    /**
+     * Obtains an {@code Hours} representing a number of hours.
+     * &lt;p&gt;
+     * The resulting amount will have the specified hours.
+     *
+     * @param hours  the number of hours, positive or negative
+     * @return the number of hours, not null
+     */
+    public static Hours of(int hours) {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L107">            return ZERO;</span>
+        } else {
+<span class="fc" id="L109">            return new Hours(hours);</span>
+        }
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code Hours} from a temporal amount.
+     * &lt;p&gt;
+     * This obtains an instance based on the specified amount.
+     * A {@code TemporalAmount} represents an amount of time, which may be
+     * date-based or time-based, which this factory extracts to a {@code Hours}.
+     * &lt;p&gt;
+     * The result is calculated by looping around each unit in the specified amount.
+     * Each amount is converted to hours using {@link Temporals#convertAmount}.
+     * If the conversion yields a remainder, an exception is thrown.
+     * If the amount is zero, the unit is ignored.
+     *
+     * @param amount  the temporal amount to convert, not null
+     * @return the equivalent amount, not null
+     * @throws DateTimeException if unable to convert to a {@code Hours}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public static Hours from(TemporalAmount amount) {
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (amount instanceof Hours) {</span>
+<span class="fc" id="L133">            return (Hours) amount;</span>
+        }
+<span class="fc" id="L135">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L136">        int hours = 0;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L138">            long value = amount.get(unit);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            if (value != 0) {</span>
+<span class="fc" id="L140">                long[] converted = Temporals.convertAmount(value, unit, HOURS);</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">                if (converted[1] != 0) {</span>
+<span class="nc" id="L142">                    throw new DateTimeException(</span>
+                            &quot;Amount could not be converted to a whole number of hours: &quot; + value + &quot; &quot; + unit);
+                }
+<span class="fc" id="L145">                hours = Math.addExact(hours, Math.toIntExact(converted[0]));</span>
+            }
+<span class="fc" id="L147">        }</span>
+<span class="fc" id="L148">        return of(hours);</span>
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Hours} from a text string such as {@code PTnH}.
+     * &lt;p&gt;
+     * This will parse the string produced by {@code toString()} and other
+     * related formats based on ISO-8601 {@code PnDTnH}.
+     * &lt;p&gt;
+     * The string starts with an optional sign, denoted by the ASCII negative
+     * or positive symbol. If negative, the whole amount is negated.
+     * The ASCII letter &quot;P&quot; is next in upper or lower case.
+     * There are two sections consisting of a number and a suffix.
+     * There is one section for days suffixed by &quot;D&quot;,
+     * followed by one section for hours suffixed by &quot;H&quot;.
+     * At least one section must be present.
+     * If the hours section is present it must be prefixed by &quot;T&quot;.
+     * If the hours section is omitted the &quot;T&quot; must be omitted.
+     * Letters must be in ASCII upper or lower case.
+     * The number part of each section must consist of ASCII digits.
+     * The number may be prefixed by the ASCII negative or positive symbol.
+     * The number must parse to an {@code int}.
+     * &lt;p&gt;
+     * The leading plus/minus sign, and negative values for days and hours
+     * are not part of the ISO-8601 standard.
+     * &lt;p&gt;
+     * For example, the following are valid inputs:
+     * &lt;pre&gt;
+     *   &quot;PT2H&quot;            -- Hours.of(2)
+     *   &quot;PT-HM&quot;           -- Hours.of(-2)
+     *   &quot;-PT2H&quot;           -- Hours.of(-2)
+     *   &quot;-PT-2H&quot;          -- Hours.of(2)
+     *   &quot;P3D&quot;             -- Hours.of(3 * 24)
+     *   &quot;P3DT2H&quot;          -- Hours.of(3 * 24 + 2)
+     * &lt;/pre&gt;
+     *
+     * @param text  the text to parse, not null
+     * @return the parsed period, not null
+     * @throws DateTimeParseException if the text cannot be parsed to a period
+     */
+    public static Hours parse(CharSequence text) {
+<span class="fc" id="L190">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L191">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            int negate = (&quot;-&quot;.equals(matcher.group(1)) ? -1 : 1);</span>
+<span class="fc" id="L194">            String daysStr = matcher.group(2);</span>
+<span class="fc" id="L195">            String hoursStr = matcher.group(3);</span>
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">            if (daysStr != null || hoursStr != null) {</span>
+<span class="fc" id="L197">                int hours = 0;</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                if (hoursStr != null) {</span>
+                    try {
+<span class="fc" id="L200">                        hours = Integer.parseInt(hoursStr);</span>
+<span class="nc" id="L201">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L202">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours, non-numeric hours&quot;, text, 0, ex);</span>
+<span class="fc" id="L203">                    }</span>
+                }
+<span class="fc bfc" id="L205" title="All 2 branches covered.">                if (daysStr != null) {</span>
+                    try {
+<span class="fc" id="L207">                        int daysAsHours = Math.multiplyExact(Integer.parseInt(daysStr), HOURS_PER_DAY);</span>
+<span class="fc" id="L208">                        hours = Math.addExact(hours, daysAsHours);</span>
+<span class="nc" id="L209">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L210">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours, non-numeric days&quot;, text, 0, ex);</span>
+<span class="fc" id="L211">                    }</span>
+                }
+<span class="fc" id="L213">                return of(Math.multiplyExact(hours, negate));</span>
+            }
+        }
+<span class="fc" id="L216">        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours&quot;, text, 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a {@code Hours} consisting of the number of hours between two temporals.
+     * &lt;p&gt;
+     * The start temporal is included, but the end temporal is not.
+     * The result of this method can be negative if the end is before the start.
+     *
+     * @param startInclusive  the start temporal, inclusive, not null
+     * @param endExclusive  the end temporal, exclusive, not null
+     * @return the number of hours between the start and end temporals, not null
+     */
+    public static Hours between(Temporal startInclusive, Temporal endExclusive) {
+<span class="nc" id="L231">        return of(Math.toIntExact(HOURS.between(startInclusive, endExclusive)));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructs an instance using a specific number of hours.
+     *
+     * @param hours  the amount of hours
+     */
+<span class="fc" id="L240">    private Hours(int hours) {</span>
+<span class="fc" id="L241">        this.hours = hours;</span>
+<span class="fc" id="L242">    }</span>
+
+    /**
+     * Resolves singletons.
+     *
+     * @return the singleton instance
+     */
+    private Object readResolve() {
+<span class="fc" id="L250">        return Hours.of(hours);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the value of the requested unit.
+     * &lt;p&gt;
+     * This returns a value for the supported unit - {@link ChronoUnit#HOURS HOURS}.
+     * All other units throw an exception.
+     *
+     * @param unit  the {@code TemporalUnit} for which to return the value
+     * @return the long value of the unit
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     */
+    @Override
+    public long get(TemporalUnit unit) {
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">        if (unit == HOURS) {</span>
+<span class="fc" id="L267">            return hours;</span>
+        }
+<span class="nc" id="L269">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+    }
+
+    /**
+     * Gets the set of units supported by this amount.
+     * &lt;p&gt;
+     * The single supported unit is {@link ChronoUnit#HOURS HOURS}.
+     * &lt;p&gt;
+     * This set can be used in conjunction with {@link #get(TemporalUnit)} to
+     * access the entire state of the amount.
+     *
+     * @return a list containing the hours unit, not null
+     */
+    @Override
+    public List&lt;TemporalUnit&gt; getUnits() {
+<span class="fc" id="L284">        return Collections.singletonList(ChronoUnit.HOURS);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the number of hours in this amount.
+     *
+     * @return the number of hours
+     */
+    public int getAmount() {
+<span class="fc" id="L294">        return hours;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount added.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Hours#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Hours} based on this instance with the requested amount added, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Hours plus(TemporalAmount amountToAdd) {
+<span class="fc" id="L311">        return plus(Hours.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of hours added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param hours  the amount of hours to add, may be negative
+     * @return a {@code Hours} based on this instance with the requested amount added, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Hours plus(int hours) {
+<span class="fc bfc" id="L324" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L325">            return this;</span>
+        }
+<span class="fc" id="L327">        return of(Math.addExact(this.hours, hours));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this amount with the specified amount subtracted.
+     * &lt;p&gt;
+     * The parameter is converted using {@link Hours#from(TemporalAmount)}.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code Hours} based on this instance with the requested amount subtracted, not null
+     * @throws DateTimeException if the specified amount contains an invalid unit
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Hours minus(TemporalAmount amountToAdd) {
+<span class="fc" id="L344">        return minus(Hours.from(amountToAdd).getAmount());</span>
+    }
+
+    /**
+     * Returns a copy of this amount with the specified number of hours subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param hours  the amount of hours to add, may be negative
+     * @return a {@code Hours} based on this instance with the requested amount subtracted, not null
+     * @throws ArithmeticException if the result overflows an int
+     */
+    public Hours minus(int hours) {
+<span class="fc bfc" id="L357" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L358">            return this;</span>
+        }
+<span class="fc" id="L360">        return of(Math.subtractExact(this.hours, hours));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an instance with the amount multiplied by the specified scalar.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param scalar  the scalar to multiply by, not null
+     * @return the amount multiplied by the specified scalar, not null
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    public Hours multipliedBy(int scalar) {
+<span class="fc bfc" id="L374" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L375">            return this;</span>
+        }
+<span class="fc" id="L377">        return of(Math.multiplyExact(hours, scalar));</span>
+    }
+
+    /**
+     * Returns an instance with the amount divided by the specified divisor.
+     * &lt;p&gt;
+     * The calculation uses integer division, thus 3 divided by 2 is 1.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param divisor  the amount to divide by, may be negative
+     * @return the amount divided by the specified divisor, not null
+     * @throws ArithmeticException if the divisor is zero
+     */
+    public Hours dividedBy(int divisor) {
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L393">            return this;</span>
+        }
+<span class="fc" id="L395">        return of(hours / divisor);</span>
+    }
+
+    /**
+     * Returns an instance with the amount negated.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the negated amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Hours negated() {
+<span class="fc" id="L408">        return multipliedBy(-1);</span>
+    }
+
+    /**
+     * Returns a copy of this duration with a positive length.
+     * &lt;p&gt;
+     * This method returns a positive duration by effectively removing the sign from any negative total length.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @return the absolute amount, not null
+     * @throws ArithmeticException if numeric overflow occurs, which only happens if
+     *  the amount is {@code Long.MIN_VALUE}
+     */
+    public Hours abs() {
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        return hours &lt; 0 ? negated() : this;</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the number of hours as a {@code Duration}.
+     * &lt;p&gt;
+     * This returns a duration with the same number of hours.
+     *
+     * @return the equivalent duration, not null
+     * @deprecated Use {@link #toDuration()}
+     */
+    @Deprecated
+    public Duration toPeriod() {
+<span class="nc" id="L437">        return Duration.ofHours(hours);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the number of hours as a {@code Duration}.
+     * &lt;p&gt;
+     * This returns a duration with the same number of hours.
+     *
+     * @return the equivalent duration, not null
+     */
+    public Duration toDuration() {
+<span class="nc" id="L449">        return Duration.ofHours(hours);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Adds this amount to the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount added.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#plus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.addTo(dateTime);
+     *   dateTime = dateTime.plus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to add
+     * @throws UnsupportedTemporalTypeException if the HOURS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal addTo(Temporal temporal) {
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        if (hours != 0) {</span>
+<span class="fc" id="L480">            temporal = temporal.plus(hours, HOURS);</span>
+        }
+<span class="fc" id="L482">        return temporal;</span>
+    }
+
+    /**
+     * Subtracts this amount from the specified temporal object.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with this amount subtracted.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#minus(TemporalAmount)}.
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   dateTime = thisAmount.subtractFrom(dateTime);
+     *   dateTime = dateTime.minus(thisAmount);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * Only non-zero amounts will be subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the temporal object to adjust, not null
+     * @return an object of the same type with the adjustment made, not null
+     * @throws DateTimeException if unable to subtract
+     * @throws UnsupportedTemporalTypeException if the HOURS unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal subtractFrom(Temporal temporal) {
+<span class="fc bfc" id="L511" title="All 2 branches covered.">        if (hours != 0) {</span>
+<span class="fc" id="L512">            temporal = temporal.minus(hours, HOURS);</span>
+        }
+<span class="fc" id="L514">        return temporal;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this amount to the specified {@code Hours}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the amounts.
+     * It is &quot;consistent with equals&quot;, as defined by {@link Comparable}.
+     *
+     * @param otherAmount  the other amount, not null
+     * @return the comparator value, negative if less, positive if greater
+     */
+    @Override
+    public int compareTo(Hours otherAmount) {
+<span class="fc" id="L529">        int thisValue = this.hours;</span>
+<span class="fc" id="L530">        int otherValue = otherAmount.hours;</span>
+<span class="fc" id="L531">        return Integer.compare(thisValue, otherValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this amount is equal to the specified {@code Hours}.
+     * &lt;p&gt;
+     * The comparison is based on the total length of the durations.
+     *
+     * @param otherAmount  the other amount, null returns false
+     * @return true if the other amount is equal to this one
+     */
+    @Override
+    public boolean equals(Object otherAmount) {
+<span class="fc bfc" id="L545" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L546">            return true;</span>
+        }
+<span class="fc bfc" id="L548" title="All 2 branches covered.">        if (otherAmount instanceof Hours) {</span>
+<span class="fc" id="L549">            Hours other = (Hours) otherAmount;</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">            return this.hours == other.hours;</span>
+        }
+<span class="fc" id="L552">        return false;</span>
+    }
+
+    /**
+     * A hash code for this amount.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L562">        return hours;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a string representation of the number of hours.
+     * This will be in the format 'PTnH' where n is the number of hours.
+     *
+     * @return the number of hours in ISO-8601 string format
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L574">        return &quot;PT&quot; + hours + &quot;H&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

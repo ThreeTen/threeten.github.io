@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaxChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">PaxChronology.java</span></div><h1>PaxChronology.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.chrono.AbstractChronology;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.time.chrono.Chronology;
+import java.time.chrono.Era;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.time.temporal.ValueRange;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * The Pax calendar system.
+ * &lt;p&gt;
+ * This chronology defines the rules of the proleptic Pax calendar system.
+ * This calendar system is a proposed reform calendar system, and is not in common use.
+ * The Pax differs from the Gregorian in terms of month count and length, and the leap year rule.
+ * Dates are aligned such that {@code 0001-01-01 (Pax)} is {@code 0000-12-31 (ISO)}.
+ * &lt;p&gt;
+ * This class is proleptic. It implements Pax rules to the entire time-line.
+ * &lt;p&gt;
+ * The fields are defined as follows:
+ * &lt;ul&gt;
+ * &lt;li&gt;era - There are two eras, the current 'Current Era' (CE) and the previous era 'Before Current Era' (BCE).
+ * &lt;li&gt;year-of-era - The year-of-era for the current era increases uniformly from the epoch at year one.
+ *  For the previous era the year increases from one as time goes backwards.
+ * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the
+ *  current era. For the previous era, years have zero, then negative values.
+ * &lt;li&gt;month-of-year - There are 13 or 14 months in a Pax year, numbered from 1 to 13 (or 14).
+ * &lt;li&gt;day-of-month - There are 28 days in each Pax month, numbered from 1 to 28.
+ * In a leap year a one-week month ('Pax') is inserted between months 12 and 13, shifting 13 to 14.
+ * &lt;li&gt;day-of-year - There are 364 days in a standard Pax year and 371 in a leap year.
+ * The days are numbered from 1 to 364 or 1 to 371.
+ * &lt;li&gt;leap-year - Leap years occur in every year whose last two digits are divisible by {@code 6}, are {@code 99}, or are {@code 00} and the year is &lt;b&gt;not&lt;/b&gt; divisible by 400.
+ * &lt;/ul&gt;
+ * &lt;p&gt;
+ * For more information, please read the &lt;a href=&quot;http://en.wikipedia.org/wiki/Pax_Calendar&quot;&gt;Pax Calendar&lt;/a&gt; Wikipedia article.
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class PaxChronology extends AbstractChronology implements Serializable {
+
+    /**
+     * Singleton instance for the Pax chronology.
+     */
+<span class="fc" id="L88">    public static final PaxChronology INSTANCE = new PaxChronology();</span>
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -7021464635577802085L;
+
+    /**
+     * The leap-month of Pax is only one week long.
+     */
+    static final int WEEKS_IN_LEAP_MONTH = 1;
+    /**
+     * Standard 7-day week.
+     */
+    static final int DAYS_IN_WEEK = 7;
+    /**
+     * In all months (except Pax), there are 4 complete weeks.
+     */
+    static final int WEEKS_IN_MONTH = 4;
+    /**
+     * There are 13 months in a (non-leap) year.
+     */
+    static final int MONTHS_IN_YEAR = 13;
+    /**
+     * There are 4 weeks of 7 days, or 28 total days in a month.
+     */
+    static final int DAYS_IN_MONTH = WEEKS_IN_MONTH * DAYS_IN_WEEK;
+    /**
+     * There are 13 months of 28 days, or 364 days in a (non-leap) year.
+     */
+    static final int DAYS_IN_YEAR = MONTHS_IN_YEAR * DAYS_IN_MONTH;
+    /**
+     * There are 52 weeks in a (non-leap) year.
+     */
+    static final int WEEKS_IN_YEAR = DAYS_IN_YEAR / DAYS_IN_WEEK;
+
+    /**
+     * Range of aligned week of month.
+     */
+<span class="fc" id="L127">    static final ValueRange ALIGNED_WEEK_OF_MONTH_RANGE = ValueRange.of(1, WEEKS_IN_LEAP_MONTH, WEEKS_IN_MONTH);</span>
+    /**
+     * Range of aligned week of year.
+     */
+<span class="fc" id="L131">    static final ValueRange ALIGNED_WEEK_OF_YEAR_RANGE = ValueRange.of(1, WEEKS_IN_YEAR, WEEKS_IN_YEAR + 1);</span>
+    /**
+     * Range of day of month.
+     */
+<span class="fc" id="L135">    static final ValueRange DAY_OF_MONTH_RANGE = ValueRange.of(1, DAYS_IN_WEEK, DAYS_IN_MONTH);</span>
+    /**
+     * Range of day of year.
+     */
+<span class="fc" id="L139">    static final ValueRange DAY_OF_YEAR_RANGE = ValueRange.of(1, DAYS_IN_YEAR, DAYS_IN_YEAR + DAYS_IN_WEEK);</span>
+    /**
+     * Range of month of year.
+     */
+<span class="fc" id="L143">    static final ValueRange MONTH_OF_YEAR_RANGE = ValueRange.of(1, MONTHS_IN_YEAR, MONTHS_IN_YEAR + 1);</span>
+
+    /**
+     * Private constructor, that is public to satisfy the {@code ServiceLoader}.
+     * @deprecated Use the singleton {@link #INSTANCE} instead.
+     */
+    @Deprecated
+<span class="fc" id="L150">    public PaxChronology() {</span>
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * Resolve singleton.
+     *
+     * @return the singleton instance, not null
+     */
+    @SuppressWarnings(&quot;static-method&quot;)
+    private Object readResolve() {
+<span class="nc" id="L160">        return INSTANCE;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the ID of the chronology - 'Pax'.
+     * &lt;p&gt;
+     * The ID uniquely identifies the {@code Chronology}.
+     * It can be used to lookup the {@code Chronology} using {@link Chronology#of(String)}.
+     *
+     * @return the chronology ID - 'Pax'
+     * @see #getCalendarType()
+     */
+    @Override
+    public String getId() {
+<span class="fc" id="L175">        return &quot;Pax&quot;;</span>
+    }
+
+    /**
+     * Gets the calendar type of the underlying calendar system - 'pax'.
+     * &lt;p&gt;
+     * The &lt;em&gt;Unicode Locale Data Markup Language (LDML)&lt;/em&gt; specification
+     * does not define an identifier for the Pax calendar, but were it to
+     * do so, 'pax' is highly likely to be chosen.
+     *
+     * @return the calendar system type - 'pax'
+     * @see #getId()
+     */
+    @Override
+    public String getCalendarType() {
+<span class="fc" id="L190">        return &quot;pax&quot;;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a local date in Pax calendar system from the
+     * era, year-of-era, month-of-year and day-of-month fields.
+     *
+     * @param era  the Pax era, not null
+     * @param yearOfEra  the year-of-era
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code PaxEra}
+     */
+    @Override
+    public PaxDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
+<span class="fc" id="L208">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Pax calendar system from the
+     * proleptic-year, month-of-year and day-of-month fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate date(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L223">        return PaxDate.of(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in Pax calendar system from the
+     * era, year-of-era and day-of-year fields.
+     *
+     * @param era  the Pax era, not null
+     * @param yearOfEra  the year-of-era
+     * @param dayOfYear  the day-of-year
+     * @return the Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code PaxEra}
+     */
+    @Override
+    public PaxDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
+<span class="fc" id="L239">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in Pax calendar system from the
+     * proleptic-year and day-of-year fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param dayOfYear  the day-of-year
+     * @return the Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate dateYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L253">        return PaxDate.ofYearDay(prolepticYear, dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the Pax calendar system from the epoch-day.
+     *
+     * @param epochDay  the epoch day
+     * @return the Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate dateEpochDay(long epochDay) {
+<span class="fc" id="L265">        return PaxDate.ofEpochDay(epochDay);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains the current Pax local date from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current Pax local date using the system clock and default time-zone, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate dateNow() {
+<span class="nc" id="L283">        return PaxDate.now();</span>
+    }
+
+    /**
+     * Obtains the current Pax local date from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the ZoneId to use, not null
+     * @return the current Pax local date using the system clock, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate dateNow(ZoneId zone) {
+<span class="nc" id="L301">        return PaxDate.now(zone);</span>
+    }
+
+    /**
+     * Obtains the current Pax local date from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate dateNow(Clock clock) {
+<span class="nc" id="L317">        return PaxDate.now(clock);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a Pax local date from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Pax local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public PaxDate date(TemporalAccessor temporal) {
+<span class="fc" id="L330">        return PaxDate.from(temporal);</span>
+    }
+
+    /**
+     * Obtains a Pax local date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Pax local date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;PaxDate&gt; localDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L343">        return (ChronoLocalDateTime&lt;PaxDate&gt;) super.localDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Pax zoned date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the Pax zoned date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;PaxDate&gt; zonedDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L356">        return (ChronoZonedDateTime&lt;PaxDate&gt;) super.zonedDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a Pax zoned date-time in this chronology from an {@code Instant}.
+     *
+     * @param instant  the instant to create the date-time from, not null
+     * @param zone  the time-zone, not null
+     * @return the Pax zoned date-time, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;PaxDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
+<span class="nc" id="L370">        return (ChronoZonedDateTime&lt;PaxDate&gt;) super.zonedDateTime(instant, zone);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified year is a leap year.
+     * &lt;p&gt;
+     * In general, a year is a leap year if the last two digits are divisible by 6 without remainder, or are 99. 
+     * Years with the last two digits of 00 are also leap years, with the exception of years divisible by 400, which are not.
+     * &lt;p&gt;
+     * For example, 2012 is a leap year because the last two digits (12) are divisible by 6. 
+     * 1999 is a leap year as the last two digits are both 9's (99). 
+     * 1900 is a leap year as the last two digits are both 0's (00), however 2000 was not a leap year as it is divisible by 400. 
+     * The year 0 is not a leap year.
+     *
+     * @param prolepticYear  the proleptic-year to check, not validated for range
+     * @return true if the year is a leap year
+     */
+    @Override
+    public boolean isLeapYear(long prolepticYear) {
+<span class="fc" id="L390">        long lastTwoDigits = prolepticYear % 100;</span>
+<span class="fc bfc" id="L391" title="All 8 branches covered.">        return Math.abs(lastTwoDigits) == 99 || (prolepticYear % 400 != 0 &amp;&amp; (lastTwoDigits == 0 || lastTwoDigits % 6 == 0));</span>
+    }
+
+    @Override
+    public int prolepticYear(Era era, int yearOfEra) {
+<span class="fc bfc" id="L396" title="All 2 branches covered.">        if (!(era instanceof PaxEra)) {</span>
+<span class="fc" id="L397">            throw new ClassCastException(&quot;Era must be PaxEra&quot;);</span>
+        }
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        return (era == PaxEra.CE ? yearOfEra : 1 - yearOfEra);</span>
+    }
+
+    @Override
+    public PaxEra eraOf(int eraValue) {
+<span class="fc" id="L404">        return PaxEra.of(eraValue);</span>
+    }
+
+    @Override
+    public List&lt;Era&gt; eras() {
+<span class="fc" id="L409">        return Arrays.&lt;Era&gt;asList(PaxEra.values());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ValueRange range(ChronoField field) {
+<span class="pc bfc" id="L415" title="All 6 branches covered.">        switch (field) {</span>
+            case ALIGNED_WEEK_OF_MONTH:
+<span class="fc" id="L417">                return ALIGNED_WEEK_OF_MONTH_RANGE;</span>
+            case ALIGNED_WEEK_OF_YEAR:
+<span class="fc" id="L419">                return ALIGNED_WEEK_OF_YEAR_RANGE;</span>
+            case DAY_OF_MONTH:
+<span class="fc" id="L421">                return DAY_OF_MONTH_RANGE;</span>
+            case DAY_OF_YEAR:
+<span class="fc" id="L423">                return DAY_OF_YEAR_RANGE;</span>
+            case MONTH_OF_YEAR:
+<span class="fc" id="L425">                return MONTH_OF_YEAR_RANGE;</span>
+            default:
+<span class="fc" id="L427">                return field.range();</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public PaxDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L434">        return (PaxDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

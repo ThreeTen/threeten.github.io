@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InternationalFixedChronology.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra.chrono</a> &gt; <span class="el_source">InternationalFixedChronology.java</span></div><h1>InternationalFixedChronology.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra.chrono;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.chrono.AbstractChronology;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.chrono.ChronoZonedDateTime;
+import java.time.chrono.Chronology;
+import java.time.chrono.Era;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.ValueRange;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * The International Fixed calendar system.
+ * &lt;p&gt;
+ * This chronology defines the rules of the International Fixed calendar system.
+ * It shares the leap year rule with the Gregorian calendar.
+ * Dates are aligned such that {@code 0001-01-01 (International Fixed)} is {@code 0001-01-01 (ISO)}.
+ * &lt;p&gt;
+ * This class is proleptic. It implements only years greater or equal to 1.
+ * &lt;p&gt;
+ * This class implements a calendar where January 1st is the start of the year.
+ * &lt;p&gt;
+ * The fields are defined as follows:
+ * &lt;ul&gt;
+ * &lt;li&gt;era - There is only one era, the current 'Common Era' (CE).
+ * &lt;li&gt;year-of-era - The year-of-era for the current era increases uniformly from the epoch at year 1.
+ * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the current era.
+ * &lt;li&gt;month-of-year - There are 13 months in an International Fixed year, numbered from 1 to 13.
+ * &lt;li&gt;day-of-month - There are 28 days in a standard International Fixed month, numbered from 1 to 28,
+ *  with day 29 used in months 6 and 12 (month 6 only has 29 days in a leap year).
+ * &lt;li&gt;day-of-year - There are 365 days in a standard International Fixed year and 366 days in a leap year.
+ *  The days are numbered accordingly.
+ * &lt;li&gt;leap-year - Leap years occur every 4 years, but skips 3 out of four centuries, i.e. when the century
+ *  is not divisible by 400. This is the same rule in use for the Gregorian calendar.
+ * &lt;li&gt;Week day - every month starts on a Sunday.  Leap-day and year-day are neither part of a week, nor of any month.
+ * &lt;/ul&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class InternationalFixedChronology extends AbstractChronology implements Serializable {
+
+    /**
+     * Singleton instance for the International fixed chronology.
+     */
+<span class="fc" id="L84">    public static final InternationalFixedChronology INSTANCE = new InternationalFixedChronology();</span>
+    /**
+     * Serialization version UID.
+     */
+    private static final long serialVersionUID = -8252657100538813526L;
+    /**
+     * Standard 7-day week.
+     */
+    static final int DAYS_IN_WEEK = 7;
+    /**
+     * In all months, there are 4 complete weeks.
+     */
+    static final int WEEKS_IN_MONTH = 4;
+    /**
+     * There are 13 months in a year.
+     */
+    static final int MONTHS_IN_YEAR = 13;
+    /**
+     * There are 4 weeks of 7 days, or 28 total days in a month.
+     */
+    static final int DAYS_IN_MONTH = WEEKS_IN_MONTH * DAYS_IN_WEEK;
+    /**
+     * There are 29 days in a long month.
+     */
+    static final int DAYS_IN_LONG_MONTH = DAYS_IN_MONTH + 1;
+    /**
+     * There are 13 months of 28 days, or 365 days in a (non-leap) year.
+     */
+    static final int DAYS_IN_YEAR = MONTHS_IN_YEAR * DAYS_IN_MONTH + 1;
+    /**
+     * There are 52 weeks in a year.
+     */
+    static final int WEEKS_IN_YEAR = DAYS_IN_YEAR / DAYS_IN_WEEK;
+    /**
+     * The number of days in a 400 year cycle.
+     */
+    static final int DAYS_PER_CYCLE = 146097;
+    /**
+     * The number of days from year zero to year 1970, still the era only allows year 1 and higher.
+     * There are five 400 year cycles from year zero to 2000.
+     * There are 7 leap years from 1970 to 2000.
+     */
+    static final long DAYS_0000_TO_1970 = (DAYS_PER_CYCLE * 5L) - (30L * 365L + 7L);
+    /**
+     * Range of year.
+     */
+<span class="fc" id="L130">    static final ValueRange YEAR_RANGE = ValueRange.of(1, 1_000_000L);</span>
+    /**
+     * Epoch day range.
+     */
+<span class="fc" id="L134">    static final ValueRange EPOCH_DAY_RANGE = ValueRange.of(-DAYS_0000_TO_1970, 1_000_000L * DAYS_IN_YEAR + getLeapYearsBefore(1_000_000L) - DAYS_0000_TO_1970);</span>
+    /**
+     * Range of proleptic month.
+     */
+<span class="fc" id="L138">    private static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(13, 1_000_000 * 13L - 1);</span>
+    /**
+     * Range of day of month.
+     */
+<span class="fc" id="L142">    static final ValueRange DAY_OF_MONTH_RANGE = ValueRange.of(1, DAYS_IN_MONTH + 1);</span>
+    /**
+     * Range of day of year.
+     */
+<span class="fc" id="L146">    static final ValueRange DAY_OF_YEAR_NORMAL_RANGE = ValueRange.of(1, DAYS_IN_YEAR);</span>
+    /**
+     * Range of day of leap year.
+     */
+<span class="fc" id="L150">    static final ValueRange DAY_OF_YEAR_LEAP_RANGE = ValueRange.of(1, DAYS_IN_YEAR + 1);</span>
+    /**
+     * Range of month of year.
+     */
+<span class="fc" id="L154">    static final ValueRange MONTH_OF_YEAR_RANGE = ValueRange.of(1, MONTHS_IN_YEAR);</span>
+    /**
+     * Range of eras.
+     */
+<span class="fc" id="L158">    static final ValueRange ERA_RANGE = ValueRange.of(1, 1);</span>
+    /**
+     * Empty range: [0, 0].
+     */
+<span class="fc" id="L162">    static final ValueRange EMPTY_RANGE = ValueRange.of(0, 0);</span>
+
+    /**
+     * Private constructor, that is public to satisfy the {@code ServiceLoader}.
+     * @deprecated Use the singleton {@link #INSTANCE} instead.
+     */
+    @Deprecated
+<span class="fc" id="L169">    public InternationalFixedChronology() {</span>
+<span class="fc" id="L170">    }</span>
+
+    /**
+     * Resolve singleton.
+     *
+     * @return the singleton instance, not null
+     */
+    @SuppressWarnings(&quot;static-method&quot;)
+    private Object readResolve() {
+<span class="nc" id="L179">        return INSTANCE;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the ID of the chronology - 'Ifc'.
+     * &lt;p&gt;
+     * The ID uniquely identifies the {@code Chronology}.
+     * It can be used to lookup the {@code Chronology} using {@link Chronology#of(String)}.
+     *
+     * @return the chronology ID - 'Ifc'
+     * @see #getCalendarType()
+     */
+    @Override
+    public String getId() {
+<span class="fc" id="L194">        return &quot;Ifc&quot;;</span>
+    }
+
+    /**
+     * Gets the calendar type of the underlying calendar system, which returns null.
+     * &lt;p&gt;
+     * The &lt;em&gt;Unicode Locale Data Markup Language (LDML)&lt;/em&gt; specification
+     * does not define an identifier for this calendar system, thus null is returned.
+     *
+     * @return the calendar system type, null
+     * @see #getId()
+     */
+    @Override
+    public String getCalendarType() {
+<span class="fc" id="L208">        return null;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains a local date in International Fixed calendar system from the
+     * era, year-of-era, month-of-year and day-of-month fields.
+     *
+     * @param era  the International Fixed era, not null
+     * @param yearOfEra  the year-of-era
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code InternationalFixedEra}
+     */
+    @Override
+    public InternationalFixedDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
+<span class="fc" id="L226">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in International Fixed calendar system from the
+     * proleptic-year, month-of-year and day-of-month fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param month  the month-of-year
+     * @param dayOfMonth  the day-of-month
+     * @return the International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public InternationalFixedDate date(int prolepticYear, int month, int dayOfMonth) {
+<span class="fc" id="L241">        return InternationalFixedDate.of(prolepticYear, month, dayOfMonth);</span>
+    }
+
+    /**
+     * Obtains a local date in International Fixed calendar system from the
+     * era, year-of-era and day-of-year fields.
+     *
+     * @param era  the International Fixed era, not null
+     * @param yearOfEra  the year-of-era
+     * @param dayOfYear  the day-of-year
+     * @return the International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     * @throws ClassCastException if the {@code era} is not a {@code InternationalFixedEra}
+     */
+    @Override
+    public InternationalFixedDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
+<span class="fc" id="L257">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in International Fixed calendar system from the
+     * proleptic-year and day-of-year fields.
+     *
+     * @param prolepticYear  the proleptic-year
+     * @param dayOfYear  the day-of-year
+     * @return the International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public InternationalFixedDate dateYearDay(int prolepticYear, int dayOfYear) {
+<span class="fc" id="L271">        return InternationalFixedDate.ofYearDay(prolepticYear, dayOfYear);</span>
+    }
+
+    /**
+     * Obtains a local date in the International Fixed calendar system from the epoch-day.
+     *
+     * @param epochDay  the epoch day
+     * @return the International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public InternationalFixedDate dateEpochDay(long epochDay) {
+<span class="fc" id="L283">        return InternationalFixedDate.ofEpochDay(epochDay);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains the current International Fixed local date from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current date.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current International Fixed local date using the system clock and default time-zone, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public InternationalFixedDate dateNow() {
+<span class="nc" id="L301">        return InternationalFixedDate.now();</span>
+    }
+
+    /**
+     * Obtains the current International Fixed local date from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the zone ID to use, not null
+     * @return the current International Fixed local date using the system clock, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public InternationalFixedDate dateNow(ZoneId zone) {
+<span class="nc" id="L319">        return InternationalFixedDate.now(zone);</span>
+    }
+
+    /**
+     * Obtains the current International Fixed local date from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current date - today.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override  // override with covariant return type
+    public InternationalFixedDate dateNow(Clock clock) {
+<span class="nc" id="L335">        return InternationalFixedDate.now(clock);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Obtains a International Fixed local date from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the International Fixed local date, not null
+     * @throws DateTimeException if unable to create the date
+     */
+    @Override
+    public InternationalFixedDate date(TemporalAccessor temporal) {
+<span class="fc" id="L348">        return InternationalFixedDate.from(temporal);</span>
+    }
+
+    /**
+     * Obtains a International Fixed local date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the International Fixed local date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoLocalDateTime&lt;InternationalFixedDate&gt; localDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L361">        return (ChronoLocalDateTime&lt;InternationalFixedDate&gt;) super.localDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a International Fixed zoned date-time from another date-time object.
+     *
+     * @param temporal  the date-time object to convert, not null
+     * @return the International Fixed zoned date-time, not null
+     * @throws DateTimeException if unable to create the date-time
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;InternationalFixedDate&gt; zonedDateTime(TemporalAccessor temporal) {
+<span class="nc" id="L374">        return (ChronoZonedDateTime&lt;InternationalFixedDate&gt;) super.zonedDateTime(temporal);</span>
+    }
+
+    /**
+     * Obtains a International Fixed zoned date-time in this chronology from an {@code Instant}.
+     *
+     * @param instant  the instant to create the date-time from, not null
+     * @param zone  the time-zone, not null
+     * @return the International Fixed zoned date-time, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    @Override
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public ChronoZonedDateTime&lt;InternationalFixedDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
+<span class="nc" id="L388">        return (ChronoZonedDateTime&lt;InternationalFixedDate&gt;) super.zonedDateTime(instant, zone);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified year is a leap year.
+     * &lt;p&gt;
+     * A leap-year is a year of a longer length than normal.
+     * Leap years in the calendar system match those of the ISO calendar system.
+     *
+     * @param year  the proleptic-year to check, not validated for range
+     * @return true if the year is a leap year
+     */
+    @Override
+    public boolean isLeapYear(long year) {
+<span class="fc bfc" id="L403" title="All 6 branches covered.">        return ((year &amp; 3) == 0) &amp;&amp; ((year % 100) != 0 || (year % 400) == 0);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Creates the chronology era object from the numeric value.
+     * &lt;p&gt;
+     * Only one era is supported, CE, with the value 1.
+     *
+     * @param eraValue  the era value
+     * @return the calendar system era, not null
+     * @throws DateTimeException if unable to create the era
+     */
+    @Override
+    public InternationalFixedEra eraOf(int eraValue) {
+<span class="fc" id="L418">        return InternationalFixedEra.of(eraValue);</span>
+    }
+
+    /**
+     * Gets the list of eras for the chronology.
+     * &lt;p&gt;
+     * Only one era is supported, CE, with the value 1.
+     *
+     * @return the list of eras for the chronology, may be immutable, not null
+     */
+    @Override
+    public List&lt;Era&gt; eras() {
+<span class="fc" id="L430">        return Arrays.&lt;Era&gt;asList(InternationalFixedEra.values());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    @Override
+    public ValueRange range(ChronoField field) {
+<span class="pc bfc" id="L436" title="All 11 branches covered.">        switch (field) {</span>
+            case ALIGNED_DAY_OF_WEEK_IN_YEAR:
+            case ALIGNED_DAY_OF_WEEK_IN_MONTH:
+            case DAY_OF_WEEK:
+<span class="fc" id="L440">                return ValueRange.of(0, 1, 0, DAYS_IN_WEEK);</span>
+            case ALIGNED_WEEK_OF_MONTH:
+<span class="fc" id="L442">                return ValueRange.of(0, 1, 0, WEEKS_IN_MONTH);</span>
+            case ALIGNED_WEEK_OF_YEAR:
+<span class="fc" id="L444">                return ValueRange.of(0, 1, 0, WEEKS_IN_YEAR);</span>
+            case DAY_OF_MONTH:
+<span class="fc" id="L446">                return DAY_OF_MONTH_RANGE;</span>
+            case DAY_OF_YEAR:
+<span class="fc" id="L448">                return ChronoField.DAY_OF_YEAR.range();</span>
+            case EPOCH_DAY:
+<span class="fc" id="L450">                return EPOCH_DAY_RANGE;</span>
+            case ERA:
+<span class="fc" id="L452">                return ERA_RANGE;</span>
+            case MONTH_OF_YEAR:
+<span class="fc" id="L454">                return MONTH_OF_YEAR_RANGE;</span>
+            case PROLEPTIC_MONTH:
+<span class="fc" id="L456">                return PROLEPTIC_MONTH_RANGE;</span>
+            case YEAR_OF_ERA:
+            case YEAR:
+<span class="fc" id="L459">                return YEAR_RANGE;</span>
+            default:
+<span class="fc" id="L461">                return field.range();</span>
+        }
+    }
+
+    @Override
+    public int prolepticYear(Era era, int yearOfEra) {
+<span class="fc bfc" id="L467" title="All 2 branches covered.">        if (!(era instanceof InternationalFixedEra)) {</span>
+<span class="fc" id="L468">            throw new ClassCastException(&quot;Invalid era: &quot; + era);</span>
+        }
+<span class="fc" id="L470">        YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
+<span class="fc" id="L471">        return yearOfEra;</span>
+    }
+
+    /**
+     * Get the count of leap years since International fixed year 1.
+     *
+     * @param prolepticYear The year.
+     * @return The number of leap years since International fixed year 1.
+     */
+    static long getLeapYearsBefore(long prolepticYear) {
+<span class="fc" id="L481">        long yearBefore = prolepticYear - 1;</span>
+<span class="fc" id="L482">        return (yearBefore / 4) - (yearBefore / 100) + (yearBefore / 400);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
