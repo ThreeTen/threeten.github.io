@@ -5,7 +5,7 @@ subtitle: Documentation and Articles about ThreeTen
 ---
 
 This section holds reference documentation for ThreeTen and JSR-310.
-This supplements the [Javadoc](http://download.java.net/jdk8/docs/api/java/time/package-summary.html), providing a broader user guide.
+This supplements the [Javadoc](https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html), providing a broader user guide.
 The documentation is applicable to both the backport and JDK 1.8 - only the package name changes.
 
 * Using the [Instant](instant.html) class
