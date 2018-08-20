@@ -24,7 +24,7 @@ Older issues are still visible at the GItHub [issue tracker](https://github.com/
 #### Documentation
 
 This site holds [reference documentation](articles/index.html) for ThreeTen and JSR-310.
-This supplements the [Javadoc](http://www.threeten.org/threetenbp/apidocs), providing a broader user guide.
+This supplements the [Javadoc](https://www.threeten.org/threetenbp/apidocs), providing a broader user guide.
 The documentation is applicable to both the backport and JDK 1.8 - only the package name changes.
 
 Many [articles and videos](links.html) have been published on the topic of JSR-310.
@@ -32,19 +32,17 @@ If you'd like to add another one, please raise a [pull request](https://github.c
 
 #### Backport for Java SE 7
 
-A [backport](http://www.threeten.org/threetenbp/) has been provided for Java SE 7 hosted here at GitHub.
+A [backport](https://www.threeten.org/threetenbp/) has been provided for Java SE 7 hosted here at GitHub.
 The aim of the backport is to allow developers on Java SE 7 to access an API that is very similar to the one in Java SE 8.
 The backport is NOT an official implementation of JSR-310, as that would involve many complex legal/procedural hoops.
 
-The backport [Javadoc](http://www.threeten.org/threetenbp/apidocs) is available for browsing.
-The jar file is available in the [Maven Central repository](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.threeten%22%20AND%20a%3A%22threetenbp%22).
-
-The backport is used in projects such as [OpenGamma](https://github.com/OpenGamma/OG-Platform).
+The backport [Javadoc](https://www.threeten.org/threetenbp/apidocs) is available for browsing.
+The jar file is available in the [Maven Central repository](https://search.maven.org/search?q=g:org.threeten%20AND%20a:threetenbp&core=gav).
 
 #### Extras
 
 Not every piece of functionality in the domain of date/time ended up in OpenJDK and Java SE 8.
-The "extras" have been combined into a new project - [ThreeTen-Extra](http://www.threeten.org/threeten-extra/) - which can be used as an additional date/time jar file on Java SE 8.
+The "extras" have been combined into a new project - [ThreeTen-Extra](https://www.threeten.org/threeten-extra/) - which can be used as an additional date/time jar file on Java SE 8.
 
 To store JSR-310 classes in a database, you may need to use bindings for Hibernate or JPA. Have a look at the [user type](http://jadira.sourceforge.net/usertype-userguide.html), [threeten-jpa](https://github.com/marschall/threeten-jpa) or [jpaattributeconverters](https://bitbucket.org/montanajava/jpaattributeconverters) projects for more info.
 
