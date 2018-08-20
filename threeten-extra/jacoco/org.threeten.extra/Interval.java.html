@@ -121,7 +121,7 @@ public final class Interval
 <span class="fc" id="L121">        Objects.requireNonNull(startInclusive, &quot;startInclusive&quot;);</span>
 <span class="fc" id="L122">        Objects.requireNonNull(duration, &quot;duration&quot;);</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">        if (duration.isNegative()) {</span>
-<span class="fc" id="L124">            throw new DateTimeException(&quot;Duration must not be zero or negative&quot;);</span>
+<span class="fc" id="L124">            throw new DateTimeException(&quot;Duration must not be negative&quot;);</span>
         }
 <span class="fc" id="L126">        return new Interval(startInclusive, startInclusive.plus(duration));</span>
     }
@@ -594,4 +594,4 @@ public final class Interval
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

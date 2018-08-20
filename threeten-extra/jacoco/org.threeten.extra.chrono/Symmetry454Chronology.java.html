@@ -72,7 +72,7 @@ import java.util.List;
  * &lt;li&gt;day-of-year - There are 364 days in a standard Symmetry454 year and 371 days in a leap year.
  *  The days are numbered accordingly.
  * &lt;li&gt;leap-year - Leap years occur every 5 or 6 years, evenly spread over 293 years according the formula:
- *     (52 &gt; ((52 * year + 146) % 293)).
+ *     (52 &amp;gt; ((52 * year + 146) % 293)).
  * &lt;li&gt;Week day - every month starts on a Monday.  There are no days outside of the week or month.
  * &lt;/ul&gt;
  *
@@ -508,4 +508,4 @@ public final class Symmetry454Chronology
 <span class="fc" id="L508">        return Math.floorDiv(WEEKS_IN_YEAR * (prolepticYear - 1) + 146, YEARS_IN_CYCLE);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

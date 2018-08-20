@@ -189,7 +189,7 @@ public final class YearWeek
     // from IsoFields in ThreeTen-Backport
     private static int weekRange(int weekBasedYear) {
 <span class="fc" id="L191">        LocalDate date = LocalDate.of(weekBasedYear, 1, 1);</span>
-        // 53 weeks if standard year starts on Thursday, or Wed in a leap year
+        // 53 weeks if year starts on Thursday, or Wed in a leap year
 <span class="fc bfc" id="L193" title="All 6 branches covered.">        if (date.getDayOfWeek() == THURSDAY || (date.getDayOfWeek() == WEDNESDAY &amp;&amp; date.isLeapYear())) {</span>
 <span class="fc" id="L194">            return 53;</span>
         }
@@ -789,4 +789,4 @@ public final class YearWeek
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
