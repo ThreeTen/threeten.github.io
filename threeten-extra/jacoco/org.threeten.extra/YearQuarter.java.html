@@ -446,7 +446,7 @@ public final class YearQuarter
 <span class="fc bfc" id="L446" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L447">            return quarter.getValue();</span>
 <span class="pc bpc" id="L448" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="pc bfc" id="L449" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
+<span class="fc bfc" id="L449" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
                 case YEAR_OF_ERA:
 <span class="pc bpc" id="L451" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
                 case YEAR:
@@ -1241,4 +1241,4 @@ public final class YearQuarter
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

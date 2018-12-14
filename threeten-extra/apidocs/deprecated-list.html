@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
@@ -13,7 +13,8 @@
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
 <script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
 <body>
@@ -26,22 +27,25 @@
     catch(err) {
     }
 //-->
-var pathtoroot = "./";loadScripts(document, 'script');</script>
+var pathtoroot = "./";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
 <div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
-<li><a href="org.threeten.extra-summary.html">Module</a></li>
+<li><a href="org.threeten.extra/module-summary.html">Module</a></li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -52,16 +56,8 @@ var pathtoroot = "./";loadScripts(document, 'script');</script>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?deprecated-list.html" target="_top">Frames</a></li>
-<li><a href="deprecated-list.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <ul class="navListSearch">
 <li><label for="search">SEARCH:</label>
@@ -84,7 +80,7 @@ var pathtoroot = "./";loadScripts(document, 'script');</script>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -94,6 +90,9 @@ var pathtoroot = "./";loadScripts(document, 'script');</script>
 $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 //-->
 </script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 title="Deprecated API" class="title">Deprecated API</h1>
 <h2 title="Contents">Contents</h2>
@@ -102,12 +101,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="#constructor">Constructors</a></li>
 </ul>
 </div>
-<div class="contentContainer"><a name="method">
+<div class="contentContainer"><a id="method">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<table class="deprecatedSummary" summary="Methods table, listing methods, and an explanation">
+<table class="deprecatedSummary">
 <caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Method</th>
@@ -115,21 +114,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/Hours.html#toPeriod--">org.threeten.extra.Hours.toPeriod()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/Hours.html#toPeriod()">org.threeten.extra.Hours.toPeriod()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use <a href="org/threeten/extra/Hours.html#toDuration--"><code>Hours.toDuration()</code></a></div>
+<div class="deprecationComment">Use <a href="org.threeten.extra/org/threeten/extra/Hours.html#toDuration()"><code>Hours.toDuration()</code></a></div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 </ul>
-<a name="constructor">
+<a id="constructor">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<table class="deprecatedSummary" summary="Constructors table, listing constructors, and an explanation">
+<table class="deprecatedSummary">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Constructor</th>
@@ -137,57 +136,57 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/BritishCutoverChronology.html#BritishCutoverChronology--">org.threeten.extra.chrono.BritishCutoverChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/BritishCutoverChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.BritishCutoverChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/BritishCutoverChronology.html#INSTANCE"><code>BritishCutoverChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/BritishCutoverChronology.html#INSTANCE"><code>BritishCutoverChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/CopticChronology.html#CopticChronology--">org.threeten.extra.chrono.CopticChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/CopticChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.CopticChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/CopticChronology.html#INSTANCE"><code>CopticChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/CopticChronology.html#INSTANCE"><code>CopticChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="altColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/DiscordianChronology.html#DiscordianChronology--">org.threeten.extra.chrono.DiscordianChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/DiscordianChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.DiscordianChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/DiscordianChronology.html#INSTANCE"><code>DiscordianChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/DiscordianChronology.html#INSTANCE"><code>DiscordianChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/EthiopicChronology.html#EthiopicChronology--">org.threeten.extra.chrono.EthiopicChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/EthiopicChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.EthiopicChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/EthiopicChronology.html#INSTANCE"><code>EthiopicChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/EthiopicChronology.html#INSTANCE"><code>EthiopicChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="altColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/InternationalFixedChronology.html#InternationalFixedChronology--">org.threeten.extra.chrono.InternationalFixedChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/InternationalFixedChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.InternationalFixedChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/InternationalFixedChronology.html#INSTANCE"><code>InternationalFixedChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/InternationalFixedChronology.html#INSTANCE"><code>InternationalFixedChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/JulianChronology.html#JulianChronology--">org.threeten.extra.chrono.JulianChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/JulianChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.JulianChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/JulianChronology.html#INSTANCE"><code>JulianChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/JulianChronology.html#INSTANCE"><code>JulianChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="altColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/PaxChronology.html#PaxChronology--">org.threeten.extra.chrono.PaxChronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/PaxChronology.html#%3Cinit%3E()">org.threeten.extra.chrono.PaxChronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/PaxChronology.html#INSTANCE"><code>PaxChronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/PaxChronology.html#INSTANCE"><code>PaxChronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/Symmetry010Chronology.html#Symmetry010Chronology--">org.threeten.extra.chrono.Symmetry010Chronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry010Chronology.html#%3Cinit%3E()">org.threeten.extra.chrono.Symmetry010Chronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/Symmetry010Chronology.html#INSTANCE"><code>Symmetry010Chronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry010Chronology.html#INSTANCE"><code>Symmetry010Chronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 <tr class="altColor">
-<th class="colDeprecatedItemName" scope="row"><a href="org/threeten/extra/chrono/Symmetry454Chronology.html#Symmetry454Chronology--">org.threeten.extra.chrono.Symmetry454Chronology()</a></th>
+<th class="colDeprecatedItemName" scope="row"><a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry454Chronology.html#%3Cinit%3E()">org.threeten.extra.chrono.Symmetry454Chronology()</a></th>
 <td class="colLast">
-<div class="deprecationComment">Use the singleton <a href="org/threeten/extra/chrono/Symmetry454Chronology.html#INSTANCE"><code>Symmetry454Chronology.INSTANCE</code></a> instead.</div>
+<div class="deprecationComment">Use the singleton <a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry454Chronology.html#INSTANCE"><code>Symmetry454Chronology.INSTANCE</code></a> instead.</div>
 </td>
 </tr>
 </tbody>
@@ -195,17 +194,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
-<li><a href="org.threeten.extra-summary.html">Module</a></li>
+<li><a href="org.threeten.extra/module-summary.html">Module</a></li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -216,16 +217,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?deprecated-list.html" target="_top">Frames</a></li>
-<li><a href="deprecated-list.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -242,10 +235,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
+</nav>
 <p class="legalCopy"><small>Copyright &#169; 2010&#x2013;2018 <a href="https://www.threeten.org">ThreeTen.org</a>. All rights reserved.</small></p>
+</footer>
 </body>
 </html>

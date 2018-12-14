@@ -1,79 +1,65 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 ThreeTen-Extra,org.threeten.extra,PeriodDuration,76,576,15,63,11,112,12,56,1,26
+ThreeTen-Extra,org.threeten.extra,AmountFormats.SinglePluralFormat,0,26,0,4,0,6,0,4,0,2
+ThreeTen-Extra,org.threeten.extra,AmountFormats.UnitFormat,0,68,0,2,0,9,0,2,0,1
 ThreeTen-Extra,org.threeten.extra,YearQuarter,220,789,41,105,28,151,43,86,5,44
 ThreeTen-Extra,org.threeten.extra,PackedFields.PackedTime,0,180,0,4,0,38,0,14,0,12
 ThreeTen-Extra,org.threeten.extra,Interval,0,698,2,104,0,118,2,82,0,31
+ThreeTen-Extra,org.threeten.extra,AmountFormats.PredicateFormat,20,70,3,6,4,14,3,7,0,5
 ThreeTen-Extra,org.threeten.extra,Minutes,119,274,10,40,22,72,9,42,3,23
 ThreeTen-Extra,org.threeten.extra,MutableClock.SerializationProxy,10,23,2,2,2,7,2,2,0,2
 ThreeTen-Extra,org.threeten.extra,DayOfYear,30,224,8,24,6,47,9,29,2,20
 ThreeTen-Extra,org.threeten.extra,Hours,63,297,3,41,9,76,6,42,3,23
 ThreeTen-Extra,org.threeten.extra,Temporals,18,367,3,53,3,75,3,44,0,11
-ThreeTen-Extra,org.threeten.extra,PeriodDuration.new Object() {...},5,35,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra,PackedFields.PackedHourMin,0,134,0,4,0,31,0,14,0,12
 ThreeTen-Extra,org.threeten.extra,MutableClock.InstantHolder,0,13,0,0,0,6,0,3,0,3
-ThreeTen-Extra,org.threeten.extra,DayOfMonth,30,230,9,23,6,47,10,29,2,21
 ThreeTen-Extra,org.threeten.extra,YearWeek,14,615,4,88,3,127,4,78,0,36
+ThreeTen-Extra,org.threeten.extra,DayOfMonth,30,230,9,23,6,47,10,29,2,21
 ThreeTen-Extra,org.threeten.extra,AmPm,33,168,7,20,5,32,7,19,1,11
+ThreeTen-Extra,org.threeten.extra,AmountFormats,7,432,6,12,0,73,5,11,0,7
 ThreeTen-Extra,org.threeten.extra,MutableClock,9,236,2,8,3,52,3,18,1,15
-ThreeTen-Extra,org.threeten.extra,YearQuarter.new Object() {...},8,57,0,0,0,2,0,1,0,1
 ThreeTen-Extra,org.threeten.extra,Seconds,128,303,10,46,24,80,9,46,3,24
 ThreeTen-Extra,org.threeten.extra,Months,77,298,7,41,13,77,8,42,3,23
 ThreeTen-Extra,org.threeten.extra,Days,61,314,5,43,12,78,6,44,3,23
-ThreeTen-Extra,org.threeten.extra,Temporals.new Object() {...},19,123,0,0,0,2,0,1,0,1
 ThreeTen-Extra,org.threeten.extra,LocalDateRange.new Spliterators.AbstractSpliterator() {...},0,52,0,6,0,13,0,6,0,3
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,27,0,3,0,6,0,4,0,2
-ThreeTen-Extra,org.threeten.extra,Quarter.new Object() {...},4,29,0,0,0,1,0,1,0,1
+ThreeTen-Extra,org.threeten.extra,AmountFormats.WordBased,0,88,0,16,0,20,0,10,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,27,0,3,0,6,0,4,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,24,0,3,0,6,0,4,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,24,0,3,0,6,0,4,0,2
-ThreeTen-Extra,org.threeten.extra,LocalDateRange,0,759,1,119,0,123,1,95,0,36
 ThreeTen-Extra,org.threeten.extra,Weeks,52,278,5,33,10,66,6,38,3,22
+ThreeTen-Extra,org.threeten.extra,LocalDateRange,0,759,1,119,0,123,1,95,0,36
 ThreeTen-Extra,org.threeten.extra,PackedFields.PackedDate,0,194,0,10,0,39,0,18,0,13
 ThreeTen-Extra,org.threeten.extra,Years,52,278,5,33,10,66,6,38,3,22
 ThreeTen-Extra,org.threeten.extra,PackedFields,33,17,3,1,1,6,2,2,0,2
-ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster,0,44,0,0,0,5,0,1,0,1
 ThreeTen-Extra,org.threeten.extra,Quarter,34,303,10,37,7,61,9,34,0,16
-ThreeTen-Extra,org.threeten.extra.scale,SystemUtcRules,91,489,18,38,15,85,13,27,0,12
+ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster,0,44,0,0,0,5,0,1,0,1
+ThreeTen-Extra,org.threeten.extra.scale,SystemUtcRules,91,487,18,38,15,85,13,27,0,12
 ThreeTen-Extra,org.threeten.extra.scale,TaiInstant,9,273,0,20,2,60,0,29,0,19
 ThreeTen-Extra,org.threeten.extra.scale,UtcRules,5,212,1,11,2,36,2,14,1,9
 ThreeTen-Extra,org.threeten.extra.scale,SystemUtcRules.Data,9,12,0,0,1,5,1,1,1,1
 ThreeTen-Extra,org.threeten.extra.scale,UtcInstant,2,322,1,27,0,65,1,32,0,19
-ThreeTen-Extra,org.threeten.extra.chrono,DiscordianDate.new Object() {...},11,75,0,0,0,2,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,CopticEra,3,42,0,3,1,7,1,4,1,2
-ThreeTen-Extra,org.threeten.extra.chrono,Symmetry010Chronology.new Object() {...},13,83,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,Symmetry454Chronology,23,181,0,15,7,41,7,28,7,16
-ThreeTen-Extra,org.threeten.extra.chrono,AccountingChronology.new Object() {...},6,41,0,0,0,1,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedChronology.new Object() {...},13,83,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,BritishCutoverChronology,25,137,0,13,7,36,7,26,7,17
 ThreeTen-Extra,org.threeten.extra.chrono,JulianEra,3,42,0,3,1,7,1,4,1,2
 ThreeTen-Extra,org.threeten.extra.chrono,EthiopicEra,3,42,0,3,1,7,1,4,1,2
 ThreeTen-Extra,org.threeten.extra.chrono,EthiopicChronology,34,62,1,3,9,15,9,14,8,13
-ThreeTen-Extra,org.threeten.extra.chrono,Symmetry454Chronology.new Object() {...},13,83,0,0,0,1,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,Symmetry454Date.new Object() {...},10,65,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,CopticDate,34,332,2,26,6,55,7,34,5,22
 ThreeTen-Extra,org.threeten.extra.chrono,Symmetry010Date,35,794,8,70,9,133,14,72,6,37
 ThreeTen-Extra,org.threeten.extra.chrono,AbstractNileChronology,0,68,0,9,0,19,0,11,0,4
 ThreeTen-Extra,org.threeten.extra.chrono,Symmetry010Chronology,23,181,0,15,7,41,7,28,7,16
-ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedDate.new Object() {...},10,65,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,DiscordianEra,3,30,0,2,1,5,1,3,1,2
 ThreeTen-Extra,org.threeten.extra.chrono,DiscordianDate,94,1134,35,181,10,189,35,123,5,40
-ThreeTen-Extra,org.threeten.extra.chrono,Symmetry010Date.new Object() {...},10,65,0,0,0,1,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,JulianDate,34,410,1,38,6,74,6,45,5,25
 ThreeTen-Extra,org.threeten.extra.chrono,BritishCutoverDate,27,609,1,107,4,117,5,90,4,35
+ThreeTen-Extra,org.threeten.extra.chrono,JulianDate,34,410,1,38,6,74,6,45,5,25
 ThreeTen-Extra,org.threeten.extra.chrono,DiscordianChronology,29,171,0,19,8,40,8,29,8,15
-ThreeTen-Extra,org.threeten.extra.chrono,PaxChronology.new Object() {...},5,35,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,CopticChronology,34,62,1,3,9,15,9,14,8,13
 ThreeTen-Extra,org.threeten.extra.chrono,PaxEra,3,42,0,3,1,7,1,4,1,2
 ThreeTen-Extra,org.threeten.extra.chrono,Symmetry454Date,37,853,9,71,9,140,15,76,6,40
 ThreeTen-Extra,org.threeten.extra.chrono,PaxChronology,29,139,0,18,8,30,8,26,8,15
 ThreeTen-Extra,org.threeten.extra.chrono,AbstractNileDate,0,83,0,6,0,12,0,10,0,7
-ThreeTen-Extra,org.threeten.extra.chrono,PaxDate.new Object() {...},4,29,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedChronology,23,193,0,19,7,41,7,30,7,16
-ThreeTen-Extra,org.threeten.extra.chrono,AbstractNileChronology.new Object() {...},6,41,0,0,0,1,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,DiscordianChronology.new Object() {...},12,77,0,0,0,1,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,JulianChronology.new Object() {...},3,23,0,0,0,1,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,AbstractDate.new Object() {...},21,135,0,0,0,2,0,1,0,1
-ThreeTen-Extra,org.threeten.extra.chrono,BritishCutoverDate.new Object() {...},4,29,0,0,0,1,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.chrono,AccountingYearDivision,0,459,0,30,0,30,0,25,0,10
 ThreeTen-Extra,org.threeten.extra.chrono,AccountingChronologyBuilder,0,46,0,0,0,15,0,7,0,7
 ThreeTen-Extra,org.threeten.extra.chrono,AbstractDate,40,798,8,92,7,130,6,93,0,29
@@ -81,8 +67,7 @@ ThreeTen-Extra,org.threeten.extra.chrono,PaxDate,55,909,7,106,8,129,11,86,6,33
 ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedEra,3,31,0,2,1,5,1,3,1,2
 ThreeTen-Extra,org.threeten.extra.chrono,AccountingEra,3,42,0,3,1,7,1,4,1,2
 ThreeTen-Extra,org.threeten.extra.chrono,JulianChronology,29,103,0,10,8,25,8,21,8,15
-ThreeTen-Extra,org.threeten.extra.chrono,AccountingDate,36,614,2,50,5,80,6,55,4,31
 ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedDate,101,1072,26,144,18,173,26,114,6,44
-ThreeTen-Extra,org.threeten.extra.chrono,BritishCutoverChronology.new Object() {...},6,41,0,0,0,1,0,1,0,1
+ThreeTen-Extra,org.threeten.extra.chrono,AccountingDate,36,614,2,50,5,80,6,55,4,31
 ThreeTen-Extra,org.threeten.extra.chrono,EthiopicDate,34,332,2,26,6,55,7,34,5,22
 ThreeTen-Extra,org.threeten.extra.chrono,AccountingChronology,62,506,11,52,7,93,14,51,7,24

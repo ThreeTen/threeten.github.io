@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmountFormats.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">AmountFormats.java</span></div><h1>AmountFormats.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import java.time.Duration;
+import java.time.Period;
+import java.time.temporal.TemporalAmount;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.function.IntPredicate;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+/**
+ * Provides the ability to format a temporal amount.
+ * &lt;p&gt;
+ * This allows a {@link TemporalAmount}, such as {@link Duration} or {@link Period},
+ * to be formatted. Only selected formatting options are provided.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ */
+public final class AmountFormats {
+
+    /**
+     * The number of days per week.
+     */
+    private static final int DAYS_PER_WEEK = 7;
+    /**
+     * The number of hours per day.
+     */
+    private static final int HOURS_PER_DAY = 24;
+    /**
+     * The number of minutes per hour.
+     */
+    private static final int MINUTES_PER_HOUR = 60;
+    /**
+     * The number of seconds per minute.
+     */
+    private static final int SECONDS_PER_MINUTE = 60;
+    /**
+     * The number of nanosecond per millisecond.
+     */
+    private static final int NANOS_PER_MILLIS = 1000_000;
+    /**
+     * The resource bundle name.
+     */
+    private static final String BUNDLE_NAME = &quot;org.threeten.extra.wordbased&quot;;
+    /**
+     * The pattern to split lists with.
+     */
+<span class="fc" id="L82">    private static final Pattern SPLITTER = Pattern.compile(&quot;[|][|][|]&quot;);</span>
+    /**
+     * The property file key for the separator &quot;, &quot;.
+     */
+    private static final String WORDBASED_COMMASPACE = &quot;WordBased.commaspace&quot;;
+    /**
+     * The property file key for the separator &quot; and &quot;.
+     */
+    private static final String WORDBASED_SPACEANDSPACE = &quot;WordBased.spaceandspace&quot;;
+    /**
+     * The property file key for the word &quot;year&quot;.
+     */
+    private static final String WORDBASED_YEAR = &quot;WordBased.year&quot;;
+    /**
+     * The property file key for the word &quot;month&quot;.
+     */
+    private static final String WORDBASED_MONTH = &quot;WordBased.month&quot;;
+    /**
+     * The property file key for the word &quot;week&quot;.
+     */
+    private static final String WORDBASED_WEEK = &quot;WordBased.week&quot;;
+    /**
+     * The property file key for the word &quot;day&quot;.
+     */
+    private static final String WORDBASED_DAY = &quot;WordBased.day&quot;;
+    /**
+     * The property file key for the word &quot;hour&quot;.
+     */
+    private static final String WORDBASED_HOUR = &quot;WordBased.hour&quot;;
+    /**
+     * The property file key for the word &quot;minute&quot;.
+     */
+    private static final String WORDBASED_MINUTE = &quot;WordBased.minute&quot;;
+    /**
+     * The property file key for the word &quot;second&quot;.
+     */
+    private static final String WORDBASED_SECOND = &quot;WordBased.second&quot;;
+    /**
+     * The property file key for the word &quot;millisecond&quot;.
+     */
+    private static final String WORDBASED_MILLISECOND = &quot;WordBased.millisecond&quot;;
+    /**
+     * The predicate that matches 1 or -1.
+     */
+<span class="pc bpc" id="L126" title="2 of 4 branches missed.">    private static final IntPredicate PREDICATE_1 = value -&gt; value == 1 || value == -1;</span>
+    /**
+     * The predicate that matches numbers ending 2, 3 or 4, but not ending 12, 13 or 14.
+     */
+<span class="fc" id="L130">    private static final IntPredicate PREDICATE_END234_NOTTEENS = value -&gt; {</span>
+<span class="fc" id="L131">        int abs = Math.abs(value);</span>
+<span class="fc" id="L132">        int last = abs % 10;</span>
+<span class="fc" id="L133">        int secondLast = (abs % 100) / 10;</span>
+<span class="pc bpc" id="L134" title="4 of 6 branches missed.">        return (last &gt;= 2 &amp;&amp; last &lt;= 4 &amp;&amp; secondLast != 1);</span>
+    };
+
+    //-----------------------------------------------------------------------
+    /**
+     * Formats a period and duration to a string in ISO-8601 format.
+     * &lt;p&gt;
+     * To obtain the ISO-8601 format of a {@code Period} or {@code Duration}
+     * individually, simply call {@code toString()}.
+     * See also {@link PeriodDuration}.
+     * 
+     * @param period  the period to format
+     * @param duration  the duration to format
+     * @return the ISO-8601 format for the period and duration
+     */
+    public static String iso8601(Period period, Duration duration) {
+<span class="fc" id="L150">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
+<span class="fc" id="L151">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (period.isZero()) {</span>
+<span class="fc" id="L153">            return duration.toString();</span>
+        }
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (duration.isZero()) {</span>
+<span class="fc" id="L156">            return period.toString();</span>
+        }
+<span class="fc" id="L158">        return period.toString() + duration.toString().substring(1);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Formats a period to a string in a localized word-based format.
+     * &lt;p&gt;
+     * This returns a word-based format for the period.
+     * The words are configured in a resource bundle text file -
+     * {@code org.threeten.extra.wordbased.properties} - with overrides per language.
+     *
+     * @param period  the period to format
+     * @param locale  the locale to use
+     * @return the localized word-based format for the period
+     */
+    public static String wordBased(Period period, Locale locale) {
+<span class="fc" id="L174">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
+<span class="fc" id="L175">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
+<span class="fc" id="L176">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
+<span class="fc" id="L177">        UnitFormat[] formats = {</span>
+<span class="fc" id="L178">            UnitFormat.of(bundle, WORDBASED_YEAR),</span>
+<span class="fc" id="L179">            UnitFormat.of(bundle, WORDBASED_MONTH),</span>
+<span class="fc" id="L180">            UnitFormat.of(bundle, WORDBASED_WEEK),</span>
+<span class="fc" id="L181">            UnitFormat.of(bundle, WORDBASED_DAY)};</span>
+<span class="fc" id="L182">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
+        
+<span class="fc" id="L184">        Period normPeriod = period.normalized();</span>
+<span class="fc" id="L185">        int weeks = 0, days = 0;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        if (normPeriod.getDays() % DAYS_PER_WEEK == 0) {</span>
+<span class="fc" id="L187">            weeks = normPeriod.getDays() / DAYS_PER_WEEK;</span>
+        } else {
+<span class="fc" id="L189">            days = normPeriod.getDays();</span>
+        }
+<span class="fc" id="L191">        int[] values = {normPeriod.getYears(), normPeriod.getMonths(), weeks, days};</span>
+<span class="fc" id="L192">        return wb.format(values);</span>
+    }
+
+    /**
+     * Formats a duration to a string in a localized word-based format.
+     * &lt;p&gt;
+     * This returns a word-based format for the duration.
+     * The words are configured in a resource bundle text file -
+     * {@code org.threeten.extra.wordbased.properties} - with overrides per language.
+     *
+     * @param duration  the duration to format
+     * @param locale  the locale to use
+     * @return the localized word-based format for the duration
+     */
+    public static String wordBased(Duration duration, Locale locale) {
+<span class="fc" id="L207">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
+<span class="fc" id="L208">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
+<span class="fc" id="L209">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
+<span class="fc" id="L210">        UnitFormat[] formats = {</span>
+<span class="fc" id="L211">            UnitFormat.of(bundle, WORDBASED_HOUR),</span>
+<span class="fc" id="L212">            UnitFormat.of(bundle, WORDBASED_MINUTE),</span>
+<span class="fc" id="L213">            UnitFormat.of(bundle, WORDBASED_SECOND),</span>
+<span class="fc" id="L214">            UnitFormat.of(bundle, WORDBASED_MILLISECOND)};</span>
+<span class="fc" id="L215">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
+        
+<span class="fc" id="L217">        long hours = duration.toHours();</span>
+<span class="fc" id="L218">        long mins = duration.toMinutes() % MINUTES_PER_HOUR;</span>
+<span class="fc" id="L219">        long secs = duration.getSeconds() % SECONDS_PER_MINUTE;</span>
+<span class="fc" id="L220">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
+<span class="fc" id="L221">        int[] values = {(int) hours, (int) mins, (int) secs, millis};</span>
+<span class="fc" id="L222">        return wb.format(values);</span>
+    }
+
+    /**
+     * Formats a period and duration to a string in a localized word-based format.
+     * &lt;p&gt;
+     * This returns a word-based format for the period.
+     * The words are configured in a resource bundle text file -
+     * {@code org.threeten.extra.wordbased.properties} - with overrides per language.
+     *
+     * @param period  the period to format
+     * @param duration  the duration to format
+     * @param locale  the locale to use
+     * @return the localized word-based format for the period and duration
+     */
+    public static String wordBased(Period period, Duration duration, Locale locale) {
+<span class="fc" id="L238">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
+<span class="fc" id="L239">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
+<span class="fc" id="L240">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
+<span class="fc" id="L241">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
+<span class="fc" id="L242">        UnitFormat[] formats = {</span>
+<span class="fc" id="L243">            UnitFormat.of(bundle, WORDBASED_YEAR),</span>
+<span class="fc" id="L244">            UnitFormat.of(bundle, WORDBASED_MONTH),</span>
+<span class="fc" id="L245">            UnitFormat.of(bundle, WORDBASED_WEEK),</span>
+<span class="fc" id="L246">            UnitFormat.of(bundle, WORDBASED_DAY),</span>
+<span class="fc" id="L247">            UnitFormat.of(bundle, WORDBASED_HOUR),</span>
+<span class="fc" id="L248">            UnitFormat.of(bundle, WORDBASED_MINUTE),</span>
+<span class="fc" id="L249">            UnitFormat.of(bundle, WORDBASED_SECOND),</span>
+<span class="fc" id="L250">            UnitFormat.of(bundle, WORDBASED_MILLISECOND)};</span>
+<span class="fc" id="L251">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
+        
+<span class="fc" id="L253">        Period normPeriod = period.normalized();</span>
+<span class="fc" id="L254">        int weeks = 0, days = 0;</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (normPeriod.getDays() % DAYS_PER_WEEK == 0) {</span>
+<span class="fc" id="L256">            weeks = normPeriod.getDays() / DAYS_PER_WEEK;</span>
+        } else {
+<span class="fc" id="L258">            days = normPeriod.getDays();</span>
+        }
+<span class="fc" id="L260">        long totalHours = duration.toHours();</span>
+<span class="fc" id="L261">        days += (int) (totalHours / HOURS_PER_DAY);</span>
+<span class="fc" id="L262">        int hours = (int) (totalHours % HOURS_PER_DAY);</span>
+<span class="fc" id="L263">        int mins = (int) (duration.toMinutes() % MINUTES_PER_HOUR);</span>
+<span class="fc" id="L264">        int secs = (int) (duration.getSeconds() % SECONDS_PER_MINUTE);</span>
+<span class="fc" id="L265">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
+<span class="fc" id="L266">        int[] values = {</span>
+<span class="fc" id="L267">            normPeriod.getYears(), normPeriod.getMonths(), weeks, days,</span>
+            (int) hours, mins, secs, millis};
+<span class="fc" id="L269">        return wb.format(values);</span>
+    }
+
+    private AmountFormats() {
+    }
+
+    //-------------------------------------------------------------------------
+    // data holder for word-based formats
+    static final class WordBased {
+        private final UnitFormat[] units;
+        private final String separator;
+        private final String lastSeparator;
+
+<span class="fc" id="L282">        public WordBased(UnitFormat[] units, String separator, String lastSeparator) {</span>
+<span class="fc" id="L283">            this.units = units;</span>
+<span class="fc" id="L284">            this.separator = separator;</span>
+<span class="fc" id="L285">            this.lastSeparator = lastSeparator;</span>
+<span class="fc" id="L286">        }</span>
+
+        String format(int[] values) {
+<span class="fc" id="L289">            StringBuilder buf = new StringBuilder(32);</span>
+<span class="fc" id="L290">            int nonZeroCount = 0;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">                if (values[i] != 0) {</span>
+<span class="fc" id="L293">                    nonZeroCount++;</span>
+                }
+            }
+<span class="fc" id="L296">            int count = 0;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc bfc" id="L298" title="All 6 branches covered.">                if (values[i] != 0 || (count == 0 &amp;&amp; i == values.length - 1)) {</span>
+<span class="fc" id="L299">                    units[i].formatTo(values[i], buf);</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">                    if (count &lt; nonZeroCount - 2) {</span>
+<span class="fc" id="L301">                        buf.append(separator);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">                    } else if (count == nonZeroCount - 2) {</span>
+<span class="fc" id="L303">                        buf.append(lastSeparator);</span>
+                    }
+<span class="fc" id="L305">                    count++;</span>
+                }
+            }
+<span class="fc" id="L308">            return buf.toString();</span>
+        }
+    }
+
+    // data holder for single/plural formats
+    static interface UnitFormat {
+        
+        static UnitFormat of(ResourceBundle bundle, String keyStem) {
+<span class="fc bfc" id="L316" title="All 2 branches covered.">            if (bundle.containsKey(keyStem + &quot;s.predicates&quot;)) {</span>
+<span class="fc" id="L317">                String predicateList = bundle.getString(keyStem + &quot;s.predicates&quot;);</span>
+<span class="fc" id="L318">                String textList = bundle.getString(keyStem + &quot;s.list&quot;);</span>
+<span class="fc" id="L319">                String[] regexes = SPLITTER.split(predicateList);</span>
+<span class="fc" id="L320">                String[] text = SPLITTER.split(textList);</span>
+<span class="fc" id="L321">                return new PredicateFormat(regexes, text);</span>
+            } else {
+<span class="fc" id="L323">                String single = bundle.getString(keyStem);</span>
+<span class="fc" id="L324">                String plural = bundle.getString(keyStem + &quot;s&quot;);</span>
+<span class="fc" id="L325">                return new SinglePluralFormat(single, plural);</span>
+            }
+        }
+        
+        void formatTo(int value, StringBuilder buf);
+    }
+
+    // data holder for single/plural formats
+    static final class SinglePluralFormat implements UnitFormat {
+        private final String single;
+        private final String plural;
+
+<span class="fc" id="L337">        SinglePluralFormat(String single, String plural) {</span>
+<span class="fc" id="L338">            this.single = single;</span>
+<span class="fc" id="L339">            this.plural = plural;</span>
+<span class="fc" id="L340">        }</span>
+
+        @Override
+        public void formatTo(int value, StringBuilder buf) {
+<span class="fc bfc" id="L344" title="All 4 branches covered.">            buf.append(value).append(value == 1 || value == -1 ? single : plural);</span>
+<span class="fc" id="L345">        }</span>
+    }
+
+    // data holder for predicate formats
+    static final class PredicateFormat implements UnitFormat {
+        private final IntPredicate[] predicates;
+        private final String[] text;
+
+<span class="fc" id="L353">        PredicateFormat(String[] predicateStrs, String[] text) {</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">            if (predicateStrs.length + 1 != text.length) {</span>
+<span class="nc" id="L355">                throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
+            }
+<span class="fc" id="L357">            this.predicates = Stream.of(predicateStrs)</span>
+<span class="fc" id="L358">                    .map(predicateStr -&gt; findPredicate(predicateStr))</span>
+<span class="fc" id="L359">                    .toArray(IntPredicate[]::new);</span>
+<span class="fc" id="L360">            this.text = text;</span>
+<span class="fc" id="L361">        }</span>
+
+        private IntPredicate findPredicate(String predicateStr) {
+<span class="pc bpc" id="L364" title="1 of 3 branches missed.">            switch (predicateStr) {</span>
+<span class="fc" id="L365">                case &quot;One&quot;: return PREDICATE_1;</span>
+<span class="fc" id="L366">                case &quot;End234NotTeens&quot;: return PREDICATE_END234_NOTTEENS;</span>
+<span class="nc" id="L367">                default: throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
+            }
+        }
+
+        @Override
+        public void formatTo(int value, StringBuilder buf) {
+<span class="fc bfc" id="L373" title="All 2 branches covered.">            for (int i = 0; i &lt; predicates.length; i++) {</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">                if (predicates[i].test(value)) {</span>
+<span class="nc" id="L375">                    buf.append(value).append(text[i]);</span>
+<span class="nc" id="L376">                    return;</span>
+                }
+            }
+<span class="fc" id="L379">            buf.append(value).append(text[predicates.length]);</span>
+<span class="fc" id="L380">            return;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

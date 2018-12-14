@@ -104,7 +104,7 @@ abstract class AbstractDate
     }
 
     ValueRange rangeChrono(ChronoField field) {
-<span class="pc bfc" id="L107" title="All 4 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        switch (field) {</span>
             case DAY_OF_MONTH:
 <span class="fc" id="L109">                return ValueRange.of(1, lengthOfMonth());</span>
             case DAY_OF_YEAR:
@@ -230,7 +230,7 @@ abstract class AbstractDate
     public AbstractDate plus(long amountToAdd, TemporalUnit unit) {
 <span class="pc bpc" id="L231" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
 <span class="fc" id="L232">            ChronoUnit f = (ChronoUnit) unit;</span>
-<span class="pc bfc" id="L233" title="All 9 branches covered.">            switch (f) {</span>
+<span class="fc bfc" id="L233" title="All 9 branches covered.">            switch (f) {</span>
                 case DAYS:
 <span class="fc" id="L235">                    return plusDays(amountToAdd);</span>
                 case WEEKS:
@@ -396,4 +396,4 @@ abstract class AbstractDate
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -416,7 +416,7 @@ public final class DiscordianDate
 <span class="pc bpc" id="L416" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
 <span class="fc bfc" id="L417" title="All 2 branches covered.">            if (isSupported(field)) {</span>
 <span class="fc" id="L418">                ChronoField f = (ChronoField) field;</span>
-<span class="pc bfc" id="L419" title="All 7 branches covered.">                switch (f) {</span>
+<span class="fc bfc" id="L419" title="All 7 branches covered.">                switch (f) {</span>
                     case ALIGNED_DAY_OF_WEEK_IN_MONTH:
 <span class="fc bfc" id="L421" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_WEEK);</span>
                     case ALIGNED_DAY_OF_WEEK_IN_YEAR:
@@ -607,7 +607,7 @@ public final class DiscordianDate
     public DiscordianDate plus(long amountToAdd, TemporalUnit unit) {
 <span class="pc bpc" id="L608" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
 <span class="fc" id="L609">            ChronoUnit f = (ChronoUnit) unit;</span>
-<span class="pc bfc" id="L610" title="All 3 branches covered.">            switch (f) {</span>
+<span class="fc bfc" id="L610" title="All 3 branches covered.">            switch (f) {</span>
                 case WEEKS:
 <span class="fc" id="L612">                    return plusWeeks(amountToAdd);</span>
                 case MONTHS:
@@ -744,4 +744,4 @@ public final class DiscordianDate
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

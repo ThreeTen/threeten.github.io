@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en">
 <head>
@@ -13,7 +13,8 @@
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.1.js"></script>
 <script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
 <body>
@@ -26,22 +27,25 @@
     catch(err) {
     }
 //-->
-var pathtoroot = "./";loadScripts(document, 'script');</script>
+var pathtoroot = "./";
+var useModuleDirectories = true;
+loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
+<header role="banner">
+<nav role="navigation">
 <div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar.top">
+<div class="topNav"><a id="navbar.top">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.top.firstrow">
+<a id="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
-<li><a href="org.threeten.extra-summary.html">Module</a></li>
+<li>Module</li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -52,16 +56,8 @@ var pathtoroot = "./";loadScripts(document, 'script');</script>
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?overview-tree.html" target="_top">Frames</a></li>
-<li><a href="overview-tree.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <ul class="navListSearch">
 <li><label for="search">SEARCH:</label>
@@ -84,7 +80,7 @@ var pathtoroot = "./";loadScripts(document, 'script');</script>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 </div>
-<a name="skip.navbar.top">
+<a id="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -94,109 +90,121 @@ var pathtoroot = "./";loadScripts(document, 'script');</script>
 $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 //-->
 </script>
+</nav>
+</header>
+<main role="main">
 <div class="header">
 <h1 class="title">Hierarchy For All Packages</h1>
 <span class="packageHierarchyLabel">Package Hierarchies:</span>
 <ul class="horizontal">
-<li><a href="org/threeten/extra/package-tree.html">org.threeten.extra</a>, </li>
-<li><a href="org/threeten/extra/chrono/package-tree.html">org.threeten.extra.chrono</a>, </li>
-<li><a href="org/threeten/extra/scale/package-tree.html">org.threeten.extra.scale</a></li>
+<li><a href="org.threeten.extra/org/threeten/extra/package-tree.html">org.threeten.extra</a>, </li>
+<li><a href="org.threeten.extra/org/threeten/extra/chrono/package-tree.html">org.threeten.extra.chrono</a>, </li>
+<li><a href="org.threeten.extra/org/threeten/extra/scale/package-tree.html">org.threeten.extra.scale</a></li>
 </ul>
 </div>
 <div class="contentContainer">
+<section role="region">
 <h2 title="Class Hierarchy">Class Hierarchy</h2>
 <ul>
 <li class="circle">java.lang.Object
 <ul>
 <li class="circle">java.time.chrono.AbstractChronology (implements java.time.chrono.Chronology)
 <ul>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/AccountingChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">AccountingChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/BritishCutoverChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">BritishCutoverChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">CopticChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/DiscordianChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">DiscordianChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/EthiopicChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">EthiopicChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/InternationalFixedChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">InternationalFixedChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/JulianChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">JulianChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/PaxChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">PaxChronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/Symmetry010Chronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry010Chronology</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/Symmetry454Chronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry454Chronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/AccountingChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">AccountingChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/BritishCutoverChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">BritishCutoverChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/CopticChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">CopticChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/DiscordianChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">DiscordianChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/EthiopicChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">EthiopicChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/InternationalFixedChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">InternationalFixedChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/JulianChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">JulianChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/PaxChronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">PaxChronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry010Chronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry010Chronology</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry454Chronology.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry454Chronology</span></a> (implements java.io.Serializable)</li>
 </ul>
 </li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/AccountingChronologyBuilder.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">AccountingChronologyBuilder</span></a></li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/AccountingDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">AccountingDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/BritishCutoverDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">BritishCutoverDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/AccountingChronologyBuilder.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">AccountingChronologyBuilder</span></a></li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/AccountingDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">AccountingDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/AmountFormats.html" title="class in org.threeten.extra"><span class="typeNameLink">AmountFormats</span></a></li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/BritishCutoverDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">BritishCutoverDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
 <li class="circle">java.time.Clock
 <ul>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/MutableClock.html" title="class in org.threeten.extra"><span class="typeNameLink">MutableClock</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/MutableClock.html" title="class in org.threeten.extra"><span class="typeNameLink">MutableClock</span></a> (implements java.io.Serializable)</li>
 </ul>
 </li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">CopticDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/DayOfMonth.html" title="class in org.threeten.extra"><span class="typeNameLink">DayOfMonth</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/DayOfYear.html" title="class in org.threeten.extra"><span class="typeNameLink">DayOfYear</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Days.html" title="class in org.threeten.extra"><span class="typeNameLink">Days</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/DiscordianDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">DiscordianDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/EthiopicDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">EthiopicDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Hours.html" title="class in org.threeten.extra"><span class="typeNameLink">Hours</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/InternationalFixedDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">InternationalFixedDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Interval.html" title="class in org.threeten.extra"><span class="typeNameLink">Interval</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/JulianDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">JulianDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/LocalDateRange.html" title="class in org.threeten.extra"><span class="typeNameLink">LocalDateRange</span></a> (implements java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Minutes.html" title="class in org.threeten.extra"><span class="typeNameLink">Minutes</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Months.html" title="class in org.threeten.extra"><span class="typeNameLink">Months</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/PackedFields.html" title="class in org.threeten.extra"><span class="typeNameLink">PackedFields</span></a></li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/PaxDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">PaxDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/PeriodDuration.html" title="class in org.threeten.extra"><span class="typeNameLink">PeriodDuration</span></a> (implements java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Seconds.html" title="class in org.threeten.extra"><span class="typeNameLink">Seconds</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/Symmetry010Date.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry010Date</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/Symmetry454Date.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry454Date</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.scale.<a href="org/threeten/extra/scale/TaiInstant.html" title="class in org.threeten.extra.scale"><span class="typeNameLink">TaiInstant</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Temporals.html" title="class in org.threeten.extra"><span class="typeNameLink">Temporals</span></a></li>
-<li class="circle">org.threeten.extra.scale.<a href="org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale"><span class="typeNameLink">UtcInstant</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)</li>
-<li class="circle">org.threeten.extra.scale.<a href="org/threeten/extra/scale/UtcRules.html" title="class in org.threeten.extra.scale"><span class="typeNameLink">UtcRules</span></a></li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Weeks.html" title="class in org.threeten.extra"><span class="typeNameLink">Weeks</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/YearQuarter.html" title="class in org.threeten.extra"><span class="typeNameLink">YearQuarter</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Years.html" title="class in org.threeten.extra"><span class="typeNameLink">Years</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/YearWeek.html" title="class in org.threeten.extra"><span class="typeNameLink">YearWeek</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/CopticDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">CopticDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/DayOfMonth.html" title="class in org.threeten.extra"><span class="typeNameLink">DayOfMonth</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/DayOfYear.html" title="class in org.threeten.extra"><span class="typeNameLink">DayOfYear</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Days.html" title="class in org.threeten.extra"><span class="typeNameLink">Days</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/DiscordianDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">DiscordianDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/EthiopicDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">EthiopicDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Hours.html" title="class in org.threeten.extra"><span class="typeNameLink">Hours</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/InternationalFixedDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">InternationalFixedDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Interval.html" title="class in org.threeten.extra"><span class="typeNameLink">Interval</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/JulianDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">JulianDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/LocalDateRange.html" title="class in org.threeten.extra"><span class="typeNameLink">LocalDateRange</span></a> (implements java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Minutes.html" title="class in org.threeten.extra"><span class="typeNameLink">Minutes</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Months.html" title="class in org.threeten.extra"><span class="typeNameLink">Months</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/PackedFields.html" title="class in org.threeten.extra"><span class="typeNameLink">PackedFields</span></a></li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/PaxDate.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">PaxDate</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/PeriodDuration.html" title="class in org.threeten.extra"><span class="typeNameLink">PeriodDuration</span></a> (implements java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Seconds.html" title="class in org.threeten.extra"><span class="typeNameLink">Seconds</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry010Date.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry010Date</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/Symmetry454Date.html" title="class in org.threeten.extra.chrono"><span class="typeNameLink">Symmetry454Date</span></a> (implements java.time.chrono.ChronoLocalDate, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.scale.<a href="org.threeten.extra/org/threeten/extra/scale/TaiInstant.html" title="class in org.threeten.extra.scale"><span class="typeNameLink">TaiInstant</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Temporals.html" title="class in org.threeten.extra"><span class="typeNameLink">Temporals</span></a></li>
+<li class="circle">org.threeten.extra.scale.<a href="org.threeten.extra/org/threeten/extra/scale/UtcInstant.html" title="class in org.threeten.extra.scale"><span class="typeNameLink">UtcInstant</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)</li>
+<li class="circle">org.threeten.extra.scale.<a href="org.threeten.extra/org/threeten/extra/scale/UtcRules.html" title="class in org.threeten.extra.scale"><span class="typeNameLink">UtcRules</span></a></li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Weeks.html" title="class in org.threeten.extra"><span class="typeNameLink">Weeks</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/YearQuarter.html" title="class in org.threeten.extra"><span class="typeNameLink">YearQuarter</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.Temporal, java.time.temporal.TemporalAdjuster)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Years.html" title="class in org.threeten.extra"><span class="typeNameLink">Years</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAmount)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/YearWeek.html" title="class in org.threeten.extra"><span class="typeNameLink">YearWeek</span></a> (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable, java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
 </ul>
 </li>
 </ul>
+</section>
+<section role="region">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
-<li class="circle">org.threeten.extra.scale.<a href="org/threeten/extra/scale/TimeSource.html" title="interface in org.threeten.extra.scale"><span class="typeNameLink">TimeSource</span></a></li>
+<li class="circle">org.threeten.extra.scale.<a href="org.threeten.extra/org/threeten/extra/scale/TimeSource.html" title="interface in org.threeten.extra.scale"><span class="typeNameLink">TimeSource</span></a></li>
 </ul>
+</section>
+<section role="region">
 <h2 title="Enum Hierarchy">Enum Hierarchy</h2>
 <ul>
 <li class="circle">java.lang.Object
 <ul>
 <li class="circle">java.lang.Enum&lt;E&gt; (implements java.lang.Comparable&lt;T&gt;, java.io.Serializable)
 <ul>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/AccountingEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">AccountingEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/AccountingYearDivision.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">AccountingYearDivision</span></a></li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/AmPm.html" title="enum in org.threeten.extra"><span class="typeNameLink">AmPm</span></a> (implements java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/CopticEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">CopticEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/DiscordianEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">DiscordianEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/EthiopicEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">EthiopicEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/InternationalFixedEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">InternationalFixedEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/JulianEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">JulianEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.chrono.<a href="org/threeten/extra/chrono/PaxEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">PaxEra</span></a> (implements java.time.chrono.Era)</li>
-<li class="circle">org.threeten.extra.<a href="org/threeten/extra/Quarter.html" title="enum in org.threeten.extra"><span class="typeNameLink">Quarter</span></a> (implements java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/AccountingEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">AccountingEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/AccountingYearDivision.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">AccountingYearDivision</span></a></li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/AmPm.html" title="enum in org.threeten.extra"><span class="typeNameLink">AmPm</span></a> (implements java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/CopticEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">CopticEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/DiscordianEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">DiscordianEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/EthiopicEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">EthiopicEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/InternationalFixedEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">InternationalFixedEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/JulianEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">JulianEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.chrono.<a href="org.threeten.extra/org/threeten/extra/chrono/PaxEra.html" title="enum in org.threeten.extra.chrono"><span class="typeNameLink">PaxEra</span></a> (implements java.time.chrono.Era)</li>
+<li class="circle">org.threeten.extra.<a href="org.threeten.extra/org/threeten/extra/Quarter.html" title="enum in org.threeten.extra"><span class="typeNameLink">Quarter</span></a> (implements java.time.temporal.TemporalAccessor, java.time.temporal.TemporalAdjuster)</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+</section>
 </div>
+</main>
+<footer role="contentinfo">
+<nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar.bottom">
+<div class="bottomNav"><a id="navbar.bottom">
 <!--   -->
 </a>
 <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a name="navbar.bottom.firstrow">
+<a id="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="overview-summary.html">Overview</a></li>
-<li><a href="org.threeten.extra-summary.html">Module</a></li>
+<li>Module</li>
 <li>Package</li>
 <li>Class</li>
 <li>Use</li>
@@ -207,16 +215,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </ul>
 </div>
 <div class="subNav">
-<ul class="navList">
-<li>Prev</li>
-<li>Next</li>
-</ul>
-<ul class="navList">
-<li><a href="index.html?overview-tree.html" target="_top">Frames</a></li>
-<li><a href="overview-tree.html" target="_top">No&nbsp;Frames</a></li>
-</ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="allclasses-noframe.html">All&nbsp;Classes</a></li>
+<li><a href="allclasses.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -233,10 +233,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 </div>
-<a name="skip.navbar.bottom">
+<a id="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
+</nav>
 <p class="legalCopy"><small>Copyright &#169; 2010&#x2013;2018 <a href="https://www.threeten.org">ThreeTen.org</a>. All rights reserved.</small></p>
+</footer>
 </body>
 </html>
