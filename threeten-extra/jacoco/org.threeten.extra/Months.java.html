@@ -48,6 +48,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.joda.convert.FromString;
+import org.joda.convert.ToString;
+
 /**
  * A month-based amount of time, such as '12 months'.
  * &lt;p&gt;
@@ -68,11 +71,11 @@ public final class Months
     /**
      * A constant for zero months.
      */
-<span class="fc" id="L71">    public static final Months ZERO = new Months(0);</span>
+<span class="fc" id="L74">    public static final Months ZERO = new Months(0);</span>
     /**
      * A constant for one month.
      */
-<span class="fc" id="L75">    public static final Months ONE = new Months(1);</span>
+<span class="fc" id="L78">    public static final Months ONE = new Months(1);</span>
 
     /**
      * A serialization identifier for this class.
@@ -85,8 +88,8 @@ public final class Months
     /**
      * The pattern for parsing.
      */
-<span class="fc" id="L88">    private static final Pattern PATTERN =</span>
-<span class="fc" id="L89">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+<span class="fc" id="L91">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L92">            Pattern.compile(&quot;([-+]?)P&quot;</span>
                     + &quot;(?:([-+]?[0-9]+)Y)?&quot;
                     + &quot;(?:([-+]?[0-9]+)M)?&quot;, Pattern.CASE_INSENSITIVE);
 
@@ -104,12 +107,12 @@ public final class Months
      * @return the number of months, not null
      */
     public static Months of(int months) {
-<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L108">            return ZERO;</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        } else if (months == 1) {</span>
-<span class="fc" id="L110">            return ONE;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L111">            return ZERO;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        } else if (months == 1) {</span>
+<span class="fc" id="L113">            return ONE;</span>
         }
-<span class="fc" id="L112">        return new Months(months);</span>
+<span class="fc" id="L115">        return new Months(months);</span>
     }
 
     /**
@@ -124,10 +127,10 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Months ofYears(int years) {
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (years == 0) {</span>
-<span class="fc" id="L128">            return ZERO;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (years == 0) {</span>
+<span class="fc" id="L131">            return ZERO;</span>
         }
-<span class="fc" id="L130">        return new Months(Math.multiplyExact(years, MONTHS_PER_YEAR));</span>
+<span class="fc" id="L133">        return new Months(Math.multiplyExact(years, MONTHS_PER_YEAR));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -149,23 +152,23 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Months from(TemporalAmount amount) {
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (amount instanceof Months) {</span>
-<span class="fc" id="L153">            return (Months) amount;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (amount instanceof Months) {</span>
+<span class="fc" id="L156">            return (Months) amount;</span>
         }
-<span class="fc" id="L155">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
-<span class="fc" id="L156">        int months = 0;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
-<span class="fc" id="L158">            long value = amount.get(unit);</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (value != 0) {</span>
-<span class="fc" id="L160">                long[] converted = Temporals.convertAmount(value, unit, MONTHS);</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">                if (converted[1] != 0) {</span>
-<span class="nc" id="L162">                    throw new DateTimeException(</span>
+<span class="fc" id="L158">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L159">        int months = 0;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L161">            long value = amount.get(unit);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (value != 0) {</span>
+<span class="fc" id="L163">                long[] converted = Temporals.convertAmount(value, unit, MONTHS);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">                if (converted[1] != 0) {</span>
+<span class="nc" id="L165">                    throw new DateTimeException(</span>
                             &quot;Amount could not be converted to a whole number of months: &quot; + value + &quot; &quot; + unit);
                 }
-<span class="fc" id="L165">                months = Math.addExact(months, Math.toIntExact(converted[0]));</span>
+<span class="fc" id="L168">                months = Math.addExact(months, Math.toIntExact(converted[0]));</span>
             }
-<span class="fc" id="L167">        }</span>
-<span class="fc" id="L168">        return of(months);</span>
+<span class="fc" id="L170">        }</span>
+<span class="fc" id="L171">        return of(months);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -203,34 +206,35 @@ public final class Months
      * @return the parsed period, not null
      * @throws DateTimeParseException if the text cannot be parsed to a period
      */
+    @FromString
     public static Months parse(CharSequence text) {
-<span class="fc" id="L207">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc" id="L208">        Matcher matcher = PATTERN.matcher(text);</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (matcher.matches()) {</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">            int negate = (&quot;-&quot;.equals(matcher.group(1)) ? -1 : 1);</span>
-<span class="fc" id="L211">            String weeksStr = matcher.group(2);</span>
-<span class="fc" id="L212">            String daysStr = matcher.group(3);</span>
-<span class="pc bpc" id="L213" title="1 of 4 branches missed.">            if (weeksStr != null || daysStr != null) {</span>
-<span class="fc" id="L214">                int months = 0;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">                if (daysStr != null) {</span>
+<span class="fc" id="L211">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L212">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">            int negate = &quot;-&quot;.equals(matcher.group(1)) ? -1 : 1;</span>
+<span class="fc" id="L215">            String weeksStr = matcher.group(2);</span>
+<span class="fc" id="L216">            String daysStr = matcher.group(3);</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">            if (weeksStr != null || daysStr != null) {</span>
+<span class="fc" id="L218">                int months = 0;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">                if (daysStr != null) {</span>
                     try {
-<span class="fc" id="L217">                        months = Integer.parseInt(daysStr);</span>
-<span class="nc" id="L218">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L219">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Months, non-numeric months&quot;, text, 0, ex);</span>
-<span class="fc" id="L220">                    }</span>
+<span class="fc" id="L221">                        months = Integer.parseInt(daysStr);</span>
+<span class="nc" id="L222">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L223">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Months, non-numeric months&quot;, text, 0, ex);</span>
+<span class="fc" id="L224">                    }</span>
                 }
-<span class="fc bfc" id="L222" title="All 2 branches covered.">                if (weeksStr != null) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">                if (weeksStr != null) {</span>
                     try {
-<span class="fc" id="L224">                        int years = Math.multiplyExact(Integer.parseInt(weeksStr), MONTHS_PER_YEAR);</span>
-<span class="fc" id="L225">                        months = Math.addExact(months, years);</span>
-<span class="nc" id="L226">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L227">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Months, non-numeric years&quot;, text, 0, ex);</span>
-<span class="fc" id="L228">                    }</span>
+<span class="fc" id="L228">                        int years = Math.multiplyExact(Integer.parseInt(weeksStr), MONTHS_PER_YEAR);</span>
+<span class="fc" id="L229">                        months = Math.addExact(months, years);</span>
+<span class="nc" id="L230">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L231">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Months, non-numeric years&quot;, text, 0, ex);</span>
+<span class="fc" id="L232">                    }</span>
                 }
-<span class="fc" id="L230">                return of(Math.multiplyExact(months, negate));</span>
+<span class="fc" id="L234">                return of(Math.multiplyExact(months, negate));</span>
             }
         }
-<span class="fc" id="L233">        throw new DateTimeParseException(&quot;Text cannot be parsed to a Months&quot;, text, 0);</span>
+<span class="fc" id="L237">        throw new DateTimeParseException(&quot;Text cannot be parsed to a Months&quot;, text, 0);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -245,7 +249,7 @@ public final class Months
      * @return the number of months between this date and the end date, not null
      */
     public static Months between(Temporal startDateInclusive, Temporal endDateExclusive) {
-<span class="nc" id="L248">        return of(Math.toIntExact(MONTHS.between(startDateInclusive, endDateExclusive)));</span>
+<span class="fc" id="L252">        return of(Math.toIntExact(MONTHS.between(startDateInclusive, endDateExclusive)));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -255,9 +259,9 @@ public final class Months
      * @param months  the months to use
      */
     private Months(int months) {
-<span class="fc" id="L258">        super();</span>
-<span class="fc" id="L259">        this.months = months;</span>
-<span class="fc" id="L260">    }</span>
+<span class="fc" id="L262">        super();</span>
+<span class="fc" id="L263">        this.months = months;</span>
+<span class="fc" id="L264">    }</span>
 
     /**
      * Resolves singletons.
@@ -265,7 +269,7 @@ public final class Months
      * @return the singleton instance
      */
     private Object readResolve() {
-<span class="fc" id="L268">        return Months.of(months);</span>
+<span class="fc" id="L272">        return Months.of(months);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -281,10 +285,10 @@ public final class Months
      */
     @Override
     public long get(TemporalUnit unit) {
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">        if (unit == ChronoUnit.MONTHS) {</span>
-<span class="fc" id="L285">            return months;</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (unit == MONTHS) {</span>
+<span class="fc" id="L289">            return months;</span>
         }
-<span class="nc" id="L287">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L291">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
     }
 
     /**
@@ -299,7 +303,7 @@ public final class Months
      */
     @Override
     public List&lt;TemporalUnit&gt; getUnits() {
-<span class="fc" id="L302">        return Collections.singletonList(MONTHS);</span>
+<span class="fc" id="L306">        return Collections.singletonList(MONTHS);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -309,7 +313,7 @@ public final class Months
      * @return the number of months
      */
     public int getAmount() {
-<span class="fc" id="L312">        return months;</span>
+<span class="fc" id="L316">        return months;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -326,7 +330,7 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Months plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L329">        return plus(Months.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L333">        return plus(Months.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -339,10 +343,10 @@ public final class Months
      * @throws ArithmeticException if the result overflows an int
      */
     public Months plus(int months) {
-<span class="fc bfc" id="L342" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L343">            return this;</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L347">            return this;</span>
         }
-<span class="fc" id="L345">        return of(Math.addExact(this.months, months));</span>
+<span class="fc" id="L349">        return of(Math.addExact(this.months, months));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -359,7 +363,7 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Months minus(TemporalAmount amountToAdd) {
-<span class="fc" id="L362">        return minus(Months.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L366">        return minus(Months.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -372,10 +376,10 @@ public final class Months
      * @throws ArithmeticException if the result overflows an int
      */
     public Months minus(int months) {
-<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L376">            return this;</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L380">            return this;</span>
         }
-<span class="fc" id="L378">        return of(Math.subtractExact(this.months, months));</span>
+<span class="fc" id="L382">        return of(Math.subtractExact(this.months, months));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -389,10 +393,10 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Months multipliedBy(int scalar) {
-<span class="fc bfc" id="L392" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L393">            return this;</span>
+<span class="fc bfc" id="L396" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L397">            return this;</span>
         }
-<span class="fc" id="L395">        return of(Math.multiplyExact(months, scalar));</span>
+<span class="fc" id="L399">        return of(Math.multiplyExact(months, scalar));</span>
     }
 
     /**
@@ -407,10 +411,10 @@ public final class Months
      * @throws ArithmeticException if the divisor is zero
      */
     public Months dividedBy(int divisor) {
-<span class="fc bfc" id="L410" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L411">            return this;</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L415">            return this;</span>
         }
-<span class="fc" id="L413">        return of(months / divisor);</span>
+<span class="fc" id="L417">        return of(months / divisor);</span>
     }
 
     /**
@@ -423,7 +427,7 @@ public final class Months
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Months negated() {
-<span class="fc" id="L426">        return multipliedBy(-1);</span>
+<span class="fc" id="L430">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -438,7 +442,7 @@ public final class Months
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Months abs() {
-<span class="fc bfc" id="L441" title="All 2 branches covered.">        return months &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        return months &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -450,7 +454,7 @@ public final class Months
      * @return the equivalent period, not null
      */
     public Period toPeriod() {
-<span class="fc" id="L453">        return Period.ofMonths(months);</span>
+<span class="fc" id="L457">        return Period.ofMonths(months);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -480,10 +484,10 @@ public final class Months
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="nc bnc" id="L483" title="All 2 branches missed.">        if (months != 0) {</span>
-<span class="nc" id="L484">            temporal = temporal.plus(months, MONTHS);</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (months != 0) {</span>
+<span class="fc" id="L488">            temporal = temporal.plus(months, MONTHS);</span>
         }
-<span class="nc" id="L486">        return temporal;</span>
+<span class="fc" id="L490">        return temporal;</span>
     }
 
     /**
@@ -512,10 +516,10 @@ public final class Months
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="nc bnc" id="L515" title="All 2 branches missed.">        if (months != 0) {</span>
-<span class="nc" id="L516">            temporal = temporal.minus(months, MONTHS);</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">        if (months != 0) {</span>
+<span class="fc" id="L520">            temporal = temporal.minus(months, MONTHS);</span>
         }
-<span class="nc" id="L518">        return temporal;</span>
+<span class="fc" id="L522">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -530,9 +534,9 @@ public final class Months
      */
     @Override
     public int compareTo(Months otherAmount) {
-<span class="fc" id="L533">        int thisValue = this.months;</span>
-<span class="fc" id="L534">        int otherValue = otherAmount.months;</span>
-<span class="fc" id="L535">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L537">        int thisValue = this.months;</span>
+<span class="fc" id="L538">        int otherValue = otherAmount.months;</span>
+<span class="fc" id="L539">        return Integer.compare(thisValue, otherValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -546,14 +550,14 @@ public final class Months
      */
     @Override
     public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L550">            return true;</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L554">            return true;</span>
         }
-<span class="fc bfc" id="L552" title="All 2 branches covered.">        if (otherAmount instanceof Months) {</span>
-<span class="fc" id="L553">            Months other = (Months) otherAmount;</span>
-<span class="fc bfc" id="L554" title="All 2 branches covered.">            return this.months == other.months;</span>
+<span class="fc bfc" id="L556" title="All 2 branches covered.">        if (otherAmount instanceof Months) {</span>
+<span class="fc" id="L557">            Months other = (Months) otherAmount;</span>
+<span class="fc bfc" id="L558" title="All 2 branches covered.">            return this.months == other.months;</span>
         }
-<span class="fc" id="L556">        return false;</span>
+<span class="fc" id="L560">        return false;</span>
     }
 
     /**
@@ -563,7 +567,7 @@ public final class Months
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L566">        return months;</span>
+<span class="fc" id="L570">        return months;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -574,9 +578,10 @@ public final class Months
      * @return the number of months in ISO-8601 string format
      */
     @Override
+    @ToString
     public String toString() {
-<span class="fc" id="L578">        return &quot;P&quot; + months + &quot;M&quot;;</span>
+<span class="fc" id="L583">        return &quot;P&quot; + months + &quot;M&quot;;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

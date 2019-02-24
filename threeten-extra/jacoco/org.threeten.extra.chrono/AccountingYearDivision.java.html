@@ -200,7 +200,7 @@ import java.util.Arrays;
      */
     int getMonthFromElapsedWeeks(int weeksElapsed, int leapWeekInMonth) {
 <span class="fc bfc" id="L202" title="All 6 branches covered.">        if (weeksElapsed &lt; 0 || weeksElapsed &gt;= (leapWeekInMonth == 0 ? 52 : 53)) {</span>
-<span class="fc" id="L203">            throw new DateTimeException(&quot;Count of '&quot; + elapsedWeeks + &quot;' elapsed weeks not valid,&quot;</span>
+<span class="fc" id="L203">            throw new DateTimeException(&quot;Count of '&quot; + elapsedWeeks.length + &quot;' elapsed weeks not valid,&quot;</span>
 <span class="fc bfc" id="L204" title="All 2 branches covered.">                    + &quot; should be in the range [0, &quot; + (leapWeekInMonth == 0 ? 52 : 53) + &quot;)&quot;);</span>
         }
 <span class="fc bfc" id="L206" title="All 2 branches covered.">        leapWeekInMonth = (leapWeekInMonth == 0 ? 0 : monthsInYearRange.checkValidIntValue(leapWeekInMonth, ChronoField.MONTH_OF_YEAR));</span>
@@ -212,4 +212,4 @@ import java.util.Arrays;
 <span class="fc bfc" id="L212" title="All 6 branches covered.">        return leapWeekInMonth == 0 || month &lt;= leapWeekInMonth || weeksElapsed &gt; elapsedWeeks[month - 1] ? month : month - 1;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

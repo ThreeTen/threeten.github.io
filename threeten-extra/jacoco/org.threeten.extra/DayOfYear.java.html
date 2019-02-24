@@ -105,7 +105,7 @@ public final class DayOfYear
      * @return the current day-of-year using the system clock and default time-zone, not null
      */
     public static DayOfYear now() {
-<span class="nc" id="L108">        return now(Clock.systemDefaultZone());</span>
+<span class="fc" id="L108">        return now(Clock.systemDefaultZone());</span>
     }
 
     /**
@@ -121,7 +121,7 @@ public final class DayOfYear
      * @return the current day-of-year using the system clock, not null
      */
     public static DayOfYear now(ZoneId zone) {
-<span class="nc" id="L124">        return now(Clock.system(zone));</span>
+<span class="fc" id="L124">        return now(Clock.system(zone));</span>
     }
 
     /**
@@ -177,13 +177,13 @@ public final class DayOfYear
      * @throws DateTimeException if unable to convert to a {@code DayOfYear}
      */
     public static DayOfYear from(TemporalAccessor temporal) {
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (temporal instanceof DayOfYear) {</span>
-<span class="nc" id="L181">            return (DayOfYear) temporal;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        if (temporal instanceof DayOfYear) {</span>
+<span class="fc" id="L181">            return (DayOfYear) temporal;</span>
         }
 <span class="fc" id="L183">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
         try {
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
-<span class="nc" id="L186">                temporal = LocalDate.from(temporal);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
+<span class="fc" id="L186">                temporal = LocalDate.from(temporal);</span>
             }
 <span class="fc" id="L188">            return of(temporal.get(DAY_OF_YEAR));</span>
 <span class="fc" id="L189">        } catch (DateTimeException ex) {</span>
@@ -250,7 +250,7 @@ public final class DayOfYear
 <span class="fc bfc" id="L250" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
 <span class="fc bfc" id="L251" title="All 2 branches covered.">            return field == DAY_OF_YEAR;</span>
         }
-<span class="pc bpc" id="L253" title="3 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L253" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -340,10 +340,10 @@ public final class DayOfYear
     public long getLong(TemporalField field) {
 <span class="fc bfc" id="L341" title="All 2 branches covered.">        if (field == DAY_OF_YEAR) {</span>
 <span class="fc" id="L342">            return day;</span>
-<span class="pc bpc" id="L343" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc" id="L344">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L346">        return field.getFrom(this);</span>
+<span class="fc" id="L346">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -416,8 +416,8 @@ public final class DayOfYear
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="pc bpc" id="L419" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
-<span class="nc" id="L420">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="fc" id="L420">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
 <span class="fc" id="L422">        return temporal.with(DAY_OF_YEAR, day);</span>
     }
@@ -519,4 +519,4 @@ public final class DayOfYear
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -48,6 +48,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.joda.convert.FromString;
+import org.joda.convert.ToString;
+
 /**
  * A day-based amount of time, such as '12 days'.
  * &lt;p&gt;
@@ -68,11 +71,11 @@ public final class Days
     /**
      * A constant for zero days.
      */
-<span class="fc" id="L71">    public static final Days ZERO = new Days(0);</span>
+<span class="fc" id="L74">    public static final Days ZERO = new Days(0);</span>
     /**
      * A constant for one day.
      */
-<span class="fc" id="L75">    public static final Days ONE = new Days(1);</span>
+<span class="fc" id="L78">    public static final Days ONE = new Days(1);</span>
 
     /**
      * A serialization identifier for this class.
@@ -85,8 +88,8 @@ public final class Days
     /**
      * The pattern for parsing.
      */
-<span class="fc" id="L88">    private static final Pattern PATTERN =</span>
-<span class="fc" id="L89">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+<span class="fc" id="L91">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L92">            Pattern.compile(&quot;([-+]?)P&quot;</span>
                     + &quot;(?:([-+]?[0-9]+)W)?&quot;
                     + &quot;(?:([-+]?[0-9]+)D)?&quot;, Pattern.CASE_INSENSITIVE);
 
@@ -104,12 +107,12 @@ public final class Days
      * @return the number of days, not null
      */
     public static Days of(int days) {
-<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (days == 0) {</span>
-<span class="fc" id="L108">            return ZERO;</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        } else if (days == 1) {</span>
-<span class="fc" id="L110">            return ONE;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L111">            return ZERO;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        } else if (days == 1) {</span>
+<span class="fc" id="L113">            return ONE;</span>
         }
-<span class="fc" id="L112">        return new Days(days);</span>
+<span class="fc" id="L115">        return new Days(days);</span>
     }
 
     /**
@@ -124,10 +127,10 @@ public final class Days
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Days ofWeeks(int weeks) {
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (weeks == 0) {</span>
-<span class="fc" id="L128">            return ZERO;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (weeks == 0) {</span>
+<span class="fc" id="L131">            return ZERO;</span>
         }
-<span class="fc" id="L130">        return new Days(Math.multiplyExact(weeks, DAYS_PER_WEEK));</span>
+<span class="fc" id="L133">        return new Days(Math.multiplyExact(weeks, DAYS_PER_WEEK));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -149,23 +152,23 @@ public final class Days
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Days from(TemporalAmount amount) {
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (amount instanceof Days) {</span>
-<span class="fc" id="L153">            return (Days) amount;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (amount instanceof Days) {</span>
+<span class="fc" id="L156">            return (Days) amount;</span>
         }
-<span class="fc" id="L155">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
-<span class="fc" id="L156">        int days = 0;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
-<span class="fc" id="L158">            long value = amount.get(unit);</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (value != 0) {</span>
-<span class="fc" id="L160">                long[] converted = Temporals.convertAmount(value, unit, DAYS);</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">                if (converted[1] != 0) {</span>
-<span class="fc" id="L162">                    throw new DateTimeException(</span>
+<span class="fc" id="L158">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L159">        int days = 0;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L161">            long value = amount.get(unit);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (value != 0) {</span>
+<span class="fc" id="L163">                long[] converted = Temporals.convertAmount(value, unit, DAYS);</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">                if (converted[1] != 0) {</span>
+<span class="fc" id="L165">                    throw new DateTimeException(</span>
                             &quot;Amount could not be converted to a whole number of days: &quot; + value + &quot; &quot; + unit);
                 }
-<span class="fc" id="L165">                days = Math.addExact(days, Math.toIntExact(converted[0]));</span>
+<span class="fc" id="L168">                days = Math.addExact(days, Math.toIntExact(converted[0]));</span>
             }
-<span class="fc" id="L167">        }</span>
-<span class="fc" id="L168">        return of(days);</span>
+<span class="fc" id="L170">        }</span>
+<span class="fc" id="L171">        return of(days);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -203,34 +206,35 @@ public final class Days
      * @return the parsed period, not null
      * @throws DateTimeParseException if the text cannot be parsed to a period
      */
+    @FromString
     public static Days parse(CharSequence text) {
-<span class="fc" id="L207">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc" id="L208">        Matcher matcher = PATTERN.matcher(text);</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (matcher.matches()) {</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">            int negate = (&quot;-&quot;.equals(matcher.group(1)) ? -1 : 1);</span>
-<span class="fc" id="L211">            String weeksStr = matcher.group(2);</span>
-<span class="fc" id="L212">            String daysStr = matcher.group(3);</span>
-<span class="fc bfc" id="L213" title="All 4 branches covered.">            if (weeksStr != null || daysStr != null) {</span>
-<span class="fc" id="L214">                int days = 0;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">                if (daysStr != null) {</span>
+<span class="fc" id="L211">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L212">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">            int negate = &quot;-&quot;.equals(matcher.group(1)) ? -1 : 1;</span>
+<span class="fc" id="L215">            String weeksStr = matcher.group(2);</span>
+<span class="fc" id="L216">            String daysStr = matcher.group(3);</span>
+<span class="fc bfc" id="L217" title="All 4 branches covered.">            if (weeksStr != null || daysStr != null) {</span>
+<span class="fc" id="L218">                int days = 0;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">                if (daysStr != null) {</span>
                     try {
-<span class="fc" id="L217">                        days = Integer.parseInt(daysStr);</span>
-<span class="nc" id="L218">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L219">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days, non-numeric days&quot;, text, 0, ex);</span>
-<span class="fc" id="L220">                    }</span>
+<span class="fc" id="L221">                        days = Integer.parseInt(daysStr);</span>
+<span class="nc" id="L222">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L223">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days, non-numeric days&quot;, text, 0, ex);</span>
+<span class="fc" id="L224">                    }</span>
                 }
-<span class="fc bfc" id="L222" title="All 2 branches covered.">                if (weeksStr != null) {</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">                if (weeksStr != null) {</span>
                     try {
-<span class="fc" id="L224">                        int weeks = Math.multiplyExact(Integer.parseInt(weeksStr), DAYS_PER_WEEK);</span>
-<span class="fc" id="L225">                        days = Math.addExact(days, weeks);</span>
-<span class="nc" id="L226">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L227">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days, non-numeric weeks&quot;, text, 0, ex);</span>
-<span class="fc" id="L228">                    }</span>
+<span class="fc" id="L228">                        int weeks = Math.multiplyExact(Integer.parseInt(weeksStr), DAYS_PER_WEEK);</span>
+<span class="fc" id="L229">                        days = Math.addExact(days, weeks);</span>
+<span class="nc" id="L230">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L231">                        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days, non-numeric weeks&quot;, text, 0, ex);</span>
+<span class="fc" id="L232">                    }</span>
                 }
-<span class="fc" id="L230">                return of(Math.multiplyExact(days, negate));</span>
+<span class="fc" id="L234">                return of(Math.multiplyExact(days, negate));</span>
             }
         }
-<span class="fc" id="L233">        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days&quot;, text, 0);</span>
+<span class="fc" id="L237">        throw new DateTimeParseException(&quot;Text cannot be parsed to a Days&quot;, text, 0);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -245,7 +249,7 @@ public final class Days
      * @return the number of days between this date and the end date, not null
      */
     public static Days between(Temporal startDateInclusive, Temporal endDateExclusive) {
-<span class="nc" id="L248">        return of(Math.toIntExact(DAYS.between(startDateInclusive, endDateExclusive)));</span>
+<span class="fc" id="L252">        return of(Math.toIntExact(DAYS.between(startDateInclusive, endDateExclusive)));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -255,9 +259,9 @@ public final class Days
      * @param days  the days to use
      */
     private Days(int days) {
-<span class="fc" id="L258">        super();</span>
-<span class="fc" id="L259">        this.days = days;</span>
-<span class="fc" id="L260">    }</span>
+<span class="fc" id="L262">        super();</span>
+<span class="fc" id="L263">        this.days = days;</span>
+<span class="fc" id="L264">    }</span>
 
     /**
      * Resolves singletons.
@@ -265,7 +269,7 @@ public final class Days
      * @return the singleton instance
      */
     private Object readResolve() {
-<span class="fc" id="L268">        return Days.of(days);</span>
+<span class="fc" id="L272">        return Days.of(days);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -281,10 +285,10 @@ public final class Days
      */
     @Override
     public long get(TemporalUnit unit) {
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">        if (unit == ChronoUnit.DAYS) {</span>
-<span class="fc" id="L285">            return days;</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (unit == DAYS) {</span>
+<span class="fc" id="L289">            return days;</span>
         }
-<span class="nc" id="L287">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L291">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
     }
 
     /**
@@ -299,7 +303,7 @@ public final class Days
      */
     @Override
     public List&lt;TemporalUnit&gt; getUnits() {
-<span class="fc" id="L302">        return Collections.singletonList(DAYS);</span>
+<span class="fc" id="L306">        return Collections.singletonList(DAYS);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -309,7 +313,7 @@ public final class Days
      * @return the number of days
      */
     public int getAmount() {
-<span class="fc" id="L312">        return days;</span>
+<span class="fc" id="L316">        return days;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -326,7 +330,7 @@ public final class Days
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Days plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L329">        return plus(Days.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L333">        return plus(Days.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -339,10 +343,10 @@ public final class Days
      * @throws ArithmeticException if the result overflows an int
      */
     public Days plus(int days) {
-<span class="fc bfc" id="L342" title="All 2 branches covered.">        if (days == 0) {</span>
-<span class="fc" id="L343">            return this;</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L347">            return this;</span>
         }
-<span class="fc" id="L345">        return of(Math.addExact(this.days, days));</span>
+<span class="fc" id="L349">        return of(Math.addExact(this.days, days));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -359,7 +363,7 @@ public final class Days
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Days minus(TemporalAmount amountToAdd) {
-<span class="fc" id="L362">        return minus(Days.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L366">        return minus(Days.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -372,10 +376,10 @@ public final class Days
      * @throws ArithmeticException if the result overflows an int
      */
     public Days minus(int days) {
-<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (days == 0) {</span>
-<span class="fc" id="L376">            return this;</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L380">            return this;</span>
         }
-<span class="fc" id="L378">        return of(Math.subtractExact(this.days, days));</span>
+<span class="fc" id="L382">        return of(Math.subtractExact(this.days, days));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -389,10 +393,10 @@ public final class Days
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Days multipliedBy(int scalar) {
-<span class="fc bfc" id="L392" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L393">            return this;</span>
+<span class="fc bfc" id="L396" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L397">            return this;</span>
         }
-<span class="fc" id="L395">        return of(Math.multiplyExact(days, scalar));</span>
+<span class="fc" id="L399">        return of(Math.multiplyExact(days, scalar));</span>
     }
 
     /**
@@ -407,10 +411,10 @@ public final class Days
      * @throws ArithmeticException if the divisor is zero
      */
     public Days dividedBy(int divisor) {
-<span class="fc bfc" id="L410" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L411">            return this;</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L415">            return this;</span>
         }
-<span class="fc" id="L413">        return of(days / divisor);</span>
+<span class="fc" id="L417">        return of(days / divisor);</span>
     }
 
     /**
@@ -423,7 +427,7 @@ public final class Days
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Days negated() {
-<span class="fc" id="L426">        return multipliedBy(-1);</span>
+<span class="fc" id="L430">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -438,7 +442,7 @@ public final class Days
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Days abs() {
-<span class="fc bfc" id="L441" title="All 2 branches covered.">        return days &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        return days &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -450,7 +454,7 @@ public final class Days
      * @return the equivalent period, not null
      */
     public Period toPeriod() {
-<span class="fc" id="L453">        return Period.ofDays(days);</span>
+<span class="fc" id="L457">        return Period.ofDays(days);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -480,10 +484,10 @@ public final class Days
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="nc bnc" id="L483" title="All 2 branches missed.">        if (days != 0) {</span>
-<span class="nc" id="L484">            temporal = temporal.plus(days, DAYS);</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (days != 0) {</span>
+<span class="fc" id="L488">            temporal = temporal.plus(days, DAYS);</span>
         }
-<span class="nc" id="L486">        return temporal;</span>
+<span class="fc" id="L490">        return temporal;</span>
     }
 
     /**
@@ -512,10 +516,10 @@ public final class Days
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="nc bnc" id="L515" title="All 2 branches missed.">        if (days != 0) {</span>
-<span class="nc" id="L516">            temporal = temporal.minus(days, DAYS);</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">        if (days != 0) {</span>
+<span class="fc" id="L520">            temporal = temporal.minus(days, DAYS);</span>
         }
-<span class="nc" id="L518">        return temporal;</span>
+<span class="fc" id="L522">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -530,9 +534,9 @@ public final class Days
      */
     @Override
     public int compareTo(Days otherAmount) {
-<span class="fc" id="L533">        int thisValue = this.days;</span>
-<span class="fc" id="L534">        int otherValue = otherAmount.days;</span>
-<span class="fc" id="L535">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L537">        int thisValue = this.days;</span>
+<span class="fc" id="L538">        int otherValue = otherAmount.days;</span>
+<span class="fc" id="L539">        return Integer.compare(thisValue, otherValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -546,14 +550,14 @@ public final class Days
      */
     @Override
     public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L550">            return true;</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L554">            return true;</span>
         }
-<span class="fc bfc" id="L552" title="All 2 branches covered.">        if (otherAmount instanceof Days) {</span>
-<span class="fc" id="L553">            Days other = (Days) otherAmount;</span>
-<span class="fc bfc" id="L554" title="All 2 branches covered.">            return this.days == other.days;</span>
+<span class="fc bfc" id="L556" title="All 2 branches covered.">        if (otherAmount instanceof Days) {</span>
+<span class="fc" id="L557">            Days other = (Days) otherAmount;</span>
+<span class="fc bfc" id="L558" title="All 2 branches covered.">            return this.days == other.days;</span>
         }
-<span class="fc" id="L556">        return false;</span>
+<span class="fc" id="L560">        return false;</span>
     }
 
     /**
@@ -563,7 +567,7 @@ public final class Days
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L566">        return days;</span>
+<span class="fc" id="L570">        return days;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -574,9 +578,10 @@ public final class Days
      * @return the number of days in ISO-8601 string format
      */
     @Override
+    @ToString
     public String toString() {
-<span class="fc" id="L578">        return &quot;P&quot; + days + &quot;D&quot;;</span>
+<span class="fc" id="L583">        return &quot;P&quot; + days + &quot;D&quot;;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

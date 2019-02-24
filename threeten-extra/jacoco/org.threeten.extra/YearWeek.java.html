@@ -61,6 +61,9 @@ import java.time.temporal.UnsupportedTemporalTypeException;
 import java.time.temporal.ValueRange;
 import java.util.Objects;
 
+import org.joda.convert.FromString;
+import org.joda.convert.ToString;
+
 /**
  * A year-week in the ISO week date system such as {@code 2015-W13}
  * &lt;p&gt;
@@ -99,12 +102,12 @@ public final class YearWeek
     /**
      * Parser.
      */
-<span class="fc" id="L102">    private static final DateTimeFormatter PARSER = new DateTimeFormatterBuilder()</span>
-<span class="fc" id="L103">            .parseCaseInsensitive()</span>
-<span class="fc" id="L104">            .appendValue(WEEK_BASED_YEAR, 4, 10, SignStyle.EXCEEDS_PAD)</span>
-<span class="fc" id="L105">            .appendLiteral(&quot;-W&quot;)</span>
-<span class="fc" id="L106">            .appendValue(WEEK_OF_WEEK_BASED_YEAR, 2)</span>
-<span class="fc" id="L107">            .toFormatter();</span>
+<span class="fc" id="L105">    private static final DateTimeFormatter PARSER = new DateTimeFormatterBuilder()</span>
+<span class="fc" id="L106">            .parseCaseInsensitive()</span>
+<span class="fc" id="L107">            .appendValue(WEEK_BASED_YEAR, 4, 10, SignStyle.EXCEEDS_PAD)</span>
+<span class="fc" id="L108">            .appendLiteral(&quot;-W&quot;)</span>
+<span class="fc" id="L109">            .appendValue(WEEK_OF_WEEK_BASED_YEAR, 2)</span>
+<span class="fc" id="L110">            .toFormatter();</span>
 
     /**
      * The week-based-year.
@@ -129,7 +132,7 @@ public final class YearWeek
      * @return the current year-week using the system clock and default time-zone, not null
      */
     public static YearWeek now() {
-<span class="fc" id="L132">        return now(Clock.systemDefaultZone());</span>
+<span class="fc" id="L135">        return now(Clock.systemDefaultZone());</span>
     }
 
     /**
@@ -145,7 +148,7 @@ public final class YearWeek
      * @return the current year-week using the system clock, not null
      */
     public static YearWeek now(ZoneId zone) {
-<span class="fc" id="L148">        return now(Clock.system(zone));</span>
+<span class="fc" id="L151">        return now(Clock.system(zone));</span>
     }
 
     /**
@@ -159,8 +162,8 @@ public final class YearWeek
      * @return the current year-week, not null
      */
     public static YearWeek now(Clock clock) {
-<span class="fc" id="L162">        final LocalDate now = LocalDate.now(clock);  // called once</span>
-<span class="fc" id="L163">        return YearWeek.of(now.get(WEEK_BASED_YEAR), now.get(WEEK_OF_WEEK_BASED_YEAR));</span>
+<span class="fc" id="L165">        final LocalDate now = LocalDate.now(clock);  // called once</span>
+<span class="fc" id="L166">        return YearWeek.of(now.get(WEEK_BASED_YEAR), now.get(WEEK_OF_WEEK_BASED_YEAR));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -176,24 +179,24 @@ public final class YearWeek
      * @throws DateTimeException if either field is invalid
      */
     public static YearWeek of(int weekBasedYear, int week) {
-<span class="fc" id="L179">        WEEK_BASED_YEAR.range().checkValidValue(weekBasedYear, WEEK_BASED_YEAR);</span>
-<span class="fc" id="L180">        WEEK_OF_WEEK_BASED_YEAR.range().checkValidValue(week, WEEK_OF_WEEK_BASED_YEAR);</span>
-<span class="fc bfc" id="L181" title="All 4 branches covered.">        if (week == 53 &amp;&amp; weekRange(weekBasedYear) &lt; 53) {</span>
-<span class="fc" id="L182">            week = 1;</span>
-<span class="fc" id="L183">            weekBasedYear++;</span>
-<span class="fc" id="L184">            WEEK_BASED_YEAR.range().checkValidValue(weekBasedYear, WEEK_BASED_YEAR);</span>
+<span class="fc" id="L182">        WEEK_BASED_YEAR.range().checkValidValue(weekBasedYear, WEEK_BASED_YEAR);</span>
+<span class="fc" id="L183">        WEEK_OF_WEEK_BASED_YEAR.range().checkValidValue(week, WEEK_OF_WEEK_BASED_YEAR);</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">        if (week == 53 &amp;&amp; weekRange(weekBasedYear) &lt; 53) {</span>
+<span class="fc" id="L185">            week = 1;</span>
+<span class="fc" id="L186">            weekBasedYear++;</span>
+<span class="fc" id="L187">            WEEK_BASED_YEAR.range().checkValidValue(weekBasedYear, WEEK_BASED_YEAR);</span>
         }
-<span class="fc" id="L186">        return new YearWeek(weekBasedYear, week);</span>
+<span class="fc" id="L189">        return new YearWeek(weekBasedYear, week);</span>
     }
 
     // from IsoFields in ThreeTen-Backport
     private static int weekRange(int weekBasedYear) {
-<span class="fc" id="L191">        LocalDate date = LocalDate.of(weekBasedYear, 1, 1);</span>
+<span class="fc" id="L194">        LocalDate date = LocalDate.of(weekBasedYear, 1, 1);</span>
         // 53 weeks if year starts on Thursday, or Wed in a leap year
-<span class="fc bfc" id="L193" title="All 6 branches covered.">        if (date.getDayOfWeek() == THURSDAY || (date.getDayOfWeek() == WEDNESDAY &amp;&amp; date.isLeapYear())) {</span>
-<span class="fc" id="L194">            return 53;</span>
+<span class="fc bfc" id="L196" title="All 6 branches covered.">        if (date.getDayOfWeek() == THURSDAY || (date.getDayOfWeek() == WEDNESDAY &amp;&amp; date.isLeapYear())) {</span>
+<span class="fc" id="L197">            return 53;</span>
         }
-<span class="fc" id="L196">        return 52;</span>
+<span class="fc" id="L199">        return 52;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -217,21 +220,21 @@ public final class YearWeek
      * @throws DateTimeException if unable to convert to a {@code YearWeek}
      */
     public static YearWeek from(TemporalAccessor temporal) {
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (temporal instanceof YearWeek) {</span>
-<span class="fc" id="L221">            return (YearWeek) temporal;</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (temporal instanceof YearWeek) {</span>
+<span class="fc" id="L224">            return (YearWeek) temporal;</span>
         }
-<span class="fc" id="L223">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
+<span class="fc" id="L226">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
         try {
-<span class="fc bfc" id="L225" title="All 2 branches covered.">            if (!IsoChronology.INSTANCE.equals(Chronology.from(temporal))) {</span>
-<span class="fc" id="L226">                temporal = LocalDate.from(temporal);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">            if (!IsoChronology.INSTANCE.equals(Chronology.from(temporal))) {</span>
+<span class="fc" id="L229">                temporal = LocalDate.from(temporal);</span>
             }
             // need to use getLong() as JDK Parsed class get() doesn't work properly
-<span class="fc" id="L229">            int year = Math.toIntExact(temporal.getLong(WEEK_BASED_YEAR));</span>
-<span class="fc" id="L230">            int week = Math.toIntExact(temporal.getLong(WEEK_OF_WEEK_BASED_YEAR));</span>
-<span class="fc" id="L231">            return of(year, week);</span>
-<span class="fc" id="L232">        } catch (DateTimeException ex) {</span>
-<span class="fc" id="L233">            throw new DateTimeException(&quot;Unable to obtain YearWeek from TemporalAccessor: &quot; +</span>
-<span class="fc" id="L234">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+<span class="fc" id="L232">            int year = Math.toIntExact(temporal.getLong(WEEK_BASED_YEAR));</span>
+<span class="fc" id="L233">            int week = Math.toIntExact(temporal.getLong(WEEK_OF_WEEK_BASED_YEAR));</span>
+<span class="fc" id="L234">            return of(year, week);</span>
+<span class="fc" id="L235">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L236">            throw new DateTimeException(&quot;Unable to obtain YearWeek from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L237">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
         }
     }
 
@@ -248,8 +251,9 @@ public final class YearWeek
      * @return the parsed year-week, not null
      * @throws DateTimeParseException if the text cannot be parsed
      */
+    @FromString
     public static YearWeek parse(CharSequence text) {
-<span class="fc" id="L252">        return parse(text, PARSER);</span>
+<span class="fc" id="L256">        return parse(text, PARSER);</span>
     }
 
     /**
@@ -263,8 +267,8 @@ public final class YearWeek
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static YearWeek parse(CharSequence text, DateTimeFormatter formatter) {
-<span class="fc" id="L266">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L267">        return formatter.parse(text, YearWeek::from);</span>
+<span class="fc" id="L270">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L271">        return formatter.parse(text, YearWeek::from);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -274,10 +278,10 @@ public final class YearWeek
      * @param weekBasedYear  the week-based-year to represent, validated from MIN_YEAR to MAX_YEAR
      * @param week  the week to represent, validated
      */
-<span class="fc" id="L277">    private YearWeek(int weekBasedYear, int week) {</span>
-<span class="fc" id="L278">        this.year = weekBasedYear;</span>
-<span class="fc" id="L279">        this.week = week;</span>
-<span class="fc" id="L280">    }</span>
+<span class="fc" id="L281">    private YearWeek(int weekBasedYear, int week) {</span>
+<span class="fc" id="L282">        this.year = weekBasedYear;</span>
+<span class="fc" id="L283">        this.week = week;</span>
+<span class="fc" id="L284">    }</span>
 
     /**
      * Validates the input.
@@ -285,7 +289,7 @@ public final class YearWeek
      * @return the valid object, not null
      */
     private Object readResolve() {
-<span class="fc" id="L288">        return of(year, week);</span>
+<span class="fc" id="L292">        return of(year, week);</span>
     }
 
     /**
@@ -297,10 +301,10 @@ public final class YearWeek
      * @return the year-week, not null
      */
     private YearWeek with(int newYear, int newWeek) {
-<span class="fc bfc" id="L300" title="All 4 branches covered.">        if (year == newYear &amp;&amp; week == newWeek) {</span>
-<span class="fc" id="L301">            return this;</span>
+<span class="fc bfc" id="L304" title="All 4 branches covered.">        if (year == newYear &amp;&amp; week == newWeek) {</span>
+<span class="fc" id="L305">            return this;</span>
         }
-<span class="fc" id="L303">        return of(newYear, newWeek);</span>
+<span class="fc" id="L307">        return of(newYear, newWeek);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -329,12 +333,12 @@ public final class YearWeek
      */
     @Override
     public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L332" title="All 4 branches covered.">        if (field == WEEK_OF_WEEK_BASED_YEAR || field == WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L333">            return true;</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L335">            return false;</span>
+<span class="fc bfc" id="L336" title="All 4 branches covered.">        if (field == WEEK_OF_WEEK_BASED_YEAR || field == WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L337">            return true;</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L339">            return false;</span>
         }
-<span class="pc bpc" id="L337" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L341" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -357,13 +361,13 @@ public final class YearWeek
      */
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc bfc" id="L360" title="All 2 branches covered.">        if (field == WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L361">            return WEEK_BASED_YEAR.range();</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">        if (field == WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L365">            return WEEK_BASED_YEAR.range();</span>
         }
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">        if (field == WEEK_OF_WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L364">            return ValueRange.of(1, weekRange(year));</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">        if (field == WEEK_OF_WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L368">            return ValueRange.of(1, weekRange(year));</span>
         }
-<span class="nc" id="L366">        return TemporalAccessor.super.range(field);</span>
+<span class="nc" id="L370">        return TemporalAccessor.super.range(field);</span>
     }
 
     /**
@@ -388,13 +392,13 @@ public final class YearWeek
      */
     @Override
     public int get(TemporalField field) {
-<span class="fc bfc" id="L391" title="All 2 branches covered.">        if (field == WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L392">            return year;</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">        if (field == WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L396">            return year;</span>
         }
-<span class="pc bpc" id="L394" title="1 of 2 branches missed.">        if (field == WEEK_OF_WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L395">            return week;</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">        if (field == WEEK_OF_WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L399">            return week;</span>
         }
-<span class="nc" id="L397">        return TemporalAccessor.super.get(field);</span>
+<span class="nc" id="L401">        return TemporalAccessor.super.get(field);</span>
     }
 
     /**
@@ -416,16 +420,16 @@ public final class YearWeek
      */
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (field == WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L420">            return year;</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        if (field == WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L424">            return year;</span>
         }
-<span class="fc bfc" id="L422" title="All 2 branches covered.">        if (field == WEEK_OF_WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L423">            return week;</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">        if (field == WEEK_OF_WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L427">            return week;</span>
         }
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
-<span class="fc" id="L426">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc" id="L430">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L428">        return field.getFrom(this);</span>
+<span class="nc" id="L432">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -439,7 +443,7 @@ public final class YearWeek
      * @return the week-based-year
      */
     public int getYear() {
-<span class="fc" id="L442">        return year;</span>
+<span class="fc" id="L446">        return year;</span>
     }
 
     /**
@@ -450,7 +454,7 @@ public final class YearWeek
      * @return the week-of-week-based-year
      */
     public int getWeek() {
-<span class="fc" id="L453">        return week;</span>
+<span class="fc" id="L457">        return week;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -463,7 +467,7 @@ public final class YearWeek
      * @return true if the year has 53 weeks, false otherwise
      */
     public boolean is53WeekYear() {
-<span class="fc bfc" id="L466" title="All 2 branches covered.">        return weekRange(year) == 53;</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">        return weekRange(year) == 53;</span>
     }
 
     /**
@@ -474,7 +478,7 @@ public final class YearWeek
      * @return 364 if the year has 52 weeks, 371 if it has 53 weeks
      */
     public int lengthOfYear() {
-<span class="fc bfc" id="L477" title="All 2 branches covered.">        return (is53WeekYear() ? 371 : 364);</span>
+<span class="fc bfc" id="L481" title="All 2 branches covered.">        return (is53WeekYear() ? 371 : 364);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -492,10 +496,10 @@ public final class YearWeek
      * @throws DateTimeException if the week-based-year value is invalid
      */
     public YearWeek withYear(int weekBasedYear) {
-<span class="fc bfc" id="L495" title="All 4 branches covered.">        if (week == 53 &amp;&amp; weekRange(weekBasedYear) &lt; 53) {</span>
-<span class="fc" id="L496">            return YearWeek.of(weekBasedYear, 52);</span>
+<span class="fc bfc" id="L499" title="All 4 branches covered.">        if (week == 53 &amp;&amp; weekRange(weekBasedYear) &lt; 53) {</span>
+<span class="fc" id="L500">            return YearWeek.of(weekBasedYear, 52);</span>
         }
-<span class="fc" id="L498">        return with(weekBasedYear, week);</span>
+<span class="fc" id="L502">        return with(weekBasedYear, week);</span>
     }
 
     /**
@@ -512,7 +516,7 @@ public final class YearWeek
      * @throws DateTimeException if the week-of-week-based-year value is invalid
      */
     public YearWeek withWeek(int week) {
-<span class="fc" id="L515">        return with(year, week);</span>
+<span class="fc" id="L519">        return with(year, week);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -528,11 +532,11 @@ public final class YearWeek
      * @return the year-week with the years added, not null
      */
     public YearWeek plusYears(long yearsToAdd) {
-<span class="fc bfc" id="L531" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
-<span class="fc" id="L532">            return this;</span>
+<span class="fc bfc" id="L535" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
+<span class="fc" id="L536">            return this;</span>
         }
-<span class="fc" id="L534">        int newYear = Math.toIntExact(Math.addExact(year, yearsToAdd));</span>
-<span class="fc" id="L535">        return withYear(newYear);</span>
+<span class="fc" id="L538">        int newYear = Math.toIntExact(Math.addExact(year, yearsToAdd));</span>
+<span class="fc" id="L539">        return withYear(newYear);</span>
     }
 
     /**
@@ -544,11 +548,11 @@ public final class YearWeek
      * @return the year-week with the weeks added, not null
      */
     public YearWeek plusWeeks(long weeksToAdd) {
-<span class="fc bfc" id="L547" title="All 2 branches covered.">        if (weeksToAdd == 0) {</span>
-<span class="fc" id="L548">            return this;</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">        if (weeksToAdd == 0) {</span>
+<span class="fc" id="L552">            return this;</span>
         }
-<span class="fc" id="L550">        LocalDate mondayOfWeek = atDay(DayOfWeek.MONDAY).plusWeeks(weeksToAdd);</span>
-<span class="fc" id="L551">        return YearWeek.from(mondayOfWeek);</span>
+<span class="fc" id="L554">        LocalDate mondayOfWeek = atDay(DayOfWeek.MONDAY).plusWeeks(weeksToAdd);</span>
+<span class="fc" id="L555">        return YearWeek.from(mondayOfWeek);</span>
     }
 
     /**
@@ -563,11 +567,11 @@ public final class YearWeek
      * @return the year-week with the years subtracted, not null
      */
     public YearWeek minusYears(long yearsToSubtract) {
-<span class="fc bfc" id="L566" title="All 2 branches covered.">        if (yearsToSubtract == 0) {</span>
-<span class="fc" id="L567">            return this;</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">        if (yearsToSubtract == 0) {</span>
+<span class="fc" id="L571">            return this;</span>
         }
-<span class="fc" id="L569">        int newYear = Math.toIntExact(Math.subtractExact(year, yearsToSubtract));</span>
-<span class="fc" id="L570">        return withYear(newYear);</span>
+<span class="fc" id="L573">        int newYear = Math.toIntExact(Math.subtractExact(year, yearsToSubtract));</span>
+<span class="fc" id="L574">        return withYear(newYear);</span>
     }
 
     /**
@@ -579,11 +583,11 @@ public final class YearWeek
      * @return the year-week with the weeks subtracted, not null
      */
     public YearWeek minusWeeks(long weeksToSubtract) {
-<span class="fc bfc" id="L582" title="All 2 branches covered.">        if (weeksToSubtract == 0) {</span>
-<span class="fc" id="L583">            return this;</span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">        if (weeksToSubtract == 0) {</span>
+<span class="fc" id="L587">            return this;</span>
         }
-<span class="fc" id="L585">        LocalDate mondayOfWeek = atDay(DayOfWeek.MONDAY).minusWeeks(weeksToSubtract);</span>
-<span class="fc" id="L586">        return YearWeek.from(mondayOfWeek);</span>
+<span class="fc" id="L589">        LocalDate mondayOfWeek = atDay(DayOfWeek.MONDAY).minusWeeks(weeksToSubtract);</span>
+<span class="fc" id="L590">        return YearWeek.from(mondayOfWeek);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -608,10 +612,10 @@ public final class YearWeek
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L611" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L612">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L616">            return (R) IsoChronology.INSTANCE;</span>
         }
-<span class="fc" id="L614">        return TemporalAccessor.super.query(query);</span>
+<span class="fc" id="L618">        return TemporalAccessor.super.query(query);</span>
     }
 
     /**
@@ -643,10 +647,10 @@ public final class YearWeek
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="fc bfc" id="L646" title="All 2 branches covered.">        if (!Chronology.from(temporal).equals(IsoChronology.INSTANCE)) {</span>
-<span class="fc" id="L647">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="fc bfc" id="L650" title="All 2 branches covered.">        if (!Chronology.from(temporal).equals(IsoChronology.INSTANCE)) {</span>
+<span class="fc" id="L651">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
-<span class="fc" id="L649">        return temporal.with(WEEK_BASED_YEAR, year).with(WEEK_OF_WEEK_BASED_YEAR, week);</span>
+<span class="fc" id="L653">        return temporal.with(WEEK_BASED_YEAR, year).with(WEEK_OF_WEEK_BASED_YEAR, week);</span>
     }
 
     /**
@@ -659,8 +663,8 @@ public final class YearWeek
      * @throws DateTimeException if an error occurs during printing
      */
     public String format(DateTimeFormatter formatter) {
-<span class="fc" id="L662">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L663">        return formatter.format(this);</span>
+<span class="fc" id="L666">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L667">        return formatter.format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -678,18 +682,18 @@ public final class YearWeek
      * @return the date formed from this year-week and the specified day, not null
      */
     public LocalDate atDay(DayOfWeek dayOfWeek) {
-<span class="fc" id="L681">        Objects.requireNonNull(dayOfWeek, &quot;dayOfWeek&quot;);</span>
-<span class="fc" id="L682">        int correction = LocalDate.of(year, 1, 4).getDayOfWeek().getValue() + 3;</span>
-<span class="fc" id="L683">        int dayOfYear = week * 7 + dayOfWeek.getValue() - correction;</span>
-<span class="fc bfc" id="L684" title="All 2 branches covered.">        int maxDaysOfYear = Year.isLeap(year) ? 366 : 365;</span>
-<span class="fc bfc" id="L685" title="All 2 branches covered.">        if (dayOfYear &gt; maxDaysOfYear) {</span>
-<span class="fc" id="L686">            return LocalDate.ofYearDay(year + 1, dayOfYear - maxDaysOfYear);</span>
+<span class="fc" id="L685">        Objects.requireNonNull(dayOfWeek, &quot;dayOfWeek&quot;);</span>
+<span class="fc" id="L686">        int correction = LocalDate.of(year, 1, 4).getDayOfWeek().getValue() + 3;</span>
+<span class="fc" id="L687">        int dayOfYear = week * 7 + dayOfWeek.getValue() - correction;</span>
+<span class="fc bfc" id="L688" title="All 2 branches covered.">        int maxDaysOfYear = Year.isLeap(year) ? 366 : 365;</span>
+<span class="fc bfc" id="L689" title="All 2 branches covered.">        if (dayOfYear &gt; maxDaysOfYear) {</span>
+<span class="fc" id="L690">            return LocalDate.ofYearDay(year + 1, dayOfYear - maxDaysOfYear);</span>
         }
-<span class="fc bfc" id="L688" title="All 2 branches covered.">        if (dayOfYear &gt; 0) {</span>
-<span class="fc" id="L689">            return LocalDate.ofYearDay(year, dayOfYear);</span>
+<span class="fc bfc" id="L692" title="All 2 branches covered.">        if (dayOfYear &gt; 0) {</span>
+<span class="fc" id="L693">            return LocalDate.ofYearDay(year, dayOfYear);</span>
         } else {
-<span class="fc bfc" id="L691" title="All 2 branches covered.">            int daysOfPreviousYear = Year.isLeap(year - 1) ? 366 : 365;</span>
-<span class="fc" id="L692">            return LocalDate.ofYearDay(year - 1, daysOfPreviousYear + dayOfYear);</span>
+<span class="fc bfc" id="L695" title="All 2 branches covered.">            int daysOfPreviousYear = Year.isLeap(year - 1) ? 366 : 365;</span>
+<span class="fc" id="L696">            return LocalDate.ofYearDay(year - 1, daysOfPreviousYear + dayOfYear);</span>
         }
     }
 
@@ -705,11 +709,11 @@ public final class YearWeek
      */
     @Override
     public int compareTo(YearWeek other) {
-<span class="fc" id="L708">        int cmp = (year - other.year);</span>
-<span class="fc bfc" id="L709" title="All 2 branches covered.">        if (cmp == 0) {</span>
-<span class="fc" id="L710">            cmp = (week - other.week);</span>
+<span class="fc" id="L712">        int cmp = (year - other.year);</span>
+<span class="fc bfc" id="L713" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L714">            cmp = (week - other.week);</span>
         }
-<span class="fc" id="L712">        return cmp;</span>
+<span class="fc" id="L716">        return cmp;</span>
     }
 
     /**
@@ -719,7 +723,7 @@ public final class YearWeek
      * @return true if this is after the specified year-week
      */
     public boolean isAfter(YearWeek other) {
-<span class="fc bfc" id="L722" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L726" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -729,7 +733,7 @@ public final class YearWeek
      * @return true if this point is before the specified year-week
      */
     public boolean isBefore(YearWeek other) {
-<span class="fc bfc" id="L732" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L736" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -741,14 +745,14 @@ public final class YearWeek
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L744" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L745">            return true;</span>
+<span class="fc bfc" id="L748" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L749">            return true;</span>
         }
-<span class="fc bfc" id="L747" title="All 2 branches covered.">        if (obj instanceof YearWeek) {</span>
-<span class="fc" id="L748">            YearWeek other = (YearWeek) obj;</span>
-<span class="fc bfc" id="L749" title="All 4 branches covered.">            return year == other.year &amp;&amp; week == other.week;</span>
+<span class="fc bfc" id="L751" title="All 2 branches covered.">        if (obj instanceof YearWeek) {</span>
+<span class="fc" id="L752">            YearWeek other = (YearWeek) obj;</span>
+<span class="fc bfc" id="L753" title="All 4 branches covered.">            return year == other.year &amp;&amp; week == other.week;</span>
         }
-<span class="fc" id="L751">        return false;</span>
+<span class="fc" id="L755">        return false;</span>
     }
 
     /**
@@ -758,7 +762,7 @@ public final class YearWeek
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L761">        return year ^ (week &lt;&lt; 25);</span>
+<span class="fc" id="L765">        return year ^ (week &lt;&lt; 25);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -770,23 +774,24 @@ public final class YearWeek
      * @return a string representation of this year-week, not null
      */
     @Override
+    @ToString
     public String toString() {
-<span class="fc" id="L774">        int absYear = Math.abs(year);</span>
-<span class="fc" id="L775">        StringBuilder buf = new StringBuilder(10);</span>
-<span class="fc bfc" id="L776" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
-<span class="fc bfc" id="L777" title="All 2 branches covered.">            if (year &lt; 0) {</span>
-<span class="fc" id="L778">                buf.append(year - 10000).deleteCharAt(1);</span>
+<span class="fc" id="L779">        int absYear = Math.abs(year);</span>
+<span class="fc" id="L780">        StringBuilder buf = new StringBuilder(10);</span>
+<span class="fc bfc" id="L781" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
+<span class="fc bfc" id="L782" title="All 2 branches covered.">            if (year &lt; 0) {</span>
+<span class="fc" id="L783">                buf.append(year - 10000).deleteCharAt(1);</span>
             } else {
-<span class="fc" id="L780">                buf.append(year + 10000).deleteCharAt(0);</span>
+<span class="fc" id="L785">                buf.append(year + 10000).deleteCharAt(0);</span>
             }
         } else {
-<span class="fc bfc" id="L783" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
-<span class="fc" id="L784">                buf.append('+');</span>
+<span class="fc bfc" id="L788" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
+<span class="fc" id="L789">                buf.append('+');</span>
             }
-<span class="fc" id="L786">            buf.append(year);</span>
+<span class="fc" id="L791">            buf.append(year);</span>
         }
-<span class="fc bfc" id="L788" title="All 2 branches covered.">        return buf.append(week &lt; 10 ? &quot;-W0&quot; : &quot;-W&quot;).append(week).toString();</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">        return buf.append(week &lt; 10 ? &quot;-W0&quot; : &quot;-W&quot;).append(week).toString();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

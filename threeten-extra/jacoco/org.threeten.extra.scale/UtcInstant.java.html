@@ -47,6 +47,9 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.JulianFields;
 import java.time.temporal.TemporalAccessor;
 
+import org.joda.convert.FromString;
+import org.joda.convert.ToString;
+
 /**
  * An instantaneous point on the time-line measured in the UTC time-scale
  * with leap seconds.
@@ -148,8 +151,8 @@ public final class UtcInstant
      * @throws IllegalArgumentException if nanoOfDay is out of range
      */
     public static UtcInstant ofModifiedJulianDay(long mjDay, long nanoOfDay) {
-<span class="fc" id="L151">        UtcRules.system().validateModifiedJulianDay(mjDay, nanoOfDay);</span>
-<span class="fc" id="L152">        return new UtcInstant(mjDay, nanoOfDay);</span>
+<span class="fc" id="L154">        UtcRules.system().validateModifiedJulianDay(mjDay, nanoOfDay);</span>
+<span class="fc" id="L155">        return new UtcInstant(mjDay, nanoOfDay);</span>
     }
 
     /**
@@ -167,7 +170,7 @@ public final class UtcInstant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static UtcInstant of(Instant instant) {
-<span class="fc" id="L170">        return UtcRules.system().convertToUtc(instant);</span>
+<span class="fc" id="L173">        return UtcRules.system().convertToUtc(instant);</span>
     }
 
     /**
@@ -187,7 +190,7 @@ public final class UtcInstant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static UtcInstant of(TaiInstant instant) {
-<span class="fc" id="L190">        return UtcRules.system().convertToUtc(instant);</span>
+<span class="fc" id="L193">        return UtcRules.system().convertToUtc(instant);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -203,18 +206,19 @@ public final class UtcInstant
      * @throws DateTimeParseException if the text cannot be parsed
      * @throws DateTimeException if parsed text represents an invalid leap second
      */
+    @FromString
     public static UtcInstant parse(CharSequence text) {
-<span class="fc" id="L207">        TemporalAccessor parsed = DateTimeFormatter.ISO_INSTANT.parse(text);</span>
-<span class="fc" id="L208">        long epochSecond = parsed.getLong(INSTANT_SECONDS);</span>
-<span class="fc" id="L209">        long nanoOfSecond = parsed.getLong(NANO_OF_SECOND);</span>
-<span class="fc" id="L210">        boolean leap = parsed.query(DateTimeFormatter.parsedLeapSecond());</span>
-<span class="fc" id="L211">        long epochDay = Math.floorDiv(epochSecond, SECS_PER_DAY);</span>
-<span class="fc" id="L212">        long mjd = epochDay + OFFSET_MJD_EPOCH;</span>
-<span class="fc" id="L213">        long nanoOfDay = Math.floorMod(epochSecond, SECS_PER_DAY) * NANOS_PER_SECOND + nanoOfSecond;</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">        if (leap) {</span>
-<span class="fc" id="L215">            nanoOfDay += NANOS_PER_SECOND;</span>
+<span class="fc" id="L211">        TemporalAccessor parsed = DateTimeFormatter.ISO_INSTANT.parse(text);</span>
+<span class="fc" id="L212">        long epochSecond = parsed.getLong(INSTANT_SECONDS);</span>
+<span class="fc" id="L213">        long nanoOfSecond = parsed.getLong(NANO_OF_SECOND);</span>
+<span class="fc" id="L214">        boolean leap = parsed.query(DateTimeFormatter.parsedLeapSecond());</span>
+<span class="fc" id="L215">        long epochDay = Math.floorDiv(epochSecond, SECS_PER_DAY);</span>
+<span class="fc" id="L216">        long mjd = epochDay + OFFSET_MJD_EPOCH;</span>
+<span class="fc" id="L217">        long nanoOfDay = Math.floorMod(epochSecond, SECS_PER_DAY) * NANOS_PER_SECOND + nanoOfSecond;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (leap) {</span>
+<span class="fc" id="L219">            nanoOfDay += NANOS_PER_SECOND;</span>
         }
-<span class="fc" id="L217">        return UtcInstant.ofModifiedJulianDay(mjd, nanoOfDay);</span>
+<span class="fc" id="L221">        return UtcInstant.ofModifiedJulianDay(mjd, nanoOfDay);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -225,10 +229,10 @@ public final class UtcInstant
      * @param nanoOfDay  the nanoseconds within the day, including leap seconds
      */
     private UtcInstant(long mjDay, long nanoOfDay) {
-<span class="fc" id="L228">        super();</span>
-<span class="fc" id="L229">        this.mjDay = mjDay;</span>
-<span class="fc" id="L230">        this.nanoOfDay = nanoOfDay;</span>
-<span class="fc" id="L231">    }</span>
+<span class="fc" id="L232">        super();</span>
+<span class="fc" id="L233">        this.mjDay = mjDay;</span>
+<span class="fc" id="L234">        this.nanoOfDay = nanoOfDay;</span>
+<span class="fc" id="L235">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -241,7 +245,7 @@ public final class UtcInstant
      * @return the Modified Julian Day based on the epoch 1858-11-17
      */
     public long getModifiedJulianDay() {
-<span class="fc" id="L244">        return mjDay;</span>
+<span class="fc" id="L248">        return mjDay;</span>
     }
 
     /**
@@ -258,7 +262,7 @@ public final class UtcInstant
      * @throws DateTimeException if nanoOfDay becomes invalid
      */
     public UtcInstant withModifiedJulianDay(long mjDay) {
-<span class="fc" id="L261">        return UtcInstant.ofModifiedJulianDay(mjDay, nanoOfDay);</span>
+<span class="fc" id="L265">        return UtcInstant.ofModifiedJulianDay(mjDay, nanoOfDay);</span>
     }
 
     /**
@@ -272,7 +276,7 @@ public final class UtcInstant
      * @return the nanoseconds within the day, including leap seconds
      */
     public long getNanoOfDay() {
-<span class="fc" id="L275">        return nanoOfDay;</span>
+<span class="fc" id="L279">        return nanoOfDay;</span>
     }
 
     /**
@@ -289,7 +293,7 @@ public final class UtcInstant
      * @throws DateTimeException if the nanoOfDay value is invalid
      */
     public UtcInstant withNanoOfDay(long nanoOfDay) {
-<span class="fc" id="L292">        return UtcInstant.ofModifiedJulianDay(mjDay, nanoOfDay);</span>
+<span class="fc" id="L296">        return UtcInstant.ofModifiedJulianDay(mjDay, nanoOfDay);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -302,7 +306,7 @@ public final class UtcInstant
      * @return true if this instant is within a leap second
      */
     public boolean isLeapSecond() {
-<span class="pc bpc" id="L305" title="1 of 2 branches missed.">        return nanoOfDay &gt; SECS_PER_DAY * NANOS_PER_SECOND;</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">        return nanoOfDay &gt; SECS_PER_DAY * NANOS_PER_SECOND;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -321,7 +325,7 @@ public final class UtcInstant
      * @throws ArithmeticException if the calculation exceeds the supported range
      */
     public UtcInstant plus(Duration duration) {
-<span class="fc" id="L324">        return UtcInstant.of(toTaiInstant().plus(duration));</span>
+<span class="fc" id="L328">        return UtcInstant.of(toTaiInstant().plus(duration));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -340,7 +344,7 @@ public final class UtcInstant
      * @throws ArithmeticException if the calculation exceeds the supported range
      */
     public UtcInstant minus(Duration duration) {
-<span class="fc" id="L343">        return UtcInstant.of(toTaiInstant().minus(duration));</span>
+<span class="fc" id="L347">        return UtcInstant.of(toTaiInstant().minus(duration));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -357,9 +361,9 @@ public final class UtcInstant
      * @throws ArithmeticException if the calculation exceeds the supported range
      */
     public Duration durationUntil(UtcInstant utcInstant) {
-<span class="fc" id="L360">        TaiInstant thisTAI = toTaiInstant();</span>
-<span class="fc" id="L361">        TaiInstant otherTAI = utcInstant.toTaiInstant();</span>
-<span class="fc" id="L362">        return thisTAI.durationUntil(otherTAI);</span>
+<span class="fc" id="L364">        TaiInstant thisTAI = toTaiInstant();</span>
+<span class="fc" id="L365">        TaiInstant otherTAI = utcInstant.toTaiInstant();</span>
+<span class="fc" id="L366">        return thisTAI.durationUntil(otherTAI);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -377,7 +381,7 @@ public final class UtcInstant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Instant toInstant() {
-<span class="fc" id="L380">        return UtcRules.system().convertToInstant(this);</span>
+<span class="fc" id="L384">        return UtcRules.system().convertToInstant(this);</span>
     }
 
     /**
@@ -396,7 +400,7 @@ public final class UtcInstant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public TaiInstant toTaiInstant() {
-<span class="fc" id="L399">        return UtcRules.system().convertToTai(this);</span>
+<span class="fc" id="L403">        return UtcRules.system().convertToTai(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -411,11 +415,11 @@ public final class UtcInstant
      */
     @Override
     public int compareTo(UtcInstant otherInstant) {
-<span class="fc" id="L414">        int cmp = Long.compare(mjDay, otherInstant.mjDay);</span>
-<span class="fc bfc" id="L415" title="All 2 branches covered.">        if (cmp != 0) {</span>
-<span class="fc" id="L416">            return cmp;</span>
+<span class="fc" id="L418">        int cmp = Long.compare(mjDay, otherInstant.mjDay);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (cmp != 0) {</span>
+<span class="fc" id="L420">            return cmp;</span>
         }
-<span class="fc" id="L418">        return Long.compare(nanoOfDay, otherInstant.nanoOfDay);</span>
+<span class="fc" id="L422">        return Long.compare(nanoOfDay, otherInstant.nanoOfDay);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -429,15 +433,15 @@ public final class UtcInstant
      */
     @Override
     public boolean equals(Object otherInstant) {
-<span class="fc bfc" id="L432" title="All 2 branches covered.">        if (this == otherInstant) {</span>
-<span class="fc" id="L433">            return true;</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">        if (this == otherInstant) {</span>
+<span class="fc" id="L437">            return true;</span>
         }
-<span class="fc bfc" id="L435" title="All 2 branches covered.">        if (otherInstant instanceof UtcInstant) {</span>
-<span class="fc" id="L436">            UtcInstant other = (UtcInstant) otherInstant;</span>
-<span class="fc bfc" id="L437" title="All 4 branches covered.">            return this.mjDay == other.mjDay &amp;&amp;</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">        if (otherInstant instanceof UtcInstant) {</span>
+<span class="fc" id="L440">            UtcInstant other = (UtcInstant) otherInstant;</span>
+<span class="fc bfc" id="L441" title="All 4 branches covered.">            return this.mjDay == other.mjDay &amp;&amp;</span>
                     this.nanoOfDay == other.nanoOfDay;
         }
-<span class="fc" id="L440">        return false;</span>
+<span class="fc" id="L444">        return false;</span>
     }
 
     /**
@@ -447,7 +451,7 @@ public final class UtcInstant
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L450">        return ((int) (mjDay ^ (mjDay &gt;&gt;&gt; 32))) + 51 * ((int) (nanoOfDay ^ (nanoOfDay &gt;&gt;&gt; 32)));</span>
+<span class="fc" id="L454">        return ((int) (mjDay ^ (mjDay &gt;&gt;&gt; 32))) + 51 * ((int) (nanoOfDay ^ (nanoOfDay &gt;&gt;&gt; 32)));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -461,36 +465,37 @@ public final class UtcInstant
      * @return a representation of this instant, not null
      */
     @Override
+    @ToString
     public String toString() {
-<span class="fc" id="L465">        LocalDate date = LocalDate.MAX.with(JulianFields.MODIFIED_JULIAN_DAY, mjDay);  // TODO: capacity/import issues</span>
-<span class="fc" id="L466">        StringBuilder buf = new StringBuilder(30);</span>
-<span class="fc" id="L467">        int sod = (int) (nanoOfDay / NANOS_PER_SECOND);</span>
-<span class="fc" id="L468">        int hourValue = sod / (60 * 60);</span>
-<span class="fc" id="L469">        int minuteValue = (sod / 60) % 60;</span>
-<span class="fc" id="L470">        int secondValue = sod % 60;</span>
-<span class="fc" id="L471">        int nanoValue = (int) (nanoOfDay % NANOS_PER_SECOND);</span>
-<span class="fc bfc" id="L472" title="All 2 branches covered.">        if (hourValue == 24) {</span>
-<span class="fc" id="L473">            hourValue = 23;</span>
-<span class="fc" id="L474">            minuteValue = 59;</span>
-<span class="fc" id="L475">            secondValue = 60;</span>
+<span class="fc" id="L470">        LocalDate date = LocalDate.MAX.with(JulianFields.MODIFIED_JULIAN_DAY, mjDay);  // TODO: capacity/import issues</span>
+<span class="fc" id="L471">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L472">        int sod = (int) (nanoOfDay / NANOS_PER_SECOND);</span>
+<span class="fc" id="L473">        int hourValue = sod / (60 * 60);</span>
+<span class="fc" id="L474">        int minuteValue = (sod / 60) % 60;</span>
+<span class="fc" id="L475">        int secondValue = sod % 60;</span>
+<span class="fc" id="L476">        int nanoValue = (int) (nanoOfDay % NANOS_PER_SECOND);</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">        if (hourValue == 24) {</span>
+<span class="fc" id="L478">            hourValue = 23;</span>
+<span class="fc" id="L479">            minuteValue = 59;</span>
+<span class="fc" id="L480">            secondValue = 60;</span>
         }
-<span class="fc" id="L477">        buf.append(date).append('T')</span>
-<span class="fc bfc" id="L478" title="All 2 branches covered.">                .append(hourValue &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hourValue)</span>
-<span class="fc bfc" id="L479" title="All 2 branches covered.">                .append(minuteValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minuteValue)</span>
-<span class="fc bfc" id="L480" title="All 2 branches covered.">                .append(secondValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(secondValue);</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">        if (nanoValue &gt; 0) {</span>
-<span class="fc" id="L482">            buf.append('.');</span>
-<span class="fc bfc" id="L483" title="All 2 branches covered.">            if (nanoValue % 1000_000 == 0) {</span>
-<span class="fc" id="L484">                buf.append(Integer.toString((nanoValue / 1000_000) + 1000).substring(1));</span>
-<span class="fc bfc" id="L485" title="All 2 branches covered.">            } else if (nanoValue % 1000 == 0) {</span>
-<span class="fc" id="L486">                buf.append(Integer.toString((nanoValue / 1000) + 1000_000).substring(1));</span>
+<span class="fc" id="L482">        buf.append(date).append('T')</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">                .append(hourValue &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hourValue)</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">                .append(minuteValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minuteValue)</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">                .append(secondValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(secondValue);</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">        if (nanoValue &gt; 0) {</span>
+<span class="fc" id="L487">            buf.append('.');</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">            if (nanoValue % 1000_000 == 0) {</span>
+<span class="fc" id="L489">                buf.append(Integer.toString((nanoValue / 1000_000) + 1000).substring(1));</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">            } else if (nanoValue % 1000 == 0) {</span>
+<span class="fc" id="L491">                buf.append(Integer.toString((nanoValue / 1000) + 1000_000).substring(1));</span>
             } else {
-<span class="fc" id="L488">                buf.append(Integer.toString((nanoValue) + 1000_000_000).substring(1));</span>
+<span class="fc" id="L493">                buf.append(Integer.toString((nanoValue) + 1000_000_000).substring(1));</span>
             }
         }
-<span class="fc" id="L491">        buf.append('Z');</span>
-<span class="fc" id="L492">        return buf.toString();</span>
+<span class="fc" id="L496">        buf.append('Z');</span>
+<span class="fc" id="L497">        return buf.toString();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -102,7 +102,7 @@ final class SystemUtcRules extends UtcRules implements Serializable {
          * @return The modified Julian Date of the newest leap second
          */
         public long getNewestDate() {
-<span class="nc" id="L105">            return dates[dates.length - 1];</span>
+<span class="fc" id="L105">            return dates[dates.length - 1];</span>
         }
     }
 
@@ -228,18 +228,18 @@ final class SystemUtcRules extends UtcRules implements Serializable {
 <span class="nc" id="L228">            }</span>
             // this location does not work on Java 9 module path because the resource is encapsulated
 <span class="fc" id="L230">            en = Thread.currentThread().getContextClassLoader().getResources(LEAP_SECONDS_TXT);</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            while (en.hasMoreElements()) {</span>
-<span class="nc" id="L232">                url = en.nextElement();</span>
-<span class="nc" id="L233">                Data candidate = loadLeapSeconds(url);</span>
-<span class="nc bnc" id="L234" title="All 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
-<span class="nc" id="L235">                    bestData = candidate;</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">            while (en.hasMoreElements()) {</span>
+<span class="fc" id="L232">                url = en.nextElement();</span>
+<span class="fc" id="L233">                Data candidate = loadLeapSeconds(url);</span>
+<span class="pc bpc" id="L234" title="3 of 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
+<span class="fc" id="L235">                    bestData = candidate;</span>
                 }
-<span class="nc" id="L237">            }</span>
+<span class="fc" id="L237">            }</span>
             // this location is the canonical one, and class-based loading works on Java 9 module path
 <span class="fc" id="L239">            url = SystemUtcRules.class.getResource(&quot;/&quot; + LEAP_SECONDS_TXT);</span>
 <span class="pc bpc" id="L240" title="1 of 2 branches missed.">            if (url != null) {</span>
 <span class="fc" id="L241">                Data candidate = loadLeapSeconds(url);</span>
-<span class="pc bpc" id="L242" title="3 of 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
+<span class="pc bpc" id="L242" title="1 of 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
 <span class="fc" id="L243">                    bestData = candidate;</span>
                 }
             }
@@ -302,4 +302,4 @@ final class SystemUtcRules extends UtcRules implements Serializable {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
