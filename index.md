@@ -46,6 +46,15 @@ The "extras" have been combined into a new project - [ThreeTen-Extra](https://ww
 
 To store JSR-310 classes in a database, you may need to use bindings for Hibernate or JPA. Have a look at the [user type](http://jadira.sourceforge.net/usertype-userguide.html), [threeten-jpa](https://github.com/marschall/threeten-jpa) or [jpaattributeconverters](https://bitbucket.org/montanajava/jpaattributeconverters) projects for more info.
 
+#### For Enterprise
+
+Enterprise versions of each project are available via the [Tidelift Subscription](https://tidelift.com/subscription/pkg/maven-org-threeten-threeten-extra?utm_source=maven-joda-time-joda-time&utm_medium=referral&utm_campaign=enterprise).
+
+#### For Security
+
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure.
+
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
