@@ -357,13 +357,13 @@ public final class Days
      * &lt;p&gt;
      * This instance is immutable and unaffected by this method call.
      *
-     * @param amountToAdd  the amount to add, not null
+     * @param amountToSubtract  the amount to subtract, not null
      * @return a {@code Days} based on this instance with the requested amount subtracted, not null
      * @throws DateTimeException if the specified amount contains an invalid unit
      * @throws ArithmeticException if numeric overflow occurs
      */
-    public Days minus(TemporalAmount amountToAdd) {
-<span class="fc" id="L366">        return minus(Days.from(amountToAdd).getAmount());</span>
+    public Days minus(TemporalAmount amountToSubtract) {
+<span class="fc" id="L366">        return minus(Days.from(amountToSubtract).getAmount());</span>
     }
 
     /**

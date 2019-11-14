@@ -326,7 +326,7 @@ public final class DiscordianDate
 
 <span class="fc bfc" id="L327" title="All 4 branches covered.">        if (month == 0 || dayOfMonth == 0) {</span>
 <span class="fc bfc" id="L328" title="All 4 branches covered.">            if (month != 0 || dayOfMonth != 0) {</span>
-<span class="fc" id="L329">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot; &quot; + dayOfMonth + &quot;' as St. Tib's Day is the only special day inserted in a nonexistant month.&quot;);</span>
+<span class="fc" id="L329">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot; &quot; + dayOfMonth + &quot;' as St. Tib's Day is the only special day inserted in a non-existent month.&quot;);</span>
 <span class="fc bfc" id="L330" title="All 2 branches covered.">            } else if (!DiscordianChronology.INSTANCE.isLeapYear(prolepticYear)) {</span>
 <span class="fc" id="L331">                throw new DateTimeException(&quot;Invalid date 'St. Tibs Day' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
             }

@@ -313,13 +313,13 @@ public final class Years
      * &lt;p&gt;
      * This instance is immutable and unaffected by this method call.
      *
-     * @param amountToAdd  the amount to add, not null
+     * @param amountToSubtract  the amount to subtract, not null
      * @return a {@code Years} based on this instance with the requested amount subtracted, not null
      * @throws DateTimeException if the specified amount contains an invalid unit
      * @throws ArithmeticException if numeric overflow occurs
      */
-    public Years minus(TemporalAmount amountToAdd) {
-<span class="fc" id="L322">        return minus(Years.from(amountToAdd).getAmount());</span>
+    public Years minus(TemporalAmount amountToSubtract) {
+<span class="fc" id="L322">        return minus(Years.from(amountToSubtract).getAmount());</span>
     }
 
     /**

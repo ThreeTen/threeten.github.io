@@ -408,13 +408,13 @@ public final class Seconds
      * &lt;p&gt;
      * This instance is immutable and unaffected by this method call.
      *
-     * @param amountToAdd  the amount to add, not null
+     * @param amountToSubtract  the amount to subtract, not null
      * @return a {@code Seconds} based on this instance with the requested amount subtracted, not null
      * @throws DateTimeException if the specified amount contains an invalid unit
      * @throws ArithmeticException if numeric overflow occurs
      */
-    public Seconds minus(TemporalAmount amountToAdd) {
-<span class="fc" id="L417">        return minus(Seconds.from(amountToAdd).getAmount());</span>
+    public Seconds minus(TemporalAmount amountToSubtract) {
+<span class="fc" id="L417">        return minus(Seconds.from(amountToSubtract).getAmount());</span>
     }
 
     /**
