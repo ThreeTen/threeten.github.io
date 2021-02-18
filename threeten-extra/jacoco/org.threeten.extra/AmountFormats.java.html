@@ -125,13 +125,22 @@ public final class AmountFormats {
      */
 <span class="pc bpc" id="L126" title="1 of 4 branches missed.">    private static final IntPredicate PREDICATE_1 = value -&gt; value == 1 || value == -1;</span>
     /**
-     * The predicate that matches numbers ending 2, 3 or 4, but not ending 12, 13 or 14.
+     * The predicate that matches numbers ending 1 but not ending 11.
      */
-<span class="fc" id="L130">    private static final IntPredicate PREDICATE_END234_NOTTEENS = value -&gt; {</span>
+<span class="fc" id="L130">    private static final IntPredicate PREDICATE_END1_NOT11 = value -&gt; {</span>
 <span class="fc" id="L131">        int abs = Math.abs(value);</span>
 <span class="fc" id="L132">        int last = abs % 10;</span>
 <span class="fc" id="L133">        int secondLast = (abs % 100) / 10;</span>
-<span class="fc bfc" id="L134" title="All 6 branches covered.">        return (last &gt;= 2 &amp;&amp; last &lt;= 4 &amp;&amp; secondLast != 1);</span>
+<span class="fc bfc" id="L134" title="All 4 branches covered.">        return (last == 1 &amp;&amp; secondLast != 1);</span>
+    };
+    /**
+     * The predicate that matches numbers ending 2, 3 or 4, but not ending 12, 13 or 14.
+     */
+<span class="fc" id="L139">    private static final IntPredicate PREDICATE_END234_NOTTEENS = value -&gt; {</span>
+<span class="fc" id="L140">        int abs = Math.abs(value);</span>
+<span class="fc" id="L141">        int last = abs % 10;</span>
+<span class="fc" id="L142">        int secondLast = (abs % 100) / 10;</span>
+<span class="fc bfc" id="L143" title="All 6 branches covered.">        return (last &gt;= 2 &amp;&amp; last &lt;= 4 &amp;&amp; secondLast != 1);</span>
     };
 
     //-----------------------------------------------------------------------
@@ -147,15 +156,15 @@ public final class AmountFormats {
      * @return the ISO-8601 format for the period and duration
      */
     public static String iso8601(Period period, Duration duration) {
-<span class="fc" id="L150">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
-<span class="fc" id="L151">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (period.isZero()) {</span>
-<span class="fc" id="L153">            return duration.toString();</span>
+<span class="fc" id="L159">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
+<span class="fc" id="L160">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (period.isZero()) {</span>
+<span class="fc" id="L162">            return duration.toString();</span>
         }
-<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (duration.isZero()) {</span>
-<span class="fc" id="L156">            return period.toString();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (duration.isZero()) {</span>
+<span class="fc" id="L165">            return period.toString();</span>
         }
-<span class="fc" id="L158">        return period.toString() + duration.toString().substring(1);</span>
+<span class="fc" id="L167">        return period.toString() + duration.toString().substring(1);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -172,25 +181,26 @@ public final class AmountFormats {
      * @return the localized word-based format for the period
      */
     public static String wordBased(Period period, Locale locale) {
-<span class="fc" id="L175">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
-<span class="fc" id="L176">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
-<span class="fc" id="L177">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
-<span class="fc" id="L178">        UnitFormat[] formats = {</span>
-<span class="fc" id="L179">            UnitFormat.of(bundle, WORDBASED_YEAR),</span>
-<span class="fc" id="L180">            UnitFormat.of(bundle, WORDBASED_MONTH),</span>
-<span class="fc" id="L181">            UnitFormat.of(bundle, WORDBASED_WEEK),</span>
-<span class="fc" id="L182">            UnitFormat.of(bundle, WORDBASED_DAY)};</span>
-<span class="fc" id="L183">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
+<span class="fc" id="L184">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
+<span class="fc" id="L185">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
+<span class="fc" id="L186">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
+<span class="fc" id="L187">        UnitFormat[] formats = {</span>
+<span class="fc" id="L188">            UnitFormat.of(bundle, WORDBASED_YEAR),</span>
+<span class="fc" id="L189">            UnitFormat.of(bundle, WORDBASED_MONTH),</span>
+<span class="fc" id="L190">            UnitFormat.of(bundle, WORDBASED_WEEK),</span>
+<span class="fc" id="L191">            UnitFormat.of(bundle, WORDBASED_DAY)};</span>
+<span class="fc" id="L192">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
 
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        Period normPeriod = oppositeSigns(period.getMonths(), period.getYears()) ? period.normalized() : period;</span>
-<span class="fc" id="L186">        int weeks = 0, days = 0;</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (normPeriod.getDays() % DAYS_PER_WEEK == 0) {</span>
-<span class="fc" id="L188">            weeks = normPeriod.getDays() / DAYS_PER_WEEK;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        Period normPeriod = oppositeSigns(period.getMonths(), period.getYears()) ? period.normalized() : period;</span>
+<span class="fc" id="L195">        int weeks = 0;</span>
+<span class="fc" id="L196">        int days = 0;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (normPeriod.getDays() % DAYS_PER_WEEK == 0) {</span>
+<span class="fc" id="L198">            weeks = normPeriod.getDays() / DAYS_PER_WEEK;</span>
         } else {
-<span class="fc" id="L190">            days = normPeriod.getDays();</span>
+<span class="fc" id="L200">            days = normPeriod.getDays();</span>
         }
-<span class="fc" id="L192">        int[] values = {normPeriod.getYears(), normPeriod.getMonths(), weeks, days};</span>
-<span class="fc" id="L193">        return wb.format(values);</span>
+<span class="fc" id="L202">        int[] values = {normPeriod.getYears(), normPeriod.getMonths(), weeks, days};</span>
+<span class="fc" id="L203">        return wb.format(values);</span>
     }
 
     /**
@@ -205,22 +215,22 @@ public final class AmountFormats {
      * @return the localized word-based format for the duration
      */
     public static String wordBased(Duration duration, Locale locale) {
-<span class="fc" id="L208">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
-<span class="fc" id="L209">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
-<span class="fc" id="L210">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
-<span class="fc" id="L211">        UnitFormat[] formats = {</span>
-<span class="fc" id="L212">            UnitFormat.of(bundle, WORDBASED_HOUR),</span>
-<span class="fc" id="L213">            UnitFormat.of(bundle, WORDBASED_MINUTE),</span>
-<span class="fc" id="L214">            UnitFormat.of(bundle, WORDBASED_SECOND),</span>
-<span class="fc" id="L215">            UnitFormat.of(bundle, WORDBASED_MILLISECOND)};</span>
-<span class="fc" id="L216">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
+<span class="fc" id="L218">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
+<span class="fc" id="L219">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
+<span class="fc" id="L220">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
+<span class="fc" id="L221">        UnitFormat[] formats = {</span>
+<span class="fc" id="L222">            UnitFormat.of(bundle, WORDBASED_HOUR),</span>
+<span class="fc" id="L223">            UnitFormat.of(bundle, WORDBASED_MINUTE),</span>
+<span class="fc" id="L224">            UnitFormat.of(bundle, WORDBASED_SECOND),</span>
+<span class="fc" id="L225">            UnitFormat.of(bundle, WORDBASED_MILLISECOND)};</span>
+<span class="fc" id="L226">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
 
-<span class="fc" id="L218">        long hours = duration.toHours();</span>
-<span class="fc" id="L219">        long mins = duration.toMinutes() % MINUTES_PER_HOUR;</span>
-<span class="fc" id="L220">        long secs = duration.getSeconds() % SECONDS_PER_MINUTE;</span>
-<span class="fc" id="L221">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
-<span class="fc" id="L222">        int[] values = {(int) hours, (int) mins, (int) secs, millis};</span>
-<span class="fc" id="L223">        return wb.format(values);</span>
+<span class="fc" id="L228">        long hours = duration.toHours();</span>
+<span class="fc" id="L229">        long mins = duration.toMinutes() % MINUTES_PER_HOUR;</span>
+<span class="fc" id="L230">        long secs = duration.getSeconds() % SECONDS_PER_MINUTE;</span>
+<span class="fc" id="L231">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
+<span class="fc" id="L232">        int[] values = {(int) hours, (int) mins, (int) secs, millis};</span>
+<span class="fc" id="L233">        return wb.format(values);</span>
     }
 
     /**
@@ -237,43 +247,44 @@ public final class AmountFormats {
      * @return the localized word-based format for the period and duration
      */
     public static String wordBased(Period period, Duration duration, Locale locale) {
-<span class="fc" id="L240">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
-<span class="fc" id="L241">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
-<span class="fc" id="L242">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
-<span class="fc" id="L243">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
-<span class="fc" id="L244">        UnitFormat[] formats = {</span>
-<span class="fc" id="L245">            UnitFormat.of(bundle, WORDBASED_YEAR),</span>
-<span class="fc" id="L246">            UnitFormat.of(bundle, WORDBASED_MONTH),</span>
-<span class="fc" id="L247">            UnitFormat.of(bundle, WORDBASED_WEEK),</span>
-<span class="fc" id="L248">            UnitFormat.of(bundle, WORDBASED_DAY),</span>
-<span class="fc" id="L249">            UnitFormat.of(bundle, WORDBASED_HOUR),</span>
-<span class="fc" id="L250">            UnitFormat.of(bundle, WORDBASED_MINUTE),</span>
-<span class="fc" id="L251">            UnitFormat.of(bundle, WORDBASED_SECOND),</span>
-<span class="fc" id="L252">            UnitFormat.of(bundle, WORDBASED_MILLISECOND)};</span>
-<span class="fc" id="L253">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
+<span class="fc" id="L250">        Objects.requireNonNull(period, &quot;period must not be null&quot;);</span>
+<span class="fc" id="L251">        Objects.requireNonNull(duration, &quot;duration must not be null&quot;);</span>
+<span class="fc" id="L252">        Objects.requireNonNull(locale, &quot;locale must not be null&quot;);</span>
+<span class="fc" id="L253">        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);</span>
+<span class="fc" id="L254">        UnitFormat[] formats = {</span>
+<span class="fc" id="L255">            UnitFormat.of(bundle, WORDBASED_YEAR),</span>
+<span class="fc" id="L256">            UnitFormat.of(bundle, WORDBASED_MONTH),</span>
+<span class="fc" id="L257">            UnitFormat.of(bundle, WORDBASED_WEEK),</span>
+<span class="fc" id="L258">            UnitFormat.of(bundle, WORDBASED_DAY),</span>
+<span class="fc" id="L259">            UnitFormat.of(bundle, WORDBASED_HOUR),</span>
+<span class="fc" id="L260">            UnitFormat.of(bundle, WORDBASED_MINUTE),</span>
+<span class="fc" id="L261">            UnitFormat.of(bundle, WORDBASED_SECOND),</span>
+<span class="fc" id="L262">            UnitFormat.of(bundle, WORDBASED_MILLISECOND)};</span>
+<span class="fc" id="L263">        WordBased wb = new WordBased(formats, bundle.getString(WORDBASED_COMMASPACE), bundle.getString(WORDBASED_SPACEANDSPACE));</span>
 
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">        Period normPeriod = oppositeSigns(period.getMonths(), period.getYears()) ? period.normalized() : period;</span>
-<span class="fc" id="L256">        int weeks = 0, days = 0;</span>
-<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (normPeriod.getDays() % DAYS_PER_WEEK == 0) {</span>
-<span class="fc" id="L258">            weeks = normPeriod.getDays() / DAYS_PER_WEEK;</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        Period normPeriod = oppositeSigns(period.getMonths(), period.getYears()) ? period.normalized() : period;</span>
+<span class="fc" id="L266">        int weeks = 0;</span>
+<span class="fc" id="L267">        int days = 0;</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (normPeriod.getDays() % DAYS_PER_WEEK == 0) {</span>
+<span class="fc" id="L269">            weeks = normPeriod.getDays() / DAYS_PER_WEEK;</span>
         } else {
-<span class="fc" id="L260">            days = normPeriod.getDays();</span>
+<span class="fc" id="L271">            days = normPeriod.getDays();</span>
         }
-<span class="fc" id="L262">        long totalHours = duration.toHours();</span>
-<span class="fc" id="L263">        days += (int) (totalHours / HOURS_PER_DAY);</span>
-<span class="fc" id="L264">        int hours = (int) (totalHours % HOURS_PER_DAY);</span>
-<span class="fc" id="L265">        int mins = (int) (duration.toMinutes() % MINUTES_PER_HOUR);</span>
-<span class="fc" id="L266">        int secs = (int) (duration.getSeconds() % SECONDS_PER_MINUTE);</span>
-<span class="fc" id="L267">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
-<span class="fc" id="L268">        int[] values = {</span>
-<span class="fc" id="L269">            normPeriod.getYears(), normPeriod.getMonths(), weeks, days,</span>
+<span class="fc" id="L273">        long totalHours = duration.toHours();</span>
+<span class="fc" id="L274">        days += (int) (totalHours / HOURS_PER_DAY);</span>
+<span class="fc" id="L275">        int hours = (int) (totalHours % HOURS_PER_DAY);</span>
+<span class="fc" id="L276">        int mins = (int) (duration.toMinutes() % MINUTES_PER_HOUR);</span>
+<span class="fc" id="L277">        int secs = (int) (duration.getSeconds() % SECONDS_PER_MINUTE);</span>
+<span class="fc" id="L278">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
+<span class="fc" id="L279">        int[] values = {</span>
+<span class="fc" id="L280">            normPeriod.getYears(), normPeriod.getMonths(), weeks, days,</span>
             (int) hours, mins, secs, millis};
-<span class="fc" id="L271">        return wb.format(values);</span>
+<span class="fc" id="L282">        return wb.format(values);</span>
     }
 
     // are the signs opposite
     private static boolean oppositeSigns(int a, int b) {
-<span class="pc bpc" id="L276" title="3 of 6 branches missed.">        return a &lt; 0 ? (b &gt;= 0) : (b &lt; 0);</span>
+<span class="pc bpc" id="L287" title="3 of 6 branches missed.">        return a &lt; 0 ? (b &gt;= 0) : (b &lt; 0);</span>
     }
 
     private AmountFormats() {
@@ -286,33 +297,33 @@ public final class AmountFormats {
         private final String separator;
         private final String lastSeparator;
 
-<span class="fc" id="L289">        public WordBased(UnitFormat[] units, String separator, String lastSeparator) {</span>
-<span class="fc" id="L290">            this.units = units;</span>
-<span class="fc" id="L291">            this.separator = separator;</span>
-<span class="fc" id="L292">            this.lastSeparator = lastSeparator;</span>
-<span class="fc" id="L293">        }</span>
+<span class="fc" id="L300">        public WordBased(UnitFormat[] units, String separator, String lastSeparator) {</span>
+<span class="fc" id="L301">            this.units = units;</span>
+<span class="fc" id="L302">            this.separator = separator;</span>
+<span class="fc" id="L303">            this.lastSeparator = lastSeparator;</span>
+<span class="fc" id="L304">        }</span>
 
         String format(int[] values) {
-<span class="fc" id="L296">            StringBuilder buf = new StringBuilder(32);</span>
-<span class="fc" id="L297">            int nonZeroCount = 0;</span>
-<span class="fc bfc" id="L298" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
-<span class="fc bfc" id="L299" title="All 2 branches covered.">                if (values[i] != 0) {</span>
-<span class="fc" id="L300">                    nonZeroCount++;</span>
+<span class="fc" id="L307">            StringBuilder buf = new StringBuilder(32);</span>
+<span class="fc" id="L308">            int nonZeroCount = 0;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">                if (values[i] != 0) {</span>
+<span class="fc" id="L311">                    nonZeroCount++;</span>
                 }
             }
-<span class="fc" id="L303">            int count = 0;</span>
-<span class="fc bfc" id="L304" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
-<span class="fc bfc" id="L305" title="All 6 branches covered.">                if (values[i] != 0 || (count == 0 &amp;&amp; i == values.length - 1)) {</span>
-<span class="fc" id="L306">                    units[i].formatTo(values[i], buf);</span>
-<span class="fc bfc" id="L307" title="All 2 branches covered.">                    if (count &lt; nonZeroCount - 2) {</span>
-<span class="fc" id="L308">                        buf.append(separator);</span>
-<span class="fc bfc" id="L309" title="All 2 branches covered.">                    } else if (count == nonZeroCount - 2) {</span>
-<span class="fc" id="L310">                        buf.append(lastSeparator);</span>
+<span class="fc" id="L314">            int count = 0;</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc bfc" id="L316" title="All 6 branches covered.">                if (values[i] != 0 || (count == 0 &amp;&amp; i == values.length - 1)) {</span>
+<span class="fc" id="L317">                    units[i].formatTo(values[i], buf);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">                    if (count &lt; nonZeroCount - 2) {</span>
+<span class="fc" id="L319">                        buf.append(separator);</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">                    } else if (count == nonZeroCount - 2) {</span>
+<span class="fc" id="L321">                        buf.append(lastSeparator);</span>
                     }
-<span class="fc" id="L312">                    count++;</span>
+<span class="fc" id="L323">                    count++;</span>
                 }
             }
-<span class="fc" id="L315">            return buf.toString();</span>
+<span class="fc" id="L326">            return buf.toString();</span>
         }
     }
 
@@ -320,16 +331,16 @@ public final class AmountFormats {
     static interface UnitFormat {
         
         static UnitFormat of(ResourceBundle bundle, String keyStem) {
-<span class="fc bfc" id="L323" title="All 2 branches covered.">            if (bundle.containsKey(keyStem + &quot;s.predicates&quot;)) {</span>
-<span class="fc" id="L324">                String predicateList = bundle.getString(keyStem + &quot;s.predicates&quot;);</span>
-<span class="fc" id="L325">                String textList = bundle.getString(keyStem + &quot;s.list&quot;);</span>
-<span class="fc" id="L326">                String[] regexes = SPLITTER.split(predicateList);</span>
-<span class="fc" id="L327">                String[] text = SPLITTER.split(textList);</span>
-<span class="fc" id="L328">                return new PredicateFormat(regexes, text);</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">            if (bundle.containsKey(keyStem + &quot;s.predicates&quot;)) {</span>
+<span class="fc" id="L335">                String predicateList = bundle.getString(keyStem + &quot;s.predicates&quot;);</span>
+<span class="fc" id="L336">                String textList = bundle.getString(keyStem + &quot;s.list&quot;);</span>
+<span class="fc" id="L337">                String[] regexes = SPLITTER.split(predicateList);</span>
+<span class="fc" id="L338">                String[] text = SPLITTER.split(textList);</span>
+<span class="fc" id="L339">                return new PredicateFormat(regexes, text);</span>
             } else {
-<span class="fc" id="L330">                String single = bundle.getString(keyStem);</span>
-<span class="fc" id="L331">                String plural = bundle.getString(keyStem + &quot;s&quot;);</span>
-<span class="fc" id="L332">                return new SinglePluralFormat(single, plural);</span>
+<span class="fc" id="L341">                String single = bundle.getString(keyStem);</span>
+<span class="fc" id="L342">                String plural = bundle.getString(keyStem + &quot;s&quot;);</span>
+<span class="fc" id="L343">                return new SinglePluralFormat(single, plural);</span>
             }
         }
         
@@ -341,15 +352,15 @@ public final class AmountFormats {
         private final String single;
         private final String plural;
 
-<span class="fc" id="L344">        SinglePluralFormat(String single, String plural) {</span>
-<span class="fc" id="L345">            this.single = single;</span>
-<span class="fc" id="L346">            this.plural = plural;</span>
-<span class="fc" id="L347">        }</span>
+<span class="fc" id="L355">        SinglePluralFormat(String single, String plural) {</span>
+<span class="fc" id="L356">            this.single = single;</span>
+<span class="fc" id="L357">            this.plural = plural;</span>
+<span class="fc" id="L358">        }</span>
 
         @Override
         public void formatTo(int value, StringBuilder buf) {
-<span class="fc bfc" id="L351" title="All 4 branches covered.">            buf.append(value).append(value == 1 || value == -1 ? single : plural);</span>
-<span class="fc" id="L352">        }</span>
+<span class="fc bfc" id="L362" title="All 4 branches covered.">            buf.append(value).append(value == 1 || value == -1 ? single : plural);</span>
+<span class="fc" id="L363">        }</span>
     }
 
     // data holder for predicate formats
@@ -357,35 +368,35 @@ public final class AmountFormats {
         private final IntPredicate[] predicates;
         private final String[] text;
 
-<span class="fc" id="L360">        PredicateFormat(String[] predicateStrs, String[] text) {</span>
-<span class="pc bpc" id="L361" title="1 of 2 branches missed.">            if (predicateStrs.length + 1 != text.length) {</span>
-<span class="nc" id="L362">                throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
+<span class="fc" id="L371">        PredicateFormat(String[] predicateStrs, String[] text) {</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">            if (predicateStrs.length + 1 != text.length) {</span>
+<span class="nc" id="L373">                throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
             }
-<span class="fc" id="L364">            this.predicates = Stream.of(predicateStrs)</span>
-<span class="fc" id="L365">                    .map(predicateStr -&gt; findPredicate(predicateStr))</span>
-<span class="fc" id="L366">                    .toArray(IntPredicate[]::new);</span>
-<span class="fc" id="L367">            this.text = text;</span>
-<span class="fc" id="L368">        }</span>
+<span class="fc" id="L375">            this.predicates = Stream.of(predicateStrs)</span>
+<span class="fc" id="L376">                    .map(predicateStr -&gt; findPredicate(predicateStr))</span>
+<span class="fc" id="L377">                    .toArray(IntPredicate[]::new);</span>
+<span class="fc" id="L378">            this.text = text;</span>
+<span class="fc" id="L379">        }</span>
 
         private IntPredicate findPredicate(String predicateStr) {
-<span class="pc bpc" id="L371" title="1 of 3 branches missed.">            switch (predicateStr) {</span>
-<span class="fc" id="L372">                case &quot;One&quot;: return PREDICATE_1;</span>
-<span class="fc" id="L373">                case &quot;End234NotTeens&quot;: return PREDICATE_END234_NOTTEENS;</span>
-<span class="nc" id="L374">                default: throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
+<span class="pc bpc" id="L382" title="1 of 4 branches missed.">            switch (predicateStr) {</span>
+<span class="fc" id="L383">                case &quot;One&quot;: return PREDICATE_1;</span>
+<span class="fc" id="L384">                case &quot;End234NotTeens&quot;: return PREDICATE_END234_NOTTEENS;</span>
+<span class="fc" id="L385">                case &quot;End1Not11&quot;: return PREDICATE_END1_NOT11;</span>
+<span class="nc" id="L386">                default: throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
             }
         }
 
         @Override
         public void formatTo(int value, StringBuilder buf) {
-<span class="fc bfc" id="L380" title="All 2 branches covered.">            for (int i = 0; i &lt; predicates.length; i++) {</span>
-<span class="fc bfc" id="L381" title="All 2 branches covered.">                if (predicates[i].test(value)) {</span>
-<span class="fc" id="L382">                    buf.append(value).append(text[i]);</span>
-<span class="fc" id="L383">                    return;</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">            for (int i = 0; i &lt; predicates.length; i++) {</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">                if (predicates[i].test(value)) {</span>
+<span class="fc" id="L394">                    buf.append(value).append(text[i]);</span>
+<span class="fc" id="L395">                    return;</span>
                 }
             }
-<span class="fc" id="L386">            buf.append(value).append(text[predicates.length]);</span>
-<span class="fc" id="L387">            return;</span>
-        }
+<span class="fc" id="L398">            buf.append(value).append(text[predicates.length]);</span>
+<span class="fc" id="L399">        }</span>
     }
 
 }

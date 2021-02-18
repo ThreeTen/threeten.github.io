@@ -634,55 +634,54 @@ public final class InternationalFixedDate
 <span class="fc" id="L634">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, WEEKS_IN_YEAR));</span>
 <span class="fc" id="L635">        int newWeek = Math.toIntExact(Math.floorMod(calcEm, WEEKS_IN_YEAR));</span>
 <span class="fc" id="L636">        int newMonth = 1 + Math.floorDiv(newWeek, WEEKS_IN_MONTH);</span>
-        //int newDay = 1 + ((newWeek * DAYS_IN_WEEK + ((day - 1) % DAYS_IN_WEEK)) % DAYS_IN_MONTH);
-<span class="fc" id="L638">        int newDay = 1 + ((newWeek * DAYS_IN_WEEK + 8 +</span>
-<span class="fc bfc" id="L639" title="All 4 branches covered.">                (isLeapDay ? 0 : isYearDay ? -1 : (day - 1) % DAYS_IN_WEEK) - 1) % DAYS_IN_MONTH);</span>
-<span class="fc" id="L640">        return create(newYear, newMonth, newDay);</span>
+<span class="fc" id="L637">        int newDay = 1 + ((newWeek * DAYS_IN_WEEK + 8 +</span>
+<span class="fc bfc" id="L638" title="All 4 branches covered.">                (isLeapDay ? 0 : isYearDay ? -1 : (day - 1) % DAYS_IN_WEEK) - 1) % DAYS_IN_MONTH);</span>
+<span class="fc" id="L639">        return create(newYear, newMonth, newDay);</span>
     }
 
     @Override
     InternationalFixedDate plusMonths(long months) {
-<span class="fc bfc" id="L645" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L646">            return this;</span>
+<span class="fc bfc" id="L644" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L645">            return this;</span>
         }
-<span class="fc bfc" id="L648" title="All 2 branches covered.">        if (months % MONTHS_IN_YEAR == 0) {</span>
-<span class="fc" id="L649">            return plusYears(months / MONTHS_IN_YEAR);</span>
+<span class="fc bfc" id="L647" title="All 2 branches covered.">        if (months % MONTHS_IN_YEAR == 0) {</span>
+<span class="fc" id="L648">            return plusYears(months / MONTHS_IN_YEAR);</span>
         }
-<span class="fc" id="L651">        int newMonth = (int) Math.addExact(getProlepticMonth(), months);</span>
-<span class="fc" id="L652">        int newYear = newMonth / MONTHS_IN_YEAR;</span>
-<span class="fc" id="L653">        newMonth = 1 + (newMonth % MONTHS_IN_YEAR);</span>
-<span class="fc" id="L654">        return resolvePreviousValid(newYear, newMonth, day);</span>
+<span class="fc" id="L650">        int newMonth = (int) Math.addExact(getProlepticMonth(), months);</span>
+<span class="fc" id="L651">        int newYear = newMonth / MONTHS_IN_YEAR;</span>
+<span class="fc" id="L652">        newMonth = 1 + (newMonth % MONTHS_IN_YEAR);</span>
+<span class="fc" id="L653">        return resolvePreviousValid(newYear, newMonth, day);</span>
     }
 
     @Override
     InternationalFixedDate plusYears(long yearsToAdd) {
-<span class="fc bfc" id="L659" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
-<span class="fc" id="L660">            return this;</span>
+<span class="fc bfc" id="L658" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
+<span class="fc" id="L659">            return this;</span>
         }
-<span class="fc" id="L662">        int newYear = YEAR_RANGE.checkValidIntValue(Math.addExact(prolepticYear, yearsToAdd), ChronoField.YEAR);</span>
-<span class="fc" id="L663">        return resolvePreviousValid(newYear, month, day);</span>
+<span class="fc" id="L661">        int newYear = YEAR_RANGE.checkValidIntValue(Math.addExact(prolepticYear, yearsToAdd), ChronoField.YEAR);</span>
+<span class="fc" id="L662">        return resolvePreviousValid(newYear, month, day);</span>
     }
 
     @Override
     public InternationalFixedDate minus(TemporalAmount amount) {
-<span class="fc" id="L668">        return (InternationalFixedDate) amount.subtractFrom(this);</span>
+<span class="fc" id="L667">        return (InternationalFixedDate) amount.subtractFrom(this);</span>
     }
 
     @Override
     public InternationalFixedDate minus(long amountToSubtract, TemporalUnit unit) {
-<span class="fc" id="L673">        return (InternationalFixedDate) super.minus(amountToSubtract, unit);</span>
+<span class="fc" id="L672">        return (InternationalFixedDate) super.minus(amountToSubtract, unit);</span>
     }
 
     //-------------------------------------------------------------------------
     @Override  // for covariant return type
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;InternationalFixedDate&gt; atTime(LocalTime localTime) {
-<span class="nc" id="L680">        return (ChronoLocalDateTime&lt;InternationalFixedDate&gt;) super.atTime(localTime);</span>
+<span class="nc" id="L679">        return (ChronoLocalDateTime&lt;InternationalFixedDate&gt;) super.atTime(localTime);</span>
     }
 
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L685">        return until(InternationalFixedDate.from(endExclusive), unit);</span>
+<span class="fc" id="L684">        return until(InternationalFixedDate.from(endExclusive), unit);</span>
     }
 
     /**
@@ -692,9 +691,9 @@ public final class InternationalFixedDate
      * @return The number of years from this date to the given day.
      */
     long yearsUntil(InternationalFixedDate end) {
-<span class="fc" id="L695">        long startYear = this.prolepticYear * 512L + this.getInternalDayOfYear();</span>
-<span class="fc" id="L696">        long endYear = end.prolepticYear * 512L + end.getInternalDayOfYear();</span>
-<span class="fc" id="L697">        return (endYear - startYear) / 512L;</span>
+<span class="fc" id="L694">        long startYear = this.prolepticYear * 512L + this.getInternalDayOfYear();</span>
+<span class="fc" id="L695">        long endYear = end.prolepticYear * 512L + end.getInternalDayOfYear();</span>
+<span class="fc" id="L696">        return (endYear - startYear) / 512L;</span>
     }
 
     /**
@@ -704,62 +703,62 @@ public final class InternationalFixedDate
      * @return int day of the year for calculations
      */
     private int getInternalDayOfYear() {
-<span class="fc bfc" id="L707" title="All 4 branches covered.">        return isLeapYear &amp;&amp; (month &gt; 6) ? dayOfYear - 1 : dayOfYear;</span>
+<span class="fc bfc" id="L706" title="All 4 branches covered.">        return isLeapYear &amp;&amp; (month &gt; 6) ? dayOfYear - 1 : dayOfYear;</span>
     }
 
     @Override
     public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
-<span class="fc" id="L712">        InternationalFixedDate end = InternationalFixedDate.from(endDateExclusive);</span>
-<span class="fc" id="L713">        int years = Math.toIntExact(yearsUntil(end));</span>
+<span class="fc" id="L711">        InternationalFixedDate end = InternationalFixedDate.from(endDateExclusive);</span>
+<span class="fc" id="L712">        int years = Math.toIntExact(yearsUntil(end));</span>
         // Get to the same &quot;whole&quot; year.
-<span class="fc" id="L715">        InternationalFixedDate sameYearEnd = plusYears(years);</span>
-<span class="fc" id="L716">        int months = (int) sameYearEnd.monthsUntil(end);</span>
-<span class="fc" id="L717">        int days = (int) sameYearEnd.plusMonths(months).daysUntil(end);</span>
+<span class="fc" id="L714">        InternationalFixedDate sameYearEnd = plusYears(years);</span>
+<span class="fc" id="L715">        int months = (int) sameYearEnd.monthsUntil(end);</span>
+<span class="fc" id="L716">        int days = (int) sameYearEnd.plusMonths(months).daysUntil(end);</span>
 
         // When both Leap Day and Year Day start / end the period, the intra-month difference can be +- 28 days,
         // because internally day-of-month as 1 (Leap Day) or 29 (Year Day) for calculations.
         // Thus we have to compensate the difference accordingly.
-<span class="pc bpc" id="L722" title="1 of 8 branches missed.">        if ((!isYearDay &amp;&amp; !isLeapDay) &amp;&amp; !(end.isYearDay &amp;&amp; !end.isLeapDay)) {</span>
-<span class="pc bpc" id="L723" title="1 of 2 branches missed.">            if (days == DAYS_IN_MONTH) {</span>
-<span class="nc" id="L724">                days = 0;</span>
-<span class="nc" id="L725">                months += 1;</span>
+<span class="pc bpc" id="L721" title="1 of 8 branches missed.">        if ((!isYearDay &amp;&amp; !isLeapDay) &amp;&amp; !(end.isYearDay &amp;&amp; !end.isLeapDay)) {</span>
+<span class="pc bpc" id="L722" title="1 of 2 branches missed.">            if (days == DAYS_IN_MONTH) {</span>
+<span class="nc" id="L723">                days = 0;</span>
+<span class="nc" id="L724">                months += 1;</span>
             }
 
-<span class="fc bfc" id="L728" title="All 2 branches covered.">            if (days == -DAYS_IN_MONTH) {</span>
-<span class="fc" id="L729">                days = 0;</span>
-<span class="fc" id="L730">                months -= 1;</span>
+<span class="fc bfc" id="L727" title="All 2 branches covered.">            if (days == -DAYS_IN_MONTH) {</span>
+<span class="fc" id="L728">                days = 0;</span>
+<span class="fc" id="L729">                months -= 1;</span>
             }
         }
 
-<span class="fc" id="L734">        return getChronology().period(years, months, days);</span>
+<span class="fc" id="L733">        return getChronology().period(years, months, days);</span>
     }
 
     @Override
     long weeksUntil(AbstractDate end) {
-<span class="fc" id="L739">        InternationalFixedDate endDate = InternationalFixedDate.from(end);</span>
+<span class="fc" id="L738">        InternationalFixedDate endDate = InternationalFixedDate.from(end);</span>
         int offset = (this.day &lt; 1 || endDate.day &lt; 1) &amp;&amp; (this.day != endDate.day) &amp;&amp;
-<span class="pc bpc" id="L741" title="10 of 12 branches missed.">                this.isLeapYear &amp;&amp; endDate.isLeapYear ? (this.isBefore(endDate) ? 1 : -1) : 0;</span>
-<span class="fc" id="L742">        long startWeek = this.getProlepticWeek() * 8L + this.getDayOfWeek();</span>
-<span class="fc" id="L743">        long endWeek = endDate.getProlepticWeek() * 8L + end.getDayOfWeek();</span>
+<span class="pc bpc" id="L740" title="10 of 12 branches missed.">                this.isLeapYear &amp;&amp; endDate.isLeapYear ? (this.isBefore(endDate) ? 1 : -1) : 0;</span>
+<span class="fc" id="L741">        long startWeek = this.getProlepticWeek() * 8L + this.getDayOfWeek();</span>
+<span class="fc" id="L742">        long endWeek = endDate.getProlepticWeek() * 8L + end.getDayOfWeek();</span>
 
-<span class="fc" id="L745">        return (endWeek - startWeek - offset) / 8L;</span>
+<span class="fc" id="L744">        return (endWeek - startWeek - offset) / 8L;</span>
     }
 
     @Override
     long monthsUntil(AbstractDate end) {
-<span class="fc" id="L750">        InternationalFixedDate date = InternationalFixedDate.from(end);</span>
-<span class="fc" id="L751">        long monthStart = this.getProlepticMonth() * 32L + this.getDayOfMonth();</span>
-<span class="fc" id="L752">        long monthEnd = date.getProlepticMonth() * 32L + date.getDayOfMonth();</span>
+<span class="fc" id="L749">        InternationalFixedDate date = InternationalFixedDate.from(end);</span>
+<span class="fc" id="L750">        long monthStart = this.getProlepticMonth() * 32L + this.getDayOfMonth();</span>
+<span class="fc" id="L751">        long monthEnd = date.getProlepticMonth() * 32L + date.getDayOfMonth();</span>
 
-<span class="fc" id="L754">        return (monthEnd - monthStart) / 32L;</span>
+<span class="fc" id="L753">        return (monthEnd - monthStart) / 32L;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public long toEpochDay() {
-<span class="fc" id="L760">        long epochDay = ((long) this.prolepticYear) * DAYS_IN_YEAR +</span>
-<span class="fc" id="L761">                InternationalFixedChronology.getLeapYearsBefore(this.prolepticYear) + this.dayOfYear;</span>
-<span class="fc" id="L762">        return epochDay - DAYS_0000_TO_1970;</span>
+<span class="fc" id="L759">        long epochDay = ((long) this.prolepticYear) * DAYS_IN_YEAR +</span>
+<span class="fc" id="L760">                InternationalFixedChronology.getLeapYearsBefore(this.prolepticYear) + this.dayOfYear;</span>
+<span class="fc" id="L761">        return epochDay - DAYS_0000_TO_1970;</span>
     }
 
     /**
@@ -769,17 +768,17 @@ public final class InternationalFixedDate
      */
     @Override
     public String toString() {
-<span class="fc" id="L772">        StringBuilder buf = new StringBuilder(30);</span>
-<span class="fc" id="L773">        return buf.append(getChronology().toString())</span>
-<span class="fc" id="L774">                .append(' ')</span>
-<span class="fc" id="L775">                .append(getEra())</span>
-<span class="fc" id="L776">                .append(' ')</span>
-<span class="fc" id="L777">                .append(getYearOfEra())</span>
-<span class="pc bpc" id="L778" title="1 of 4 branches missed.">                .append(this.month &lt; 10 &amp;&amp; this.month &gt; 0 ? &quot;/0&quot; : '/')</span>
-<span class="fc" id="L779">                .append(this.month)</span>
-<span class="fc bfc" id="L780" title="All 2 branches covered.">                .append(this.day &lt; 10 ? &quot;/0&quot; : '/')</span>
-<span class="fc" id="L781">                .append(this.day)</span>
-<span class="fc" id="L782">                .toString();</span>
+<span class="fc" id="L771">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L772">        return buf.append(getChronology().toString())</span>
+<span class="fc" id="L773">                .append(' ')</span>
+<span class="fc" id="L774">                .append(getEra())</span>
+<span class="fc" id="L775">                .append(' ')</span>
+<span class="fc" id="L776">                .append(getYearOfEra())</span>
+<span class="pc bpc" id="L777" title="1 of 4 branches missed.">                .append(this.month &lt; 10 &amp;&amp; this.month &gt; 0 ? &quot;/0&quot; : '/')</span>
+<span class="fc" id="L778">                .append(this.month)</span>
+<span class="fc bfc" id="L779" title="All 2 branches covered.">                .append(this.day &lt; 10 ? &quot;/0&quot; : '/')</span>
+<span class="fc" id="L780">                .append(this.day)</span>
+<span class="fc" id="L781">                .toString();</span>
     }
 
 }

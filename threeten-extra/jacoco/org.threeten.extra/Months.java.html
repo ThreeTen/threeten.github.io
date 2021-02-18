@@ -316,6 +316,33 @@ public final class Months
 <span class="fc" id="L316">        return months;</span>
     }
 
+    /**
+     * Checks if the amount is negative.
+     *
+     * @return true if the amount is negative, false if the amount is zero or positive
+     */
+    public boolean isNegative() {
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
+    }
+
+    /**
+     * Checks if the amount is zero.
+     *
+     * @return true if the amount is zero, false if not
+     */
+    public boolean isZero() {
+<span class="fc bfc" id="L334" title="All 2 branches covered.">        return getAmount() == 0;</span>
+    }
+
+    /**
+     * Checks if the amount is positive.
+     *
+     * @return true if the amount is positive, false if the amount is zero or negative
+     */
+    public boolean isPositive() {
+<span class="fc bfc" id="L343" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Returns a copy of this amount with the specified amount added.
@@ -330,7 +357,7 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Months plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L333">        return plus(Months.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L360">        return plus(Months.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -343,10 +370,10 @@ public final class Months
      * @throws ArithmeticException if the result overflows an int
      */
     public Months plus(int months) {
-<span class="fc bfc" id="L346" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L347">            return this;</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L374">            return this;</span>
         }
-<span class="fc" id="L349">        return of(Math.addExact(this.months, months));</span>
+<span class="fc" id="L376">        return of(Math.addExact(this.months, months));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -363,7 +390,7 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Months minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L366">        return minus(Months.from(amountToSubtract).getAmount());</span>
+<span class="fc" id="L393">        return minus(Months.from(amountToSubtract).getAmount());</span>
     }
 
     /**
@@ -376,10 +403,10 @@ public final class Months
      * @throws ArithmeticException if the result overflows an int
      */
     public Months minus(int months) {
-<span class="fc bfc" id="L379" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L380">            return this;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L407">            return this;</span>
         }
-<span class="fc" id="L382">        return of(Math.subtractExact(this.months, months));</span>
+<span class="fc" id="L409">        return of(Math.subtractExact(this.months, months));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -393,10 +420,10 @@ public final class Months
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Months multipliedBy(int scalar) {
-<span class="fc bfc" id="L396" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L397">            return this;</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L424">            return this;</span>
         }
-<span class="fc" id="L399">        return of(Math.multiplyExact(months, scalar));</span>
+<span class="fc" id="L426">        return of(Math.multiplyExact(months, scalar));</span>
     }
 
     /**
@@ -411,10 +438,10 @@ public final class Months
      * @throws ArithmeticException if the divisor is zero
      */
     public Months dividedBy(int divisor) {
-<span class="fc bfc" id="L414" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L415">            return this;</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L442">            return this;</span>
         }
-<span class="fc" id="L417">        return of(months / divisor);</span>
+<span class="fc" id="L444">        return of(months / divisor);</span>
     }
 
     /**
@@ -427,7 +454,7 @@ public final class Months
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Months negated() {
-<span class="fc" id="L430">        return multipliedBy(-1);</span>
+<span class="fc" id="L457">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -442,7 +469,7 @@ public final class Months
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Months abs() {
-<span class="fc bfc" id="L445" title="All 2 branches covered.">        return months &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">        return months &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -454,7 +481,7 @@ public final class Months
      * @return the equivalent period, not null
      */
     public Period toPeriod() {
-<span class="fc" id="L457">        return Period.ofMonths(months);</span>
+<span class="fc" id="L484">        return Period.ofMonths(months);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -484,10 +511,10 @@ public final class Months
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (months != 0) {</span>
-<span class="fc" id="L488">            temporal = temporal.plus(months, MONTHS);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        if (months != 0) {</span>
+<span class="fc" id="L515">            temporal = temporal.plus(months, MONTHS);</span>
         }
-<span class="fc" id="L490">        return temporal;</span>
+<span class="fc" id="L517">        return temporal;</span>
     }
 
     /**
@@ -516,10 +543,10 @@ public final class Months
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc bfc" id="L519" title="All 2 branches covered.">        if (months != 0) {</span>
-<span class="fc" id="L520">            temporal = temporal.minus(months, MONTHS);</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        if (months != 0) {</span>
+<span class="fc" id="L547">            temporal = temporal.minus(months, MONTHS);</span>
         }
-<span class="fc" id="L522">        return temporal;</span>
+<span class="fc" id="L549">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -534,9 +561,9 @@ public final class Months
      */
     @Override
     public int compareTo(Months otherAmount) {
-<span class="fc" id="L537">        int thisValue = this.months;</span>
-<span class="fc" id="L538">        int otherValue = otherAmount.months;</span>
-<span class="fc" id="L539">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L564">        int thisValue = this.months;</span>
+<span class="fc" id="L565">        int otherValue = otherAmount.months;</span>
+<span class="fc" id="L566">        return Integer.compare(thisValue, otherValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -550,14 +577,14 @@ public final class Months
      */
     @Override
     public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L553" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L554">            return true;</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L581">            return true;</span>
         }
-<span class="fc bfc" id="L556" title="All 2 branches covered.">        if (otherAmount instanceof Months) {</span>
-<span class="fc" id="L557">            Months other = (Months) otherAmount;</span>
-<span class="fc bfc" id="L558" title="All 2 branches covered.">            return this.months == other.months;</span>
+<span class="fc bfc" id="L583" title="All 2 branches covered.">        if (otherAmount instanceof Months) {</span>
+<span class="fc" id="L584">            Months other = (Months) otherAmount;</span>
+<span class="fc bfc" id="L585" title="All 2 branches covered.">            return this.months == other.months;</span>
         }
-<span class="fc" id="L560">        return false;</span>
+<span class="fc" id="L587">        return false;</span>
     }
 
     /**
@@ -567,7 +594,7 @@ public final class Months
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L570">        return months;</span>
+<span class="fc" id="L597">        return months;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -580,7 +607,7 @@ public final class Months
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L583">        return &quot;P&quot; + months + &quot;M&quot;;</span>
+<span class="fc" id="L610">        return &quot;P&quot; + months + &quot;M&quot;;</span>
     }
 
 }

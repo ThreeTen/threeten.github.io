@@ -152,8 +152,6 @@ public final class Symmetry010Chronology
      * There are 6 full 293-year cycles from CE 1 to 1758, with 6 * 52 leap years, i.e. 312.
      * There are 37 leap years from CE 1758 to 1970.
      */
-    //public static final long DAYS_0001_TO_1970 = (DAYS_PER_CYCLE * 6L) + 211L * DAYS_IN_YEAR + 37 * DAYS_IN_WEEK;
-    //public static final long DAYS_0001_TO_1970_ISO = IsoChronology.INSTANCE.date(1,1,1).toEpochDay() * -1;
     public static final long DAYS_0001_TO_1970 = (146097 * 5L) - (31L * 365L + 7L) - 1;
     /**
      * Highest year in the range.
@@ -162,45 +160,45 @@ public final class Symmetry010Chronology
     /**
      * Range of year.
      */
-<span class="fc" id="L165">    static final ValueRange YEAR_RANGE = ValueRange.of(-MAX_YEAR, MAX_YEAR);</span>
+<span class="fc" id="L163">    static final ValueRange YEAR_RANGE = ValueRange.of(-MAX_YEAR, MAX_YEAR);</span>
     /**
      * Epoch day range.
      */
-<span class="fc" id="L169">    static final ValueRange EPOCH_DAY_RANGE = ValueRange.of(</span>
-<span class="fc" id="L170">            -MAX_YEAR * DAYS_IN_YEAR - getLeapYearsBefore(MAX_YEAR) * DAYS_IN_WEEK - DAYS_0001_TO_1970,</span>
-<span class="fc" id="L171">             MAX_YEAR * DAYS_IN_YEAR + getLeapYearsBefore(MAX_YEAR) * DAYS_IN_WEEK - DAYS_0001_TO_1970);</span>
+<span class="fc" id="L167">    static final ValueRange EPOCH_DAY_RANGE = ValueRange.of(</span>
+<span class="fc" id="L168">            -MAX_YEAR * DAYS_IN_YEAR - getLeapYearsBefore(MAX_YEAR) * DAYS_IN_WEEK - DAYS_0001_TO_1970,</span>
+<span class="fc" id="L169">             MAX_YEAR * DAYS_IN_YEAR + getLeapYearsBefore(MAX_YEAR) * DAYS_IN_WEEK - DAYS_0001_TO_1970);</span>
     /**
      * Range of proleptic month.
      */
-<span class="fc" id="L175">    private static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-MAX_YEAR * MONTHS_IN_YEAR, MAX_YEAR * MONTHS_IN_YEAR - 1);</span>
+<span class="fc" id="L173">    private static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-MAX_YEAR * MONTHS_IN_YEAR, MAX_YEAR * MONTHS_IN_YEAR - 1);</span>
     /**
      * Range of day of month.
      */
-<span class="fc" id="L179">    static final ValueRange DAY_OF_MONTH_RANGE = ValueRange.of(1, DAYS_IN_MONTH, DAYS_IN_MONTH_LONG + 6);</span>
+<span class="fc" id="L177">    static final ValueRange DAY_OF_MONTH_RANGE = ValueRange.of(1, DAYS_IN_MONTH, DAYS_IN_MONTH_LONG + 6);</span>
     /**
      * Range of day of year.
      */
-<span class="fc" id="L183">    static final ValueRange DAY_OF_YEAR_RANGE = ValueRange.of(1, DAYS_IN_YEAR, DAYS_IN_YEAR_LONG);</span>
+<span class="fc" id="L181">    static final ValueRange DAY_OF_YEAR_RANGE = ValueRange.of(1, DAYS_IN_YEAR, DAYS_IN_YEAR_LONG);</span>
     /**
      * Range of month of year.
      */
-<span class="fc" id="L187">    static final ValueRange MONTH_OF_YEAR_RANGE = ValueRange.of(1, MONTHS_IN_YEAR);</span>
+<span class="fc" id="L185">    static final ValueRange MONTH_OF_YEAR_RANGE = ValueRange.of(1, MONTHS_IN_YEAR);</span>
     /**
      * Range of eras.
      */
-<span class="fc" id="L191">    static final ValueRange ERA_RANGE = ValueRange.of(0, 1);</span>
+<span class="fc" id="L189">    static final ValueRange ERA_RANGE = ValueRange.of(0, 1);</span>
     /**
      * Empty range: [0, 0].
      */
-<span class="fc" id="L195">    static final ValueRange EMPTY_RANGE = ValueRange.of(0, 0);</span>
+<span class="fc" id="L193">    static final ValueRange EMPTY_RANGE = ValueRange.of(0, 0);</span>
 
     /**
      * Private constructor, that is public to satisfy the {@code ServiceLoader}.
      * @deprecated Use the singleton {@link #INSTANCE} instead.
      */
     @Deprecated
-<span class="fc" id="L202">    public Symmetry010Chronology() {</span>
-<span class="fc" id="L203">    }</span>
+<span class="fc" id="L200">    public Symmetry010Chronology() {</span>
+<span class="fc" id="L201">    }</span>
 
     /**
      * Resolve singleton.
@@ -208,7 +206,7 @@ public final class Symmetry010Chronology
      * @return the singleton instance, not null
      */
     private Object readResolve() {
-<span class="nc" id="L211">        return INSTANCE;</span>
+<span class="nc" id="L209">        return INSTANCE;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -223,7 +221,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public String getId() {
-<span class="fc" id="L226">        return &quot;Sym010&quot;;</span>
+<span class="fc" id="L224">        return &quot;Sym010&quot;;</span>
     }
 
     /**
@@ -237,7 +235,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public String getCalendarType() {
-<span class="fc" id="L240">        return null;</span>
+<span class="fc" id="L238">        return null;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -255,7 +253,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public Symmetry010Date date(Era era, int yearOfEra, int month, int dayOfMonth) {
-<span class="fc" id="L258">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+<span class="fc" id="L256">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
     }
 
     /**
@@ -270,7 +268,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public Symmetry010Date date(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L273">        return Symmetry010Date.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L271">        return Symmetry010Date.of(prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -286,7 +284,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public Symmetry010Date dateYearDay(Era era, int yearOfEra, int dayOfYear) {
-<span class="fc" id="L289">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+<span class="fc" id="L287">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
     }
 
     /**
@@ -300,7 +298,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public Symmetry010Date dateYearDay(int prolepticYear, int dayOfYear) {
-<span class="fc" id="L303">        return Symmetry010Date.ofYearDay(prolepticYear, dayOfYear);</span>
+<span class="fc" id="L301">        return Symmetry010Date.ofYearDay(prolepticYear, dayOfYear);</span>
     }
 
     /**
@@ -312,7 +310,7 @@ public final class Symmetry010Chronology
      */
     @Override  // override with covariant return type
     public Symmetry010Date dateEpochDay(long epochDay) {
-<span class="fc" id="L315">        return Symmetry010Date.ofEpochDay(epochDay);</span>
+<span class="fc" id="L313">        return Symmetry010Date.ofEpochDay(epochDay);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -330,7 +328,7 @@ public final class Symmetry010Chronology
      */
     @Override  // override with covariant return type
     public Symmetry010Date dateNow() {
-<span class="nc" id="L333">        return Symmetry010Date.now();</span>
+<span class="nc" id="L331">        return Symmetry010Date.now();</span>
     }
 
     /**
@@ -348,7 +346,7 @@ public final class Symmetry010Chronology
      */
     @Override  // override with covariant return type
     public Symmetry010Date dateNow(ZoneId zone) {
-<span class="nc" id="L351">        return Symmetry010Date.now(zone);</span>
+<span class="nc" id="L349">        return Symmetry010Date.now(zone);</span>
     }
 
     /**
@@ -364,7 +362,7 @@ public final class Symmetry010Chronology
      */
     @Override  // override with covariant return type
     public Symmetry010Date dateNow(Clock clock) {
-<span class="nc" id="L367">        return Symmetry010Date.now(clock);</span>
+<span class="nc" id="L365">        return Symmetry010Date.now(clock);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -377,7 +375,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public Symmetry010Date date(TemporalAccessor temporal) {
-<span class="fc" id="L380">        return Symmetry010Date.from(temporal);</span>
+<span class="fc" id="L378">        return Symmetry010Date.from(temporal);</span>
     }
 
     /**
@@ -390,7 +388,7 @@ public final class Symmetry010Chronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;Symmetry010Date&gt; localDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L393">        return (ChronoLocalDateTime&lt;Symmetry010Date&gt;) super.localDateTime(temporal);</span>
+<span class="nc" id="L391">        return (ChronoLocalDateTime&lt;Symmetry010Date&gt;) super.localDateTime(temporal);</span>
     }
 
     /**
@@ -403,7 +401,7 @@ public final class Symmetry010Chronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;Symmetry010Date&gt; zonedDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L406">        return (ChronoZonedDateTime&lt;Symmetry010Date&gt;) super.zonedDateTime(temporal);</span>
+<span class="nc" id="L404">        return (ChronoZonedDateTime&lt;Symmetry010Date&gt;) super.zonedDateTime(temporal);</span>
     }
 
     /**
@@ -417,7 +415,7 @@ public final class Symmetry010Chronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;Symmetry010Date&gt; zonedDateTime(Instant instant, ZoneId zone) {
-<span class="nc" id="L420">        return (ChronoZonedDateTime&lt;Symmetry010Date&gt;) super.zonedDateTime(instant, zone);</span>
+<span class="nc" id="L418">        return (ChronoZonedDateTime&lt;Symmetry010Date&gt;) super.zonedDateTime(instant, zone);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -432,7 +430,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public boolean isLeapYear(long year) {
-<span class="fc bfc" id="L435" title="All 2 branches covered.">        return WEEKS_IN_YEAR &gt; ((WEEKS_IN_YEAR * year + 146) % YEARS_IN_CYCLE);</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        return WEEKS_IN_YEAR &gt; ((WEEKS_IN_YEAR * year + 146) % YEARS_IN_CYCLE);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -447,7 +445,7 @@ public final class Symmetry010Chronology
      */
     @Override
     public IsoEra eraOf(int eraValue) {
-<span class="fc" id="L450">        return IsoEra.of(eraValue);</span>
+<span class="fc" id="L448">        return IsoEra.of(eraValue);</span>
     }
 
     /**
@@ -459,50 +457,50 @@ public final class Symmetry010Chronology
      */
     @Override
     public List&lt;Era&gt; eras() {
-<span class="fc" id="L462">        return Arrays.&lt;Era&gt;asList(IsoEra.values());</span>
+<span class="fc" id="L460">        return Arrays.&lt;Era&gt;asList(IsoEra.values());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(ChronoField field) {
-<span class="fc bfc" id="L468" title="All 11 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L466" title="All 11 branches covered.">        switch (field) {</span>
             case ALIGNED_DAY_OF_WEEK_IN_YEAR:
             case ALIGNED_DAY_OF_WEEK_IN_MONTH:
             case DAY_OF_WEEK:
-<span class="fc" id="L472">                return ValueRange.of(1, DAYS_IN_WEEK);</span>
+<span class="fc" id="L470">                return ValueRange.of(1, DAYS_IN_WEEK);</span>
             case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L474">                return ValueRange.of(1, WEEKS_IN_MONTH, WEEKS_IN_MONTH_LONG);</span>
+<span class="fc" id="L472">                return ValueRange.of(1, WEEKS_IN_MONTH, WEEKS_IN_MONTH_LONG);</span>
             case ALIGNED_WEEK_OF_YEAR:
-<span class="fc" id="L476">                return ValueRange.of(1, WEEKS_IN_YEAR, WEEKS_IN_YEAR + 1);</span>
+<span class="fc" id="L474">                return ValueRange.of(1, WEEKS_IN_YEAR, WEEKS_IN_YEAR + 1);</span>
             case DAY_OF_MONTH:
-<span class="fc" id="L478">                return DAY_OF_MONTH_RANGE;</span>
+<span class="fc" id="L476">                return DAY_OF_MONTH_RANGE;</span>
             case DAY_OF_YEAR:
-<span class="fc" id="L480">                return DAY_OF_YEAR_RANGE;</span>
+<span class="fc" id="L478">                return DAY_OF_YEAR_RANGE;</span>
             case EPOCH_DAY:
-<span class="fc" id="L482">                return EPOCH_DAY_RANGE;</span>
+<span class="fc" id="L480">                return EPOCH_DAY_RANGE;</span>
             case ERA:
-<span class="fc" id="L484">                return ERA_RANGE;</span>
+<span class="fc" id="L482">                return ERA_RANGE;</span>
             case MONTH_OF_YEAR:
-<span class="fc" id="L486">                return MONTH_OF_YEAR_RANGE;</span>
+<span class="fc" id="L484">                return MONTH_OF_YEAR_RANGE;</span>
             case PROLEPTIC_MONTH:
-<span class="fc" id="L488">                return PROLEPTIC_MONTH_RANGE;</span>
+<span class="fc" id="L486">                return PROLEPTIC_MONTH_RANGE;</span>
             case YEAR_OF_ERA:
             case YEAR:
-<span class="fc" id="L491">                return YEAR_RANGE;</span>
+<span class="fc" id="L489">                return YEAR_RANGE;</span>
             default:
-<span class="fc" id="L493">                return field.range();</span>
+<span class="fc" id="L491">                return field.range();</span>
         }
     }
 
     @Override
     public int prolepticYear(Era era, int yearOfEra) {
-<span class="fc bfc" id="L499" title="All 2 branches covered.">        if (!(era instanceof IsoEra)) {</span>
-<span class="fc" id="L500">            throw new ClassCastException(&quot;Invalid era: &quot; + era);</span>
+<span class="fc bfc" id="L497" title="All 2 branches covered.">        if (!(era instanceof IsoEra)) {</span>
+<span class="fc" id="L498">            throw new ClassCastException(&quot;Invalid era: &quot; + era);</span>
         }
 
-<span class="fc" id="L503">        YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
+<span class="fc" id="L501">        YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
 
-<span class="fc" id="L505">        return yearOfEra;</span>
+<span class="fc" id="L503">        return yearOfEra;</span>
     }
 
     /**
@@ -512,7 +510,7 @@ public final class Symmetry010Chronology
      * @return the number of leap years since CE 1
      */
     public static long getLeapYearsBefore(long prolepticYear) {
-<span class="fc" id="L515">        return Math.floorDiv(WEEKS_IN_YEAR * (prolepticYear - 1) + 146, YEARS_IN_CYCLE);</span>
+<span class="fc" id="L513">        return Math.floorDiv(WEEKS_IN_YEAR * (prolepticYear - 1) + 146, YEARS_IN_CYCLE);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

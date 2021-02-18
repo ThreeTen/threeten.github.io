@@ -306,7 +306,7 @@ public final class UtcInstant
      * @return true if this instant is within a leap second
      */
     public boolean isLeapSecond() {
-<span class="pc bpc" id="L309" title="1 of 2 branches missed.">        return nanoOfDay &gt; SECS_PER_DAY * NANOS_PER_SECOND;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">        return nanoOfDay &gt;= SECS_PER_DAY * NANOS_PER_SECOND;</span>
     }
 
     //-----------------------------------------------------------------------

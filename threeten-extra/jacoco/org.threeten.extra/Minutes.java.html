@@ -332,6 +332,33 @@ public final class Minutes
 <span class="fc" id="L332">        return minutes;</span>
     }
 
+    /**
+     * Checks if the amount is negative.
+     *
+     * @return true if the amount is negative, false if the amount is zero or positive
+     */
+    public boolean isNegative() {
+<span class="fc bfc" id="L341" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
+    }
+
+    /**
+     * Checks if the amount is zero.
+     *
+     * @return true if the amount is zero, false if not
+     */
+    public boolean isZero() {
+<span class="fc bfc" id="L350" title="All 2 branches covered.">        return getAmount() == 0;</span>
+    }
+
+    /**
+     * Checks if the amount is positive.
+     *
+     * @return true if the amount is positive, false if the amount is zero or negative
+     */
+    public boolean isPositive() {
+<span class="fc bfc" id="L359" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Returns a copy of this amount with the specified amount added.
@@ -346,7 +373,7 @@ public final class Minutes
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Minutes plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L349">        return plus(Minutes.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L376">        return plus(Minutes.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -359,10 +386,10 @@ public final class Minutes
      * @throws ArithmeticException if the result overflows an int
      */
     public Minutes plus(int minutes) {
-<span class="fc bfc" id="L362" title="All 2 branches covered.">        if (minutes == 0) {</span>
-<span class="fc" id="L363">            return this;</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">        if (minutes == 0) {</span>
+<span class="fc" id="L390">            return this;</span>
         }
-<span class="fc" id="L365">        return of(Math.addExact(this.minutes, minutes));</span>
+<span class="fc" id="L392">        return of(Math.addExact(this.minutes, minutes));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -379,7 +406,7 @@ public final class Minutes
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Minutes minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L382">        return minus(Minutes.from(amountToSubtract).getAmount());</span>
+<span class="fc" id="L409">        return minus(Minutes.from(amountToSubtract).getAmount());</span>
     }
 
     /**
@@ -392,10 +419,10 @@ public final class Minutes
      * @throws ArithmeticException if the result overflows an int
      */
     public Minutes minus(int minutes) {
-<span class="fc bfc" id="L395" title="All 2 branches covered.">        if (minutes == 0) {</span>
-<span class="fc" id="L396">            return this;</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        if (minutes == 0) {</span>
+<span class="fc" id="L423">            return this;</span>
         }
-<span class="fc" id="L398">        return of(Math.subtractExact(this.minutes, minutes));</span>
+<span class="fc" id="L425">        return of(Math.subtractExact(this.minutes, minutes));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -409,10 +436,10 @@ public final class Minutes
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Minutes multipliedBy(int scalar) {
-<span class="fc bfc" id="L412" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L413">            return this;</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L440">            return this;</span>
         }
-<span class="fc" id="L415">        return of(Math.multiplyExact(minutes, scalar));</span>
+<span class="fc" id="L442">        return of(Math.multiplyExact(minutes, scalar));</span>
     }
 
     /**
@@ -427,10 +454,10 @@ public final class Minutes
      * @throws ArithmeticException if the divisor is zero
      */
     public Minutes dividedBy(int divisor) {
-<span class="fc bfc" id="L430" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L431">            return this;</span>
+<span class="fc bfc" id="L457" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L458">            return this;</span>
         }
-<span class="fc" id="L433">        return of(minutes / divisor);</span>
+<span class="fc" id="L460">        return of(minutes / divisor);</span>
     }
 
     /**
@@ -443,7 +470,7 @@ public final class Minutes
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Minutes negated() {
-<span class="fc" id="L446">        return multipliedBy(-1);</span>
+<span class="fc" id="L473">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -458,7 +485,7 @@ public final class Minutes
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Minutes abs() {
-<span class="fc bfc" id="L461" title="All 2 branches covered.">        return minutes &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">        return minutes &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -470,7 +497,7 @@ public final class Minutes
      * @return the equivalent duration, not null
      */
     public Duration toDuration() {
-<span class="fc" id="L473">        return Duration.ofMinutes(minutes);</span>
+<span class="fc" id="L500">        return Duration.ofMinutes(minutes);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -500,10 +527,10 @@ public final class Minutes
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc bfc" id="L503" title="All 2 branches covered.">        if (minutes != 0) {</span>
-<span class="fc" id="L504">            temporal = temporal.plus(minutes, MINUTES);</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        if (minutes != 0) {</span>
+<span class="fc" id="L531">            temporal = temporal.plus(minutes, MINUTES);</span>
         }
-<span class="fc" id="L506">        return temporal;</span>
+<span class="fc" id="L533">        return temporal;</span>
     }
 
     /**
@@ -532,10 +559,10 @@ public final class Minutes
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc bfc" id="L535" title="All 2 branches covered.">        if (minutes != 0) {</span>
-<span class="fc" id="L536">            temporal = temporal.minus(minutes, MINUTES);</span>
+<span class="fc bfc" id="L562" title="All 2 branches covered.">        if (minutes != 0) {</span>
+<span class="fc" id="L563">            temporal = temporal.minus(minutes, MINUTES);</span>
         }
-<span class="fc" id="L538">        return temporal;</span>
+<span class="fc" id="L565">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -550,9 +577,9 @@ public final class Minutes
      */
     @Override
     public int compareTo(Minutes otherAmount) {
-<span class="fc" id="L553">        int thisValue = this.minutes;</span>
-<span class="fc" id="L554">        int otherValue = otherAmount.minutes;</span>
-<span class="fc" id="L555">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L580">        int thisValue = this.minutes;</span>
+<span class="fc" id="L581">        int otherValue = otherAmount.minutes;</span>
+<span class="fc" id="L582">        return Integer.compare(thisValue, otherValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -566,14 +593,14 @@ public final class Minutes
      */
     @Override
     public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L569" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L570">            return true;</span>
+<span class="fc bfc" id="L596" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L597">            return true;</span>
         }
-<span class="fc bfc" id="L572" title="All 2 branches covered.">        if (otherAmount instanceof Minutes) {</span>
-<span class="fc" id="L573">            Minutes other = (Minutes) otherAmount;</span>
-<span class="fc bfc" id="L574" title="All 2 branches covered.">            return this.minutes == other.minutes;</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">        if (otherAmount instanceof Minutes) {</span>
+<span class="fc" id="L600">            Minutes other = (Minutes) otherAmount;</span>
+<span class="fc bfc" id="L601" title="All 2 branches covered.">            return this.minutes == other.minutes;</span>
         }
-<span class="fc" id="L576">        return false;</span>
+<span class="fc" id="L603">        return false;</span>
     }
 
     /**
@@ -583,7 +610,7 @@ public final class Minutes
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L586">        return minutes;</span>
+<span class="fc" id="L613">        return minutes;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -596,7 +623,7 @@ public final class Minutes
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L599">        return &quot;PT&quot; + minutes + &quot;M&quot;;</span>
+<span class="fc" id="L626">        return &quot;PT&quot; + minutes + &quot;M&quot;;</span>
     }
 
 }

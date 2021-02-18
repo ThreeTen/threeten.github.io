@@ -272,6 +272,33 @@ public final class Years
 <span class="fc" id="L272">        return years;</span>
     }
 
+    /**
+     * Checks if the amount is negative.
+     *
+     * @return true if the amount is negative, false if the amount is zero or positive
+     */
+    public boolean isNegative() {
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
+    }
+
+    /**
+     * Checks if the amount is zero.
+     *
+     * @return true if the amount is zero, false if not
+     */
+    public boolean isZero() {
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        return getAmount() == 0;</span>
+    }
+
+    /**
+     * Checks if the amount is positive.
+     *
+     * @return true if the amount is positive, false if the amount is zero or negative
+     */
+    public boolean isPositive() {
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Returns a copy of this amount with the specified amount added.
@@ -286,7 +313,7 @@ public final class Years
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Years plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L289">        return plus(Years.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L316">        return plus(Years.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -299,10 +326,10 @@ public final class Years
      * @throws ArithmeticException if the result overflows an int
      */
     public Years plus(int years) {
-<span class="fc bfc" id="L302" title="All 2 branches covered.">        if (years == 0) {</span>
-<span class="fc" id="L303">            return this;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        if (years == 0) {</span>
+<span class="fc" id="L330">            return this;</span>
         }
-<span class="fc" id="L305">        return of(Math.addExact(this.years, years));</span>
+<span class="fc" id="L332">        return of(Math.addExact(this.years, years));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -319,7 +346,7 @@ public final class Years
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Years minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L322">        return minus(Years.from(amountToSubtract).getAmount());</span>
+<span class="fc" id="L349">        return minus(Years.from(amountToSubtract).getAmount());</span>
     }
 
     /**
@@ -332,10 +359,10 @@ public final class Years
      * @throws ArithmeticException if the result overflows an int
      */
     public Years minus(int years) {
-<span class="fc bfc" id="L335" title="All 2 branches covered.">        if (years == 0) {</span>
-<span class="fc" id="L336">            return this;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        if (years == 0) {</span>
+<span class="fc" id="L363">            return this;</span>
         }
-<span class="fc" id="L338">        return of(Math.subtractExact(this.years, years));</span>
+<span class="fc" id="L365">        return of(Math.subtractExact(this.years, years));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -349,10 +376,10 @@ public final class Years
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Years multipliedBy(int scalar) {
-<span class="fc bfc" id="L352" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L353">            return this;</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L380">            return this;</span>
         }
-<span class="fc" id="L355">        return of(Math.multiplyExact(years, scalar));</span>
+<span class="fc" id="L382">        return of(Math.multiplyExact(years, scalar));</span>
     }
 
     /**
@@ -367,10 +394,10 @@ public final class Years
      * @throws ArithmeticException if the divisor is zero
      */
     public Years dividedBy(int divisor) {
-<span class="fc bfc" id="L370" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L371">            return this;</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L398">            return this;</span>
         }
-<span class="fc" id="L373">        return of(years / divisor);</span>
+<span class="fc" id="L400">        return of(years / divisor);</span>
     }
 
     /**
@@ -383,7 +410,7 @@ public final class Years
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Years negated() {
-<span class="fc" id="L386">        return multipliedBy(-1);</span>
+<span class="fc" id="L413">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -398,7 +425,7 @@ public final class Years
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Years abs() {
-<span class="fc bfc" id="L401" title="All 2 branches covered.">        return years &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">        return years &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -410,7 +437,7 @@ public final class Years
      * @return the equivalent period, not null
      */
     public Period toPeriod() {
-<span class="fc" id="L413">        return Period.ofYears(years);</span>
+<span class="fc" id="L440">        return Period.ofYears(years);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -440,10 +467,10 @@ public final class Years
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc bfc" id="L443" title="All 2 branches covered.">        if (years != 0) {</span>
-<span class="fc" id="L444">            temporal = temporal.plus(years, YEARS);</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">        if (years != 0) {</span>
+<span class="fc" id="L471">            temporal = temporal.plus(years, YEARS);</span>
         }
-<span class="fc" id="L446">        return temporal;</span>
+<span class="fc" id="L473">        return temporal;</span>
     }
 
     /**
@@ -472,10 +499,10 @@ public final class Years
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc bfc" id="L475" title="All 2 branches covered.">        if (years != 0) {</span>
-<span class="fc" id="L476">            temporal = temporal.minus(years, YEARS);</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">        if (years != 0) {</span>
+<span class="fc" id="L503">            temporal = temporal.minus(years, YEARS);</span>
         }
-<span class="fc" id="L478">        return temporal;</span>
+<span class="fc" id="L505">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -490,9 +517,9 @@ public final class Years
      */
     @Override
     public int compareTo(Years otherAmount) {
-<span class="fc" id="L493">        int thisValue = this.years;</span>
-<span class="fc" id="L494">        int otherValue = otherAmount.years;</span>
-<span class="fc" id="L495">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L520">        int thisValue = this.years;</span>
+<span class="fc" id="L521">        int otherValue = otherAmount.years;</span>
+<span class="fc" id="L522">        return Integer.compare(thisValue, otherValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -506,14 +533,14 @@ public final class Years
      */
     @Override
     public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L509" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L510">            return true;</span>
+<span class="fc bfc" id="L536" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L537">            return true;</span>
         }
-<span class="fc bfc" id="L512" title="All 2 branches covered.">        if (otherAmount instanceof Years) {</span>
-<span class="fc" id="L513">            Years other = (Years) otherAmount;</span>
-<span class="fc bfc" id="L514" title="All 2 branches covered.">            return this.years == other.years;</span>
+<span class="fc bfc" id="L539" title="All 2 branches covered.">        if (otherAmount instanceof Years) {</span>
+<span class="fc" id="L540">            Years other = (Years) otherAmount;</span>
+<span class="fc bfc" id="L541" title="All 2 branches covered.">            return this.years == other.years;</span>
         }
-<span class="fc" id="L516">        return false;</span>
+<span class="fc" id="L543">        return false;</span>
     }
 
     /**
@@ -523,7 +550,7 @@ public final class Years
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L526">        return years;</span>
+<span class="fc" id="L553">        return years;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -536,7 +563,7 @@ public final class Years
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L539">        return &quot;P&quot; + years + &quot;Y&quot;;</span>
+<span class="fc" id="L566">        return &quot;P&quot; + years + &quot;Y&quot;;</span>
     }
 
 }

@@ -298,6 +298,33 @@ public final class Hours
 <span class="fc" id="L298">        return hours;</span>
     }
 
+    /**
+     * Checks if the amount is negative.
+     *
+     * @return true if the amount is negative, false if the amount is zero or positive
+     */
+    public boolean isNegative() {
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
+    }
+
+    /**
+     * Checks if the amount is zero.
+     *
+     * @return true if the amount is zero, false if not
+     */
+    public boolean isZero() {
+<span class="fc bfc" id="L316" title="All 2 branches covered.">        return getAmount() == 0;</span>
+    }
+
+    /**
+     * Checks if the amount is positive.
+     *
+     * @return true if the amount is positive, false if the amount is zero or negative
+     */
+    public boolean isPositive() {
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Returns a copy of this amount with the specified amount added.
@@ -312,7 +339,7 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Hours plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L315">        return plus(Hours.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L342">        return plus(Hours.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -325,10 +352,10 @@ public final class Hours
      * @throws ArithmeticException if the result overflows an int
      */
     public Hours plus(int hours) {
-<span class="fc bfc" id="L328" title="All 2 branches covered.">        if (hours == 0) {</span>
-<span class="fc" id="L329">            return this;</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L356">            return this;</span>
         }
-<span class="fc" id="L331">        return of(Math.addExact(this.hours, hours));</span>
+<span class="fc" id="L358">        return of(Math.addExact(this.hours, hours));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -345,7 +372,7 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Hours minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L348">        return minus(Hours.from(amountToSubtract).getAmount());</span>
+<span class="fc" id="L375">        return minus(Hours.from(amountToSubtract).getAmount());</span>
     }
 
     /**
@@ -358,10 +385,10 @@ public final class Hours
      * @throws ArithmeticException if the result overflows an int
      */
     public Hours minus(int hours) {
-<span class="fc bfc" id="L361" title="All 2 branches covered.">        if (hours == 0) {</span>
-<span class="fc" id="L362">            return this;</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L389">            return this;</span>
         }
-<span class="fc" id="L364">        return of(Math.subtractExact(this.hours, hours));</span>
+<span class="fc" id="L391">        return of(Math.subtractExact(this.hours, hours));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -375,10 +402,10 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Hours multipliedBy(int scalar) {
-<span class="fc bfc" id="L378" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L379">            return this;</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L406">            return this;</span>
         }
-<span class="fc" id="L381">        return of(Math.multiplyExact(hours, scalar));</span>
+<span class="fc" id="L408">        return of(Math.multiplyExact(hours, scalar));</span>
     }
 
     /**
@@ -393,10 +420,10 @@ public final class Hours
      * @throws ArithmeticException if the divisor is zero
      */
     public Hours dividedBy(int divisor) {
-<span class="fc bfc" id="L396" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L397">            return this;</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L424">            return this;</span>
         }
-<span class="fc" id="L399">        return of(hours / divisor);</span>
+<span class="fc" id="L426">        return of(hours / divisor);</span>
     }
 
     /**
@@ -409,7 +436,7 @@ public final class Hours
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Hours negated() {
-<span class="fc" id="L412">        return multipliedBy(-1);</span>
+<span class="fc" id="L439">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -424,7 +451,7 @@ public final class Hours
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Hours abs() {
-<span class="fc bfc" id="L427" title="All 2 branches covered.">        return hours &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        return hours &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -438,7 +465,7 @@ public final class Hours
      */
     @Deprecated
     public Duration toPeriod() {
-<span class="fc" id="L441">        return Duration.ofHours(hours);</span>
+<span class="fc" id="L468">        return Duration.ofHours(hours);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -450,7 +477,7 @@ public final class Hours
      * @return the equivalent duration, not null
      */
     public Duration toDuration() {
-<span class="fc" id="L453">        return Duration.ofHours(hours);</span>
+<span class="fc" id="L480">        return Duration.ofHours(hours);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -480,10 +507,10 @@ public final class Hours
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc bfc" id="L483" title="All 2 branches covered.">        if (hours != 0) {</span>
-<span class="fc" id="L484">            temporal = temporal.plus(hours, HOURS);</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">        if (hours != 0) {</span>
+<span class="fc" id="L511">            temporal = temporal.plus(hours, HOURS);</span>
         }
-<span class="fc" id="L486">        return temporal;</span>
+<span class="fc" id="L513">        return temporal;</span>
     }
 
     /**
@@ -512,10 +539,10 @@ public final class Hours
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc bfc" id="L515" title="All 2 branches covered.">        if (hours != 0) {</span>
-<span class="fc" id="L516">            temporal = temporal.minus(hours, HOURS);</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">        if (hours != 0) {</span>
+<span class="fc" id="L543">            temporal = temporal.minus(hours, HOURS);</span>
         }
-<span class="fc" id="L518">        return temporal;</span>
+<span class="fc" id="L545">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -530,9 +557,9 @@ public final class Hours
      */
     @Override
     public int compareTo(Hours otherAmount) {
-<span class="fc" id="L533">        int thisValue = this.hours;</span>
-<span class="fc" id="L534">        int otherValue = otherAmount.hours;</span>
-<span class="fc" id="L535">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L560">        int thisValue = this.hours;</span>
+<span class="fc" id="L561">        int otherValue = otherAmount.hours;</span>
+<span class="fc" id="L562">        return Integer.compare(thisValue, otherValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -546,14 +573,14 @@ public final class Hours
      */
     @Override
     public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L550">            return true;</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L577">            return true;</span>
         }
-<span class="fc bfc" id="L552" title="All 2 branches covered.">        if (otherAmount instanceof Hours) {</span>
-<span class="fc" id="L553">            Hours other = (Hours) otherAmount;</span>
-<span class="fc bfc" id="L554" title="All 2 branches covered.">            return this.hours == other.hours;</span>
+<span class="fc bfc" id="L579" title="All 2 branches covered.">        if (otherAmount instanceof Hours) {</span>
+<span class="fc" id="L580">            Hours other = (Hours) otherAmount;</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">            return this.hours == other.hours;</span>
         }
-<span class="fc" id="L556">        return false;</span>
+<span class="fc" id="L583">        return false;</span>
     }
 
     /**
@@ -563,7 +590,7 @@ public final class Hours
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L566">        return hours;</span>
+<span class="fc" id="L593">        return hours;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -576,7 +603,7 @@ public final class Hours
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L579">        return &quot;PT&quot; + hours + &quot;H&quot;;</span>
+<span class="fc" id="L606">        return &quot;PT&quot; + hours + &quot;H&quot;;</span>
     }
 
 }

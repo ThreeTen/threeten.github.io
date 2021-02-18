@@ -181,15 +181,38 @@ public final class YearQuarter
     /**
      * Obtains an instance of {@code YearQuarter} from a year and quarter.
      *
+     * @param year  the year to represent, not null
+     * @param quarter  the quarter-of-year to represent, not null
+     * @return the year-quarter, not null
+     */
+    public static YearQuarter of(Year year, Quarter quarter) {
+<span class="fc" id="L189">        return of(year.getValue(), quarter);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code YearQuarter} from a year and quarter.
+     *
+     * @param year  the year to represent, not null
+     * @param quarter  the quarter-of-year to represent, from 1 to 4
+     * @return the year-quarter, not null
+     * @throws DateTimeException if the quarter value is invalid
+     */
+    public static YearQuarter of(Year year, int quarter) {
+<span class="fc" id="L201">        return of(year.getValue(), Quarter.of(quarter));</span>
+    }
+
+    /**
+     * Obtains an instance of {@code YearQuarter} from a year and quarter.
+     *
      * @param year  the year to represent, from MIN_YEAR to MAX_YEAR
      * @param quarter  the quarter-of-year to represent, not null
      * @return the year-quarter, not null
      * @throws DateTimeException if the year value is invalid
      */
     public static YearQuarter of(int year, Quarter quarter) {
-<span class="fc" id="L190">        YEAR.checkValidValue(year);</span>
-<span class="fc" id="L191">        Objects.requireNonNull(quarter, &quot;quarter&quot;);</span>
-<span class="fc" id="L192">        return new YearQuarter(year, quarter);</span>
+<span class="fc" id="L213">        YEAR.checkValidValue(year);</span>
+<span class="fc" id="L214">        Objects.requireNonNull(quarter, &quot;quarter&quot;);</span>
+<span class="fc" id="L215">        return new YearQuarter(year, quarter);</span>
     }
 
     /**
@@ -201,8 +224,8 @@ public final class YearQuarter
      * @throws DateTimeException if either field value is invalid
      */
     public static YearQuarter of(int year, int quarter) {
-<span class="fc" id="L204">        YEAR.checkValidValue(year);</span>
-<span class="fc" id="L205">        return new YearQuarter(year, Quarter.of(quarter));</span>
+<span class="fc" id="L227">        YEAR.checkValidValue(year);</span>
+<span class="fc" id="L228">        return new YearQuarter(year, Quarter.of(quarter));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -226,21 +249,21 @@ public final class YearQuarter
      * @throws DateTimeException if unable to convert to a {@code YearQuarter}
      */
     public static YearQuarter from(TemporalAccessor temporal) {
-<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (temporal instanceof YearQuarter) {</span>
-<span class="fc" id="L230">            return (YearQuarter) temporal;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (temporal instanceof YearQuarter) {</span>
+<span class="fc" id="L253">            return (YearQuarter) temporal;</span>
         }
-<span class="fc" id="L232">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
+<span class="fc" id="L255">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
         try {
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
-<span class="nc" id="L235">                temporal = LocalDate.from(temporal);</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
+<span class="nc" id="L258">                temporal = LocalDate.from(temporal);</span>
             }
             // need to use getLong() as JDK Parsed class get() doesn't work properly
-<span class="fc" id="L238">            int year = Math.toIntExact(temporal.getLong(YEAR));</span>
-<span class="fc" id="L239">            int qoy = Math.toIntExact(temporal.getLong(QUARTER_OF_YEAR));</span>
-<span class="fc" id="L240">            return of(year, qoy);</span>
-<span class="fc" id="L241">        } catch (DateTimeException ex) {</span>
-<span class="fc" id="L242">            throw new DateTimeException(&quot;Unable to obtain YearQuarter from TemporalAccessor: &quot; +</span>
-<span class="fc" id="L243">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+<span class="fc" id="L261">            int year = Math.toIntExact(temporal.getLong(YEAR));</span>
+<span class="fc" id="L262">            int qoy = Math.toIntExact(temporal.getLong(QUARTER_OF_YEAR));</span>
+<span class="fc" id="L263">            return of(year, qoy);</span>
+<span class="fc" id="L264">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L265">            throw new DateTimeException(&quot;Unable to obtain YearQuarter from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L266">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
         }
     }
 
@@ -258,7 +281,7 @@ public final class YearQuarter
      */
     @FromString
     public static YearQuarter parse(CharSequence text) {
-<span class="fc" id="L261">        return parse(text, PARSER);</span>
+<span class="fc" id="L284">        return parse(text, PARSER);</span>
     }
 
     /**
@@ -272,8 +295,8 @@ public final class YearQuarter
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static YearQuarter parse(CharSequence text, DateTimeFormatter formatter) {
-<span class="fc" id="L275">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L276">        return formatter.parse(text, YearQuarter::from);</span>
+<span class="fc" id="L298">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L299">        return formatter.parse(text, YearQuarter::from);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -283,10 +306,10 @@ public final class YearQuarter
      * @param year  the year to represent, validated from MIN_YEAR to MAX_YEAR
      * @param quarter  the quarter-of-year to represent, validated not null
      */
-<span class="fc" id="L286">    private YearQuarter(int year, Quarter quarter) {</span>
-<span class="fc" id="L287">        this.year = year;</span>
-<span class="fc" id="L288">        this.quarter = quarter;</span>
-<span class="fc" id="L289">    }</span>
+<span class="fc" id="L309">    private YearQuarter(int year, Quarter quarter) {</span>
+<span class="fc" id="L310">        this.year = year;</span>
+<span class="fc" id="L311">        this.quarter = quarter;</span>
+<span class="fc" id="L312">    }</span>
 
     /**
      * Validates the input.
@@ -294,7 +317,7 @@ public final class YearQuarter
      * @return the valid object, not null
      */
     private Object readResolve() {
-<span class="fc" id="L297">        return of(year, quarter);</span>
+<span class="fc" id="L320">        return of(year, quarter);</span>
     }
 
     /**
@@ -306,10 +329,10 @@ public final class YearQuarter
      * @return the year-quarter, not null
      */
     private YearQuarter with(int newYear, Quarter newQuarter) {
-<span class="pc bpc" id="L309" title="1 of 4 branches missed.">        if (year == newYear &amp;&amp; quarter == newQuarter) {</span>
-<span class="nc" id="L310">            return this;</span>
+<span class="pc bpc" id="L332" title="1 of 4 branches missed.">        if (year == newYear &amp;&amp; quarter == newQuarter) {</span>
+<span class="nc" id="L333">            return this;</span>
         }
-<span class="fc" id="L312">        return new YearQuarter(newYear, newQuarter);</span>
+<span class="fc" id="L335">        return new YearQuarter(newYear, newQuarter);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -341,12 +364,12 @@ public final class YearQuarter
      */
     @Override
     public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L344" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
-<span class="fc" id="L345">            return true;</span>
-<span class="fc bfc" id="L346" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L347" title="All 6 branches covered.">            return field == YEAR || field == YEAR_OF_ERA || field == ERA;</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
+<span class="fc" id="L368">            return true;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L370" title="All 6 branches covered.">            return field == YEAR || field == YEAR_OF_ERA || field == ERA;</span>
         }
-<span class="pc bpc" id="L349" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L372" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -378,12 +401,12 @@ public final class YearQuarter
      */
     @Override
     public boolean isSupported(TemporalUnit unit) {
-<span class="fc bfc" id="L381" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
-<span class="fc" id="L382">            return true;</span>
-<span class="fc bfc" id="L383" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L384" title="1 of 10 branches missed.">            return unit == YEARS || unit == DECADES || unit == CENTURIES || unit == MILLENNIA || unit == ERAS;</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
+<span class="fc" id="L405">            return true;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="pc bpc" id="L407" title="1 of 10 branches missed.">            return unit == YEARS || unit == DECADES || unit == CENTURIES || unit == MILLENNIA || unit == ERAS;</span>
         }
-<span class="pc bpc" id="L386" title="3 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
+<span class="pc bpc" id="L409" title="3 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -412,13 +435,13 @@ public final class YearQuarter
      */
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc bfc" id="L415" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
-<span class="fc" id="L416">            return QUARTER_OF_YEAR.range();</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
+<span class="fc" id="L439">            return QUARTER_OF_YEAR.range();</span>
         }
-<span class="fc bfc" id="L418" title="All 2 branches covered.">        if (field == YEAR_OF_ERA) {</span>
-<span class="pc bpc" id="L419" title="1 of 2 branches missed.">            return (getYear() &lt;= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1) : ValueRange.of(1, Year.MAX_VALUE));</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">        if (field == YEAR_OF_ERA) {</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">            return (getYear() &lt;= 0 ? ValueRange.of(1, Year.MAX_VALUE + 1) : ValueRange.of(1, Year.MAX_VALUE));</span>
         }
-<span class="fc" id="L421">        return Temporal.super.range(field);</span>
+<span class="fc" id="L444">        return Temporal.super.range(field);</span>
     }
 
     /**
@@ -449,21 +472,21 @@ public final class YearQuarter
      */
     @Override
     public int get(TemporalField field) {
-<span class="fc bfc" id="L452" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
-<span class="fc" id="L453">            return quarter.getValue();</span>
-<span class="pc bpc" id="L454" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L455" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
+<span class="fc" id="L476">            return quarter.getValue();</span>
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L478" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
                 case YEAR_OF_ERA:
-<span class="pc bpc" id="L457" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
                 case YEAR:
-<span class="fc" id="L459">                    return year;</span>
+<span class="fc" id="L482">                    return year;</span>
                 case ERA:
-<span class="pc bpc" id="L461" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 0 : 1);</span>
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 0 : 1);</span>
                 default:
-<span class="fc" id="L463">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc" id="L486">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
             }
         }
-<span class="nc" id="L466">        return Temporal.super.get(field);</span>
+<span class="nc" id="L489">        return Temporal.super.get(field);</span>
     }
 
     /**
@@ -491,25 +514,25 @@ public final class YearQuarter
      */
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L494" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
-<span class="fc" id="L495">            return quarter.getValue();</span>
-<span class="pc bpc" id="L496" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L497" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
+<span class="fc" id="L518">            return quarter.getValue();</span>
+<span class="pc bpc" id="L519" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L520" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
                 case YEAR_OF_ERA:
-<span class="pc bpc" id="L499" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
+<span class="pc bpc" id="L522" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
                 case YEAR:
-<span class="fc" id="L501">                    return year;</span>
+<span class="fc" id="L524">                    return year;</span>
                 case ERA:
-<span class="pc bpc" id="L503" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 0 : 1);</span>
+<span class="pc bpc" id="L526" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 0 : 1);</span>
                 default:
-<span class="fc" id="L505">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc" id="L528">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
             }
         }
-<span class="nc" id="L508">        return field.getFrom(this);</span>
+<span class="nc" id="L531">        return field.getFrom(this);</span>
     }
 
     private long getProlepticQuarter() {
-<span class="fc" id="L512">        return year * 4L + (quarter.getValue() - 1);</span>
+<span class="fc" id="L535">        return year * 4L + (quarter.getValue() - 1);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -523,7 +546,7 @@ public final class YearQuarter
      * @return the year, from MIN_YEAR to MAX_YEAR
      */
     public int getYear() {
-<span class="fc" id="L526">        return year;</span>
+<span class="fc" id="L549">        return year;</span>
     }
 
     /**
@@ -537,7 +560,7 @@ public final class YearQuarter
      * @see #getQuarter()
      */
     public int getQuarterValue() {
-<span class="fc" id="L540">        return quarter.getValue();</span>
+<span class="fc" id="L563">        return quarter.getValue();</span>
     }
 
     /**
@@ -552,7 +575,7 @@ public final class YearQuarter
      * @see #getQuarterValue()
      */
     public Quarter getQuarter() {
-<span class="fc" id="L555">        return quarter;</span>
+<span class="fc" id="L578">        return quarter;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -575,7 +598,7 @@ public final class YearQuarter
      * @return true if the year is leap, false otherwise
      */
     public boolean isLeapYear() {
-<span class="fc" id="L578">        return IsoChronology.INSTANCE.isLeapYear(year);</span>
+<span class="fc" id="L601">        return IsoChronology.INSTANCE.isLeapYear(year);</span>
     }
 
     /**
@@ -588,7 +611,7 @@ public final class YearQuarter
      * @return true if the day is valid for this year-quarter
      */
     public boolean isValidDay(int dayOfQuarter) {
-<span class="fc bfc" id="L591" title="All 4 branches covered.">        return dayOfQuarter &gt;= 1 &amp;&amp; dayOfQuarter &lt;= lengthOfQuarter();</span>
+<span class="fc bfc" id="L614" title="All 4 branches covered.">        return dayOfQuarter &gt;= 1 &amp;&amp; dayOfQuarter &lt;= lengthOfQuarter();</span>
     }
 
     /**
@@ -599,7 +622,7 @@ public final class YearQuarter
      * @return the length of the quarter in days, from 90 to 92
      */
     public int lengthOfQuarter() {
-<span class="fc" id="L602">        return quarter.length(isLeapYear());</span>
+<span class="fc" id="L625">        return quarter.length(isLeapYear());</span>
     }
 
     /**
@@ -610,7 +633,7 @@ public final class YearQuarter
      * @return 366 if the year is leap, 365 otherwise
      */
     public int lengthOfYear() {
-<span class="fc bfc" id="L613" title="All 2 branches covered.">        return (isLeapYear() ? 366 : 365);</span>
+<span class="fc bfc" id="L636" title="All 2 branches covered.">        return (isLeapYear() ? 366 : 365);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -638,7 +661,7 @@ public final class YearQuarter
      */
     @Override
     public YearQuarter with(TemporalAdjuster adjuster) {
-<span class="fc" id="L641">        return (YearQuarter) adjuster.adjustInto(this);</span>
+<span class="fc" id="L664">        return (YearQuarter) adjuster.adjustInto(this);</span>
     }
 
     /**
@@ -688,23 +711,23 @@ public final class YearQuarter
      */
     @Override
     public YearQuarter with(TemporalField field, long newValue) {
-<span class="fc bfc" id="L691" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
-<span class="fc" id="L692">            return withQuarter(QUARTER_OF_YEAR.range().checkValidIntValue(newValue, QUARTER_OF_YEAR));</span>
-<span class="pc bpc" id="L693" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L694">            ChronoField f = (ChronoField) field;</span>
-<span class="fc" id="L695">            f.checkValidValue(newValue);</span>
-<span class="pc bpc" id="L696" title="2 of 4 branches missed.">            switch (f) {</span>
+<span class="fc bfc" id="L714" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
+<span class="fc" id="L715">            return withQuarter(QUARTER_OF_YEAR.range().checkValidIntValue(newValue, QUARTER_OF_YEAR));</span>
+<span class="pc bpc" id="L716" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L717">            ChronoField f = (ChronoField) field;</span>
+<span class="fc" id="L718">            f.checkValidValue(newValue);</span>
+<span class="pc bpc" id="L719" title="2 of 4 branches missed.">            switch (f) {</span>
                 case YEAR_OF_ERA:
-<span class="nc bnc" id="L698" title="All 2 branches missed.">                    return withYear((int) (year &lt; 1 ? 1 - newValue : newValue));</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">                    return withYear((int) (year &lt; 1 ? 1 - newValue : newValue));</span>
                 case YEAR:
-<span class="fc" id="L700">                    return withYear((int) newValue);</span>
+<span class="fc" id="L723">                    return withYear((int) newValue);</span>
                 case ERA:
-<span class="nc bnc" id="L702" title="All 2 branches missed.">                    return (getLong(ERA) == newValue ? this : withYear(1 - year));</span>
+<span class="nc bnc" id="L725" title="All 2 branches missed.">                    return (getLong(ERA) == newValue ? this : withYear(1 - year));</span>
                 default:
-<span class="fc" id="L704">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc" id="L727">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
             }
         }
-<span class="nc" id="L707">        return field.adjustInto(this, newValue);</span>
+<span class="nc" id="L730">        return field.adjustInto(this, newValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -718,8 +741,8 @@ public final class YearQuarter
      * @throws DateTimeException if the year value is invalid
      */
     public YearQuarter withYear(int year) {
-<span class="fc" id="L721">        YEAR.checkValidValue(year);</span>
-<span class="fc" id="L722">        return with(year, quarter);</span>
+<span class="fc" id="L744">        YEAR.checkValidValue(year);</span>
+<span class="fc" id="L745">        return with(year, quarter);</span>
     }
 
     /**
@@ -732,8 +755,8 @@ public final class YearQuarter
      * @throws DateTimeException if the quarter-of-year value is invalid
      */
     public YearQuarter withQuarter(int quarter) {
-<span class="fc" id="L735">        QUARTER_OF_YEAR.range().checkValidValue(quarter, QUARTER_OF_YEAR);</span>
-<span class="fc" id="L736">        return with(year, Quarter.of(quarter));</span>
+<span class="fc" id="L758">        QUARTER_OF_YEAR.range().checkValidValue(quarter, QUARTER_OF_YEAR);</span>
+<span class="fc" id="L759">        return with(year, Quarter.of(quarter));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -759,7 +782,7 @@ public final class YearQuarter
      */
     @Override
     public YearQuarter plus(TemporalAmount amountToAdd) {
-<span class="nc" id="L762">        return (YearQuarter) amountToAdd.addTo(this);</span>
+<span class="nc" id="L785">        return (YearQuarter) amountToAdd.addTo(this);</span>
     }
 
     /**
@@ -815,25 +838,25 @@ public final class YearQuarter
      */
     @Override
     public YearQuarter plus(long amountToAdd, TemporalUnit unit) {
-<span class="fc bfc" id="L818" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
-<span class="fc" id="L819">            return plusQuarters(amountToAdd);</span>
-<span class="pc bpc" id="L820" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L821" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
+<span class="fc bfc" id="L841" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
+<span class="fc" id="L842">            return plusQuarters(amountToAdd);</span>
+<span class="pc bpc" id="L843" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="pc bpc" id="L844" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
-<span class="fc" id="L823">                    return plusYears(amountToAdd);</span>
+<span class="fc" id="L846">                    return plusYears(amountToAdd);</span>
                 case DECADES:
-<span class="nc" id="L825">                    return plusYears(Math.multiplyExact(amountToAdd, 10));</span>
+<span class="nc" id="L848">                    return plusYears(Math.multiplyExact(amountToAdd, 10));</span>
                 case CENTURIES:
-<span class="nc" id="L827">                    return plusYears(Math.multiplyExact(amountToAdd, 100));</span>
+<span class="nc" id="L850">                    return plusYears(Math.multiplyExact(amountToAdd, 100));</span>
                 case MILLENNIA:
-<span class="nc" id="L829">                    return plusYears(Math.multiplyExact(amountToAdd, 1000));</span>
+<span class="nc" id="L852">                    return plusYears(Math.multiplyExact(amountToAdd, 1000));</span>
                 case ERAS:
-<span class="nc" id="L831">                    return with(ERA, Math.addExact(getLong(ERA), amountToAdd));</span>
+<span class="nc" id="L854">                    return with(ERA, Math.addExact(getLong(ERA), amountToAdd));</span>
                 default:
-<span class="nc" id="L833">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="nc" id="L856">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
-<span class="nc" id="L836">        return unit.addTo(this, amountToAdd);</span>
+<span class="nc" id="L859">        return unit.addTo(this, amountToAdd);</span>
     }
 
     /**
@@ -846,11 +869,11 @@ public final class YearQuarter
      * @throws DateTimeException if the result exceeds the supported range
      */
     public YearQuarter plusYears(long yearsToAdd) {
-<span class="fc bfc" id="L849" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
-<span class="fc" id="L850">            return this;</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
+<span class="fc" id="L873">            return this;</span>
         }
-<span class="fc" id="L852">        int newYear = YEAR.checkValidIntValue(year + yearsToAdd);  // safe overflow</span>
-<span class="fc" id="L853">        return with(newYear, quarter);</span>
+<span class="fc" id="L875">        int newYear = YEAR.checkValidIntValue(year + yearsToAdd);  // safe overflow</span>
+<span class="fc" id="L876">        return with(newYear, quarter);</span>
     }
 
     /**
@@ -863,14 +886,14 @@ public final class YearQuarter
      * @throws DateTimeException if the result exceeds the supported range
      */
     public YearQuarter plusQuarters(long quartersToAdd) {
-<span class="fc bfc" id="L866" title="All 2 branches covered.">        if (quartersToAdd == 0) {</span>
-<span class="fc" id="L867">            return this;</span>
+<span class="fc bfc" id="L889" title="All 2 branches covered.">        if (quartersToAdd == 0) {</span>
+<span class="fc" id="L890">            return this;</span>
         }
-<span class="fc" id="L869">        long quarterCount = year * 4L + (quarter.getValue() - 1);</span>
-<span class="fc" id="L870">        long calcQuarters = quarterCount + quartersToAdd;  // safe overflow</span>
-<span class="fc" id="L871">        int newYear = YEAR.checkValidIntValue(Math.floorDiv(calcQuarters, 4));</span>
-<span class="fc" id="L872">        int newQuarter = (int) Math.floorMod(calcQuarters, 4) + 1;</span>
-<span class="fc" id="L873">        return with(newYear, Quarter.of(newQuarter));</span>
+<span class="fc" id="L892">        long quarterCount = year * 4L + (quarter.getValue() - 1);</span>
+<span class="fc" id="L893">        long calcQuarters = quarterCount + quartersToAdd;  // safe overflow</span>
+<span class="fc" id="L894">        int newYear = YEAR.checkValidIntValue(Math.floorDiv(calcQuarters, 4));</span>
+<span class="fc" id="L895">        int newQuarter = (int) Math.floorMod(calcQuarters, 4) + 1;</span>
+<span class="fc" id="L896">        return with(newYear, Quarter.of(newQuarter));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -896,7 +919,7 @@ public final class YearQuarter
      */
     @Override
     public YearQuarter minus(TemporalAmount amountToSubtract) {
-<span class="nc" id="L899">        return (YearQuarter) amountToSubtract.subtractFrom(this);</span>
+<span class="nc" id="L922">        return (YearQuarter) amountToSubtract.subtractFrom(this);</span>
     }
 
     /**
@@ -920,7 +943,7 @@ public final class YearQuarter
      */
     @Override
     public YearQuarter minus(long amountToSubtract, TemporalUnit unit) {
-<span class="pc bpc" id="L923" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+<span class="pc bpc" id="L946" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
     }
 
     /**
@@ -933,7 +956,7 @@ public final class YearQuarter
      * @throws DateTimeException if the result exceeds the supported range
      */
     public YearQuarter minusYears(long yearsToSubtract) {
-<span class="pc bpc" id="L936" title="1 of 2 branches missed.">        return (yearsToSubtract == Long.MIN_VALUE ? plusYears(Long.MAX_VALUE).plusYears(1) : plusYears(-yearsToSubtract));</span>
+<span class="pc bpc" id="L959" title="1 of 2 branches missed.">        return (yearsToSubtract == Long.MIN_VALUE ? plusYears(Long.MAX_VALUE).plusYears(1) : plusYears(-yearsToSubtract));</span>
     }
 
     /**
@@ -946,7 +969,7 @@ public final class YearQuarter
      * @throws DateTimeException if the result exceeds the supported range
      */
     public YearQuarter minusQuarters(long quartersToSubtract) {
-<span class="pc bpc" id="L949" title="1 of 2 branches missed.">        return (quartersToSubtract == Long.MIN_VALUE ? plusQuarters(Long.MAX_VALUE).plusQuarters(1) : plusQuarters(-quartersToSubtract));</span>
+<span class="pc bpc" id="L972" title="1 of 2 branches missed.">        return (quartersToSubtract == Long.MIN_VALUE ? plusQuarters(Long.MAX_VALUE).plusQuarters(1) : plusQuarters(-quartersToSubtract));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -971,12 +994,12 @@ public final class YearQuarter
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L974" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L975">            return (R) IsoChronology.INSTANCE;</span>
-<span class="fc bfc" id="L976" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L977">            return (R) QUARTER_YEARS;</span>
+<span class="fc bfc" id="L997" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L998">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L999" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L1000">            return (R) QUARTER_YEARS;</span>
         }
-<span class="fc" id="L979">        return Temporal.super.query(query);</span>
+<span class="fc" id="L1002">        return Temporal.super.query(query);</span>
     }
 
     /**
@@ -1007,12 +1030,12 @@ public final class YearQuarter
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="pc bpc" id="L1010" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
-<span class="nc" id="L1011">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="pc bpc" id="L1033" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="nc" id="L1034">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
-<span class="fc" id="L1013">        long newProlepticQuarter = getProlepticQuarter();</span>
-<span class="fc" id="L1014">        long oldProlepticQuarter = temporal.get(YEAR) * 4L + (temporal.get(QUARTER_OF_YEAR) - 1);</span>
-<span class="fc" id="L1015">        return temporal.plus(newProlepticQuarter - oldProlepticQuarter, QUARTER_YEARS);</span>
+<span class="fc" id="L1036">        long newProlepticQuarter = getProlepticQuarter();</span>
+<span class="fc" id="L1037">        long oldProlepticQuarter = temporal.get(YEAR) * 4L + (temporal.get(QUARTER_OF_YEAR) - 1);</span>
+<span class="fc" id="L1038">        return temporal.plus(newProlepticQuarter - oldProlepticQuarter, QUARTER_YEARS);</span>
     }
 
     /**
@@ -1064,27 +1087,27 @@ public final class YearQuarter
      */
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L1067">        YearQuarter end = YearQuarter.from(endExclusive);</span>
-<span class="fc" id="L1068">        long quartersUntil = end.getProlepticQuarter() - getProlepticQuarter();  // no overflow</span>
-<span class="fc bfc" id="L1069" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
-<span class="fc" id="L1070">            return quartersUntil;</span>
-<span class="pc bpc" id="L1071" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L1072" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
+<span class="fc" id="L1090">        YearQuarter end = YearQuarter.from(endExclusive);</span>
+<span class="fc" id="L1091">        long quartersUntil = end.getProlepticQuarter() - getProlepticQuarter();  // no overflow</span>
+<span class="fc bfc" id="L1092" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
+<span class="fc" id="L1093">            return quartersUntil;</span>
+<span class="pc bpc" id="L1094" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="pc bpc" id="L1095" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
-<span class="fc" id="L1074">                    return quartersUntil / 4;</span>
+<span class="fc" id="L1097">                    return quartersUntil / 4;</span>
                 case DECADES:
-<span class="nc" id="L1076">                    return quartersUntil / 40;</span>
+<span class="nc" id="L1099">                    return quartersUntil / 40;</span>
                 case CENTURIES:
-<span class="nc" id="L1078">                    return quartersUntil / 400;</span>
+<span class="nc" id="L1101">                    return quartersUntil / 400;</span>
                 case MILLENNIA:
-<span class="nc" id="L1080">                    return quartersUntil / 4000;</span>
+<span class="nc" id="L1103">                    return quartersUntil / 4000;</span>
                 case ERAS:
-<span class="nc" id="L1082">                    return end.getLong(ERA) - getLong(ERA);</span>
+<span class="nc" id="L1105">                    return end.getLong(ERA) - getLong(ERA);</span>
                 default:
-<span class="nc" id="L1084">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="nc" id="L1107">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
-<span class="nc" id="L1087">        return unit.between(this, end);</span>
+<span class="nc" id="L1110">        return unit.between(this, end);</span>
     }
 
     /**
@@ -1098,11 +1121,11 @@ public final class YearQuarter
      * @throws IllegalArgumentException if end year-quarter is before this year-quarter
      */
     public Stream&lt;YearQuarter&gt; quartersUntil(YearQuarter endExclusive) {
-<span class="fc bfc" id="L1101" title="All 2 branches covered.">        if (endExclusive.isBefore(this)) {</span>
-<span class="fc" id="L1102">            throw new IllegalArgumentException(endExclusive + &quot; &lt; &quot; + this);</span>
+<span class="fc bfc" id="L1124" title="All 2 branches covered.">        if (endExclusive.isBefore(this)) {</span>
+<span class="fc" id="L1125">            throw new IllegalArgumentException(endExclusive + &quot; &lt; &quot; + this);</span>
         }
-<span class="fc" id="L1104">        long intervalLength = until(endExclusive, QUARTER_YEARS);</span>
-<span class="fc" id="L1105">        return LongStream.range(0, intervalLength).mapToObj(n -&gt; plusQuarters(n));</span>
+<span class="fc" id="L1127">        long intervalLength = until(endExclusive, QUARTER_YEARS);</span>
+<span class="fc" id="L1128">        return LongStream.range(0, intervalLength).mapToObj(n -&gt; plusQuarters(n));</span>
     }
 
     /**
@@ -1115,8 +1138,8 @@ public final class YearQuarter
      * @throws DateTimeException if an error occurs during printing
      */
     public String format(DateTimeFormatter formatter) {
-<span class="fc" id="L1118">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L1119">        return formatter.format(this);</span>
+<span class="fc" id="L1141">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L1142">        return formatter.format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1138,14 +1161,14 @@ public final class YearQuarter
      * @see #isValidDay(int)
      */
     public LocalDate atDay(int dayOfQuarter) {
-<span class="fc" id="L1141">        ValueRange.of(1, lengthOfQuarter()).checkValidValue(dayOfQuarter, DAY_OF_QUARTER);</span>
-<span class="fc" id="L1142">        boolean leap = Year.isLeap(year);</span>
-<span class="fc" id="L1143">        Month month = quarter.firstMonth();</span>
-<span class="fc bfc" id="L1144" title="All 2 branches covered.">        while (dayOfQuarter &gt; month.length(leap)) {</span>
-<span class="fc" id="L1145">            dayOfQuarter -= month.length(leap);</span>
-<span class="fc" id="L1146">            month = month.plus(1);</span>
+<span class="fc" id="L1164">        ValueRange.of(1, lengthOfQuarter()).checkValidValue(dayOfQuarter, DAY_OF_QUARTER);</span>
+<span class="fc" id="L1165">        boolean leap = Year.isLeap(year);</span>
+<span class="fc" id="L1166">        Month month = quarter.firstMonth();</span>
+<span class="fc bfc" id="L1167" title="All 2 branches covered.">        while (dayOfQuarter &gt; month.length(leap)) {</span>
+<span class="fc" id="L1168">            dayOfQuarter -= month.length(leap);</span>
+<span class="fc" id="L1169">            month = month.plus(1);</span>
         }
-<span class="fc" id="L1148">        return LocalDate.of(year, month, dayOfQuarter);</span>
+<span class="fc" id="L1171">        return LocalDate.of(year, month, dayOfQuarter);</span>
     }
 
     /**
@@ -1163,8 +1186,8 @@ public final class YearQuarter
      * @return the last valid date of this year-quarter, not null
      */
     public LocalDate atEndOfQuarter() {
-<span class="fc" id="L1166">        Month month = quarter.firstMonth().plus(2);</span>
-<span class="fc" id="L1167">        return LocalDate.of(year, month, month.maxLength());</span>
+<span class="fc" id="L1189">        Month month = quarter.firstMonth().plus(2);</span>
+<span class="fc" id="L1190">        return LocalDate.of(year, month, month.maxLength());</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1179,11 +1202,11 @@ public final class YearQuarter
      */
     @Override
     public int compareTo(YearQuarter other) {
-<span class="fc" id="L1182">        int cmp = (year - other.year);</span>
-<span class="fc bfc" id="L1183" title="All 2 branches covered.">        if (cmp == 0) {</span>
-<span class="fc" id="L1184">            cmp = quarter.compareTo(other.quarter);</span>
+<span class="fc" id="L1205">        int cmp = (year - other.year);</span>
+<span class="fc bfc" id="L1206" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L1207">            cmp = quarter.compareTo(other.quarter);</span>
         }
-<span class="fc" id="L1186">        return cmp;</span>
+<span class="fc" id="L1209">        return cmp;</span>
     }
 
     /**
@@ -1193,7 +1216,7 @@ public final class YearQuarter
      * @return true if this is after the specified year-quarter
      */
     public boolean isAfter(YearQuarter other) {
-<span class="fc bfc" id="L1196" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L1219" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -1203,7 +1226,7 @@ public final class YearQuarter
      * @return true if this point is before the specified year-quarter
      */
     public boolean isBefore(YearQuarter other) {
-<span class="fc bfc" id="L1206" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L1229" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1217,14 +1240,14 @@ public final class YearQuarter
      */
     @Override
     public boolean equals(Object obj) {
-<span class="pc bpc" id="L1220" title="1 of 2 branches missed.">        if (this == obj) {</span>
-<span class="nc" id="L1221">            return true;</span>
+<span class="pc bpc" id="L1243" title="1 of 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L1244">            return true;</span>
         }
-<span class="fc bfc" id="L1223" title="All 2 branches covered.">        if (obj instanceof YearQuarter) {</span>
-<span class="fc" id="L1224">            YearQuarter other = (YearQuarter) obj;</span>
-<span class="pc bpc" id="L1225" title="2 of 4 branches missed.">            return year == other.year &amp;&amp; quarter == other.quarter;</span>
+<span class="fc bfc" id="L1246" title="All 2 branches covered.">        if (obj instanceof YearQuarter) {</span>
+<span class="fc" id="L1247">            YearQuarter other = (YearQuarter) obj;</span>
+<span class="pc bpc" id="L1248" title="2 of 4 branches missed.">            return year == other.year &amp;&amp; quarter == other.quarter;</span>
         }
-<span class="fc" id="L1227">        return false;</span>
+<span class="fc" id="L1250">        return false;</span>
     }
 
     /**
@@ -1234,7 +1257,7 @@ public final class YearQuarter
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1237">        return year ^ (quarter.getValue() &lt;&lt; 27);</span>
+<span class="fc" id="L1260">        return year ^ (quarter.getValue() &lt;&lt; 27);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1248,21 +1271,21 @@ public final class YearQuarter
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1251">        int absYear = Math.abs(year);</span>
-<span class="fc" id="L1252">        StringBuilder buf = new StringBuilder(10);</span>
-<span class="fc bfc" id="L1253" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
-<span class="pc bpc" id="L1254" title="1 of 2 branches missed.">            if (year &lt; 0) {</span>
-<span class="fc" id="L1255">                buf.append(year - 10000).deleteCharAt(1);</span>
+<span class="fc" id="L1274">        int absYear = Math.abs(year);</span>
+<span class="fc" id="L1275">        StringBuilder buf = new StringBuilder(10);</span>
+<span class="fc bfc" id="L1276" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
+<span class="pc bpc" id="L1277" title="1 of 2 branches missed.">            if (year &lt; 0) {</span>
+<span class="fc" id="L1278">                buf.append(year - 10000).deleteCharAt(1);</span>
             } else {
-<span class="nc" id="L1257">                buf.append(year + 10000).deleteCharAt(0);</span>
+<span class="nc" id="L1280">                buf.append(year + 10000).deleteCharAt(0);</span>
             }
         } else {
-<span class="fc bfc" id="L1260" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
-<span class="fc" id="L1261">                buf.append('+');</span>
+<span class="fc bfc" id="L1283" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
+<span class="fc" id="L1284">                buf.append('+');</span>
             }
-<span class="fc" id="L1263">            buf.append(year);</span>
+<span class="fc" id="L1286">            buf.append(year);</span>
         }
-<span class="fc" id="L1265">        return buf.append('-').append(quarter).toString();</span>
+<span class="fc" id="L1288">        return buf.append('-').append(quarter).toString();</span>
     }
 
 }
