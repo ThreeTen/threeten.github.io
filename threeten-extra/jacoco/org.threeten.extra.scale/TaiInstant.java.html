@@ -414,6 +414,32 @@ public final class TaiInstant
 <span class="fc" id="L414">        return nanos - otherInstant.nanos;</span>
     }
 
+    /**
+     * Checks if this instant is after the specified instant.
+     * &lt;p&gt;
+     * The comparison is based on the time-line position of the instants.
+     *
+     * @param otherInstant  the other instant to compare to, not null
+     * @return true if this instant is after the specified instant
+     * @throws NullPointerException if otherInstant is null
+     */
+    public boolean isAfter(TaiInstant otherInstant) {
+<span class="fc bfc" id="L427" title="All 2 branches covered.">        return compareTo(otherInstant) &gt; 0;</span>
+    }
+
+    /**
+     * Checks if this instant is before the specified instant.
+     * &lt;p&gt;
+     * The comparison is based on the time-line position of the instants.
+     *
+     * @param otherInstant  the other instant to compare to, not null
+     * @return true if this instant is before the specified instant
+     * @throws NullPointerException if otherInstant is null
+     */
+    public boolean isBefore(TaiInstant otherInstant) {
+<span class="fc bfc" id="L440" title="All 2 branches covered.">        return compareTo(otherInstant) &lt; 0;</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Checks if this instant is equal to the specified {@code TaiInstant}.
@@ -423,15 +449,15 @@ public final class TaiInstant
      */
     @Override
     public boolean equals(Object otherInstant) {
-<span class="fc bfc" id="L426" title="All 2 branches covered.">        if (this == otherInstant) {</span>
-<span class="fc" id="L427">            return true;</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">        if (this == otherInstant) {</span>
+<span class="fc" id="L453">            return true;</span>
         }
-<span class="fc bfc" id="L429" title="All 2 branches covered.">        if (otherInstant instanceof TaiInstant) {</span>
-<span class="fc" id="L430">            TaiInstant other = (TaiInstant) otherInstant;</span>
-<span class="fc bfc" id="L431" title="All 4 branches covered.">            return this.seconds == other.seconds &amp;&amp;</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">        if (otherInstant instanceof TaiInstant) {</span>
+<span class="fc" id="L456">            TaiInstant other = (TaiInstant) otherInstant;</span>
+<span class="fc bfc" id="L457" title="All 4 branches covered.">            return this.seconds == other.seconds &amp;&amp;</span>
                     this.nanos == other.nanos;
         }
-<span class="fc" id="L434">        return false;</span>
+<span class="fc" id="L460">        return false;</span>
     }
 
     /**
@@ -442,7 +468,7 @@ public final class TaiInstant
     @Override
     public int hashCode() {
         // TODO: Evaluate hash code
-<span class="fc" id="L445">        return ((int) (seconds ^ (seconds &gt;&gt;&gt; 32))) + 51 * nanos;</span>
+<span class="fc" id="L471">        return ((int) (seconds ^ (seconds &gt;&gt;&gt; 32))) + 51 * nanos;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -458,13 +484,13 @@ public final class TaiInstant
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L461">        StringBuilder buf = new StringBuilder();</span>
-<span class="fc" id="L462">        buf.append(seconds);</span>
-<span class="fc" id="L463">        int pos = buf.length();</span>
-<span class="fc" id="L464">        buf.append(nanos + NANOS_PER_SECOND);</span>
-<span class="fc" id="L465">        buf.setCharAt(pos, '.');</span>
-<span class="fc" id="L466">        buf.append(&quot;s(TAI)&quot;);</span>
-<span class="fc" id="L467">        return buf.toString();</span>
+<span class="fc" id="L487">        StringBuilder buf = new StringBuilder();</span>
+<span class="fc" id="L488">        buf.append(seconds);</span>
+<span class="fc" id="L489">        int pos = buf.length();</span>
+<span class="fc" id="L490">        buf.append(nanos + NANOS_PER_SECOND);</span>
+<span class="fc" id="L491">        buf.setCharAt(pos, '.');</span>
+<span class="fc" id="L492">        buf.append(&quot;s(TAI)&quot;);</span>
+<span class="fc" id="L493">        return buf.toString();</span>
     }
 
 }

@@ -426,6 +426,32 @@ public final class UtcInstant
 <span class="fc" id="L426">        return Long.compare(nanoOfDay, otherInstant.nanoOfDay);</span>
     }
 
+    /**
+     * Checks if this instant is after the specified instant.
+     * &lt;p&gt;
+     * The comparison is based on the time-line position of the instants.
+     *
+     * @param otherInstant  the other instant to compare to, not null
+     * @return true if this instant is after the specified instant
+     * @throws NullPointerException if otherInstant is null
+     */
+    public boolean isAfter(UtcInstant otherInstant) {
+<span class="fc bfc" id="L439" title="All 2 branches covered.">        return compareTo(otherInstant) &gt; 0;</span>
+    }
+
+    /**
+     * Checks if this instant is before the specified instant.
+     * &lt;p&gt;
+     * The comparison is based on the time-line position of the instants.
+     *
+     * @param otherInstant  the other instant to compare to, not null
+     * @return true if this instant is before the specified instant
+     * @throws NullPointerException if otherInstant is null
+     */
+    public boolean isBefore(UtcInstant otherInstant) {
+<span class="fc bfc" id="L452" title="All 2 branches covered.">        return compareTo(otherInstant) &lt; 0;</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Checks if this instant is equal to the specified {@code UtcInstant}.
@@ -437,15 +463,15 @@ public final class UtcInstant
      */
     @Override
     public boolean equals(Object otherInstant) {
-<span class="fc bfc" id="L440" title="All 2 branches covered.">        if (this == otherInstant) {</span>
-<span class="fc" id="L441">            return true;</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (this == otherInstant) {</span>
+<span class="fc" id="L467">            return true;</span>
         }
-<span class="fc bfc" id="L443" title="All 2 branches covered.">        if (otherInstant instanceof UtcInstant) {</span>
-<span class="fc" id="L444">            UtcInstant other = (UtcInstant) otherInstant;</span>
-<span class="fc bfc" id="L445" title="All 4 branches covered.">            return this.mjDay == other.mjDay &amp;&amp;</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">        if (otherInstant instanceof UtcInstant) {</span>
+<span class="fc" id="L470">            UtcInstant other = (UtcInstant) otherInstant;</span>
+<span class="fc bfc" id="L471" title="All 4 branches covered.">            return this.mjDay == other.mjDay &amp;&amp;</span>
                     this.nanoOfDay == other.nanoOfDay;
         }
-<span class="fc" id="L448">        return false;</span>
+<span class="fc" id="L474">        return false;</span>
     }
 
     /**
@@ -455,7 +481,7 @@ public final class UtcInstant
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L458">        return ((int) (mjDay ^ (mjDay &gt;&gt;&gt; 32))) + 51 * ((int) (nanoOfDay ^ (nanoOfDay &gt;&gt;&gt; 32)));</span>
+<span class="fc" id="L484">        return ((int) (mjDay ^ (mjDay &gt;&gt;&gt; 32))) + 51 * ((int) (nanoOfDay ^ (nanoOfDay &gt;&gt;&gt; 32)));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -472,43 +498,44 @@ public final class UtcInstant
     @ToString
     public String toString() {
         // racy single-check idiom
-<span class="fc" id="L475">        String currentStringValue = toString;</span>
-<span class="fc bfc" id="L476" title="All 2 branches covered.">        if (currentStringValue == null) {</span>
-<span class="fc" id="L477">            toString = currentStringValue = buildToString();</span>
+<span class="fc" id="L501">        String currentStringValue = toString;</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">        if (currentStringValue == null) {</span>
+<span class="fc" id="L503">            currentStringValue = buildToString();</span>
+<span class="fc" id="L504">            toString = currentStringValue;</span>
         }
-<span class="fc" id="L479">        return currentStringValue;</span>
+<span class="fc" id="L506">        return currentStringValue;</span>
     }
 
     // produces the string representation of this instant
     private String buildToString() {
-<span class="fc" id="L484">        LocalDate date = LocalDate.MAX.with(JulianFields.MODIFIED_JULIAN_DAY, mjDay); // TODO: capacity/import issues</span>
-<span class="fc" id="L485">        StringBuilder buf = new StringBuilder(30);</span>
-<span class="fc" id="L486">        int sod = (int) (nanoOfDay / NANOS_PER_SECOND);</span>
-<span class="fc" id="L487">        int hourValue = sod / (60 * 60);</span>
-<span class="fc" id="L488">        int minuteValue = (sod / 60) % 60;</span>
-<span class="fc" id="L489">        int secondValue = sod % 60;</span>
-<span class="fc" id="L490">        int nanoValue = (int) (nanoOfDay % NANOS_PER_SECOND);</span>
-<span class="fc bfc" id="L491" title="All 2 branches covered.">        if (hourValue == 24) {</span>
-<span class="fc" id="L492">            hourValue = 23;</span>
-<span class="fc" id="L493">            minuteValue = 59;</span>
-<span class="fc" id="L494">            secondValue = 60;</span>
+<span class="fc" id="L511">        LocalDate date = LocalDate.MAX.with(JulianFields.MODIFIED_JULIAN_DAY, mjDay); // TODO: capacity/import issues</span>
+<span class="fc" id="L512">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L513">        int sod = (int) (nanoOfDay / NANOS_PER_SECOND);</span>
+<span class="fc" id="L514">        int hourValue = sod / (60 * 60);</span>
+<span class="fc" id="L515">        int minuteValue = (sod / 60) % 60;</span>
+<span class="fc" id="L516">        int secondValue = sod % 60;</span>
+<span class="fc" id="L517">        int nanoValue = (int) (nanoOfDay % NANOS_PER_SECOND);</span>
+<span class="fc bfc" id="L518" title="All 2 branches covered.">        if (hourValue == 24) {</span>
+<span class="fc" id="L519">            hourValue = 23;</span>
+<span class="fc" id="L520">            minuteValue = 59;</span>
+<span class="fc" id="L521">            secondValue = 60;</span>
         }
-<span class="fc" id="L496">        buf.append(date).append('T')</span>
-<span class="fc bfc" id="L497" title="All 2 branches covered.">                .append(hourValue &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hourValue)</span>
-<span class="fc bfc" id="L498" title="All 2 branches covered.">                .append(minuteValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minuteValue)</span>
-<span class="fc bfc" id="L499" title="All 2 branches covered.">                .append(secondValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(secondValue);</span>
-<span class="fc bfc" id="L500" title="All 2 branches covered.">        if (nanoValue &gt; 0) {</span>
-<span class="fc" id="L501">            buf.append('.');</span>
-<span class="fc bfc" id="L502" title="All 2 branches covered.">            if (nanoValue % 1000_000 == 0) {</span>
-<span class="fc" id="L503">                buf.append(Integer.toString((nanoValue / 1000_000) + 1000).substring(1));</span>
-<span class="fc bfc" id="L504" title="All 2 branches covered.">            } else if (nanoValue % 1000 == 0) {</span>
-<span class="fc" id="L505">                buf.append(Integer.toString((nanoValue / 1000) + 1000_000).substring(1));</span>
+<span class="fc" id="L523">        buf.append(date).append('T')</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">                .append(hourValue &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hourValue)</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">                .append(minuteValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minuteValue)</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">                .append(secondValue &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(secondValue);</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">        if (nanoValue &gt; 0) {</span>
+<span class="fc" id="L528">            buf.append('.');</span>
+<span class="fc bfc" id="L529" title="All 2 branches covered.">            if (nanoValue % 1000_000 == 0) {</span>
+<span class="fc" id="L530">                buf.append(Integer.toString((nanoValue / 1000_000) + 1000).substring(1));</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">            } else if (nanoValue % 1000 == 0) {</span>
+<span class="fc" id="L532">                buf.append(Integer.toString((nanoValue / 1000) + 1000_000).substring(1));</span>
             } else {
-<span class="fc" id="L507">                buf.append(Integer.toString((nanoValue) + 1000_000_000).substring(1));</span>
+<span class="fc" id="L534">                buf.append(Integer.toString((nanoValue) + 1000_000_000).substring(1));</span>
             }
         }
-<span class="fc" id="L510">        buf.append('Z');</span>
-<span class="fc" id="L511">        return buf.toString();</span>
+<span class="fc" id="L537">        buf.append('Z');</span>
+<span class="fc" id="L538">        return buf.toString();</span>
     }
 
 }

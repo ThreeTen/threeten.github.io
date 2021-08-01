@@ -969,9 +969,13 @@ public final class YearWeek
 
     private long yearsUntil(YearWeek end) {
 <span class="fc" id="L971">        long yearsDiff = end.year - this.year;</span>
-<span class="fc bfc" id="L972" title="All 4 branches covered.">        if (yearsDiff &gt; 0 &amp;&amp; end.week &lt; this.week) return yearsDiff - 1;</span>
-<span class="fc bfc" id="L973" title="All 4 branches covered.">        if (yearsDiff &lt; 0 &amp;&amp; end.week &gt; this.week) return yearsDiff + 1;</span>
-<span class="fc" id="L974">        return yearsDiff;</span>
+<span class="fc bfc" id="L972" title="All 4 branches covered.">        if (yearsDiff &gt; 0 &amp;&amp; end.week &lt; this.week) {</span>
+<span class="fc" id="L973">            return yearsDiff - 1;</span>
+        }
+<span class="fc bfc" id="L975" title="All 4 branches covered.">        if (yearsDiff &lt; 0 &amp;&amp; end.week &gt; this.week) {</span>
+<span class="fc" id="L976">            return yearsDiff + 1;</span>
+        }
+<span class="fc" id="L978">        return yearsDiff;</span>
     }
 
     /**
@@ -984,8 +988,8 @@ public final class YearWeek
      * @throws DateTimeException if an error occurs during printing
      */
     public String format(DateTimeFormatter formatter) {
-<span class="fc" id="L987">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L988">        return formatter.format(this);</span>
+<span class="fc" id="L991">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L992">        return formatter.format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1003,18 +1007,18 @@ public final class YearWeek
      * @return the date formed from this year-week and the specified day, not null
      */
     public LocalDate atDay(DayOfWeek dayOfWeek) {
-<span class="fc" id="L1006">        Objects.requireNonNull(dayOfWeek, &quot;dayOfWeek&quot;);</span>
-<span class="fc" id="L1007">        int correction = LocalDate.of(year, 1, 4).getDayOfWeek().getValue() + 3;</span>
-<span class="fc" id="L1008">        int dayOfYear = week * 7 + dayOfWeek.getValue() - correction;</span>
-<span class="fc bfc" id="L1009" title="All 2 branches covered.">        int maxDaysOfYear = Year.isLeap(year) ? 366 : 365;</span>
-<span class="fc bfc" id="L1010" title="All 2 branches covered.">        if (dayOfYear &gt; maxDaysOfYear) {</span>
-<span class="fc" id="L1011">            return LocalDate.ofYearDay(year + 1, dayOfYear - maxDaysOfYear);</span>
+<span class="fc" id="L1010">        Objects.requireNonNull(dayOfWeek, &quot;dayOfWeek&quot;);</span>
+<span class="fc" id="L1011">        int correction = LocalDate.of(year, 1, 4).getDayOfWeek().getValue() + 3;</span>
+<span class="fc" id="L1012">        int dayOfYear = week * 7 + dayOfWeek.getValue() - correction;</span>
+<span class="fc bfc" id="L1013" title="All 2 branches covered.">        int maxDaysOfYear = Year.isLeap(year) ? 366 : 365;</span>
+<span class="fc bfc" id="L1014" title="All 2 branches covered.">        if (dayOfYear &gt; maxDaysOfYear) {</span>
+<span class="fc" id="L1015">            return LocalDate.ofYearDay(year + 1, dayOfYear - maxDaysOfYear);</span>
         }
-<span class="fc bfc" id="L1013" title="All 2 branches covered.">        if (dayOfYear &gt; 0) {</span>
-<span class="fc" id="L1014">            return LocalDate.ofYearDay(year, dayOfYear);</span>
+<span class="fc bfc" id="L1017" title="All 2 branches covered.">        if (dayOfYear &gt; 0) {</span>
+<span class="fc" id="L1018">            return LocalDate.ofYearDay(year, dayOfYear);</span>
         } else {
-<span class="fc bfc" id="L1016" title="All 2 branches covered.">            int daysOfPreviousYear = Year.isLeap(year - 1) ? 366 : 365;</span>
-<span class="fc" id="L1017">            return LocalDate.ofYearDay(year - 1, daysOfPreviousYear + dayOfYear);</span>
+<span class="fc bfc" id="L1020" title="All 2 branches covered.">            int daysOfPreviousYear = Year.isLeap(year - 1) ? 366 : 365;</span>
+<span class="fc" id="L1021">            return LocalDate.ofYearDay(year - 1, daysOfPreviousYear + dayOfYear);</span>
         }
     }
 
@@ -1030,11 +1034,11 @@ public final class YearWeek
      */
     @Override
     public int compareTo(YearWeek other) {
-<span class="fc" id="L1033">        int cmp = (year - other.year);</span>
-<span class="fc bfc" id="L1034" title="All 2 branches covered.">        if (cmp == 0) {</span>
-<span class="fc" id="L1035">            cmp = (week - other.week);</span>
+<span class="fc" id="L1037">        int cmp = (year - other.year);</span>
+<span class="fc bfc" id="L1038" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L1039">            cmp = (week - other.week);</span>
         }
-<span class="fc" id="L1037">        return cmp;</span>
+<span class="fc" id="L1041">        return cmp;</span>
     }
 
     /**
@@ -1044,7 +1048,7 @@ public final class YearWeek
      * @return true if this is after the specified year-week
      */
     public boolean isAfter(YearWeek other) {
-<span class="fc bfc" id="L1047" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L1051" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -1054,7 +1058,7 @@ public final class YearWeek
      * @return true if this point is before the specified year-week
      */
     public boolean isBefore(YearWeek other) {
-<span class="fc bfc" id="L1057" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L1061" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1066,14 +1070,14 @@ public final class YearWeek
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L1069" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L1070">            return true;</span>
+<span class="fc bfc" id="L1073" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L1074">            return true;</span>
         }
-<span class="fc bfc" id="L1072" title="All 2 branches covered.">        if (obj instanceof YearWeek) {</span>
-<span class="fc" id="L1073">            YearWeek other = (YearWeek) obj;</span>
-<span class="fc bfc" id="L1074" title="All 4 branches covered.">            return year == other.year &amp;&amp; week == other.week;</span>
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">        if (obj instanceof YearWeek) {</span>
+<span class="fc" id="L1077">            YearWeek other = (YearWeek) obj;</span>
+<span class="fc bfc" id="L1078" title="All 4 branches covered.">            return year == other.year &amp;&amp; week == other.week;</span>
         }
-<span class="fc" id="L1076">        return false;</span>
+<span class="fc" id="L1080">        return false;</span>
     }
 
     /**
@@ -1083,7 +1087,7 @@ public final class YearWeek
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1086">        return year ^ (week &lt;&lt; 25);</span>
+<span class="fc" id="L1090">        return year ^ (week &lt;&lt; 25);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1097,21 +1101,21 @@ public final class YearWeek
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1100">        int absYear = Math.abs(year);</span>
-<span class="fc" id="L1101">        StringBuilder buf = new StringBuilder(10);</span>
-<span class="fc bfc" id="L1102" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
-<span class="fc bfc" id="L1103" title="All 2 branches covered.">            if (year &lt; 0) {</span>
-<span class="fc" id="L1104">                buf.append(year - 10000).deleteCharAt(1);</span>
+<span class="fc" id="L1104">        int absYear = Math.abs(year);</span>
+<span class="fc" id="L1105">        StringBuilder buf = new StringBuilder(10);</span>
+<span class="fc bfc" id="L1106" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
+<span class="fc bfc" id="L1107" title="All 2 branches covered.">            if (year &lt; 0) {</span>
+<span class="fc" id="L1108">                buf.append(year - 10000).deleteCharAt(1);</span>
             } else {
-<span class="fc" id="L1106">                buf.append(year + 10000).deleteCharAt(0);</span>
+<span class="fc" id="L1110">                buf.append(year + 10000).deleteCharAt(0);</span>
             }
         } else {
-<span class="fc bfc" id="L1109" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
-<span class="fc" id="L1110">                buf.append('+');</span>
+<span class="fc bfc" id="L1113" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
+<span class="fc" id="L1114">                buf.append('+');</span>
             }
-<span class="fc" id="L1112">            buf.append(year);</span>
+<span class="fc" id="L1116">            buf.append(year);</span>
         }
-<span class="fc bfc" id="L1114" title="All 2 branches covered.">        return buf.append(week &lt; 10 ? &quot;-W0&quot; : &quot;-W&quot;).append(week).toString();</span>
+<span class="fc bfc" id="L1118" title="All 2 branches covered.">        return buf.append(week &lt; 10 ? &quot;-W0&quot; : &quot;-W&quot;).append(week).toString();</span>
     }
 
 }
