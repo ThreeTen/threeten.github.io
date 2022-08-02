@@ -37,8 +37,12 @@ import static java.time.temporal.ChronoUnit.ERAS;
 import static java.time.temporal.ChronoUnit.FOREVER;
 import static java.time.temporal.ChronoUnit.WEEKS;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.text.ParsePosition;
 import java.time.DateTimeException;
+import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -84,7 +88,7 @@ public final class Temporals {
      * @return the next working day adjuster, not null
      */
     public static TemporalAdjuster nextWorkingDay() {
-<span class="fc" id="L87">        return Adjuster.NEXT_WORKING;</span>
+<span class="fc" id="L91">        return Adjuster.NEXT_WORKING;</span>
     }
 
     /**
@@ -97,7 +101,7 @@ public final class Temporals {
      * @return the next working day or same adjuster, not null
      */
     public static TemporalAdjuster nextWorkingDayOrSame() {
-<span class="fc" id="L100">        return Adjuster.NEXT_WORKING_OR_SAME;</span>
+<span class="fc" id="L104">        return Adjuster.NEXT_WORKING_OR_SAME;</span>
     }
 
     /**
@@ -110,7 +114,7 @@ public final class Temporals {
      * @return the previous working day adjuster, not null
      */
     public static TemporalAdjuster previousWorkingDay() {
-<span class="fc" id="L113">        return Adjuster.PREVIOUS_WORKING;</span>
+<span class="fc" id="L117">        return Adjuster.PREVIOUS_WORKING;</span>
     }
 
     /**
@@ -123,71 +127,71 @@ public final class Temporals {
      * @return the previous working day or same adjuster, not null
      */
     public static TemporalAdjuster previousWorkingDayOrSame() {
-<span class="fc" id="L126">        return Adjuster.PREVIOUS_WORKING_OR_SAME;</span>
+<span class="fc" id="L130">        return Adjuster.PREVIOUS_WORKING_OR_SAME;</span>
     }
 
     //-----------------------------------------------------------------------
     /**
      * Enum implementing the adjusters.
      */
-<span class="fc" id="L133">    private static enum Adjuster implements TemporalAdjuster {</span>
+<span class="fc" id="L137">    private static enum Adjuster implements TemporalAdjuster {</span>
         /** Next working day adjuster. */
-<span class="fc" id="L135">        NEXT_WORKING {</span>
+<span class="fc" id="L139">        NEXT_WORKING {</span>
             @Override
             public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L138">                int dow = temporal.get(DAY_OF_WEEK);</span>
-<span class="fc bfc" id="L139" title="All 3 branches covered.">                switch (dow) {</span>
+<span class="fc" id="L142">                int dow = temporal.get(DAY_OF_WEEK);</span>
+<span class="fc bfc" id="L143" title="All 3 branches covered.">                switch (dow) {</span>
                     case 6:  // Saturday
-<span class="fc" id="L141">                        return temporal.plus(2, DAYS);</span>
+<span class="fc" id="L145">                        return temporal.plus(2, DAYS);</span>
                     case 5:  // Friday
-<span class="fc" id="L143">                        return temporal.plus(3, DAYS);</span>
+<span class="fc" id="L147">                        return temporal.plus(3, DAYS);</span>
                     default:
-<span class="fc" id="L145">                        return temporal.plus(1, DAYS);</span>
+<span class="fc" id="L149">                        return temporal.plus(1, DAYS);</span>
                 }
             }
         },
         /** Previous working day adjuster. */
-<span class="fc" id="L150">        PREVIOUS_WORKING {</span>
+<span class="fc" id="L154">        PREVIOUS_WORKING {</span>
             @Override
             public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L153">                int dow = temporal.get(DAY_OF_WEEK);</span>
-<span class="fc bfc" id="L154" title="All 3 branches covered.">                switch (dow) {</span>
+<span class="fc" id="L157">                int dow = temporal.get(DAY_OF_WEEK);</span>
+<span class="fc bfc" id="L158" title="All 3 branches covered.">                switch (dow) {</span>
                     case 1:  // Monday
-<span class="fc" id="L156">                        return temporal.minus(3, DAYS);</span>
+<span class="fc" id="L160">                        return temporal.minus(3, DAYS);</span>
                     case 7:  // Sunday
-<span class="fc" id="L158">                        return temporal.minus(2, DAYS);</span>
+<span class="fc" id="L162">                        return temporal.minus(2, DAYS);</span>
                     default:
-<span class="fc" id="L160">                        return temporal.minus(1, DAYS);</span>
+<span class="fc" id="L164">                        return temporal.minus(1, DAYS);</span>
                 }
             }
         },
         /** Next working day or same adjuster. */
-<span class="fc" id="L165">        NEXT_WORKING_OR_SAME {</span>
+<span class="fc" id="L169">        NEXT_WORKING_OR_SAME {</span>
             @Override
             public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L168">                int dow = temporal.get(DAY_OF_WEEK);</span>
-<span class="fc bfc" id="L169" title="All 3 branches covered.">                switch (dow) {</span>
+<span class="fc" id="L172">                int dow = temporal.get(DAY_OF_WEEK);</span>
+<span class="fc bfc" id="L173" title="All 3 branches covered.">                switch (dow) {</span>
                     case 6: // Saturday
-<span class="fc" id="L171">                        return temporal.plus(2, DAYS);</span>
+<span class="fc" id="L175">                        return temporal.plus(2, DAYS);</span>
                     case 7: // Sunday
-<span class="fc" id="L173">                        return temporal.plus(1, DAYS);</span>
+<span class="fc" id="L177">                        return temporal.plus(1, DAYS);</span>
                     default:
-<span class="fc" id="L175">                        return temporal;</span>
+<span class="fc" id="L179">                        return temporal;</span>
                 }
             }
         },
         /** Previous working day or same adjuster. */
-<span class="fc" id="L180">        PREVIOUS_WORKING_OR_SAME {</span>
+<span class="fc" id="L184">        PREVIOUS_WORKING_OR_SAME {</span>
             @Override
             public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L183">                int dow = temporal.get(DAY_OF_WEEK);</span>
-<span class="fc bfc" id="L184" title="All 3 branches covered.">                switch (dow) {</span>
+<span class="fc" id="L187">                int dow = temporal.get(DAY_OF_WEEK);</span>
+<span class="fc bfc" id="L188" title="All 3 branches covered.">                switch (dow) {</span>
                     case 6: //Saturday
-<span class="fc" id="L186">                        return temporal.minus(1, DAYS);</span>
+<span class="fc" id="L190">                        return temporal.minus(1, DAYS);</span>
                     case 7:  // Sunday
-<span class="fc" id="L188">                        return temporal.minus(2, DAYS);</span>
+<span class="fc" id="L192">                        return temporal.minus(2, DAYS);</span>
                     default:
-<span class="fc" id="L190">                        return temporal;</span>
+<span class="fc" id="L194">                        return temporal;</span>
                 }
             }
         }
@@ -214,28 +218,28 @@ public final class Temporals {
      * @throws DateTimeParseException if unable to parse the requested result
      */
     public static &lt;T&gt; T parseFirstMatching(CharSequence text, TemporalQuery&lt;T&gt; query, DateTimeFormatter... formatters) {
-<span class="fc" id="L217">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc" id="L218">        Objects.requireNonNull(query, &quot;query&quot;);</span>
-<span class="fc" id="L219">        Objects.requireNonNull(formatters, &quot;formatters&quot;);</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (formatters.length == 0) {</span>
-<span class="fc" id="L221">            throw new DateTimeParseException(&quot;No formatters specified&quot;, text, 0);</span>
+<span class="fc" id="L221">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L222">        Objects.requireNonNull(query, &quot;query&quot;);</span>
+<span class="fc" id="L223">        Objects.requireNonNull(formatters, &quot;formatters&quot;);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        if (formatters.length == 0) {</span>
+<span class="fc" id="L225">            throw new DateTimeParseException(&quot;No formatters specified&quot;, text, 0);</span>
         }
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (formatters.length == 1) {</span>
-<span class="fc" id="L224">            return formatters[0].parse(text, query);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (formatters.length == 1) {</span>
+<span class="fc" id="L228">            return formatters[0].parse(text, query);</span>
         }
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        for (DateTimeFormatter formatter : formatters) {</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        for (DateTimeFormatter formatter : formatters) {</span>
             try {
-<span class="fc" id="L228">                ParsePosition pp = new ParsePosition(0);</span>
-<span class="fc" id="L229">                formatter.parseUnresolved(text, pp);</span>
-<span class="fc" id="L230">                int len = text.length();</span>
-<span class="pc bpc" id="L231" title="1 of 4 branches missed.">                if (pp.getErrorIndex() == -1 &amp;&amp; pp.getIndex() == len) {</span>
-<span class="fc" id="L232">                    return formatter.parse(text, query);</span>
+<span class="fc" id="L232">                ParsePosition pp = new ParsePosition(0);</span>
+<span class="fc" id="L233">                formatter.parseUnresolved(text, pp);</span>
+<span class="fc" id="L234">                int len = text.length();</span>
+<span class="pc bpc" id="L235" title="1 of 4 branches missed.">                if (pp.getErrorIndex() == -1 &amp;&amp; pp.getIndex() == len) {</span>
+<span class="fc" id="L236">                    return formatter.parse(text, query);</span>
                 }
-<span class="nc" id="L234">            } catch (RuntimeException ex) {</span>
+<span class="nc" id="L238">            } catch (RuntimeException ex) {</span>
                 // should not happen, but ignore if it does
-<span class="fc" id="L236">            }</span>
+<span class="fc" id="L240">            }</span>
         }
-<span class="fc" id="L238">        throw new DateTimeParseException(&quot;Text '&quot; + text + &quot;' could not be parsed&quot;, text, 0);</span>
+<span class="fc" id="L242">        throw new DateTimeParseException(&quot;Text '&quot; + text + &quot;' could not be parsed&quot;, text, 0);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -248,24 +252,24 @@ public final class Temporals {
      * @return the converted unit, not null
      */
     public static ChronoUnit chronoUnit(TimeUnit unit) {
-<span class="fc" id="L251">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
-<span class="pc bpc" id="L252" title="1 of 8 branches missed.">        switch (unit) {</span>
+<span class="fc" id="L255">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
+<span class="pc bpc" id="L256" title="1 of 8 branches missed.">        switch (unit) {</span>
             case NANOSECONDS:
-<span class="fc" id="L254">                return ChronoUnit.NANOS;</span>
+<span class="fc" id="L258">                return ChronoUnit.NANOS;</span>
             case MICROSECONDS:
-<span class="fc" id="L256">                return ChronoUnit.MICROS;</span>
+<span class="fc" id="L260">                return ChronoUnit.MICROS;</span>
             case MILLISECONDS:
-<span class="fc" id="L258">                return ChronoUnit.MILLIS;</span>
+<span class="fc" id="L262">                return ChronoUnit.MILLIS;</span>
             case SECONDS:
-<span class="fc" id="L260">                return ChronoUnit.SECONDS;</span>
+<span class="fc" id="L264">                return ChronoUnit.SECONDS;</span>
             case MINUTES:
-<span class="fc" id="L262">                return ChronoUnit.MINUTES;</span>
+<span class="fc" id="L266">                return ChronoUnit.MINUTES;</span>
             case HOURS:
-<span class="fc" id="L264">                return ChronoUnit.HOURS;</span>
+<span class="fc" id="L268">                return ChronoUnit.HOURS;</span>
             case DAYS:
-<span class="fc" id="L266">                return ChronoUnit.DAYS;</span>
+<span class="fc" id="L270">                return ChronoUnit.DAYS;</span>
             default:
-<span class="nc" id="L268">                throw new IllegalArgumentException(&quot;Unknown TimeUnit constant&quot;);</span>
+<span class="nc" id="L272">                throw new IllegalArgumentException(&quot;Unknown TimeUnit constant&quot;);</span>
         }
     }
 
@@ -279,24 +283,24 @@ public final class Temporals {
      * @throws IllegalArgumentException if the unit cannot be converted
      */
     public static TimeUnit timeUnit(ChronoUnit unit) {
-<span class="fc" id="L282">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
-<span class="fc bfc" id="L283" title="All 8 branches covered.">        switch (unit) {</span>
+<span class="fc" id="L286">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
+<span class="fc bfc" id="L287" title="All 8 branches covered.">        switch (unit) {</span>
             case NANOS:
-<span class="fc" id="L285">                return TimeUnit.NANOSECONDS;</span>
+<span class="fc" id="L289">                return TimeUnit.NANOSECONDS;</span>
             case MICROS:
-<span class="fc" id="L287">                return TimeUnit.MICROSECONDS;</span>
+<span class="fc" id="L291">                return TimeUnit.MICROSECONDS;</span>
             case MILLIS:
-<span class="fc" id="L289">                return TimeUnit.MILLISECONDS;</span>
+<span class="fc" id="L293">                return TimeUnit.MILLISECONDS;</span>
             case SECONDS:
-<span class="fc" id="L291">                return TimeUnit.SECONDS;</span>
+<span class="fc" id="L295">                return TimeUnit.SECONDS;</span>
             case MINUTES:
-<span class="fc" id="L293">                return TimeUnit.MINUTES;</span>
+<span class="fc" id="L297">                return TimeUnit.MINUTES;</span>
             case HOURS:
-<span class="fc" id="L295">                return TimeUnit.HOURS;</span>
+<span class="fc" id="L299">                return TimeUnit.HOURS;</span>
             case DAYS:
-<span class="fc" id="L297">                return TimeUnit.DAYS;</span>
+<span class="fc" id="L301">                return TimeUnit.DAYS;</span>
             default:
-<span class="fc" id="L299">                throw new IllegalArgumentException(&quot;ChronoUnit cannot be converted to TimeUnit: &quot; + unit);</span>
+<span class="fc" id="L303">                throw new IllegalArgumentException(&quot;ChronoUnit cannot be converted to TimeUnit: &quot; + unit);</span>
         }
     }
 
@@ -320,71 +324,158 @@ public final class Temporals {
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static long[] convertAmount(long amount, TemporalUnit fromUnit, TemporalUnit toUnit) {
-<span class="fc" id="L323">        Objects.requireNonNull(fromUnit, &quot;fromUnit&quot;);</span>
-<span class="fc" id="L324">        Objects.requireNonNull(toUnit, &quot;toUnit&quot;);</span>
-<span class="fc" id="L325">        validateUnit(fromUnit);</span>
-<span class="fc" id="L326">        validateUnit(toUnit);</span>
-<span class="fc bfc" id="L327" title="All 2 branches covered.">        if (fromUnit.equals(toUnit)) {</span>
-<span class="fc" id="L328">            return new long[] {amount, 0};</span>
+<span class="fc" id="L327">        Objects.requireNonNull(fromUnit, &quot;fromUnit&quot;);</span>
+<span class="fc" id="L328">        Objects.requireNonNull(toUnit, &quot;toUnit&quot;);</span>
+<span class="fc" id="L329">        validateUnit(fromUnit);</span>
+<span class="fc" id="L330">        validateUnit(toUnit);</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        if (fromUnit.equals(toUnit)) {</span>
+<span class="fc" id="L332">            return new long[] {amount, 0};</span>
         }
         // precise-based
-<span class="fc bfc" id="L331" title="All 4 branches covered.">        if (isPrecise(fromUnit) &amp;&amp; isPrecise(toUnit)) {</span>
-<span class="fc" id="L332">            long fromNanos = fromUnit.getDuration().toNanos();</span>
-<span class="fc" id="L333">            long toNanos = toUnit.getDuration().toNanos();</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">            if (fromNanos &gt; toNanos) {</span>
-<span class="fc" id="L335">                long multiple = fromNanos / toNanos;</span>
-<span class="fc" id="L336">                return new long[] {Math.multiplyExact(amount, multiple), 0};</span>
+<span class="fc bfc" id="L335" title="All 4 branches covered.">        if (isPrecise(fromUnit) &amp;&amp; isPrecise(toUnit)) {</span>
+<span class="fc" id="L336">            long fromNanos = fromUnit.getDuration().toNanos();</span>
+<span class="fc" id="L337">            long toNanos = toUnit.getDuration().toNanos();</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">            if (fromNanos &gt; toNanos) {</span>
+<span class="fc" id="L339">                long multiple = fromNanos / toNanos;</span>
+<span class="fc" id="L340">                return new long[] {Math.multiplyExact(amount, multiple), 0};</span>
             } else {
-<span class="fc" id="L338">                long multiple = toNanos / fromNanos;</span>
-<span class="fc" id="L339">                return new long[] {amount / multiple, amount % multiple};</span>
+<span class="fc" id="L342">                long multiple = toNanos / fromNanos;</span>
+<span class="fc" id="L343">                return new long[] {amount / multiple, amount % multiple};</span>
             }
         }
         // month-based
-<span class="fc" id="L343">        int fromMonthFactor = monthMonthFactor(fromUnit, fromUnit, toUnit);</span>
-<span class="fc" id="L344">        int toMonthFactor = monthMonthFactor(toUnit, fromUnit, toUnit);</span>
-<span class="fc bfc" id="L345" title="All 2 branches covered.">        if (fromMonthFactor &gt; toMonthFactor) {</span>
-<span class="fc" id="L346">            long multiple = fromMonthFactor / toMonthFactor;</span>
-<span class="fc" id="L347">            return new long[] {Math.multiplyExact(amount, multiple), 0};</span>
+<span class="fc" id="L347">        int fromMonthFactor = monthMonthFactor(fromUnit, fromUnit, toUnit);</span>
+<span class="fc" id="L348">        int toMonthFactor = monthMonthFactor(toUnit, fromUnit, toUnit);</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">        if (fromMonthFactor &gt; toMonthFactor) {</span>
+<span class="fc" id="L350">            long multiple = fromMonthFactor / toMonthFactor;</span>
+<span class="fc" id="L351">            return new long[] {Math.multiplyExact(amount, multiple), 0};</span>
         } else {
-<span class="fc" id="L349">            long multiple = toMonthFactor / fromMonthFactor;</span>
-<span class="fc" id="L350">            return new long[] {amount / multiple, amount % multiple};</span>
+<span class="fc" id="L353">            long multiple = toMonthFactor / fromMonthFactor;</span>
+<span class="fc" id="L354">            return new long[] {amount / multiple, amount % multiple};</span>
         }
     }
 
     private static void validateUnit(TemporalUnit unit) {
-<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc bfc" id="L356" title="All 4 branches covered.">            if (unit.equals(ERAS) || unit.equals(FOREVER)) {</span>
-<span class="fc" id="L357">                throw new UnsupportedTemporalTypeException(&quot;Unsupported TemporalUnit: &quot; + unit);</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L360" title="All 4 branches covered.">            if (unit.equals(ERAS) || unit.equals(FOREVER)) {</span>
+<span class="fc" id="L361">                throw new UnsupportedTemporalTypeException(&quot;Unsupported TemporalUnit: &quot; + unit);</span>
             }
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">        } else if (unit.equals(IsoFields.QUARTER_YEARS) == false) {</span>
-<span class="nc" id="L360">            throw new UnsupportedTemporalTypeException(&quot;Unsupported TemporalUnit: &quot; + unit);</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">        } else if (unit.equals(IsoFields.QUARTER_YEARS) == false) {</span>
+<span class="nc" id="L364">            throw new UnsupportedTemporalTypeException(&quot;Unsupported TemporalUnit: &quot; + unit);</span>
         }
-<span class="fc" id="L362">    }</span>
+<span class="fc" id="L366">    }</span>
 
     private static boolean isPrecise(TemporalUnit unit) {
-<span class="fc bfc" id="L365" title="All 4 branches covered.">        return unit instanceof ChronoUnit &amp;&amp; ((ChronoUnit) unit).compareTo(WEEKS) &lt;= 0;</span>
+<span class="fc bfc" id="L369" title="All 4 branches covered.">        return unit instanceof ChronoUnit &amp;&amp; ((ChronoUnit) unit).compareTo(WEEKS) &lt;= 0;</span>
     }
 
     private static int monthMonthFactor(TemporalUnit unit, TemporalUnit fromUnit, TemporalUnit toUnit) {
-<span class="fc bfc" id="L369" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc bfc" id="L370" title="All 6 branches covered.">            switch ((ChronoUnit) unit) {</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L374" title="All 6 branches covered.">            switch ((ChronoUnit) unit) {</span>
                 case MONTHS:
-<span class="fc" id="L372">                    return 1;</span>
+<span class="fc" id="L376">                    return 1;</span>
                 case YEARS:
-<span class="fc" id="L374">                    return 12;</span>
+<span class="fc" id="L378">                    return 12;</span>
                 case DECADES:
-<span class="fc" id="L376">                    return 120;</span>
+<span class="fc" id="L380">                    return 120;</span>
                 case CENTURIES:
-<span class="fc" id="L378">                    return 1200;</span>
+<span class="fc" id="L382">                    return 1200;</span>
                 case MILLENNIA:
-<span class="fc" id="L380">                    return 12000;</span>
+<span class="fc" id="L384">                    return 12000;</span>
                 default:
-<span class="fc" id="L382">                    throw new DateTimeException(</span>
-<span class="fc" id="L383">                            String.format(&quot;Unable to convert between units: %s to %s&quot;, fromUnit, toUnit));</span>
+<span class="fc" id="L386">                    throw new DateTimeException(</span>
+<span class="fc" id="L387">                            String.format(&quot;Unable to convert between units: %s to %s&quot;, fromUnit, toUnit));</span>
             }
         }
-<span class="fc" id="L386">        return 3;  // quarters</span>
+<span class="fc" id="L390">        return 3;  // quarters</span>
     }
 
+    //-------------------------------------------------------------------------
+    /**
+     * Converts a duration to a {@code BigDecimal} with a scale of 9.
+     *
+     * @param duration  the duration to convert, not null
+     * @return the {@code BigDecimal} equivalent of the duration, in seconds with a scale of 9
+     */
+    public static BigDecimal durationToBigDecimalSeconds(Duration duration) {
+<span class="fc" id="L401">        return BigDecimal.valueOf(duration.getSeconds()).add(BigDecimal.valueOf(duration.getNano(), 9));</span>
+    }
+
+    /**
+     * Converts a {@code BigDecimal} representing seconds to a duration, saturating if necessary.
+     * &lt;p&gt;
+     * No exception is thrown by this method.
+     * Numbers are rounded up to the nearest nanosecond (away from zero).
+     * The duration will saturate at the biggest positive or negative {@code Duration}.
+     *
+     * @param seconds  the number of seconds to convert, positive or negative
+     * @return a {@code Duration}, not null
+     */
+    public static Duration durationFromBigDecimalSeconds(BigDecimal seconds) {
+<span class="fc" id="L415">        BigInteger nanos = seconds.setScale(9, RoundingMode.UP).max(BigDecimalSeconds.MIN).min(BigDecimalSeconds.MAX).unscaledValue();</span>
+<span class="fc" id="L416">        BigInteger[] secondsNanos = nanos.divideAndRemainder(BigInteger.valueOf(1_000_000_000));</span>
+<span class="fc" id="L417">        return Duration.ofSeconds(secondsNanos[0].longValue(), secondsNanos[1].intValue());</span>
+    }
+
+    /**
+     * Converts a duration to a {@code double}.
+     *
+     * @param duration  the duration to convert, not null
+     * @return the {@code double} equivalent of the duration, in seconds
+     */
+    public static double durationToDoubleSeconds(Duration duration) {
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">        if (duration.getSeconds() &lt; 1_000_000_000) {</span>
+<span class="fc" id="L428">            return duration.toNanos() / 1_000_000_000d;</span>
+        }
+<span class="nc" id="L430">        return durationToBigDecimalSeconds(duration).doubleValue();</span>
+    }
+
+    /**
+     * Converts a {@code double} representing seconds to a duration, saturating if necessary.
+     * &lt;p&gt;
+     * No exception is thrown by this method.
+     * Numbers are rounded up to the nearest nanosecond (away from zero).
+     * The duration will saturate at the biggest positive or negative {@code Duration}.
+     *
+     * @param seconds  the number of seconds to convert, positive or negative
+     * @return a {@code Duration}, not null
+     */
+    public static Duration durationFromDoubleSeconds(double seconds) {
+<span class="fc" id="L444">        return durationFromBigDecimalSeconds(BigDecimal.valueOf(seconds));</span>
+    }
+
+    /**
+     * Multiplies a duration by a {@code double}.
+     * &lt;p&gt;
+     * The amount is rounded away from zero, thus the result is only zero if zero is passed in.
+     * See {@link #durationToBigDecimalSeconds(Duration)} and {@link #durationFromBigDecimalSeconds(BigDecimal)}.
+     * Note that due to the rounding up, 1 nanosecond multiplied by any number smaller than 1 will still be 1 nanosecond.
+     * 
+     * @param duration  the duration to multiply, not null
+     * @param multiplicand  the multiplication factor
+     * @return the multiplied duration, not null
+     */
+    public static Duration multiply(Duration duration, double multiplicand) {
+<span class="fc bfc" id="L459" title="All 4 branches covered.">        if (multiplicand == 0d || duration.isZero()) {</span>
+<span class="fc" id="L460">            return Duration.ZERO;</span>
+        }
+<span class="fc bfc" id="L462" title="All 2 branches covered.">        if (multiplicand == 1d) {</span>
+<span class="fc" id="L463">            return duration;</span>
+        }
+<span class="fc" id="L465">        BigDecimal amount = durationToBigDecimalSeconds(duration);</span>
+<span class="fc" id="L466">        amount = amount.multiply(BigDecimal.valueOf(multiplicand));</span>
+<span class="fc" id="L467">        return durationFromBigDecimalSeconds(amount);</span>
+    }
+
+    /**
+     * Useful Duration constants expressed as BigDecimal seconds with a scale of 9.
+     */
+    private static final class BigDecimalSeconds {
+<span class="fc" id="L474">        public static final BigDecimal MIN = BigDecimal.valueOf(Long.MIN_VALUE).add(BigDecimal.valueOf(0, 9));</span>
+<span class="fc" id="L475">        public static final BigDecimal MAX = BigDecimal.valueOf(Long.MAX_VALUE).add(BigDecimal.valueOf(999_999_999, 9));</span>
+
+        private BigDecimalSeconds() {
+        }
+    }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

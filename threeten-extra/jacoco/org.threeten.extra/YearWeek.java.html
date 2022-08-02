@@ -344,13 +344,12 @@ public final class YearWeek
      * If false, then calling the {@link #range(TemporalField) range} and
      * {@link #get(TemporalField) get} methods will throw an exception.
      * &lt;p&gt;
-     * If the field is a {@link ChronoField} then the query is implemented here.
      * The supported fields are:
      * &lt;ul&gt;
      * &lt;li&gt;{@code WEEK_OF_WEEK_BASED_YEAR}
      * &lt;li&gt;{@code WEEK_BASED_YEAR}
      * &lt;/ul&gt;
-     * All {@code ChronoField} instances will return false.
+     * All other {@code ChronoField} instances will return false.
      * &lt;p&gt;
      * If the field is not a {@code ChronoField}, then the result of this method
      * is obtained by invoking {@code TemporalField.isSupportedBy(TemporalAccessor)}
@@ -362,12 +361,12 @@ public final class YearWeek
      */
     @Override
     public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L365" title="All 4 branches covered.">        if (field == WEEK_OF_WEEK_BASED_YEAR || field == WEEK_BASED_YEAR) {</span>
-<span class="fc" id="L366">            return true;</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L368">            return false;</span>
+<span class="fc bfc" id="L364" title="All 4 branches covered.">        if (field == WEEK_OF_WEEK_BASED_YEAR || field == WEEK_BASED_YEAR) {</span>
+<span class="fc" id="L365">            return true;</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L367">            return false;</span>
         }
-<span class="pc bpc" id="L370" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L369" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -377,7 +376,6 @@ public final class YearWeek
      * If false, then calling the {@link #plus(long, TemporalUnit)} and
      * {@link #minus(long, TemporalUnit) minus} methods will throw an exception.
      * &lt;p&gt;
-     * If the unit is a {@link ChronoUnit} then the query is implemented here.
      * The supported units are:
      * &lt;ul&gt;
      * &lt;li&gt;{@code WEEKS}
@@ -395,10 +393,12 @@ public final class YearWeek
      */
     @Override
     public boolean isSupported(TemporalUnit unit) {
-<span class="nc bnc" id="L398" title="All 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="nc bnc" id="L399" title="All 4 branches missed.">            return unit == WEEKS || unit == WEEK_BASED_YEARS;</span>
+<span class="fc bfc" id="L396" title="All 4 branches covered.">        if (unit == WEEKS || unit == WEEK_BASED_YEARS) {</span>
+<span class="fc" id="L397">            return true;</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="fc" id="L399">            return false;</span>
         }
-<span class="nc bnc" id="L401" title="All 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
+<span class="pc bpc" id="L401" title="1 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
     }
     
     //-----------------------------------------------------------------------
@@ -1119,4 +1119,4 @@ public final class YearWeek
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
