@@ -497,10 +497,7 @@ public final class Symmetry010Chronology
 <span class="fc bfc" id="L497" title="All 2 branches covered.">        if (!(era instanceof IsoEra)) {</span>
 <span class="fc" id="L498">            throw new ClassCastException(&quot;Invalid era: &quot; + era);</span>
         }
-
-<span class="fc" id="L501">        YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
-
-<span class="fc" id="L503">        return yearOfEra;</span>
+<span class="fc" id="L500">        return YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
     }
 
     /**
@@ -510,7 +507,7 @@ public final class Symmetry010Chronology
      * @return the number of leap years since CE 1
      */
     public static long getLeapYearsBefore(long prolepticYear) {
-<span class="fc" id="L513">        return Math.floorDiv(WEEKS_IN_YEAR * (prolepticYear - 1) + 146, YEARS_IN_CYCLE);</span>
+<span class="fc" id="L510">        return Math.floorDiv(WEEKS_IN_YEAR * (prolepticYear - 1) + 146, YEARS_IN_CYCLE);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

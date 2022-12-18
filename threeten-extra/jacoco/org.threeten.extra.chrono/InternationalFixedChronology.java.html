@@ -467,8 +467,7 @@ public final class InternationalFixedChronology extends AbstractChronology imple
 <span class="fc bfc" id="L467" title="All 2 branches covered.">        if (!(era instanceof InternationalFixedEra)) {</span>
 <span class="fc" id="L468">            throw new ClassCastException(&quot;Invalid era: &quot; + era);</span>
         }
-<span class="fc" id="L470">        YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
-<span class="fc" id="L471">        return yearOfEra;</span>
+<span class="fc" id="L470">        return YEAR_RANGE.checkValidIntValue(yearOfEra, ChronoField.YEAR_OF_ERA);</span>
     }
 
     /**
@@ -478,8 +477,8 @@ public final class InternationalFixedChronology extends AbstractChronology imple
      * @return The number of leap years since International fixed year 1.
      */
     static long getLeapYearsBefore(long prolepticYear) {
-<span class="fc" id="L481">        long yearBefore = prolepticYear - 1;</span>
-<span class="fc" id="L482">        return (yearBefore / 4) - (yearBefore / 100) + (yearBefore / 400);</span>
+<span class="fc" id="L480">        long yearBefore = prolepticYear - 1;</span>
+<span class="fc" id="L481">        return (yearBefore / 4) - (yearBefore / 100) + (yearBefore / 400);</span>
     }
 
 }
