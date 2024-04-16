@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TemporalFields.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">TemporalFields.java</span></div><h1>TemporalFields.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoField.DAY_OF_YEAR;
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+import static java.time.temporal.ChronoField.YEAR;
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.YEARS;
+import static java.time.temporal.IsoFields.QUARTER_OF_YEAR;
+import static java.time.temporal.IsoFields.QUARTER_YEARS;
+
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.IsoChronology;
+import java.time.format.ResolverStyle;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.time.temporal.ValueRange;
+import java.util.Map;
+
+/**
+ * Additional Temporal fields.
+ * &lt;p&gt;
+ * This provides additional fields and units not in the JDK.
+ */
+public final class TemporalFields {
+
+    /**
+     * The field that represents the day-of-half.
+     * &lt;p&gt;
+     * This field allows the day-of-half value to be queried and set.
+     * The day-of-half has values from 1 to 181 in H1 of a standard year, from 1 to 182
+     * in H1 of a leap year and from 1 to 184 in H2.
+     * &lt;p&gt;
+     * The day-of-half can only be calculated if the day-of-year, month-of-year and year
+     * are available.
+     * &lt;p&gt;
+     * When setting this field, the value is allowed to be partially lenient, taking any
+     * value from 1 to 184. If the half has less than 184 days, then the day will end up
+     * in the following half-year.
+     * &lt;p&gt;
+     * In the resolving phase of parsing, a date can be created from a year,
+     * half-of-year and day-of-half.
+     * &lt;p&gt;
+     * In {@linkplain ResolverStyle#STRICT strict mode}, all three fields are
+     * validated against their range of valid values. The day-of-half field
+     * is validated from 1 to 181, 182 or 184 depending on the year and half.
+     * &lt;p&gt;
+     * In {@linkplain ResolverStyle#SMART smart mode}, all three fields are
+     * validated against their range of valid values. The day-of-half field is
+     * validated between 1 and 184, ignoring the actual range based on the year and half.
+     * If the day-of-half exceeds the actual range, then the resulting date is in the next half-year.
+     * &lt;p&gt;
+     * In {@linkplain ResolverStyle#LENIENT lenient mode}, only the year is validated
+     * against the range of valid values. The resulting date is calculated equivalent to
+     * the following three stage approach. First, create a date on the first of January
+     * in the requested year. Then take the half-of-year, subtract one, and add the
+     * amount in halves to the date. Finally, take the day-of-half, subtract one,
+     * and add the amount in days to the date.
+     * &lt;p&gt;
+     * This unit is an immutable and thread-safe singleton.
+     */
+<span class="fc" id="L98">    public static final TemporalField DAY_OF_HALF = DayOfHalfField.INSTANCE;</span>
+    /**
+     * The field that represents the half-of-year.
+     * &lt;p&gt;
+     * This field allows the half-of-year value to be queried and set.
+     * The half-of-year has values from 1 to 2.
+     * &lt;p&gt;
+     * The half-of-year can only be calculated if the month-of-year is available.
+     * &lt;p&gt;
+     * In the resolving phase of parsing, a date can be created from a year,
+     * half-of-year and day-of-half.
+     * See {@link #DAY_OF_HALF} for details.
+     * &lt;p&gt;
+     * This unit is an immutable and thread-safe singleton.
+     */
+<span class="fc" id="L113">    public static final TemporalField HALF_OF_YEAR = HalfOfYearField.INSTANCE;</span>
+    /**
+     * Unit that represents the concept of a half-year.
+     * For the ISO calendar system, it is equal to 6 months.
+     * The estimated duration of a half-year is one half of {@code 365.2425 Days}.
+     * &lt;p&gt;
+     * This unit is an immutable and thread-safe singleton.
+     */
+<span class="fc" id="L121">    public static final TemporalUnit HALF_YEARS = HalfUnit.INSTANCE;</span>
+
+    /**
+     * Restricted constructor.
+     */
+    private TemporalFields() {
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Implementation of day-of-half.
+     */
+<span class="fc" id="L133">    private static enum DayOfHalfField implements TemporalField {</span>
+<span class="fc" id="L134">        INSTANCE;</span>
+
+<span class="fc" id="L136">        private static final ValueRange RANGE = ValueRange.of(1, 181, 184);</span>
+        private static final long serialVersionUID = 262362728L;
+
+        //-----------------------------------------------------------------------
+        @Override
+        public TemporalUnit getBaseUnit() {
+<span class="fc" id="L142">            return DAYS;</span>
+        }
+
+        @Override
+        public TemporalUnit getRangeUnit() {
+<span class="fc" id="L147">            return HALF_YEARS;</span>
+        }
+
+        @Override
+        public boolean isDateBased() {
+<span class="fc" id="L152">            return true;</span>
+        }
+
+        @Override
+        public boolean isTimeBased() {
+<span class="fc" id="L157">            return false;</span>
+        }
+
+        @Override
+        public ValueRange range() {
+<span class="fc" id="L162">            return RANGE;</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public boolean isSupportedBy(TemporalAccessor temporal) {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            return temporal.isSupported(DAY_OF_YEAR) &amp;&amp;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                    temporal.isSupported(MONTH_OF_YEAR) &amp;&amp;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">                    temporal.isSupported(YEAR);</span>
+        }
+
+        @Override
+        public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (!temporal.isSupported(this)) {</span>
+<span class="nc" id="L176">                throw new DateTimeException(&quot;Unsupported field: DayOfHalf&quot;);</span>
+            }
+<span class="fc" id="L178">            long hoy = temporal.getLong(HALF_OF_YEAR);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">            if (hoy == 1) {</span>
+<span class="fc" id="L180">                long year = temporal.getLong(YEAR);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                return (IsoChronology.INSTANCE.isLeapYear(year) ? ValueRange.of(1, 182) : ValueRange.of(1, 181));</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            } else if (hoy == 2) {</span>
+<span class="fc" id="L183">                return ValueRange.of(1, 184);</span>
+            } // else value not from 1 to 2, so drop through
+<span class="nc" id="L185">            return range();</span>
+        }
+
+        @Override
+        public long getFrom(TemporalAccessor temporal) {
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (isSupportedBy(temporal) == false) {</span>
+<span class="nc" id="L191">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: DayOfHalf&quot;);</span>
+            }
+<span class="fc" id="L193">            int doy = temporal.get(DAY_OF_YEAR);</span>
+<span class="fc" id="L194">            int moy = temporal.get(MONTH_OF_YEAR);</span>
+<span class="fc" id="L195">            long year = temporal.getLong(YEAR);</span>
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">            return moy &lt;= 6 ? doy : doy - 181 - (IsoChronology.INSTANCE.isLeapYear(year) ? 1 : 0);</span>
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        @Override
+        public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
+            // calls getFrom() to check if supported
+<span class="fc" id="L203">            long curValue = getFrom(temporal);</span>
+<span class="fc" id="L204">            range().checkValidValue(newValue, this);  // leniently check from 1 to 184</span>
+<span class="fc" id="L205">            return (R) temporal.with(DAY_OF_YEAR, temporal.getLong(DAY_OF_YEAR) + (newValue - curValue));</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public ChronoLocalDate resolve(
+                Map&lt;TemporalField, Long&gt; fieldValues,
+                TemporalAccessor partialTemporal,
+                ResolverStyle resolverStyle) {
+
+<span class="fc" id="L215">            Long yearLong = fieldValues.get(YEAR);</span>
+<span class="fc" id="L216">            Long hoyLong = fieldValues.get(HALF_OF_YEAR);</span>
+<span class="fc bfc" id="L217" title="All 4 branches covered.">            if (yearLong == null || hoyLong == null) {</span>
+<span class="fc" id="L218">                return null;</span>
+            }
+<span class="fc" id="L220">            int y = YEAR.checkValidIntValue(yearLong);  // always validate</span>
+<span class="fc" id="L221">            long doh = fieldValues.get(DAY_OF_HALF);</span>
+            LocalDate date;
+<span class="fc bfc" id="L223" title="All 2 branches covered.">            if (resolverStyle == ResolverStyle.LENIENT) {</span>
+<span class="fc" id="L224">                date = LocalDate.of(y, 1, 1).plusMonths(Math.multiplyExact(Math.subtractExact(hoyLong, 1), 6));</span>
+<span class="fc" id="L225">                doh = Math.subtractExact(doh, 1);</span>
+            } else {
+<span class="fc" id="L227">                int qoy = HALF_OF_YEAR.range().checkValidIntValue(hoyLong, HALF_OF_YEAR);  // validated</span>
+<span class="fc" id="L228">                date = LocalDate.of(y, ((qoy - 1) * 6) + 1, 1);</span>
+<span class="fc bfc" id="L229" title="All 4 branches covered.">                if (doh &lt; 1 || doh &gt; 181) {</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">                    if (resolverStyle == ResolverStyle.STRICT) {</span>
+<span class="fc" id="L231">                        rangeRefinedBy(date).checkValidValue(doh, this);  // only allow exact range</span>
+                    } else {  // SMART
+<span class="fc" id="L233">                        range().checkValidValue(doh, this);  // allow 1-184 rolling into next quarter</span>
+                    }
+                }
+<span class="fc" id="L236">                doh--;</span>
+            }
+<span class="fc" id="L238">            fieldValues.remove(this);</span>
+<span class="fc" id="L239">            fieldValues.remove(YEAR);</span>
+<span class="fc" id="L240">            fieldValues.remove(HALF_OF_YEAR);</span>
+<span class="fc" id="L241">            return date.plusDays(doh);</span>
+        }
+
+        //-----------------------------------------------------------------------
+        @Override
+        public String toString() {
+<span class="fc" id="L247">            return &quot;DayOfHalf&quot;;</span>
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Implementation of half-of-year.
+     */
+<span class="fc" id="L255">    private static enum HalfOfYearField implements TemporalField {</span>
+<span class="fc" id="L256">        INSTANCE;</span>
+
+        private static final long serialVersionUID = -29115701L;
+
+        //-----------------------------------------------------------------------
+        @Override
+        public TemporalUnit getBaseUnit() {
+<span class="fc" id="L263">            return HALF_YEARS;</span>
+        }
+
+        @Override
+        public TemporalUnit getRangeUnit() {
+<span class="fc" id="L268">            return YEARS;</span>
+        }
+
+        @Override
+        public boolean isDateBased() {
+<span class="fc" id="L273">            return true;</span>
+        }
+
+        @Override
+        public boolean isTimeBased() {
+<span class="fc" id="L278">            return false;</span>
+        }
+
+        @Override
+        public ValueRange range() {
+<span class="fc" id="L283">            return ValueRange.of(1, 2);</span>
+        }
+
+        @Override
+        public boolean isSupportedBy(TemporalAccessor temporal) {
+<span class="fc" id="L288">            return temporal.isSupported(QUARTER_OF_YEAR);</span>
+        }
+
+        @Override
+        public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
+<span class="fc" id="L293">            return range();</span>
+        }
+
+        @Override
+        public long getFrom(TemporalAccessor temporal) {
+<span class="fc bfc" id="L298" title="All 2 branches covered.">            if (isSupportedBy(temporal) == false) {</span>
+<span class="fc" id="L299">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: HalfOfYear&quot;);</span>
+            }
+<span class="fc" id="L301">            long qoy = temporal.get(QUARTER_OF_YEAR);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">            return qoy &lt;= 2 ? 1 : 2;</span>
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        @Override
+        public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
+            // calls getFrom() to check if supported
+<span class="fc" id="L309">            long curValue = getFrom(temporal);</span>
+<span class="fc" id="L310">            range().checkValidValue(newValue, this);  // strictly check from 1 to 2</span>
+<span class="fc" id="L311">            return (R) temporal.with(MONTH_OF_YEAR, temporal.getLong(MONTH_OF_YEAR) + (newValue - curValue) * 6);</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="fc" id="L316">            return &quot;HalfOfYear&quot;;</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implementation of the half-year unit.
+     */
+<span class="fc" id="L324">    private static enum HalfUnit implements TemporalUnit {</span>
+
+        /**
+         * Unit that represents the concept of a week-based-year.
+         */
+<span class="fc" id="L329">        INSTANCE;</span>
+
+        @Override
+        public Duration getDuration() {
+<span class="nc" id="L333">            return Duration.ofSeconds(31556952L / 2);</span>
+        }
+
+        @Override
+        public boolean isDurationEstimated() {
+<span class="nc" id="L338">            return true;</span>
+        }
+
+        @Override
+        public boolean isDateBased() {
+<span class="fc" id="L343">            return true;</span>
+        }
+
+        @Override
+        public boolean isTimeBased() {
+<span class="fc" id="L348">            return false;</span>
+        }
+
+        @Override
+        public boolean isSupportedBy(Temporal temporal) {
+<span class="fc" id="L353">            return temporal.isSupported(QUARTER_OF_YEAR);</span>
+        }
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+        @Override
+        public &lt;R extends Temporal&gt; R addTo(R temporal, long amount) {
+<span class="fc" id="L359">            return (R) temporal.plus(Math.multiplyExact(amount, 2), QUARTER_YEARS);</span>
+        }
+
+        @Override
+        public long between(Temporal temporal1Inclusive, Temporal temporal2Exclusive) {
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">            if (temporal1Inclusive.getClass() != temporal2Exclusive.getClass()) {</span>
+<span class="nc" id="L365">                return temporal1Inclusive.until(temporal2Exclusive, this);</span>
+            }
+<span class="fc" id="L367">            return temporal1Inclusive.until(temporal2Exclusive, QUARTER_YEARS) / 2;</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="fc" id="L372">            return &quot;HalfYears&quot;;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

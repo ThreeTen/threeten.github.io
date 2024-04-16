@@ -320,11 +320,11 @@ public final class MutableClock
 <span class="fc bfc" id="L320" title="All 2 branches covered.">        if (this == obj) {</span>
 <span class="fc" id="L321">            return true;</span>
         }
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">        if (obj instanceof MutableClock) {</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        if (obj instanceof MutableClock) {</span>
 <span class="fc" id="L324">            MutableClock other = (MutableClock) obj;</span>
 <span class="fc bfc" id="L325" title="All 4 branches covered.">            return instantHolder == other.instantHolder &amp;&amp; zone.equals(other.zone);</span>
         }
-<span class="nc" id="L327">        return false;</span>
+<span class="fc" id="L327">        return false;</span>
     }
 
     /**
@@ -461,4 +461,4 @@ public final class MutableClock
 <span class="fc" id="L461">        }</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -3,42 +3,49 @@ ThreeTen-Extra,org.threeten.extra,PeriodDuration,76,576,15,63,11,112,12,56,1,26
 ThreeTen-Extra,org.threeten.extra,AmountFormats.SinglePluralFormat,0,26,0,4,0,6,0,4,0,2
 ThreeTen-Extra,org.threeten.extra,AmountFormats.ParsedUnitPart,0,17,0,0,0,6,0,3,0,3
 ThreeTen-Extra,org.threeten.extra,AmountFormats.UnitFormat,0,68,0,2,0,9,0,2,0,1
-ThreeTen-Extra,org.threeten.extra,YearQuarter,220,834,41,107,28,157,43,91,5,48
+ThreeTen-Extra,org.threeten.extra,YearQuarter,207,851,37,111,25,160,39,95,5,48
 ThreeTen-Extra,org.threeten.extra,PackedFields.PackedTime,0,180,0,4,0,38,0,14,0,12
-ThreeTen-Extra,org.threeten.extra,Interval,0,814,4,122,0,137,4,100,0,41
+ThreeTen-Extra,org.threeten.extra,YearHalf,203,855,35,113,25,160,38,96,5,48
+ThreeTen-Extra,org.threeten.extra,Interval,0,838,4,124,0,142,4,102,0,42
 ThreeTen-Extra,org.threeten.extra,OffsetDate,45,683,8,64,6,129,10,85,3,56
 ThreeTen-Extra,org.threeten.extra,AmountFormats.PredicateFormat,10,82,2,8,2,17,2,9,0,5
 ThreeTen-Extra,org.threeten.extra,Minutes,119,295,10,46,22,75,9,48,3,26
 ThreeTen-Extra,org.threeten.extra,AmountFormats.DurationUnit,0,43,0,4,0,8,0,6,0,4
+ThreeTen-Extra,org.threeten.extra,TemporalFields.HalfOfYearField,0,80,0,4,0,17,0,13,0,11
 ThreeTen-Extra,org.threeten.extra,MutableClock.SerializationProxy,10,23,2,2,2,7,2,2,0,2
-ThreeTen-Extra,org.threeten.extra,DayOfYear,2,252,2,30,0,53,2,36,0,22
+ThreeTen-Extra,org.threeten.extra,DayOfYear,2,252,1,31,0,53,1,37,0,22
 ThreeTen-Extra,org.threeten.extra,Hours,53,328,3,47,7,81,4,50,1,28
 ThreeTen-Extra,org.threeten.extra,Temporals,22,444,4,60,4,89,4,52,0,16
 ThreeTen-Extra,org.threeten.extra,PackedFields.PackedHourMin,0,134,0,4,0,31,0,14,0,12
 ThreeTen-Extra,org.threeten.extra,MutableClock.InstantHolder,0,13,0,0,0,6,0,3,0,3
 ThreeTen-Extra,org.threeten.extra,YearWeek,46,812,9,121,7,165,10,102,1,46
 ThreeTen-Extra,org.threeten.extra,DayOfMonth,2,258,1,31,0,53,1,38,0,23
-ThreeTen-Extra,org.threeten.extra,AmPm,33,168,7,20,5,32,7,19,1,11
+ThreeTen-Extra,org.threeten.extra,TemporalFields.DayOfHalfField,15,247,5,27,3,47,5,23,0,12
+ThreeTen-Extra,org.threeten.extra,AmPm,26,175,7,20,4,33,6,20,0,12
 ThreeTen-Extra,org.threeten.extra,AmountFormats,21,938,11,67,3,182,10,44,0,15
-ThreeTen-Extra,org.threeten.extra,MutableClock,9,236,2,8,3,52,3,18,1,15
+ThreeTen-Extra,org.threeten.extra,TemporalFields,0,7,0,0,0,3,0,1,0,1
+ThreeTen-Extra,org.threeten.extra,MutableClock,7,238,1,9,2,53,2,19,1,15
 ThreeTen-Extra,org.threeten.extra,AmountFormats.FractionScalarPart,0,29,0,2,0,7,0,4,0,3
 ThreeTen-Extra,org.threeten.extra,AmountFormats.IntegerScalarPart,0,16,0,0,0,4,0,3,0,3
 ThreeTen-Extra,org.threeten.extra,Seconds,128,324,10,52,24,83,9,52,3,27
 ThreeTen-Extra,org.threeten.extra,Months,34,362,2,52,5,88,2,54,0,29
+ThreeTen-Extra,org.threeten.extra,TemporalFields.HalfUnit,10,43,1,1,3,9,3,7,2,7
 ThreeTen-Extra,org.threeten.extra,Days,18,378,0,54,4,89,0,56,0,29
 ThreeTen-Extra,org.threeten.extra,LocalDateRange.new Spliterators.AbstractSpliterator() {...},0,52,0,6,0,13,0,6,0,3
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,27,0,3,0,6,0,4,0,2
+ThreeTen-Extra,org.threeten.extra,HourMinute,84,719,20,94,14,124,23,86,3,41
 ThreeTen-Extra,org.threeten.extra,AmountFormats.WordBased,0,88,0,16,0,20,0,10,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,27,0,3,0,6,0,4,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,24,0,3,0,6,0,4,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster.new Temporals.Adjuster() {...},0,24,0,3,0,6,0,4,0,2
 ThreeTen-Extra,org.threeten.extra,Weeks,9,342,0,44,2,77,0,50,0,28
+ThreeTen-Extra,org.threeten.extra,Half,22,277,6,37,4,51,6,32,0,16
 ThreeTen-Extra,org.threeten.extra,LocalDateRange,0,759,1,119,0,123,1,95,0,36
 ThreeTen-Extra,org.threeten.extra,PackedFields.PackedDate,0,194,0,10,0,39,0,18,0,13
 ThreeTen-Extra,org.threeten.extra,Years,9,342,0,44,2,77,0,50,0,28
 ThreeTen-Extra,org.threeten.extra,PackedFields,33,17,3,1,1,6,2,2,0,2
 ThreeTen-Extra,org.threeten.extra,Temporals.Adjuster,0,44,0,0,0,5,0,1,0,1
-ThreeTen-Extra,org.threeten.extra,Quarter,34,303,10,37,7,61,9,34,0,16
+ThreeTen-Extra,org.threeten.extra,Quarter,34,305,10,37,6,61,9,34,0,16
 ThreeTen-Extra,org.threeten.extra,Temporals.BigDecimalSeconds,0,15,0,0,0,2,0,1,0,1
 ThreeTen-Extra,org.threeten.extra.scale,SystemUtcRules,73,505,14,42,10,90,11,29,0,12
 ThreeTen-Extra,org.threeten.extra.scale,TaiInstant,9,289,0,24,2,62,0,33,0,21
@@ -62,8 +69,8 @@ ThreeTen-Extra,org.threeten.extra.chrono,JulianDate,34,410,1,38,6,74,6,45,5,25
 ThreeTen-Extra,org.threeten.extra.chrono,DiscordianChronology,29,171,0,19,8,40,8,29,8,15
 ThreeTen-Extra,org.threeten.extra.chrono,CopticChronology,34,62,1,3,9,15,9,14,8,13
 ThreeTen-Extra,org.threeten.extra.chrono,PaxEra,3,42,0,3,1,7,1,4,1,2
-ThreeTen-Extra,org.threeten.extra.chrono,Symmetry454Date,37,853,9,71,9,140,15,76,6,40
 ThreeTen-Extra,org.threeten.extra.chrono,PaxChronology,29,139,0,18,8,30,8,26,8,15
+ThreeTen-Extra,org.threeten.extra.chrono,Symmetry454Date,37,853,9,71,9,140,15,76,6,40
 ThreeTen-Extra,org.threeten.extra.chrono,AbstractNileDate,0,83,0,6,0,12,0,10,0,7
 ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedChronology,23,191,0,19,7,40,7,30,7,16
 ThreeTen-Extra,org.threeten.extra.chrono,AccountingYearDivision,0,460,0,30,0,30,0,25,0,10
@@ -76,4 +83,4 @@ ThreeTen-Extra,org.threeten.extra.chrono,JulianChronology,29,103,0,10,8,25,8,21,
 ThreeTen-Extra,org.threeten.extra.chrono,AccountingDate,36,614,2,50,5,80,6,55,4,31
 ThreeTen-Extra,org.threeten.extra.chrono,InternationalFixedDate,101,1072,26,144,18,173,26,114,6,44
 ThreeTen-Extra,org.threeten.extra.chrono,EthiopicDate,34,332,2,26,6,55,7,34,5,22
-ThreeTen-Extra,org.threeten.extra.chrono,AccountingChronology,42,562,6,63,7,96,13,55,7,24
+ThreeTen-Extra,org.threeten.extra.chrono,AccountingChronology,67,537,12,57,7,96,14,54,7,24

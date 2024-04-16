@@ -560,10 +560,10 @@ public final class AccountingChronology extends AbstractChronology implements Se
         }
 <span class="fc bfc" id="L561" title="All 2 branches covered.">        if (obj instanceof AccountingChronology) {</span>
 <span class="fc" id="L562">            AccountingChronology other = (AccountingChronology) obj;</span>
-<span class="pc bpc" id="L563" title="2 of 6 branches missed.">            return this.endsOn == other.endsOn &amp;&amp;</span>
+<span class="pc bpc" id="L563" title="5 of 6 branches missed.">            return this.endsOn == other.endsOn &amp;&amp;</span>
                     this.inLastWeek == other.inLastWeek &amp;&amp;
                     this.end == other.end &amp;&amp;
-<span class="pc bpc" id="L566" title="3 of 6 branches missed.">                    this.getDivision() == other.getDivision() &amp;&amp;</span>
+<span class="pc bnc" id="L566" title="All 6 branches missed.">                    this.getDivision() == other.getDivision() &amp;&amp;</span>
                     this.leapWeekInMonth == other.leapWeekInMonth &amp;&amp;
                     this.yearOffset == other.yearOffset;
         }
@@ -600,4 +600,4 @@ public final class AccountingChronology extends AbstractChronology implements Se
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

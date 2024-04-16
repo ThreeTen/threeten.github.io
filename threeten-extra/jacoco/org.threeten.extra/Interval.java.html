@@ -130,14 +130,36 @@ public final class Interval
     }
 
     /**
+     * Obtains an instance of {@code Interval} from the duration and the end.
+     * &lt;p&gt;
+     * The start instant is calculated as the end minus the duration.
+     * The duration must not be negative.
+     *
+     * @param duration  the duration from the start to the end, not null
+     * @param endExclusive  the end instant, exclusive, not null
+     * @return the interval, not null
+     * @throws DateTimeException if the end is before the start,
+     *  or if the duration addition cannot be made
+     * @throws ArithmeticException if numeric overflow occurs when subtracting the duration
+     */
+    public static Interval of(Duration duration, Instant endExclusive) {
+<span class="fc" id="L146">        Objects.requireNonNull(duration, &quot;duration&quot;);</span>
+<span class="fc" id="L147">        Objects.requireNonNull(endExclusive, &quot;endExclusive&quot;);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (duration.isNegative()) {</span>
+<span class="fc" id="L149">            throw new DateTimeException(&quot;Duration must not be negative&quot;);</span>
+        }
+<span class="fc" id="L151">        return new Interval(endExclusive.minus(duration), endExclusive);</span>
+    }
+
+    /**
      * Obtains an instance of {@code Interval} with the specified start instant and unbounded end.
      *
      * @param startInclusive the start instant, inclusive, not null
      * @return a new {@code Instant} with the specified start instant.
      */
     public static Interval startingAt(Instant startInclusive) {
-<span class="fc" id="L139">        Objects.requireNonNull(startInclusive, &quot;startInclusive&quot;);</span>
-<span class="fc" id="L140">        return Interval.ALL.withStart(startInclusive);</span>
+<span class="fc" id="L161">        Objects.requireNonNull(startInclusive, &quot;startInclusive&quot;);</span>
+<span class="fc" id="L162">        return Interval.ALL.withStart(startInclusive);</span>
     }
 
     /**
@@ -147,8 +169,8 @@ public final class Interval
      * @return a new {@code Instant} with the specified end instant.
      */
     public static Interval endingAt(Instant endExclusive) {
-<span class="fc" id="L150">        Objects.requireNonNull(endExclusive, &quot;endExclusive&quot;);</span>
-<span class="fc" id="L151">        return Interval.ALL.withEnd(endExclusive);</span>
+<span class="fc" id="L172">        Objects.requireNonNull(endExclusive, &quot;endExclusive&quot;);</span>
+<span class="fc" id="L173">        return Interval.ALL.withEnd(endExclusive);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -177,83 +199,83 @@ public final class Interval
      */
     @FromString
     public static Interval parse(CharSequence text) {
-<span class="fc" id="L180">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">            if (text.charAt(i) == '/') {</span>
-<span class="fc" id="L183">                return parseSplit(text.subSequence(0, i), text.subSequence(i + 1, text.length()));</span>
+<span class="fc" id="L202">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">            if (text.charAt(i) == '/') {</span>
+<span class="fc" id="L205">                return parseSplit(text.subSequence(0, i), text.subSequence(i + 1, text.length()));</span>
             }
         }
-<span class="fc" id="L186">        throw new DateTimeParseException(&quot;Interval cannot be parsed, no forward slash found&quot;, text, 0);</span>
+<span class="fc" id="L208">        throw new DateTimeParseException(&quot;Interval cannot be parsed, no forward slash found&quot;, text, 0);</span>
     }
 
     private static Interval parseSplit(CharSequence startStr, CharSequence endStr) {
-<span class="fc" id="L190">        char firstChar = startStr.charAt(0);</span>
-<span class="fc bfc" id="L191" title="All 4 branches covered.">        if (firstChar == 'P' || firstChar == 'p') {</span>
+<span class="fc" id="L212">        char firstChar = startStr.charAt(0);</span>
+<span class="fc bfc" id="L213" title="All 4 branches covered.">        if (firstChar == 'P' || firstChar == 'p') {</span>
             // duration followed by instant
-<span class="fc" id="L193">            PeriodDuration amount = PeriodDuration.parse(startStr);</span>
+<span class="fc" id="L215">            PeriodDuration amount = PeriodDuration.parse(startStr);</span>
             try {
-<span class="fc" id="L195">                OffsetDateTime end = OffsetDateTime.parse(endStr);</span>
-<span class="fc" id="L196">                return Interval.of(end.minus(amount).toInstant(), end.toInstant());</span>
-<span class="fc" id="L197">            } catch (DateTimeParseException ex) {</span>
+<span class="fc" id="L217">                OffsetDateTime end = OffsetDateTime.parse(endStr);</span>
+<span class="fc" id="L218">                return Interval.of(end.minus(amount).toInstant(), end.toInstant());</span>
+<span class="fc" id="L219">            } catch (DateTimeParseException ex) {</span>
                 // handle case where Instant is outside the bounds of OffsetDateTime
-<span class="fc" id="L199">                Instant end = Instant.parse(endStr);</span>
+<span class="fc" id="L221">                Instant end = Instant.parse(endStr);</span>
                 // addition of PeriodDuration only supported by OffsetDateTime,
                 // but to make that work need to move point being subtracted from closer to EPOCH
-<span class="fc bfc" id="L202" title="All 2 branches covered.">                long move = end.isBefore(Instant.EPOCH) ? 1000 * 86400 : -1000 * 86400;</span>
-<span class="fc" id="L203">                Instant start = end.plusSeconds(move).atOffset(ZoneOffset.UTC).minus(amount).toInstant().minusSeconds(move);</span>
-<span class="fc" id="L204">                return Interval.of(start, end);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                long move = end.isBefore(Instant.EPOCH) ? 1000 * 86400 : -1000 * 86400;</span>
+<span class="fc" id="L225">                Instant start = end.plusSeconds(move).atOffset(ZoneOffset.UTC).minus(amount).toInstant().minusSeconds(move);</span>
+<span class="fc" id="L226">                return Interval.of(start, end);</span>
             }
         }
         // instant followed by instant or duration
         OffsetDateTime start;
         try {
-<span class="fc" id="L210">            start = OffsetDateTime.parse(startStr);</span>
-<span class="fc" id="L211">        } catch (DateTimeParseException ex) {</span>
-<span class="fc" id="L212">            return parseStartExtended(startStr, endStr);</span>
-<span class="fc" id="L213">        }</span>
-<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if (endStr.length() &gt; 0) {</span>
-<span class="fc" id="L215">            char c = endStr.charAt(0);</span>
-<span class="fc bfc" id="L216" title="All 4 branches covered.">            if (c == 'P' || c == 'p') {</span>
-<span class="fc" id="L217">                PeriodDuration amount = PeriodDuration.parse(endStr);</span>
-<span class="fc" id="L218">                return Interval.of(start.toInstant(), start.plus(amount).toInstant());</span>
+<span class="fc" id="L232">            start = OffsetDateTime.parse(startStr);</span>
+<span class="fc" id="L233">        } catch (DateTimeParseException ex) {</span>
+<span class="fc" id="L234">            return parseStartExtended(startStr, endStr);</span>
+<span class="fc" id="L235">        }</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        if (endStr.length() &gt; 0) {</span>
+<span class="fc" id="L237">            char c = endStr.charAt(0);</span>
+<span class="fc bfc" id="L238" title="All 4 branches covered.">            if (c == 'P' || c == 'p') {</span>
+<span class="fc" id="L239">                PeriodDuration amount = PeriodDuration.parse(endStr);</span>
+<span class="fc" id="L240">                return Interval.of(start.toInstant(), start.plus(amount).toInstant());</span>
             }
         }
-<span class="fc" id="L221">        return parseEndDateTime(start.toInstant(), start.getOffset(), endStr);</span>
+<span class="fc" id="L243">        return parseEndDateTime(start.toInstant(), start.getOffset(), endStr);</span>
     }
 
     // handle case where Instant is outside the bounds of OffsetDateTime
     private static Interval parseStartExtended(CharSequence startStr, CharSequence endStr) {
-<span class="fc" id="L226">        Instant start = Instant.parse(startStr);</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">        if (endStr.length() &gt; 0) {</span>
-<span class="fc" id="L228">            char c = endStr.charAt(0);</span>
-<span class="fc bfc" id="L229" title="All 4 branches covered.">            if (c == 'P' || c == 'p') {</span>
-<span class="fc" id="L230">                PeriodDuration amount = PeriodDuration.parse(endStr);</span>
+<span class="fc" id="L248">        Instant start = Instant.parse(startStr);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        if (endStr.length() &gt; 0) {</span>
+<span class="fc" id="L250">            char c = endStr.charAt(0);</span>
+<span class="fc bfc" id="L251" title="All 4 branches covered.">            if (c == 'P' || c == 'p') {</span>
+<span class="fc" id="L252">                PeriodDuration amount = PeriodDuration.parse(endStr);</span>
                 // addition of PeriodDuration only supported by OffsetDateTime,
                 // but to make that work need to move point being added to closer to EPOCH
-<span class="fc bfc" id="L233" title="All 2 branches covered.">                long move = start.isBefore(Instant.EPOCH) ? 1000 * 86400 : -1000 * 86400;</span>
-<span class="fc" id="L234">                Instant end = start.plusSeconds(move).atOffset(ZoneOffset.UTC).plus(amount).toInstant().minusSeconds(move);</span>
-<span class="fc" id="L235">                return Interval.of(start, end);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">                long move = start.isBefore(Instant.EPOCH) ? 1000 * 86400 : -1000 * 86400;</span>
+<span class="fc" id="L256">                Instant end = start.plusSeconds(move).atOffset(ZoneOffset.UTC).plus(amount).toInstant().minusSeconds(move);</span>
+<span class="fc" id="L257">                return Interval.of(start, end);</span>
             }
         }
         // infer offset from start if not specified by end
-<span class="fc" id="L239">        return parseEndDateTime(start, ZoneOffset.UTC, endStr);</span>
+<span class="fc" id="L261">        return parseEndDateTime(start, ZoneOffset.UTC, endStr);</span>
     }
 
     // parse when there are two date-times
     private static Interval parseEndDateTime(Instant start, ZoneOffset offset, CharSequence endStr) {
         try {
-<span class="fc" id="L245">            TemporalAccessor temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(endStr, OffsetDateTime::from, LocalDateTime::from);</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">            if (temporal instanceof OffsetDateTime) {</span>
-<span class="fc" id="L247">                OffsetDateTime odt = (OffsetDateTime) temporal;</span>
-<span class="fc" id="L248">                return Interval.of(start, odt.toInstant());</span>
+<span class="fc" id="L267">            TemporalAccessor temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(endStr, OffsetDateTime::from, LocalDateTime::from);</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">            if (temporal instanceof OffsetDateTime) {</span>
+<span class="fc" id="L269">                OffsetDateTime odt = (OffsetDateTime) temporal;</span>
+<span class="fc" id="L270">                return Interval.of(start, odt.toInstant());</span>
             } else {
                 // infer offset from start if not specified by end
-<span class="fc" id="L251">                LocalDateTime ldt = (LocalDateTime) temporal;</span>
-<span class="fc" id="L252">                return Interval.of(start, ldt.toInstant(offset));</span>
+<span class="fc" id="L273">                LocalDateTime ldt = (LocalDateTime) temporal;</span>
+<span class="fc" id="L274">                return Interval.of(start, ldt.toInstant(offset));</span>
             }
-<span class="fc" id="L254">        } catch (DateTimeParseException ex) {</span>
-<span class="fc" id="L255">            Instant end = Instant.parse(endStr);</span>
-<span class="fc" id="L256">            return Interval.of(start, end);</span>
+<span class="fc" id="L276">        } catch (DateTimeParseException ex) {</span>
+<span class="fc" id="L277">            Instant end = Instant.parse(endStr);</span>
+<span class="fc" id="L278">            return Interval.of(start, end);</span>
         }
     }
 
@@ -264,10 +286,10 @@ public final class Interval
      * @param startInclusive  the start instant, inclusive, validated not null
      * @param endExclusive  the end instant, exclusive, validated not null
      */
-<span class="fc" id="L267">    private Interval(Instant startInclusive, Instant endExclusive) {</span>
-<span class="fc" id="L268">        this.start = startInclusive;</span>
-<span class="fc" id="L269">        this.end = endExclusive;</span>
-<span class="fc" id="L270">    }</span>
+<span class="fc" id="L289">    private Interval(Instant startInclusive, Instant endExclusive) {</span>
+<span class="fc" id="L290">        this.start = startInclusive;</span>
+<span class="fc" id="L291">        this.end = endExclusive;</span>
+<span class="fc" id="L292">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -279,7 +301,7 @@ public final class Interval
      * @return the start of the time interval
      */
     public Instant getStart() {
-<span class="fc" id="L282">        return start;</span>
+<span class="fc" id="L304">        return start;</span>
     }
 
     /**
@@ -291,7 +313,7 @@ public final class Interval
      * @return the end of the time interval, exclusive
      */
     public Instant getEnd() {
-<span class="fc" id="L294">        return end;</span>
+<span class="fc" id="L316">        return end;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -303,7 +325,7 @@ public final class Interval
      * @return true if the range is empty
      */
     public boolean isEmpty() {
-<span class="fc" id="L306">        return start.equals(end);</span>
+<span class="fc" id="L328">        return start.equals(end);</span>
     }
 
     /**
@@ -312,7 +334,7 @@ public final class Interval
      * @return true if start is unbounded
      */
     public boolean isUnboundedStart() {
-<span class="fc" id="L315">        return start.equals(Instant.MIN);</span>
+<span class="fc" id="L337">        return start.equals(Instant.MIN);</span>
     }
 
     /**
@@ -321,7 +343,7 @@ public final class Interval
      * @return true if end is unbounded
      */
     public boolean isUnboundedEnd() {
-<span class="fc" id="L324">        return end.equals(Instant.MAX);</span>
+<span class="fc" id="L346">        return end.equals(Instant.MAX);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -333,7 +355,7 @@ public final class Interval
      * @throws DateTimeException if the resulting interval has end before start
      */
     public Interval withStart(Instant start) {
-<span class="fc" id="L336">        return Interval.of(start, end);</span>
+<span class="fc" id="L358">        return Interval.of(start, end);</span>
     }
 
     /**
@@ -344,7 +366,7 @@ public final class Interval
      * @throws DateTimeException if the resulting interval has end before start
      */
     public Interval withEnd(Instant end) {
-<span class="fc" id="L347">        return Interval.of(start, end);</span>
+<span class="fc" id="L369">        return Interval.of(start, end);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -358,8 +380,8 @@ public final class Interval
      * @return true if this interval contains the other interval
      */
     public boolean encloses(Interval other) {
-<span class="fc" id="L361">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L362" title="All 4 branches covered.">        return start.compareTo(other.start) &lt;= 0 &amp;&amp; other.end.compareTo(end) &lt;= 0;</span>
+<span class="fc" id="L383">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L384" title="All 4 branches covered.">        return start.compareTo(other.start) &lt;= 0 &amp;&amp; other.end.compareTo(end) &lt;= 0;</span>
     }
 
     /**
@@ -372,8 +394,8 @@ public final class Interval
      * @return true if this interval abuts the other interval
      */
     public boolean abuts(Interval other) {
-<span class="fc" id="L375">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc" id="L376">        return end.equals(other.start) ^ start.equals(other.end);</span>
+<span class="fc" id="L397">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L398">        return end.equals(other.start) ^ start.equals(other.end);</span>
     }
 
     /**
@@ -388,8 +410,8 @@ public final class Interval
      * @return true if this interval is connected to the other interval
      */
     public boolean isConnected(Interval other) {
-<span class="fc" id="L391">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L392" title="All 6 branches covered.">        return this.equals(other) || (start.compareTo(other.end) &lt;= 0 &amp;&amp; other.start.compareTo(end) &lt;= 0);</span>
+<span class="fc" id="L413">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L414" title="All 6 branches covered.">        return this.equals(other) || (start.compareTo(other.end) &lt;= 0 &amp;&amp; other.start.compareTo(end) &lt;= 0);</span>
     }
 
     /**
@@ -404,8 +426,8 @@ public final class Interval
      * @return true if the time intervals overlap
      */
     public boolean overlaps(Interval other) {
-<span class="fc" id="L407">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L408" title="All 6 branches covered.">        return other.equals(this) || (start.compareTo(other.end) &lt; 0 &amp;&amp; other.start.compareTo(end) &lt; 0);</span>
+<span class="fc" id="L429">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L430" title="All 6 branches covered.">        return other.equals(this) || (start.compareTo(other.end) &lt; 0 &amp;&amp; other.start.compareTo(end) &lt; 0);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -420,20 +442,20 @@ public final class Interval
      * @throws DateTimeException if the intervals do not connect
      */
     public Interval intersection(Interval other) {
-<span class="fc" id="L423">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L424" title="All 2 branches covered.">        if (isConnected(other) == false) {</span>
-<span class="fc" id="L425">            throw new DateTimeException(&quot;Intervals do not connect: &quot; + this + &quot; and &quot; + other);</span>
+<span class="fc" id="L445">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">        if (isConnected(other) == false) {</span>
+<span class="fc" id="L447">            throw new DateTimeException(&quot;Intervals do not connect: &quot; + this + &quot; and &quot; + other);</span>
         }
-<span class="fc" id="L427">        int cmpStart = start.compareTo(other.start);</span>
-<span class="fc" id="L428">        int cmpEnd = end.compareTo(other.end);</span>
-<span class="fc bfc" id="L429" title="All 4 branches covered.">        if (cmpStart &gt;= 0 &amp;&amp; cmpEnd &lt;= 0) {</span>
-<span class="fc" id="L430">            return this;</span>
-<span class="fc bfc" id="L431" title="All 4 branches covered.">        } else if (cmpStart &lt;= 0 &amp;&amp; cmpEnd &gt;= 0) {</span>
-<span class="fc" id="L432">            return other;</span>
+<span class="fc" id="L449">        int cmpStart = start.compareTo(other.start);</span>
+<span class="fc" id="L450">        int cmpEnd = end.compareTo(other.end);</span>
+<span class="fc bfc" id="L451" title="All 4 branches covered.">        if (cmpStart &gt;= 0 &amp;&amp; cmpEnd &lt;= 0) {</span>
+<span class="fc" id="L452">            return this;</span>
+<span class="fc bfc" id="L453" title="All 4 branches covered.">        } else if (cmpStart &lt;= 0 &amp;&amp; cmpEnd &gt;= 0) {</span>
+<span class="fc" id="L454">            return other;</span>
         } else {
-<span class="fc bfc" id="L434" title="All 2 branches covered.">            Instant newStart = (cmpStart &gt;= 0 ? start : other.start);</span>
-<span class="fc bfc" id="L435" title="All 2 branches covered.">            Instant newEnd = (cmpEnd &lt;= 0 ? end : other.end);</span>
-<span class="fc" id="L436">            return Interval.of(newStart, newEnd);</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">            Instant newStart = (cmpStart &gt;= 0 ? start : other.start);</span>
+<span class="fc bfc" id="L457" title="All 2 branches covered.">            Instant newEnd = (cmpEnd &lt;= 0 ? end : other.end);</span>
+<span class="fc" id="L458">            return Interval.of(newStart, newEnd);</span>
         }
     }
 
@@ -448,20 +470,20 @@ public final class Interval
      * @throws DateTimeException if the intervals do not connect
      */
     public Interval union(Interval other) {
-<span class="fc" id="L451">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L452" title="All 2 branches covered.">        if (isConnected(other) == false) {</span>
-<span class="fc" id="L453">            throw new DateTimeException(&quot;Intervals do not connect: &quot; + this + &quot; and &quot; + other);</span>
+<span class="fc" id="L473">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">        if (isConnected(other) == false) {</span>
+<span class="fc" id="L475">            throw new DateTimeException(&quot;Intervals do not connect: &quot; + this + &quot; and &quot; + other);</span>
         }
-<span class="fc" id="L455">        int cmpStart = start.compareTo(other.start);</span>
-<span class="fc" id="L456">        int cmpEnd = end.compareTo(other.end);</span>
-<span class="fc bfc" id="L457" title="All 4 branches covered.">        if (cmpStart &gt;= 0 &amp;&amp; cmpEnd &lt;= 0) {</span>
-<span class="fc" id="L458">            return other;</span>
-<span class="fc bfc" id="L459" title="All 4 branches covered.">        } else if (cmpStart &lt;= 0 &amp;&amp; cmpEnd &gt;= 0) {</span>
-<span class="fc" id="L460">            return this;</span>
+<span class="fc" id="L477">        int cmpStart = start.compareTo(other.start);</span>
+<span class="fc" id="L478">        int cmpEnd = end.compareTo(other.end);</span>
+<span class="fc bfc" id="L479" title="All 4 branches covered.">        if (cmpStart &gt;= 0 &amp;&amp; cmpEnd &lt;= 0) {</span>
+<span class="fc" id="L480">            return other;</span>
+<span class="fc bfc" id="L481" title="All 4 branches covered.">        } else if (cmpStart &lt;= 0 &amp;&amp; cmpEnd &gt;= 0) {</span>
+<span class="fc" id="L482">            return this;</span>
         } else {
-<span class="fc bfc" id="L462" title="All 2 branches covered.">            Instant newStart = (cmpStart &gt;= 0 ? other.start : start);</span>
-<span class="fc bfc" id="L463" title="All 2 branches covered.">            Instant newEnd = (cmpEnd &lt;= 0 ? other.end : end);</span>
-<span class="fc" id="L464">            return Interval.of(newStart, newEnd);</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">            Instant newStart = (cmpStart &gt;= 0 ? other.start : start);</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">            Instant newEnd = (cmpEnd &lt;= 0 ? other.end : end);</span>
+<span class="fc" id="L486">            return Interval.of(newStart, newEnd);</span>
         }
     }
 
@@ -475,12 +497,12 @@ public final class Interval
      * @return the interval that spans the two intervals
      */
     public Interval span(Interval other) {
-<span class="fc" id="L478">        Objects.requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc" id="L479">        int cmpStart = start.compareTo(other.start);</span>
-<span class="fc" id="L480">        int cmpEnd = end.compareTo(other.end);</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">        Instant newStart = (cmpStart &gt;= 0 ? other.start : start);</span>
-<span class="fc bfc" id="L482" title="All 2 branches covered.">        Instant newEnd = (cmpEnd &lt;= 0 ? other.end : end);</span>
-<span class="fc" id="L483">        return Interval.of(newStart, newEnd);</span>
+<span class="fc" id="L500">        Objects.requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L501">        int cmpStart = start.compareTo(other.start);</span>
+<span class="fc" id="L502">        int cmpEnd = end.compareTo(other.end);</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">        Instant newStart = (cmpStart &gt;= 0 ? other.start : start);</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        Instant newEnd = (cmpEnd &lt;= 0 ? other.end : end);</span>
+<span class="fc" id="L505">        return Interval.of(newStart, newEnd);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -496,7 +518,7 @@ public final class Interval
      * @return true if this interval is after the specified interval
      */
     public boolean isAfter(Interval interval) {
-<span class="fc bfc" id="L499" title="All 4 branches covered.">        return start.compareTo(interval.end) &gt;= 0 &amp;&amp; !interval.equals(this);</span>
+<span class="fc bfc" id="L521" title="All 4 branches covered.">        return start.compareTo(interval.end) &gt;= 0 &amp;&amp; !interval.equals(this);</span>
     }
 
     /**
@@ -511,7 +533,7 @@ public final class Interval
      * @return true if this interval is before the specified interval
      */
     public boolean isBefore(Interval interval) {
-<span class="fc bfc" id="L514" title="All 4 branches covered.">        return end.compareTo(interval.start) &lt;= 0 &amp;&amp; !interval.equals(this);</span>
+<span class="fc bfc" id="L536" title="All 4 branches covered.">        return end.compareTo(interval.start) &lt;= 0 &amp;&amp; !interval.equals(this);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -525,8 +547,8 @@ public final class Interval
      * @return true if this interval starts before the instant
      */
     public boolean startsBefore(Instant instant) {
-<span class="fc" id="L528">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc bfc" id="L529" title="All 2 branches covered.">        return start.compareTo(instant) &lt; 0;</span>
+<span class="fc" id="L550">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">        return start.compareTo(instant) &lt; 0;</span>
     }
 
     /**
@@ -539,8 +561,8 @@ public final class Interval
      * @return true if this interval starts at or before the instant
      */
     public boolean startsAtOrBefore(Instant instant) {
-<span class="fc" id="L542">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc bfc" id="L543" title="All 2 branches covered.">        return start.compareTo(instant) &lt;= 0;</span>
+<span class="fc" id="L564">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">        return start.compareTo(instant) &lt;= 0;</span>
     }
 
     /**
@@ -553,8 +575,8 @@ public final class Interval
      * @return true if this interval starts after the instant
      */
     public boolean startsAfter(Instant instant) {
-<span class="fc" id="L556">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc bfc" id="L557" title="All 2 branches covered.">        return start.compareTo(instant) &gt; 0;</span>
+<span class="fc" id="L578">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc bfc" id="L579" title="All 2 branches covered.">        return start.compareTo(instant) &gt; 0;</span>
     }
 
     /**
@@ -567,8 +589,8 @@ public final class Interval
      * @return true if this interval starts at or after the instant
      */
     public boolean startsAtOrAfter(Instant instant) {
-<span class="fc" id="L570">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc bfc" id="L571" title="All 2 branches covered.">        return start.compareTo(instant) &gt;= 0;</span>
+<span class="fc" id="L592">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">        return start.compareTo(instant) &gt;= 0;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -582,8 +604,8 @@ public final class Interval
      * @return true if this interval ends before the instant
      */
     public boolean endsBefore(Instant instant) {
-<span class="fc" id="L585">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="pc bpc" id="L586" title="1 of 4 branches missed.">        return end.compareTo(instant) &lt; 0 &amp;&amp; !isUnboundedEnd();</span>
+<span class="fc" id="L607">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="pc bpc" id="L608" title="1 of 4 branches missed.">        return end.compareTo(instant) &lt; 0 &amp;&amp; !isUnboundedEnd();</span>
     }
 
     /**
@@ -596,8 +618,8 @@ public final class Interval
      * @return true if this interval ends at or before the instant
      */
     public boolean endsAtOrBefore(Instant instant) {
-<span class="fc" id="L599">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc bfc" id="L600" title="All 4 branches covered.">        return end.compareTo(instant) &lt;= 0 &amp;&amp; !isUnboundedEnd();</span>
+<span class="fc" id="L621">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc bfc" id="L622" title="All 4 branches covered.">        return end.compareTo(instant) &lt;= 0 &amp;&amp; !isUnboundedEnd();</span>
     }
 
     /**
@@ -610,8 +632,8 @@ public final class Interval
      * @return true if this interval ends after the instant
      */
     public boolean endsAfter(Instant instant) {
-<span class="fc" id="L613">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc bfc" id="L614" title="All 4 branches covered.">        return end.compareTo(instant) &gt; 0 || isUnboundedEnd();</span>
+<span class="fc" id="L635">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc bfc" id="L636" title="All 4 branches covered.">        return end.compareTo(instant) &gt; 0 || isUnboundedEnd();</span>
     }
 
     /**
@@ -624,8 +646,8 @@ public final class Interval
      * @return true if this interval ends at or after the instant
      */
     public boolean endsAtOrAfter(Instant instant) {
-<span class="fc" id="L627">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="pc bpc" id="L628" title="1 of 4 branches missed.">        return end.compareTo(instant) &gt;= 0 || isUnboundedEnd();</span>
+<span class="fc" id="L649">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="pc bpc" id="L650" title="1 of 4 branches missed.">        return end.compareTo(instant) &gt;= 0 || isUnboundedEnd();</span>
     }
 
     //-------------------------------------------------------------------------
@@ -643,7 +665,7 @@ public final class Interval
      * @return true if this interval contains the instant
      */
     public boolean contains(Instant instant) {
-<span class="fc bfc" id="L646" title="All 4 branches covered.">        return startsAtOrBefore(instant) &amp;&amp; endsAfter(instant);</span>
+<span class="fc bfc" id="L668" title="All 4 branches covered.">        return startsAtOrBefore(instant) &amp;&amp; endsAfter(instant);</span>
     }
 
     /**
@@ -658,7 +680,7 @@ public final class Interval
      * @return true if the start of this interval is after the specified instant
      */
     public boolean isAfter(Instant instant) {
-<span class="fc" id="L661">        return startsAfter(instant);</span>
+<span class="fc" id="L683">        return startsAfter(instant);</span>
     }
 
     /**
@@ -675,7 +697,7 @@ public final class Interval
      * @return true if the end of this interval is before or equal to the specified instant
      */
     public boolean isBefore(Instant instant) {
-<span class="fc bfc" id="L678" title="All 4 branches covered.">        return endsAtOrBefore(instant) &amp;&amp; startsBefore(instant);</span>
+<span class="fc bfc" id="L700" title="All 4 branches covered.">        return endsAtOrBefore(instant) &amp;&amp; startsBefore(instant);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -689,7 +711,7 @@ public final class Interval
      * @throws ArithmeticException if the calculation exceeds the capacity of {@code Duration}
      */
     public Duration toDuration() {
-<span class="fc" id="L692">        return Duration.between(start, end);</span>
+<span class="fc" id="L714">        return Duration.between(start, end);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -704,14 +726,14 @@ public final class Interval
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L707" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L708">            return true;</span>
+<span class="fc bfc" id="L729" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L730">            return true;</span>
         }
-<span class="fc bfc" id="L710" title="All 2 branches covered.">        if (obj instanceof Interval) {</span>
-<span class="fc" id="L711">            Interval other = (Interval) obj;</span>
-<span class="fc bfc" id="L712" title="All 4 branches covered.">            return start.equals(other.start) &amp;&amp; end.equals(other.end);</span>
+<span class="fc bfc" id="L732" title="All 2 branches covered.">        if (obj instanceof Interval) {</span>
+<span class="fc" id="L733">            Interval other = (Interval) obj;</span>
+<span class="fc bfc" id="L734" title="All 4 branches covered.">            return start.equals(other.start) &amp;&amp; end.equals(other.end);</span>
         }
-<span class="fc" id="L714">        return false;</span>
+<span class="fc" id="L736">        return false;</span>
     }
 
     /**
@@ -721,7 +743,7 @@ public final class Interval
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L724">        return start.hashCode() ^ end.hashCode();</span>
+<span class="fc" id="L746">        return start.hashCode() ^ end.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -736,8 +758,8 @@ public final class Interval
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L739">        return start.toString() + '/' + end.toString();</span>
+<span class="fc" id="L761">        return start.toString() + '/' + end.toString();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

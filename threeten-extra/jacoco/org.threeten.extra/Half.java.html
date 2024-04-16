@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Half.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">Half.java</span></div><h1>Half.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+import static org.threeten.extra.TemporalFields.HALF_OF_YEAR;
+import static org.threeten.extra.TemporalFields.HALF_YEARS;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.chrono.Chronology;
+import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.TextStyle;
+import java.time.temporal.ChronoField;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalQueries;
+import java.time.temporal.TemporalQuery;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.time.temporal.ValueRange;
+import java.util.Locale;
+
+/**
+ * A half-of-year, such as 'H2'.
+ * &lt;p&gt;
+ * {@code Half} is an enum representing the 2 halves of the year - H1 and H2.
+ * These are defined as January to June and July to December.
+ * &lt;p&gt;
+ * The {@code int} value follows the half, from 1 (H1) to 2 (H2).
+ * It is recommended that applications use the enum rather than the {@code int} value
+ * to ensure code clarity.
+ * &lt;p&gt;
+ * &lt;b&gt;Do not use {@code ordinal()} to obtain the numeric representation of {@code Half}.
+ * Use {@code getValue()} instead.&lt;/b&gt;
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This is an immutable and thread-safe enum.
+ */
+<span class="fc" id="L72">public enum Half implements TemporalAccessor, TemporalAdjuster {</span>
+
+    /**
+     * The singleton instance for the first half-of-year, from January to June.
+     * This has the numeric value of {@code 1}.
+     */
+<span class="fc" id="L78">    H1,</span>
+    /**
+     * The singleton instance for the second half-of-year, from July to December.
+     * This has the numeric value of {@code 2}.
+     */
+<span class="fc" id="L83">    H2;</span>
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code Half} from an {@code int} value.
+     * &lt;p&gt;
+     * {@code Half} is an enum representing the 2 halves of the year.
+     * This factory allows the enum to be obtained from the {@code int} value.
+     * The {@code int} value follows the half, from 1 (H1) to 2 (H2).
+     *
+     * @param halfOfYear  the half-of-year to represent, from 1 (H1) to 2 (H2)
+     * @return the half-of-year, not null
+     * @throws DateTimeException if the half-of-year is invalid
+     */
+    public static Half of(int halfOfYear) {
+<span class="fc bfc" id="L98" title="All 3 branches covered.">        switch (halfOfYear) {</span>
+            case 1:
+<span class="fc" id="L100">                return H1;</span>
+            case 2:
+<span class="fc" id="L102">                return H2;</span>
+            default:
+<span class="fc" id="L104">                throw new DateTimeException(&quot;Invalid value for Half: &quot; + halfOfYear);</span>
+        }
+    }
+
+    /**
+     * Obtains an instance of {@code Half} from a month-of-year.
+     * &lt;p&gt;
+     * {@code Half} is an enum representing the 2 halves of the year.
+     * This factory allows the enum to be obtained from the {@code Month} value.
+     * &lt;p&gt;
+     * January to June are H1 and July to December are H2.
+     *
+     * @param monthOfYear  the month-of-year to convert from, from 1 to 12
+     * @return the half-of-year, not null
+     * @throws DateTimeException if the month-of-year is invalid
+     */
+    public static Half ofMonth(int monthOfYear) {
+<span class="fc" id="L121">        MONTH_OF_YEAR.range().checkValidValue(monthOfYear, MONTH_OF_YEAR);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        return of(monthOfYear &lt;= 6 ? 1 : 2);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code Half} from a temporal object.
+     * &lt;p&gt;
+     * This obtains a half based on the specified temporal.
+     * A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+     * which this factory converts to an instance of {@code Half}.
+     * &lt;p&gt;
+     * The conversion extracts the {@link TemporalFields#HALF_OF_YEAR HALF_OF_YEAR} field.
+     * The extraction is only permitted if the temporal object has an ISO
+     * chronology, or can be converted to a {@code LocalDate}.
+     * &lt;p&gt;
+     * This method matches the signature of the functional interface {@link TemporalQuery}
+     * allowing it to be used in queries via method reference, {@code Half::from}.
+     *
+     * @param temporal  the temporal-time object to convert, not null
+     * @return the half-of-year, not null
+     * @throws DateTimeException if unable to convert to a {@code Half}
+     */
+    public static Half from(TemporalAccessor temporal) {
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (temporal instanceof Half) {</span>
+<span class="fc" id="L146">            return (Half) temporal;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        } else if (temporal instanceof Month) {</span>
+<span class="fc" id="L148">            Month month = (Month) temporal;</span>
+<span class="fc" id="L149">            return of(month.ordinal() / 6 + 1);</span>
+        }
+        try {
+            TemporalAccessor adjusted =
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                    !IsoChronology.INSTANCE.equals(Chronology.from(temporal)) ? LocalDate.from(temporal) : temporal;</span>
+            // need to use getLong() as JDK Parsed class get() doesn't work properly
+<span class="fc" id="L155">            int qoy = Math.toIntExact(adjusted.getLong(HALF_OF_YEAR));</span>
+<span class="fc" id="L156">            return of(qoy);</span>
+<span class="fc" id="L157">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L158">            throw new DateTimeException(&quot;Unable to obtain Half from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L159">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the half-of-year {@code int} value.
+     * &lt;p&gt;
+     * The values are numbered following the ISO-8601 standard,
+     * from 1 (H1) to 2 (H2).
+     *
+     * @return the half-of-year, from 1 (H1) to 2 (H2)
+     */
+    public int getValue() {
+<span class="fc" id="L173">        return ordinal() + 1;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the textual representation, such as 'H1' or '4th half'.
+     * &lt;p&gt;
+     * This returns the textual name used to identify the half-of-year,
+     * suitable for presentation to the user.
+     * The parameters control the style of the returned text and the locale.
+     * &lt;p&gt;
+     * If no textual mapping is found then the {@link #getValue() numeric value} is returned.
+     *
+     * @param style  the length of the text required, not null
+     * @param locale  the locale to use, not null
+     * @return the text value of the half-of-year, not null
+     */
+    public String getDisplayName(TextStyle style, Locale locale) {
+<span class="fc" id="L191">        return new DateTimeFormatterBuilder().appendText(HALF_OF_YEAR, style).toFormatter(locale).format(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified field is supported.
+     * &lt;p&gt;
+     * This checks if this half-of-year can be queried for the specified field.
+     * If false, then calling the {@link #range(TemporalField) range} and
+     * {@link #get(TemporalField) get} methods will throw an exception.
+     * &lt;p&gt;
+     * If the field is {@link TemporalFields#HALF_OF_YEAR HALF_OF_YEAR} then
+     * this method returns true.
+     * All {@code ChronoField} instances will return false.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.isSupportedBy(TemporalAccessor)}
+     * passing {@code this} as the argument.
+     * Whether the field is supported is determined by the field.
+     *
+     * @param field  the field to check, null returns false
+     * @return true if the field is supported on this half-of-year, false if not
+     */
+    @Override
+    public boolean isSupported(TemporalField field) {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L217">            return true;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L219">            return false;</span>
+        }
+<span class="pc bpc" id="L221" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+    }
+
+    /**
+     * Gets the range of valid values for the specified field.
+     * &lt;p&gt;
+     * The range object expresses the minimum and maximum valid values for a field.
+     * This half is used to enhance the accuracy of the returned range.
+     * If it is not possible to return the range, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is {@link TemporalFields#HALF_OF_YEAR HALF_OF_YEAR} then the
+     * range of the half-of-year, from 1 to 2, will be returned.
+     * All {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.rangeRefinedBy(TemporalAccessor)}
+     * passing {@code this} as the argument.
+     * Whether the range can be obtained is determined by the field.
+     *
+     * @param field  the field to query the range for, not null
+     * @return the range of valid values for the field, not null
+     * @throws DateTimeException if the range for the field cannot be obtained
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     */
+    @Override
+    public ValueRange range(TemporalField field) {
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L249">            return field.range();</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L251">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+        }
+<span class="nc" id="L253">        return TemporalAccessor.super.range(field);</span>
+    }
+
+    /**
+     * Gets the value of the specified field from this half-of-year as an {@code int}.
+     * &lt;p&gt;
+     * This queries this half for the value for the specified field.
+     * The returned value will always be within the valid range of values for the field.
+     * If it is not possible to return the value, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is {@link TemporalFields#HALF_OF_YEAR HALF_OF_YEAR} then the
+     * value of the half-of-year, from 1 to 2, will be returned.
+     * All {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.getFrom(TemporalAccessor)}
+     * passing {@code this} as the argument. Whether the value can be obtained,
+     * and what the value represents, is determined by the field.
+     *
+     * @param field  the field to get, not null
+     * @return the value for the field, within the valid range of values
+     * @throws DateTimeException if a value for the field cannot be obtained or
+     *         the value is outside the range of valid values for the field
+     * @throws UnsupportedTemporalTypeException if the field is not supported or
+     *         the range of values exceeds an {@code int}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public int get(TemporalField field) {
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L284">            return getValue();</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L286">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+        }
+<span class="nc" id="L288">        return TemporalAccessor.super.get(field);</span>
+    }
+
+    /**
+     * Gets the value of the specified field from this half-of-year as a {@code long}.
+     * &lt;p&gt;
+     * This queries this half for the value for the specified field.
+     * If it is not possible to return the value, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is {@link TemporalFields#HALF_OF_YEAR HALF_OF_YEAR} then the
+     * value of the half-of-year, from 1 to 2, will be returned.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.getFrom(TemporalAccessor)}
+     * passing {@code this} as the argument. Whether the value can be obtained,
+     * and what the value represents, is determined by the field.
+     *
+     * @param field  the field to get, not null
+     * @return the value for the field
+     * @throws DateTimeException if a value for the field cannot be obtained
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public long getLong(TemporalField field) {
+<span class="fc bfc" id="L315" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L316">            return getValue();</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L318">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+        }
+<span class="nc" id="L320">        return field.getFrom(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the half that is the specified number of halves after this one.
+     * &lt;p&gt;
+     * The calculation rolls around the end of the year from H2 to H1.
+     * The specified period may be negative.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param halves  the halves to add, positive or negative
+     * @return the resulting half, not null
+     */
+    public Half plus(long halves) {
+<span class="fc" id="L336">        int amount = (int) halves % 2;</span>
+<span class="fc" id="L337">        return values()[(ordinal() + (amount + 2)) % 2];</span>
+    }
+
+    /**
+     * Returns the half that is the specified number of halves before this one.
+     * &lt;p&gt;
+     * The calculation rolls around the start of the year from H1 to H2.
+     * The specified period may be negative.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param halves  the halves to subtract, positive or negative
+     * @return the resulting half, not null
+     */
+    public Half minus(long halves) {
+<span class="fc" id="L352">        return plus(-(halves % 2));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the length of this half in days.
+     * &lt;p&gt;
+     * This takes a flag to determine whether to return the length for a leap year or not.
+     * &lt;p&gt;
+     * H1 has 181 in a standard year and 182 days in a leap year.
+     * H2 has 184 days.
+     *
+     * @param leapYear  true if the length is required for a leap year
+     * @return the length of this month in days, 181, 182 or 184
+     */
+    public int length(boolean leapYear) {
+<span class="fc bfc" id="L368" title="All 4 branches covered.">        return this == H1 ? (leapYear ? 182 : 181) : 184;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the first of the six months that this half refers to.
+     * &lt;p&gt;
+     * H1 will return January.&lt;br&gt;
+     * H2 will return July.
+     *
+     * @return the first month in the half, not null
+     */
+    public Month firstMonth() {
+<span class="fc bfc" id="L381" title="All 2 branches covered.">        return this == H1 ? Month.JANUARY : Month.JULY;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Queries this half-of-year using the specified query.
+     * &lt;p&gt;
+     * This queries this half-of-year using the specified query strategy object.
+     * The {@code TemporalQuery} object defines the logic to be used to
+     * obtain the result. Read the documentation of the query to understand
+     * what the result of this method will be.
+     * &lt;p&gt;
+     * The result of this method is obtained by invoking the
+     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
+     * specified query passing {@code this} as the argument.
+     *
+     * @param &lt;R&gt; the type of the result
+     * @param query  the query to invoke, not null
+     * @return the query result, null may be returned (defined by the query)
+     * @throws DateTimeException if unable to query (defined by the query)
+     * @throws ArithmeticException if numeric overflow occurs (defined by the query)
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L407">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L409">            return (R) HALF_YEARS;</span>
+        }
+<span class="fc" id="L411">        return TemporalAccessor.super.query(query);</span>
+    }
+
+    /**
+     * Adjusts the specified temporal object to have this half-of-year.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with the half-of-year changed to be the same as this.
+     * &lt;p&gt;
+     * The adjustment is equivalent to using {@link Temporal#with(TemporalField, long)}
+     * passing {@link TemporalFields#HALF_OF_YEAR} as the field.
+     * If the specified temporal object does not use the ISO calendar system then
+     * a {@code DateTimeException} is thrown.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#with(TemporalAdjuster)}:
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   temporal = thisHalf.adjustInto(temporal);
+     *   temporal = temporal.with(thisHalf);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * For example, given a date in May, the following are output:
+     * &lt;pre&gt;
+     *   dateInMay.with(H1);    // no change
+     *   dateInMay.with(H2);    // six months later
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the target object to be adjusted, not null
+     * @return the adjusted object, not null
+     * @throws DateTimeException if unable to make the adjustment
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal adjustInto(Temporal temporal) {
+<span class="pc bpc" id="L448" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="nc" id="L449">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+        }
+<span class="fc" id="L451">        return temporal.with(HALF_OF_YEAR, getValue());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

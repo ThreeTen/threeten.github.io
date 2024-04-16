@@ -1,0 +1,1091 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HourMinute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ThreeTen-Extra</a> &gt; <a href="index.source.html" class="el_package">org.threeten.extra</a> &gt; <span class="el_source">HourMinute.java</span></div><h1>HourMinute.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) 2007-present, Stephen Colebourne &amp; Michael Nascimento Santos
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of JSR-310 nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.threeten.extra;
+
+import static java.time.temporal.ChronoField.AMPM_OF_DAY;
+import static java.time.temporal.ChronoField.CLOCK_HOUR_OF_AMPM;
+import static java.time.temporal.ChronoField.CLOCK_HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.HOUR_OF_AMPM;
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoUnit.HALF_DAYS;
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
+import java.io.Serializable;
+import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalQueries;
+import java.time.temporal.TemporalQuery;
+import java.time.temporal.TemporalUnit;
+import java.time.temporal.UnsupportedTemporalTypeException;
+import java.time.temporal.ValueRange;
+import java.util.Objects;
+
+import org.joda.convert.FromString;
+import org.joda.convert.ToString;
+
+/**
+ * An hour-minute, such as {@code 12:31}.
+ * &lt;p&gt;
+ * This class is similar to {@link LocalTime} but has a precision of minutes.
+ * Seconds and nanoseconds cannot be represented by this class.
+ *
+ * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
+ * This class is immutable and thread-safe.
+ * &lt;p&gt;
+ * This class must be treated as a value type. Do not synchronize, rely on the
+ * identity hash code or use the distinction between equals() and ==.
+ */
+public final class HourMinute
+        implements Temporal, TemporalAdjuster, Comparable&lt;HourMinute&gt;, Serializable {
+
+    /**
+     * The time of midnight at the start of the day, '00:00'.
+     */
+<span class="fc" id="L93">    public static final HourMinute MIDNIGHT = new HourMinute(0, 0);</span>
+
+    /**
+     * Serialization version.
+     */
+    private static final long serialVersionUID = -2532872925L;
+    /**
+     * Parser.
+     */
+<span class="fc" id="L102">    private static final DateTimeFormatter PARSER = new DateTimeFormatterBuilder()</span>
+<span class="fc" id="L103">            .appendValue(HOUR_OF_DAY, 2)</span>
+<span class="fc" id="L104">            .appendLiteral(':')</span>
+<span class="fc" id="L105">            .appendValue(MINUTE_OF_HOUR, 2)</span>
+<span class="fc" id="L106">            .toFormatter();</span>
+    /**
+     * Hours per day.
+     */
+    private static final int HOURS_PER_DAY = 24;
+    /**
+     * Minutes per hour.
+     */
+    private static final int MINUTES_PER_HOUR = 60;
+    /**
+     * Minutes per day.
+     */
+    private static final int MINUTES_PER_DAY = MINUTES_PER_HOUR * HOURS_PER_DAY;
+
+    /**
+     * The hour-of-day.
+     */
+    private final int hour;
+    /**
+     * The minute-of-hour.
+     */
+    private final int minute;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains the current hour-minute from the system clock in the default time-zone.
+     * &lt;p&gt;
+     * This will query the {@link java.time.Clock#systemDefaultZone() system clock} in the default
+     * time-zone to obtain the current hour-minute.
+     * The zone and offset will be set based on the time-zone in the clock.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @return the current hour-minute using the system clock and default time-zone, not null
+     */
+    public static HourMinute now() {
+<span class="nc" id="L143">        return now(Clock.systemDefaultZone());</span>
+    }
+
+    /**
+     * Obtains the current hour-minute from the system clock in the specified time-zone.
+     * &lt;p&gt;
+     * This will query the {@link Clock#system(java.time.ZoneId) system clock} to obtain the current hour-minute.
+     * Specifying the time-zone avoids dependence on the default time-zone.
+     * &lt;p&gt;
+     * Using this method will prevent the ability to use an alternate clock for testing
+     * because the clock is hard-coded.
+     *
+     * @param zone  the zone ID to use, not null
+     * @return the current hour-minute using the system clock, not null
+     */
+    public static HourMinute now(ZoneId zone) {
+<span class="nc" id="L159">        return now(Clock.system(zone));</span>
+    }
+
+    /**
+     * Obtains the current hour-minute from the specified clock.
+     * &lt;p&gt;
+     * This will query the specified clock to obtain the current hour-minute.
+     * Using this method allows the use of an alternate clock for testing.
+     * The alternate clock may be introduced using {@link Clock dependency injection}.
+     *
+     * @param clock  the clock to use, not null
+     * @return the current hour-minute, not null
+     */
+    public static HourMinute now(Clock clock) {
+<span class="nc" id="L173">        final LocalTime now = LocalTime.now(clock);  // called once</span>
+<span class="nc" id="L174">        return HourMinute.of(now.getHour(), now.getMinute());</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code HourMinute} from a hour and minute.
+     *
+     * @param hour  the hour to represent, from 0 to 23
+     * @param minute  the minute-of-hour to represent, from 0 to 59
+     * @return the hour-minute, not null
+     * @throws DateTimeException if either field value is invalid
+     */
+    public static HourMinute of(int hour, int minute) {
+<span class="fc" id="L187">        HOUR_OF_DAY.checkValidValue(hour);</span>
+<span class="fc" id="L188">        MINUTE_OF_HOUR.checkValidValue(minute);</span>
+<span class="fc" id="L189">        return new HourMinute(hour, minute);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code HourMinute} from a temporal object.
+     * &lt;p&gt;
+     * This obtains a hour-minute based on the specified temporal.
+     * A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+     * which this factory converts to an instance of {@code HourMinute}.
+     * &lt;p&gt;
+     * The conversion extracts the {@link ChronoField#HOUR_OF_DAY HOUR_OF_DAY} and
+     * {@link ChronoField#MINUTE_OF_HOUR MINUTE_OF_HOUR} fields.
+     * &lt;p&gt;
+     * This method matches the signature of the functional interface {@link TemporalQuery}
+     * allowing it to be used in queries via method reference, {@code HourMinute::from}.
+     *
+     * @param temporal  the temporal object to convert, not null
+     * @return the hour-minute, not null
+     * @throws DateTimeException if unable to convert to a {@code HourMinute}
+     */
+    public static HourMinute from(TemporalAccessor temporal) {
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        if (temporal instanceof HourMinute) {</span>
+<span class="fc" id="L212">            return (HourMinute) temporal;</span>
+        }
+<span class="fc" id="L214">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
+        try {
+            // need to use getLong() as JDK Parsed class get() doesn't work properly
+<span class="fc" id="L217">            int hour = Math.toIntExact(temporal.getLong(HOUR_OF_DAY));</span>
+<span class="fc" id="L218">            int minute = Math.toIntExact(temporal.getLong(MINUTE_OF_HOUR));</span>
+<span class="fc" id="L219">            return of(hour, minute);</span>
+<span class="fc" id="L220">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L221">            throw new DateTimeException(&quot;Unable to obtain HourMinute from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L222">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Obtains an instance of {@code HourMinute} from a text string such as {@code 12:31}.
+     * &lt;p&gt;
+     * The string must represent a valid hour-minute.
+     * The format must be {@code HH:mm}.
+     *
+     * @param text  the text to parse such as &quot;12:31&quot;, not null
+     * @return the parsed hour-minute, not null
+     * @throws DateTimeParseException if the text cannot be parsed
+     */
+    @FromString
+    public static HourMinute parse(CharSequence text) {
+<span class="fc" id="L239">        return parse(text, PARSER);</span>
+    }
+
+    /**
+     * Obtains an instance of {@code HourMinute} from a text string using a specific formatter.
+     * &lt;p&gt;
+     * The text is parsed using the formatter, returning a hour-minute.
+     *
+     * @param text  the text to parse, not null
+     * @param formatter  the formatter to use, not null
+     * @return the parsed hour-minute, not null
+     * @throws DateTimeParseException if the text cannot be parsed
+     */
+    public static HourMinute parse(CharSequence text, DateTimeFormatter formatter) {
+<span class="fc" id="L253">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L254">        return formatter.parse(text, HourMinute::from);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Constructor.
+     *
+     * @param hour  the hour to represent, validated from 0 to 23
+     * @param minute  the minute-of-hour to represent, validated from 0 to 59
+     */
+<span class="fc" id="L264">    private HourMinute(int hour, int minute) {</span>
+<span class="fc" id="L265">        this.hour = hour;</span>
+<span class="fc" id="L266">        this.minute = minute;</span>
+<span class="fc" id="L267">    }</span>
+
+    /**
+     * Validates the input.
+     *
+     * @return the valid object, not null
+     */
+    private Object readResolve() {
+<span class="fc" id="L275">        return of(hour, minute);</span>
+    }
+
+    /**
+     * Returns a copy of this hour-minute with the new hour and minute, checking
+     * to see if a new object is in fact required.
+     *
+     * @param newYear  the hour to represent, validated from 0 to 23
+     * @param newMinute  the minute-of-hour to represent, validated from 0 to 59
+     * @return the hour-minute, not null
+     */
+    private HourMinute with(int newYear, int newMinute) {
+<span class="pc bpc" id="L287" title="1 of 4 branches missed.">        if (hour == newYear &amp;&amp; minute == newMinute) {</span>
+<span class="nc" id="L288">            return this;</span>
+        }
+<span class="fc" id="L290">        return new HourMinute(newYear, newMinute);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if the specified field is supported.
+     * &lt;p&gt;
+     * This checks if this hour-minute can be queried for the specified field.
+     * If false, then calling the {@link #range(TemporalField) range},
+     * {@link #get(TemporalField) get} and {@link #with(TemporalField, long)}
+     * methods will throw an exception.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The supported fields are:
+     * &lt;ul&gt;
+     * &lt;li&gt;{@code MINUTE_OF_HOUR}
+     * &lt;li&gt;{@code MINUTE_OF_DAY}
+     * &lt;li&gt;{@code HOUR_OF_AMPM}
+     * &lt;li&gt;{@code CLOCK_HOUR_OF_AMPM}
+     * &lt;li&gt;{@code HOUR_OF_DAY}
+     * &lt;li&gt;{@code CLOCK_HOUR_OF_DAY}
+     * &lt;li&gt;{@code AMPM_OF_DAY}
+     * &lt;/ul&gt;
+     * All other {@code ChronoField} instances will return false.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.isSupportedBy(TemporalAccessor)}
+     * passing {@code this} as the argument.
+     * Whether the field is supported is determined by the field.
+     *
+     * @param field  the field to check, null returns false
+     * @return true if the field is supported on this hour-minute, false if not
+     */
+    @Override
+    public boolean isSupported(TemporalField field) {
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L326" title="All 14 branches covered.">            return field == MINUTE_OF_HOUR ||</span>
+                    field == MINUTE_OF_DAY ||
+                    field == HOUR_OF_AMPM ||
+                    field == CLOCK_HOUR_OF_AMPM ||
+                    field == HOUR_OF_DAY ||
+                    field == CLOCK_HOUR_OF_DAY ||
+                    field == AMPM_OF_DAY;
+        }
+<span class="pc bpc" id="L334" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+    }
+
+    /**
+     * Checks if the specified unit is supported.
+     * &lt;p&gt;
+     * This checks if the specified unit can be added to, or subtracted from, this hour-minute.
+     * If false, then calling the {@link #plus(long, TemporalUnit)} and
+     * {@link #minus(long, TemporalUnit) minus} methods will throw an exception.
+     * &lt;p&gt;
+     * If the unit is a {@link ChronoUnit} then the query is implemented here.
+     * The supported units are:
+     * &lt;ul&gt;
+     * &lt;li&gt;{@code MINUTES}
+     * &lt;li&gt;{@code HOURS}
+     * &lt;li&gt;{@code HALF_DAYS}
+     * &lt;/ul&gt;
+     * All other {@code ChronoUnit} instances will return false.
+     * &lt;p&gt;
+     * If the unit is not a {@code ChronoUnit}, then the result of this method
+     * is obtained by invoking {@code TemporalUnit.isSupportedBy(Temporal)}
+     * passing {@code this} as the argument.
+     * Whether the unit is supported is determined by the unit.
+     *
+     * @param unit  the unit to check, null returns false
+     * @return true if the unit can be added/subtracted, false if not
+     */
+    @Override
+    public boolean isSupported(TemporalUnit unit) {
+<span class="fc bfc" id="L363" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L364" title="All 6 branches covered.">            return unit == MINUTES || unit == HOURS || unit == HALF_DAYS;</span>
+        }
+<span class="pc bpc" id="L366" title="1 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the range of valid values for the specified field.
+     * &lt;p&gt;
+     * The range object expresses the minimum and maximum valid values for a field.
+     * If it is not possible to return the range, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The {@link #isSupported(TemporalField) supported fields} will return
+     * appropriate range instances.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.rangeRefinedBy(TemporalAccessor)}
+     * passing {@code this} as the argument.
+     * Whether the range can be obtained is determined by the field.
+     *
+     * @param field  the field to query the range for, not null
+     * @return the range of valid values for the field, not null
+     * @throws DateTimeException if the range for the field cannot be obtained
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     */
+    @Override
+    public ValueRange range(TemporalField field) {
+<span class="fc" id="L394">        return Temporal.super.range(field);</span>
+    }
+
+    /**
+     * Gets the value of the specified field from this hour-minute as an {@code int}.
+     * &lt;p&gt;
+     * This queries this hour-minute for the value for the specified field.
+     * The returned value will always be within the valid range of values for the field.
+     * If it is not possible to return the value, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The {@link #isSupported(TemporalField) supported fields} will return valid
+     * values based on this hour-minute,.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.getFrom(TemporalAccessor)}
+     * passing {@code this} as the argument. Whether the value can be obtained,
+     * and what the value represents, is determined by the field.
+     *
+     * @param field  the field to get, not null
+     * @return the value for the field
+     * @throws DateTimeException if a value for the field cannot be obtained or
+     *  the value is outside the range of valid values for the field
+     * @throws UnsupportedTemporalTypeException if the field is not supported or
+     *  the range of values exceeds an {@code int}
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public int get(TemporalField field) {
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc" id="L426">            return get0(field);</span>
+        }
+<span class="nc" id="L428">        return Temporal.super.get(field);</span>
+    }
+
+    /**
+     * Gets the value of the specified field from this hour-minute as a {@code long}.
+     * &lt;p&gt;
+     * This queries this hour-minute for the value for the specified field.
+     * If it is not possible to return the value, because the field is not supported
+     * or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the query is implemented here.
+     * The {@link #isSupported(TemporalField) supported fields} will return valid
+     * values based on this hour-minute.
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.getFrom(TemporalAccessor)}
+     * passing {@code this} as the argument. Whether the value can be obtained,
+     * and what the value represents, is determined by the field.
+     *
+     * @param field  the field to get, not null
+     * @return the value for the field
+     * @throws DateTimeException if a value for the field cannot be obtained
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public long getLong(TemporalField field) {
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc" id="L457">            return get0(field);</span>
+        }
+<span class="nc" id="L459">        return field.getFrom(this);</span>
+    }
+
+    private int get0(TemporalField field) {
+<span class="fc bfc" id="L463" title="All 8 branches covered.">        switch ((ChronoField) field) {</span>
+            case MINUTE_OF_HOUR:
+<span class="fc" id="L465">                return minute;</span>
+            case MINUTE_OF_DAY:
+<span class="fc" id="L467">                return hour * 60 + minute;</span>
+            case HOUR_OF_AMPM:
+<span class="fc" id="L469">                return hour % 12;</span>
+            case CLOCK_HOUR_OF_AMPM:
+<span class="fc" id="L471">                int ham = hour % 12;</span>
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">                return (ham % 12 == 0 ? 12 : ham);</span>
+            case HOUR_OF_DAY:
+<span class="fc" id="L474">                return hour;</span>
+            case CLOCK_HOUR_OF_DAY:
+<span class="pc bpc" id="L476" title="1 of 2 branches missed.">                return (hour == 0 ? 24 : hour);</span>
+            case AMPM_OF_DAY:
+<span class="fc" id="L478">                return hour / 12;</span>
+            default:
+<span class="fc" id="L480">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the hour field, from 0 to 23.
+     * &lt;p&gt;
+     * This method returns the hour as an {@code int} from 0 to 23.
+     *
+     * @return the hour, from 0 to 23
+     */
+    public int getHour() {
+<span class="fc" id="L493">        return hour;</span>
+    }
+
+    /**
+     * Gets the minute-of-hour field from 0 to 59.
+     * &lt;p&gt;
+     * This method returns the minute as an {@code int} from 0 to 59.
+     *
+     * @return the minute-of-hour, from 0 to 59
+     */
+    public int getMinute() {
+<span class="fc" id="L504">        return minute;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an adjusted copy of this hour-minute.
+     * &lt;p&gt;
+     * This returns a {@code HourMinute} based on this one, with the hour-minute adjusted.
+     * The adjustment takes place using the specified adjuster strategy object.
+     * Read the documentation of the adjuster to understand what adjustment will be made.
+     * &lt;p&gt;
+     * The result of this method is obtained by invoking the
+     * {@link TemporalAdjuster#adjustInto(Temporal)} method on the
+     * specified adjuster passing {@code this} as the argument.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param adjuster the adjuster to use, not null
+     * @return a {@code HourMinute} based on {@code this} with the adjustment made, not null
+     * @throws DateTimeException if the adjustment cannot be made
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public HourMinute with(TemporalAdjuster adjuster) {
+<span class="fc" id="L528">        return (HourMinute) adjuster.adjustInto(this);</span>
+    }
+
+    /**
+     * Returns a copy of this hour-minute with the specified field set to a new value.
+     * &lt;p&gt;
+     * This returns a {@code HourMinute} based on this one, with the value
+     * for the specified field changed.
+     * This can be used to change any supported field, such as the hour or minute.
+     * If it is not possible to set the value, because the field is not supported or for
+     * some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoField} then the adjustment is implemented here.
+     * The supported fields behave as follows:
+     * &lt;ul&gt;
+     * &lt;li&gt;{@code MINUTE_OF_HOUR} -
+     *  Returns a {@code HourMinute} with the specified minute-of-hour.
+     *  The hour will be unchanged.
+     * &lt;li&gt;{@code MINUTE_OF_DAY} -
+     *  Returns a {@code HourMinute} with the specified minute-of-day.
+     * &lt;li&gt;{@code HOUR_OF_AMPM} -
+     *  Returns a {@code HourMinute} with the specified hour-of-am-pm.
+     *  The AM/PM and minute-of-hour will be unchanged.
+     * &lt;li&gt;{@code CLOCK_HOUR_OF_AMPM} -
+     *  Returns a {@code HourMinute} with the specified clock-hour-of-am-pm.
+     *  The AM/PM and minute-of-hour will be unchanged.
+     * &lt;li&gt;{@code HOUR_OF_DAY} -
+     *  Returns a {@code HourMinute} with the specified hour-of-day.
+     *  The minute-of-hour will be unchanged.
+     * &lt;li&gt;{@code CLOCK_HOUR_OF_DAY} -
+     *  Returns a {@code HourMinute} with the specified clock-hour-of-day.
+     *  The minute-of-hour will be unchanged.
+     * &lt;li&gt;{@code AMPM_OF_DAY} -
+     *  Returns a {@code HourMinute} with the specified AM/PM.
+     *  The hour-of-am-pm and minute-of-hour will be unchanged.
+     * &lt;/ul&gt;
+     * &lt;p&gt;
+     * In all cases, if the new value is outside the valid range of values for the field
+     * then a {@code DateTimeException} will be thrown.
+     * &lt;p&gt;
+     * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoField}, then the result of this method
+     * is obtained by invoking {@code TemporalField.adjustInto(Temporal, long)}
+     * passing {@code this} as the argument. In this case, the field determines
+     * whether and how to adjust the instant.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param field  the field to set in the result, not null
+     * @param newValue  the new value of the field in the result
+     * @return a {@code HourMinute} based on {@code this} with the specified field set, not null
+     * @throws DateTimeException if the field cannot be set
+     * @throws UnsupportedTemporalTypeException if the field is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public HourMinute with(TemporalField field, long newValue) {
+<span class="pc bpc" id="L586" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc" id="L587">            ChronoField f = (ChronoField) field;</span>
+<span class="fc" id="L588">            f.checkValidValue(newValue);</span>
+<span class="fc bfc" id="L589" title="All 8 branches covered.">            switch (f) {</span>
+                case MINUTE_OF_HOUR:
+<span class="fc" id="L591">                    return withMinute((int) newValue);</span>
+                case MINUTE_OF_DAY:
+<span class="fc" id="L593">                    return plusMinutes(newValue - (hour * MINUTES_PER_HOUR + minute));</span>
+                case HOUR_OF_AMPM:
+<span class="fc" id="L595">                    return plusHours(newValue - (hour % 12));</span>
+                case CLOCK_HOUR_OF_AMPM:
+<span class="pc bpc" id="L597" title="1 of 2 branches missed.">                    return plusHours((newValue == 12 ? 0 : newValue) - (hour % 12));</span>
+                case HOUR_OF_DAY:
+<span class="fc" id="L599">                    return withHour((int) newValue);</span>
+                case CLOCK_HOUR_OF_DAY:
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">                    return withHour((int) (newValue == 24 ? 0 : newValue));</span>
+                case AMPM_OF_DAY:
+<span class="fc" id="L603">                    return plusHours((newValue - (hour / 12)) * 12);</span>
+                default:
+<span class="fc" id="L605">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+            }
+        }
+<span class="nc" id="L608">        return field.adjustInto(this, newValue);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this {@code HourMinute} with the hour altered.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param hour  the hour to set in the returned hour-minute, from 0 to 23
+     * @return a {@code HourMinute} based on this hour-minute with the requested hour, not null
+     * @throws DateTimeException if the hour value is invalid
+     */
+    public HourMinute withHour(int hour) {
+<span class="fc" id="L622">        HOUR_OF_DAY.checkValidValue(hour);</span>
+<span class="fc" id="L623">        return with(hour, minute);</span>
+    }
+
+    /**
+     * Returns a copy of this {@code HourMinute} with the minute-of-hour altered.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param minute  the minute-of-hour to set in the returned hour-minute, from 0 to 59
+     * @return a {@code HourMinute} based on this hour-minute with the requested minute, not null
+     * @throws DateTimeException if the minute-of-hour value is invalid
+     */
+    public HourMinute withMinute(int minute) {
+<span class="fc" id="L636">        MINUTE_OF_HOUR.checkValidValue(minute);</span>
+<span class="fc" id="L637">        return with(hour, minute);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this hour-minute with the specified amount added.
+     * &lt;p&gt;
+     * This returns a {@code HourMinute} based on this one, with the specified amount added.
+     * The amount is typically {@link Period} but may be any other type implementing
+     * the {@link TemporalAmount} interface.
+     * &lt;p&gt;
+     * The calculation is delegated to the amount object by calling
+     * {@link TemporalAmount#addTo(Temporal)}. The amount implementation is free
+     * to implement the addition in any way it wishes, however it typically
+     * calls back to {@link #plus(long, TemporalUnit)}. Consult the documentation
+     * of the amount implementation to determine if it can be successfully added.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount to add, not null
+     * @return a {@code HourMinute} based on this hour-minute with the addition made, not null
+     * @throws DateTimeException if the addition cannot be made
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public HourMinute plus(TemporalAmount amountToAdd) {
+<span class="fc" id="L663">        return (HourMinute) amountToAdd.addTo(this);</span>
+    }
+
+    /**
+     * Returns a copy of this hour-minute with the specified amount added.
+     * &lt;p&gt;
+     * This returns a {@code HourMinute} based on this one, with the amount
+     * in terms of the unit added. If it is not possible to add the amount, because the
+     * unit is not supported or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * If the field is a {@link ChronoUnit} then the addition is implemented here.
+     * The supported fields behave as follows:
+     * &lt;ul&gt;
+     * &lt;li&gt;{@code MINUTES} -
+     *  Returns a {@code LocalTime} with the specified number of minutes added.
+     *  This is equivalent to {@link #plusMinutes(long)}.
+     * &lt;li&gt;{@code HOURS} -
+     *  Returns a {@code LocalTime} with the specified number of hours added.
+     *  This is equivalent to {@link #plusHours(long)}.
+     * &lt;li&gt;{@code HALF_DAYS} -
+     *  Returns a {@code LocalTime} with the specified number of half-days added.
+     *  This is equivalent to {@link #plusHours(long)} with the amount
+     *  multiplied by 12.
+     * &lt;/ul&gt;
+     * &lt;p&gt;
+     * All other {@code ChronoUnit} instances will throw an {@code UnsupportedTemporalTypeException}.
+     * &lt;p&gt;
+     * If the field is not a {@code ChronoUnit}, then the result of this method
+     * is obtained by invoking {@code TemporalUnit.addTo(Temporal, long)}
+     * passing {@code this} as the argument. In this case, the unit determines
+     * whether and how to perform the addition.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToAdd  the amount of the unit to add to the result, may be negative
+     * @param unit  the unit of the amount to add, not null
+     * @return a {@code HourMinute} based on this hour-minute with the specified amount added, not null
+     * @throws DateTimeException if the addition cannot be made
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public HourMinute plus(long amountToAdd, TemporalUnit unit) {
+<span class="pc bpc" id="L706" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L707" title="All 4 branches covered.">            switch ((ChronoUnit) unit) {</span>
+                case MINUTES:
+<span class="fc" id="L709">                    return plusMinutes(amountToAdd);</span>
+                case HOURS:
+<span class="fc" id="L711">                    return plusHours(amountToAdd);</span>
+                case HALF_DAYS:
+<span class="fc" id="L713">                    return plusHours((amountToAdd % 2) * 12);</span>
+                default:
+<span class="fc" id="L715">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+            }
+        }
+<span class="nc" id="L718">        return unit.addTo(this, amountToAdd);</span>
+    }
+
+    /**
+     * Returns a copy of this {@code HourMinute} with the specified number of hours added.
+     * &lt;p&gt;
+     * This adds the specified number of hours to this time, returning a new time.
+     * The calculation wraps around midnight.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param hoursToAdd  the hours to add, may be negative
+     * @return an {@code HourMinute} based on this time with the hours added, not null
+     */
+    public HourMinute plusHours(long hoursToAdd) {
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">        if (hoursToAdd == 0) {</span>
+<span class="nc" id="L734">            return this;</span>
+        }
+<span class="fc" id="L736">        int newHour = ((int) (hoursToAdd % HOURS_PER_DAY) + hour + HOURS_PER_DAY) % HOURS_PER_DAY;</span>
+<span class="fc" id="L737">        return with(newHour, minute);</span>
+    }
+
+    /**
+     * Returns a copy of this {@code HourMinute} with the specified number of minutes added.
+     * &lt;p&gt;
+     * This adds the specified number of minutes to this time, returning a new time.
+     * The calculation wraps around midnight.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param minutesToAdd  the minutes to add, may be negative
+     * @return an {@code HourMinute} based on this time with the minutes added, not null
+     */
+    public HourMinute plusMinutes(long minutesToAdd) {
+<span class="pc bpc" id="L752" title="1 of 2 branches missed.">        if (minutesToAdd == 0) {</span>
+<span class="nc" id="L753">            return this;</span>
+        }
+<span class="fc" id="L755">        int mofd = hour * MINUTES_PER_HOUR + minute;</span>
+<span class="fc" id="L756">        int newMofd = ((int) (minutesToAdd % MINUTES_PER_DAY) + mofd + MINUTES_PER_DAY) % MINUTES_PER_DAY;</span>
+<span class="pc bpc" id="L757" title="1 of 2 branches missed.">        if (mofd == newMofd) {</span>
+<span class="nc" id="L758">            return this;</span>
+        }
+<span class="fc" id="L760">        int newHour = newMofd / MINUTES_PER_HOUR;</span>
+<span class="fc" id="L761">        int newMinute = newMofd % MINUTES_PER_HOUR;</span>
+<span class="fc" id="L762">        return with(newHour, newMinute);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a copy of this hour-minute with the specified amount subtracted.
+     * &lt;p&gt;
+     * This returns a {@code HourMinute} based on this one, with the specified amount subtracted.
+     * The amount is typically {@link Period} but may be any other type implementing
+     * the {@link TemporalAmount} interface.
+     * &lt;p&gt;
+     * The calculation is delegated to the amount object by calling
+     * {@link TemporalAmount#subtractFrom(Temporal)}. The amount implementation is free
+     * to implement the subtraction in any way it wishes, however it typically
+     * calls back to {@link #minus(long, TemporalUnit)}. Consult the documentation
+     * of the amount implementation to determine if it can be successfully subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToSubtract  the amount to subtract, not null
+     * @return a {@code HourMinute} based on this hour-minute with the subtraction made, not null
+     * @throws DateTimeException if the subtraction cannot be made
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public HourMinute minus(TemporalAmount amountToSubtract) {
+<span class="fc" id="L788">        return (HourMinute) amountToSubtract.subtractFrom(this);</span>
+    }
+
+    /**
+     * Returns a copy of this hour-minute with the specified amount subtracted.
+     * &lt;p&gt;
+     * This returns a {@code HourMinute} based on this one, with the amount
+     * in terms of the unit subtracted. If it is not possible to subtract the amount,
+     * because the unit is not supported or for some other reason, an exception is thrown.
+     * &lt;p&gt;
+     * This method is equivalent to {@link #plus(long, TemporalUnit)} with the amount negated.
+     * See that method for a full description of how addition, and thus subtraction, works.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param amountToSubtract  the amount of the unit to subtract from the result, may be negative
+     * @param unit  the unit of the amount to subtract, not null
+     * @return a {@code HourMinute} based on this hour-minute with the specified amount subtracted, not null
+     * @throws DateTimeException if the subtraction cannot be made
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public HourMinute minus(long amountToSubtract, TemporalUnit unit) {
+<span class="pc bpc" id="L812" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+    }
+
+    /**
+     * Returns a copy of this hour-minute with the specified period in hours subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param hoursToSubtract  the hours to subtract, may be negative
+     * @return a {@code HourMinute} based on this hour-minute with the hours subtracted, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    public HourMinute minusHours(long hoursToSubtract) {
+<span class="pc bpc" id="L825" title="1 of 2 branches missed.">        return (hoursToSubtract == Long.MIN_VALUE ? plusHours(Long.MAX_VALUE).plusHours(1) : plusHours(-hoursToSubtract));</span>
+    }
+
+    /**
+     * Returns a copy of this hour-minute with the specified period in minutes subtracted.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param minutesToSubtract  the minutes to subtract, may be negative
+     * @return a {@code HourMinute} based on this hour-minute with the minutes subtracted, not null
+     * @throws DateTimeException if the result exceeds the supported range
+     */
+    public HourMinute minusMinutes(long minutesToSubtract) {
+<span class="pc bpc" id="L838" title="1 of 2 branches missed.">        return (minutesToSubtract == Long.MIN_VALUE ? plusMinutes(Long.MAX_VALUE).plusMinutes(1) : plusMinutes(-minutesToSubtract));</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Queries this hour-minute using the specified query.
+     * &lt;p&gt;
+     * This queries this hour-minute using the specified query strategy object.
+     * The {@code TemporalQuery} object defines the logic to be used to
+     * obtain the result. Read the documentation of the query to understand
+     * what the result of this method will be.
+     * &lt;p&gt;
+     * The result of this method is obtained by invoking the
+     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
+     * specified query passing {@code this} as the argument.
+     *
+     * @param &lt;R&gt; the type of the result
+     * @param query  the query to invoke, not null
+     * @return the query result, null may be returned (defined by the query)
+     * @throws DateTimeException if unable to query (defined by the query)
+     * @throws ArithmeticException if numeric overflow occurs (defined by the query)
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    @Override
+    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L863" title="All 2 branches covered.">        if (query == TemporalQueries.localTime()) {</span>
+<span class="fc" id="L864">            return (R) toLocalTime();</span>
+<span class="fc bfc" id="L865" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L866">            return (R) MINUTES;</span>
+        }
+<span class="fc" id="L868">        return Temporal.super.query(query);</span>
+    }
+
+    /**
+     * Adjusts the specified temporal object to have this hour-minute.
+     * Note that if the target has a second or nanosecond field, that is not altered by this method.
+     * &lt;p&gt;
+     * This returns a temporal object of the same observable type as the input
+     * with the hour and minute changed to be the same as this.
+     * &lt;p&gt;
+     * The adjustment is equivalent to using {@link Temporal#with(TemporalField, long)}
+     * passing {@link ChronoField#MINUTE_OF_DAY} as the field.
+     * Note that this does not affect any second/nanosecond field in the target.
+     * &lt;p&gt;
+     * In most cases, it is clearer to reverse the calling pattern by using
+     * {@link Temporal#with(TemporalAdjuster)}:
+     * &lt;pre&gt;
+     *   // these two lines are equivalent, but the second approach is recommended
+     *   temporal = thisHourMinute.adjustInto(temporal);
+     *   temporal = temporal.with(thisHourMinute);
+     * &lt;/pre&gt;
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param temporal  the target object to be adjusted, not null
+     * @return the adjusted object, not null
+     * @throws DateTimeException if unable to make the adjustment
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public Temporal adjustInto(Temporal temporal) {
+<span class="fc" id="L899">        return temporal.with(MINUTE_OF_DAY, hour * MINUTES_PER_HOUR + minute);</span>
+    }
+
+    /**
+     * Calculates the amount of time until another hour-minute in terms of the specified unit.
+     * &lt;p&gt;
+     * This calculates the amount of time between two {@code HourMinute}
+     * objects in terms of a single {@code TemporalUnit}.
+     * The start and end points are {@code this} and the specified hour-minute.
+     * The result will be negative if the end is before the start.
+     * The {@code Temporal} passed to this method is converted to a
+     * {@code HourMinute} using {@link #from(TemporalAccessor)}.
+     * For example, the period in hours between two hour-minutes can be calculated
+     * using {@code startHourMinute.until(endHourMinute, YEARS)}.
+     * &lt;p&gt;
+     * The calculation is implemented in this method for {@link ChronoUnit}.
+     * The units {@code MINUTES}, {@code HOURS} and {@code HALF_DAYS} are supported.
+     * Other {@code ChronoUnit} values will throw an exception.
+     * &lt;p&gt;
+     * If the unit is not a {@code ChronoUnit}, then the result of this method
+     * is obtained by invoking {@code TemporalUnit.between(Temporal, Temporal)}
+     * passing {@code this} as the first argument and the converted input temporal
+     * as the second argument.
+     * &lt;p&gt;
+     * This instance is immutable and unaffected by this method call.
+     *
+     * @param endExclusive  the end date, exclusive, which is converted to a {@code HourMinute}, not null
+     * @param unit  the unit to measure the amount in, not null
+     * @return the amount of time between this hour-minute and the end hour-minute
+     * @throws DateTimeException if the amount cannot be calculated, or the end
+     *  temporal cannot be converted to a {@code HourMinute}
+     * @throws UnsupportedTemporalTypeException if the unit is not supported
+     * @throws ArithmeticException if numeric overflow occurs
+     */
+    @Override
+    public long until(Temporal endExclusive, TemporalUnit unit) {
+<span class="fc" id="L935">        HourMinute end = HourMinute.from(endExclusive);</span>
+<span class="fc" id="L936">        long minutesUntil = (end.hour * MINUTES_PER_HOUR + end.minute) - (hour * MINUTES_PER_HOUR + minute);  // no overflow</span>
+<span class="pc bpc" id="L937" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="pc bpc" id="L938" title="1 of 4 branches missed.">            switch ((ChronoUnit) unit) {</span>
+                case MINUTES:
+<span class="fc" id="L940">                    return minutesUntil;</span>
+                case HOURS:
+<span class="fc" id="L942">                    return minutesUntil / MINUTES_PER_HOUR;</span>
+                case HALF_DAYS:
+<span class="nc" id="L944">                    return minutesUntil / (12 * MINUTES_PER_HOUR);</span>
+                default:
+<span class="fc" id="L946">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+            }
+        }
+<span class="nc" id="L949">        return unit.between(this, end);</span>
+    }
+
+    /**
+     * Formats this hour-minute using the specified formatter.
+     * &lt;p&gt;
+     * This hour-minute will be passed to the formatter to produce a string.
+     *
+     * @param formatter  the formatter to use, not null
+     * @return the formatted hour-minute string, not null
+     * @throws DateTimeException if an error occurs during printing
+     */
+    public String format(DateTimeFormatter formatter) {
+<span class="fc" id="L962">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L963">        return formatter.format(this);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Combines this time with a date to create a {@code LocalDateTime}.
+     * &lt;p&gt;
+     * This returns a {@code LocalDateTime} formed from this time at the specified date.
+     * All possible combinations of date and time are valid.
+     *
+     * @param date  the date to combine with, not null
+     * @return the local date-time formed from this time and the specified date, not null
+     */
+    public LocalDateTime atDate(LocalDate date) {
+<span class="fc" id="L977">        return LocalDateTime.of(date, toLocalTime());</span>
+    }
+
+    /**
+     * Combines this time with an offset to create an {@code OffsetTime}.
+     * &lt;p&gt;
+     * This returns an {@code OffsetTime} formed from this time at the specified offset.
+     * All possible combinations of time and offset are valid.
+     *
+     * @param offset  the offset to combine with, not null
+     * @return the offset time formed from this time and the specified offset, not null
+     */
+    public OffsetTime atOffset(ZoneOffset offset) {
+<span class="fc" id="L990">        return OffsetTime.of(toLocalTime(), offset);</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the equivalent {@code LocalTime}.
+     * &lt;p&gt;
+     * This returns a {@code LocalTime} formed from this hour and minute.
+     *
+     * @return the equivalent local time, not null
+     */
+    public LocalTime toLocalTime() {
+<span class="fc" id="L1002">        return LocalTime.of(hour, minute);</span>
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Compares this hour-minute to another
+     * &lt;p&gt;
+     * The comparison is based first on the value of the hour, then on the value of the minute.
+     * It is &quot;consistent with equals&quot;, as defined by {@link Comparable}.
+     *
+     * @param other  the other hour-minute to compare to, not null
+     * @return the comparator value, negative if less, positive if greater
+     */
+    @Override
+    public int compareTo(HourMinute other) {
+<span class="fc" id="L1017">        int cmp = (hour - other.hour);</span>
+<span class="fc bfc" id="L1018" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L1019">            cmp = (minute - other.minute);</span>
+        }
+<span class="fc" id="L1021">        return cmp;</span>
+    }
+
+    /**
+     * Is this hour-minute after the specified hour-minute.
+     *
+     * @param other  the other hour-minute to compare to, not null
+     * @return true if this is after the specified hour-minute
+     */
+    public boolean isAfter(HourMinute other) {
+<span class="fc bfc" id="L1031" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+    }
+
+    /**
+     * Is this hour-minute before the specified hour-minute.
+     *
+     * @param other  the other hour-minute to compare to, not null
+     * @return true if this point is before the specified hour-minute
+     */
+    public boolean isBefore(HourMinute other) {
+<span class="fc bfc" id="L1041" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Checks if this hour-minute is equal to another hour-minute.
+     * &lt;p&gt;
+     * The comparison is based on the time-line position of the hour-minute.
+     *
+     * @param obj  the object to check, null returns false
+     * @return true if this is equal to the other hour-minute
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L1055" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L1056">            return true;</span>
+        }
+<span class="fc bfc" id="L1058" title="All 2 branches covered.">        if (obj instanceof HourMinute) {</span>
+<span class="fc" id="L1059">            HourMinute other = (HourMinute) obj;</span>
+<span class="pc bpc" id="L1060" title="1 of 4 branches missed.">            return hour == other.hour &amp;&amp; minute == other.minute;</span>
+        }
+<span class="fc" id="L1062">        return false;</span>
+    }
+
+    /**
+     * A hash code for this hour-minute.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L1072">        return hour * MINUTES_PER_HOUR + minute;</span>
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Outputs this hour-minute as a {@code String}, such as {@code 12:31}.
+     *
+     * @return a string representation of this hour-minute, not null
+     */
+    @Override
+    @ToString
+    public String toString() {
+<span class="fc" id="L1084">        return new StringBuilder(5)</span>
+<span class="fc bfc" id="L1085" title="All 2 branches covered.">                .append(hour &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hour)</span>
+<span class="fc bfc" id="L1086" title="All 2 branches covered.">                .append(minute &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minute)</span>
+<span class="fc" id="L1087">                .toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
