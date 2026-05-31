@@ -270,7 +270,7 @@ public final class YearHalf
      * Obtains an instance of {@code YearHalf} from a text string such as {@code 2007-H2}.
      * &lt;p&gt;
      * The string must represent a valid year-half.
-     * The format must be {@code uuuu-'Q'Q} where the 'Q' is case insensitive.
+     * The format must be {@code uuuu-'H'H} where the 'H' is case insensitive.
      * Years outside the range 0000 to 9999 must be prefixed by the plus or minus symbol.
      *
      * @param text  the text to parse such as &quot;2007-H2&quot;, not null
@@ -452,7 +452,7 @@ public final class YearHalf
      * &lt;p&gt;
      * If the field is a {@link ChronoField} then the query is implemented here.
      * The {@link #isSupported(TemporalField) supported fields} will return valid
-     * values based on this year-half,.
+     * values based on this year-half.
      * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
      * &lt;p&gt;
      * If the field is not a {@code ChronoField}, then the result of this method
@@ -974,14 +974,9 @@ public final class YearHalf
     /**
      * Queries this year-half using the specified query.
      * &lt;p&gt;
-     * This queries this year-half using the specified query strategy object.
-     * The {@code TemporalQuery} object defines the logic to be used to
-     * obtain the result. Read the documentation of the query to understand
-     * what the result of this method will be.
-     * &lt;p&gt;
-     * The result of this method is obtained by invoking the
-     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
-     * specified query passing {@code this} as the argument.
+     * {@link TemporalQueries#chronology()} and {@link TemporalQueries#precision()} are directly supported.
+     * Otherwise, the result of this method is obtained by invoking
+     * {@link TemporalAccessor#query(TemporalQuery)} on the parent interface.
      *
      * @param &lt;R&gt; the type of the result
      * @param query  the query to invoke, not null
@@ -992,12 +987,12 @@ public final class YearHalf
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L995" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L996">            return (R) IsoChronology.INSTANCE;</span>
-<span class="fc bfc" id="L997" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L998">            return (R) HALF_YEARS;</span>
+<span class="fc bfc" id="L990" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L991">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L992" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L993">            return (R) HALF_YEARS;</span>
         }
-<span class="fc" id="L1000">        return Temporal.super.query(query);</span>
+<span class="fc" id="L995">        return Temporal.super.query(query);</span>
     }
 
     /**
@@ -1028,12 +1023,12 @@ public final class YearHalf
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="pc bpc" id="L1031" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
-<span class="nc" id="L1032">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="pc bpc" id="L1026" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="nc" id="L1027">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
-<span class="fc" id="L1034">        long newProlepticHalf = getProlepticHalf();</span>
-<span class="fc" id="L1035">        long oldProlepticHalf = temporal.get(YEAR) * 2L + (temporal.get(HALF_OF_YEAR) - 1);</span>
-<span class="fc" id="L1036">        return temporal.plus(newProlepticHalf - oldProlepticHalf, HALF_YEARS);</span>
+<span class="fc" id="L1029">        long newProlepticHalf = getProlepticHalf();</span>
+<span class="fc" id="L1030">        long oldProlepticHalf = temporal.get(YEAR) * 2L + (temporal.get(HALF_OF_YEAR) - 1);</span>
+<span class="fc" id="L1031">        return temporal.plus(newProlepticHalf - oldProlepticHalf, HALF_YEARS);</span>
     }
 
     /**
@@ -1085,27 +1080,27 @@ public final class YearHalf
      */
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L1088">        YearHalf end = YearHalf.from(endExclusive);</span>
-<span class="fc" id="L1089">        long halvesUntil = end.getProlepticHalf() - getProlepticHalf();  // no overflow</span>
-<span class="fc bfc" id="L1090" title="All 2 branches covered.">        if (unit == HALF_YEARS) {</span>
-<span class="fc" id="L1091">            return halvesUntil;</span>
-<span class="pc bpc" id="L1092" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L1093" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
+<span class="fc" id="L1083">        YearHalf end = YearHalf.from(endExclusive);</span>
+<span class="fc" id="L1084">        long halvesUntil = end.getProlepticHalf() - getProlepticHalf();  // no overflow</span>
+<span class="fc bfc" id="L1085" title="All 2 branches covered.">        if (unit == HALF_YEARS) {</span>
+<span class="fc" id="L1086">            return halvesUntil;</span>
+<span class="pc bpc" id="L1087" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="pc bpc" id="L1088" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
-<span class="fc" id="L1095">                    return halvesUntil / 2;</span>
+<span class="fc" id="L1090">                    return halvesUntil / 2;</span>
                 case DECADES:
-<span class="nc" id="L1097">                    return halvesUntil / 20;</span>
+<span class="nc" id="L1092">                    return halvesUntil / 20;</span>
                 case CENTURIES:
-<span class="nc" id="L1099">                    return halvesUntil / 200;</span>
+<span class="nc" id="L1094">                    return halvesUntil / 200;</span>
                 case MILLENNIA:
-<span class="nc" id="L1101">                    return halvesUntil / 2000;</span>
+<span class="nc" id="L1096">                    return halvesUntil / 2000;</span>
                 case ERAS:
-<span class="nc" id="L1103">                    return end.getLong(ERA) - getLong(ERA);</span>
+<span class="nc" id="L1098">                    return end.getLong(ERA) - getLong(ERA);</span>
                 default:
-<span class="nc" id="L1105">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="nc" id="L1100">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
-<span class="nc" id="L1108">        return unit.between(this, end);</span>
+<span class="nc" id="L1103">        return unit.between(this, end);</span>
     }
 
     /**
@@ -1119,11 +1114,11 @@ public final class YearHalf
      * @throws IllegalArgumentException if end year-half is before this year-half
      */
     public Stream&lt;YearHalf&gt; halvesUntil(YearHalf endExclusive) {
-<span class="fc bfc" id="L1122" title="All 2 branches covered.">        if (endExclusive.isBefore(this)) {</span>
-<span class="fc" id="L1123">            throw new IllegalArgumentException(endExclusive + &quot; &lt; &quot; + this);</span>
+<span class="fc bfc" id="L1117" title="All 2 branches covered.">        if (endExclusive.isBefore(this)) {</span>
+<span class="fc" id="L1118">            throw new IllegalArgumentException(endExclusive + &quot; &lt; &quot; + this);</span>
         }
-<span class="fc" id="L1125">        long intervalLength = until(endExclusive, HALF_YEARS);</span>
-<span class="fc" id="L1126">        return LongStream.range(0, intervalLength).mapToObj(n -&gt; plusHalves(n));</span>
+<span class="fc" id="L1120">        long intervalLength = until(endExclusive, HALF_YEARS);</span>
+<span class="fc" id="L1121">        return LongStream.range(0, intervalLength).mapToObj(n -&gt; plusHalves(n));</span>
     }
 
     /**
@@ -1136,8 +1131,8 @@ public final class YearHalf
      * @throws DateTimeException if an error occurs during printing
      */
     public String format(DateTimeFormatter formatter) {
-<span class="fc" id="L1139">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L1140">        return formatter.format(this);</span>
+<span class="fc" id="L1134">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L1135">        return formatter.format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1159,15 +1154,15 @@ public final class YearHalf
      * @see #isValidDay(int)
      */
     public LocalDate atDay(int dayOfHalf) {
-<span class="fc" id="L1162">        ValueRange.of(1, lengthOfHalf()).checkValidValue(dayOfHalf, DAY_OF_HALF);</span>
-<span class="fc" id="L1163">        boolean leap = Year.isLeap(year);</span>
-<span class="fc" id="L1164">        Month month = half.firstMonth();</span>
-<span class="fc" id="L1165">        int dom = dayOfHalf;</span>
-<span class="fc bfc" id="L1166" title="All 2 branches covered.">        while (dom &gt; month.length(leap)) {</span>
-<span class="fc" id="L1167">            dom -= month.length(leap);</span>
-<span class="fc" id="L1168">            month = month.plus(1);</span>
+<span class="fc" id="L1157">        ValueRange.of(1, lengthOfHalf()).checkValidValue(dayOfHalf, DAY_OF_HALF);</span>
+<span class="fc" id="L1158">        boolean leap = Year.isLeap(year);</span>
+<span class="fc" id="L1159">        Month month = half.firstMonth();</span>
+<span class="fc" id="L1160">        int dom = dayOfHalf;</span>
+<span class="fc bfc" id="L1161" title="All 2 branches covered.">        while (dom &gt; month.length(leap)) {</span>
+<span class="fc" id="L1162">            dom -= month.length(leap);</span>
+<span class="fc" id="L1163">            month = month.plus(1);</span>
         }
-<span class="fc" id="L1170">        return LocalDate.of(year, month, dom);</span>
+<span class="fc" id="L1165">        return LocalDate.of(year, month, dom);</span>
     }
 
     /**
@@ -1185,8 +1180,8 @@ public final class YearHalf
      * @return the last valid date of this year-half, not null
      */
     public LocalDate atEndOfHalf() {
-<span class="fc" id="L1188">        Month month = half.firstMonth().plus(5);</span>
-<span class="fc" id="L1189">        return LocalDate.of(year, month, month.maxLength());</span>
+<span class="fc" id="L1183">        Month month = half.firstMonth().plus(5);</span>
+<span class="fc" id="L1184">        return LocalDate.of(year, month, month.maxLength());</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1201,11 +1196,11 @@ public final class YearHalf
      */
     @Override
     public int compareTo(YearHalf other) {
-<span class="fc" id="L1204">        int cmp = (year - other.year);</span>
-<span class="fc bfc" id="L1205" title="All 2 branches covered.">        if (cmp == 0) {</span>
-<span class="fc" id="L1206">            cmp = half.compareTo(other.half);</span>
+<span class="fc" id="L1199">        int cmp = (year - other.year);</span>
+<span class="fc bfc" id="L1200" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L1201">            cmp = half.compareTo(other.half);</span>
         }
-<span class="fc" id="L1208">        return cmp;</span>
+<span class="fc" id="L1203">        return cmp;</span>
     }
 
     /**
@@ -1215,7 +1210,7 @@ public final class YearHalf
      * @return true if this is after the specified year-half
      */
     public boolean isAfter(YearHalf other) {
-<span class="fc bfc" id="L1218" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L1213" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -1225,7 +1220,7 @@ public final class YearHalf
      * @return true if this point is before the specified year-half
      */
     public boolean isBefore(YearHalf other) {
-<span class="fc bfc" id="L1228" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L1223" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1239,14 +1234,14 @@ public final class YearHalf
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L1242" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L1243">            return true;</span>
+<span class="fc bfc" id="L1237" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L1238">            return true;</span>
         }
-<span class="fc bfc" id="L1245" title="All 2 branches covered.">        if (obj instanceof YearHalf) {</span>
-<span class="fc" id="L1246">            YearHalf other = (YearHalf) obj;</span>
-<span class="fc bfc" id="L1247" title="All 4 branches covered.">            return year == other.year &amp;&amp; half == other.half;</span>
+<span class="fc bfc" id="L1240" title="All 2 branches covered.">        if (obj instanceof YearHalf) {</span>
+<span class="fc" id="L1241">            YearHalf other = (YearHalf) obj;</span>
+<span class="fc bfc" id="L1242" title="All 4 branches covered.">            return year == other.year &amp;&amp; half == other.half;</span>
         }
-<span class="fc" id="L1249">        return false;</span>
+<span class="fc" id="L1244">        return false;</span>
     }
 
     /**
@@ -1256,7 +1251,7 @@ public final class YearHalf
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1259">        return year ^ (half.getValue() &lt;&lt; 28);</span>
+<span class="fc" id="L1254">        return year ^ (half.getValue() &lt;&lt; 28);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1268,21 +1263,21 @@ public final class YearHalf
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1271">        int absYear = Math.abs(year);</span>
-<span class="fc" id="L1272">        StringBuilder buf = new StringBuilder(10);</span>
-<span class="fc bfc" id="L1273" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
-<span class="fc bfc" id="L1274" title="All 2 branches covered.">            if (year &lt; 0) {</span>
-<span class="fc" id="L1275">                buf.append(year - 10000).deleteCharAt(1);</span>
+<span class="fc" id="L1266">        int absYear = Math.abs(year);</span>
+<span class="fc" id="L1267">        StringBuilder buf = new StringBuilder(10);</span>
+<span class="fc bfc" id="L1268" title="All 2 branches covered.">        if (absYear &lt; 1000) {</span>
+<span class="fc bfc" id="L1269" title="All 2 branches covered.">            if (year &lt; 0) {</span>
+<span class="fc" id="L1270">                buf.append(year - 10000).deleteCharAt(1);</span>
             } else {
-<span class="fc" id="L1277">                buf.append(year + 10000).deleteCharAt(0);</span>
+<span class="fc" id="L1272">                buf.append(year + 10000).deleteCharAt(0);</span>
             }
         } else {
-<span class="fc bfc" id="L1280" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
-<span class="fc" id="L1281">                buf.append('+');</span>
+<span class="fc bfc" id="L1275" title="All 2 branches covered.">            if (year &gt; 9999) {</span>
+<span class="fc" id="L1276">                buf.append('+');</span>
             }
-<span class="fc" id="L1283">            buf.append(year);</span>
+<span class="fc" id="L1278">            buf.append(year);</span>
         }
-<span class="fc" id="L1285">        return buf.append('-').append(half).toString();</span>
+<span class="fc" id="L1280">        return buf.append('-').append(half).toString();</span>
     }
 
 }

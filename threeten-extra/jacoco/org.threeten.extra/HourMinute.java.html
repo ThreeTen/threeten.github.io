@@ -404,7 +404,7 @@ public final class HourMinute
      * &lt;p&gt;
      * If the field is a {@link ChronoField} then the query is implemented here.
      * The {@link #isSupported(TemporalField) supported fields} will return valid
-     * values based on this hour-minute,.
+     * values based on this hour-minute.
      * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
      * &lt;p&gt;
      * If the field is not a {@code ChronoField}, then the result of this method
@@ -674,13 +674,13 @@ public final class HourMinute
      * The supported fields behave as follows:
      * &lt;ul&gt;
      * &lt;li&gt;{@code MINUTES} -
-     *  Returns a {@code LocalTime} with the specified number of minutes added.
+     *  Returns an {@code HourMinute} with the specified number of minutes added.
      *  This is equivalent to {@link #plusMinutes(long)}.
      * &lt;li&gt;{@code HOURS} -
-     *  Returns a {@code LocalTime} with the specified number of hours added.
+     *  Returns an {@code HourMinute} with the specified number of hours added.
      *  This is equivalent to {@link #plusHours(long)}.
      * &lt;li&gt;{@code HALF_DAYS} -
-     *  Returns a {@code LocalTime} with the specified number of half-days added.
+     *  Returns an {@code HourMinute} with the specified number of half-days added.
      *  This is equivalent to {@link #plusHours(long)} with the amount
      *  multiplied by 12.
      * &lt;/ul&gt;
@@ -842,14 +842,9 @@ public final class HourMinute
     /**
      * Queries this hour-minute using the specified query.
      * &lt;p&gt;
-     * This queries this hour-minute using the specified query strategy object.
-     * The {@code TemporalQuery} object defines the logic to be used to
-     * obtain the result. Read the documentation of the query to understand
-     * what the result of this method will be.
-     * &lt;p&gt;
-     * The result of this method is obtained by invoking the
-     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
-     * specified query passing {@code this} as the argument.
+     * {@link TemporalQueries#localTime()} and {@link TemporalQueries#precision()} are directly supported.
+     * Otherwise, the result of this method is obtained by invoking
+     * {@link TemporalAccessor#query(TemporalQuery)} on the parent interface.
      *
      * @param &lt;R&gt; the type of the result
      * @param query  the query to invoke, not null
@@ -860,12 +855,12 @@ public final class HourMinute
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L863" title="All 2 branches covered.">        if (query == TemporalQueries.localTime()) {</span>
-<span class="fc" id="L864">            return (R) toLocalTime();</span>
-<span class="fc bfc" id="L865" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L866">            return (R) MINUTES;</span>
+<span class="fc bfc" id="L858" title="All 2 branches covered.">        if (query == TemporalQueries.localTime()) {</span>
+<span class="fc" id="L859">            return (R) toLocalTime();</span>
+<span class="fc bfc" id="L860" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L861">            return (R) MINUTES;</span>
         }
-<span class="fc" id="L868">        return Temporal.super.query(query);</span>
+<span class="fc" id="L863">        return Temporal.super.query(query);</span>
     }
 
     /**
@@ -896,7 +891,7 @@ public final class HourMinute
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L899">        return temporal.with(MINUTE_OF_DAY, hour * MINUTES_PER_HOUR + minute);</span>
+<span class="fc" id="L894">        return temporal.with(MINUTE_OF_DAY, hour * MINUTES_PER_HOUR + minute);</span>
     }
 
     /**
@@ -932,21 +927,21 @@ public final class HourMinute
      */
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L935">        HourMinute end = HourMinute.from(endExclusive);</span>
-<span class="fc" id="L936">        long minutesUntil = (end.hour * MINUTES_PER_HOUR + end.minute) - (hour * MINUTES_PER_HOUR + minute);  // no overflow</span>
-<span class="pc bpc" id="L937" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L938" title="1 of 4 branches missed.">            switch ((ChronoUnit) unit) {</span>
+<span class="fc" id="L930">        HourMinute end = HourMinute.from(endExclusive);</span>
+<span class="fc" id="L931">        long minutesUntil = (end.hour * MINUTES_PER_HOUR + end.minute) - (hour * MINUTES_PER_HOUR + minute);  // no overflow</span>
+<span class="pc bpc" id="L932" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="pc bpc" id="L933" title="1 of 4 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case MINUTES:
-<span class="fc" id="L940">                    return minutesUntil;</span>
+<span class="fc" id="L935">                    return minutesUntil;</span>
                 case HOURS:
-<span class="fc" id="L942">                    return minutesUntil / MINUTES_PER_HOUR;</span>
+<span class="fc" id="L937">                    return minutesUntil / MINUTES_PER_HOUR;</span>
                 case HALF_DAYS:
-<span class="nc" id="L944">                    return minutesUntil / (12 * MINUTES_PER_HOUR);</span>
+<span class="nc" id="L939">                    return minutesUntil / (12 * MINUTES_PER_HOUR);</span>
                 default:
-<span class="fc" id="L946">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L941">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
-<span class="nc" id="L949">        return unit.between(this, end);</span>
+<span class="nc" id="L944">        return unit.between(this, end);</span>
     }
 
     /**
@@ -959,8 +954,8 @@ public final class HourMinute
      * @throws DateTimeException if an error occurs during printing
      */
     public String format(DateTimeFormatter formatter) {
-<span class="fc" id="L962">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L963">        return formatter.format(this);</span>
+<span class="fc" id="L957">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L958">        return formatter.format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -974,7 +969,7 @@ public final class HourMinute
      * @return the local date-time formed from this time and the specified date, not null
      */
     public LocalDateTime atDate(LocalDate date) {
-<span class="fc" id="L977">        return LocalDateTime.of(date, toLocalTime());</span>
+<span class="fc" id="L972">        return LocalDateTime.of(date, toLocalTime());</span>
     }
 
     /**
@@ -987,7 +982,7 @@ public final class HourMinute
      * @return the offset time formed from this time and the specified offset, not null
      */
     public OffsetTime atOffset(ZoneOffset offset) {
-<span class="fc" id="L990">        return OffsetTime.of(toLocalTime(), offset);</span>
+<span class="fc" id="L985">        return OffsetTime.of(toLocalTime(), offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -999,7 +994,7 @@ public final class HourMinute
      * @return the equivalent local time, not null
      */
     public LocalTime toLocalTime() {
-<span class="fc" id="L1002">        return LocalTime.of(hour, minute);</span>
+<span class="fc" id="L997">        return LocalTime.of(hour, minute);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -1014,11 +1009,11 @@ public final class HourMinute
      */
     @Override
     public int compareTo(HourMinute other) {
-<span class="fc" id="L1017">        int cmp = (hour - other.hour);</span>
-<span class="fc bfc" id="L1018" title="All 2 branches covered.">        if (cmp == 0) {</span>
-<span class="fc" id="L1019">            cmp = (minute - other.minute);</span>
+<span class="fc" id="L1012">        int cmp = (hour - other.hour);</span>
+<span class="fc bfc" id="L1013" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L1014">            cmp = (minute - other.minute);</span>
         }
-<span class="fc" id="L1021">        return cmp;</span>
+<span class="fc" id="L1016">        return cmp;</span>
     }
 
     /**
@@ -1028,7 +1023,7 @@ public final class HourMinute
      * @return true if this is after the specified hour-minute
      */
     public boolean isAfter(HourMinute other) {
-<span class="fc bfc" id="L1031" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
+<span class="fc bfc" id="L1026" title="All 2 branches covered.">        return compareTo(other) &gt; 0;</span>
     }
 
     /**
@@ -1038,7 +1033,7 @@ public final class HourMinute
      * @return true if this point is before the specified hour-minute
      */
     public boolean isBefore(HourMinute other) {
-<span class="fc bfc" id="L1041" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
+<span class="fc bfc" id="L1036" title="All 2 branches covered.">        return compareTo(other) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1052,14 +1047,14 @@ public final class HourMinute
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L1055" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L1056">            return true;</span>
+<span class="fc bfc" id="L1050" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L1051">            return true;</span>
         }
-<span class="fc bfc" id="L1058" title="All 2 branches covered.">        if (obj instanceof HourMinute) {</span>
-<span class="fc" id="L1059">            HourMinute other = (HourMinute) obj;</span>
-<span class="pc bpc" id="L1060" title="1 of 4 branches missed.">            return hour == other.hour &amp;&amp; minute == other.minute;</span>
+<span class="fc bfc" id="L1053" title="All 2 branches covered.">        if (obj instanceof HourMinute) {</span>
+<span class="fc" id="L1054">            HourMinute other = (HourMinute) obj;</span>
+<span class="pc bpc" id="L1055" title="1 of 4 branches missed.">            return hour == other.hour &amp;&amp; minute == other.minute;</span>
         }
-<span class="fc" id="L1062">        return false;</span>
+<span class="fc" id="L1057">        return false;</span>
     }
 
     /**
@@ -1069,7 +1064,7 @@ public final class HourMinute
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1072">        return hour * MINUTES_PER_HOUR + minute;</span>
+<span class="fc" id="L1067">        return hour * MINUTES_PER_HOUR + minute;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1081,10 +1076,10 @@ public final class HourMinute
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1084">        return new StringBuilder(5)</span>
-<span class="fc bfc" id="L1085" title="All 2 branches covered.">                .append(hour &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hour)</span>
-<span class="fc bfc" id="L1086" title="All 2 branches covered.">                .append(minute &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minute)</span>
-<span class="fc" id="L1087">                .toString();</span>
+<span class="fc" id="L1079">        return new StringBuilder(5)</span>
+<span class="fc bfc" id="L1080" title="All 2 branches covered.">                .append(hour &lt; 10 ? &quot;0&quot; : &quot;&quot;).append(hour)</span>
+<span class="fc bfc" id="L1081" title="All 2 branches covered.">                .append(minute &lt; 10 ? &quot;:0&quot; : &quot;:&quot;).append(minute)</span>
+<span class="fc" id="L1082">                .toString();</span>
     }
 
 }

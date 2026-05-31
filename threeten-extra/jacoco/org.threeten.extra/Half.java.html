@@ -175,7 +175,7 @@ import java.util.Locale;
 
     //-----------------------------------------------------------------------
     /**
-     * Gets the textual representation, such as 'H1' or '4th half'.
+     * Gets the textual representation, such as 'H1' or '2nd half'.
      * &lt;p&gt;
      * This returns the textual name used to identify the half-of-year,
      * suitable for presentation to the user.
@@ -362,7 +362,7 @@ import java.util.Locale;
      * H2 has 184 days.
      *
      * @param leapYear  true if the length is required for a leap year
-     * @return the length of this month in days, 181, 182 or 184
+     * @return the length of this half in days, 181, 182 or 184
      */
     public int length(boolean leapYear) {
 <span class="fc bfc" id="L368" title="All 4 branches covered.">        return this == H1 ? (leapYear ? 182 : 181) : 184;</span>
@@ -385,14 +385,9 @@ import java.util.Locale;
     /**
      * Queries this half-of-year using the specified query.
      * &lt;p&gt;
-     * This queries this half-of-year using the specified query strategy object.
-     * The {@code TemporalQuery} object defines the logic to be used to
-     * obtain the result. Read the documentation of the query to understand
-     * what the result of this method will be.
-     * &lt;p&gt;
-     * The result of this method is obtained by invoking the
-     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
-     * specified query passing {@code this} as the argument.
+     * {@link TemporalQueries#chronology()} and {@link TemporalQueries#precision()} are directly supported.
+     * Otherwise, the result of this method is obtained by invoking
+     * {@link TemporalAccessor#query(TemporalQuery)} on the parent interface.
      *
      * @param &lt;R&gt; the type of the result
      * @param query  the query to invoke, not null
@@ -403,12 +398,12 @@ import java.util.Locale;
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L407">            return (R) IsoChronology.INSTANCE;</span>
-<span class="fc bfc" id="L408" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L409">            return (R) HALF_YEARS;</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L402">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L404">            return (R) HALF_YEARS;</span>
         }
-<span class="fc" id="L411">        return TemporalAccessor.super.query(query);</span>
+<span class="fc" id="L406">        return TemporalAccessor.super.query(query);</span>
     }
 
     /**
@@ -445,10 +440,10 @@ import java.util.Locale;
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="pc bpc" id="L448" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
-<span class="nc" id="L449">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="nc" id="L444">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
-<span class="fc" id="L451">        return temporal.with(HALF_OF_YEAR, getValue());</span>
+<span class="fc" id="L446">        return temporal.with(HALF_OF_YEAR, getValue());</span>
     }
 
 }

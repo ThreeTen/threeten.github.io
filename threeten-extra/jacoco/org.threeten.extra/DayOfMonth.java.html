@@ -44,6 +44,7 @@ import java.time.ZoneId;
 import java.time.chrono.Chronology;
 import java.time.chrono.IsoChronology;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjuster;
@@ -81,12 +82,12 @@ public final class DayOfMonth
     /**
      * Cache of singleton instances.
      */
-<span class="fc" id="L84">    private static final DayOfMonth[] VALUES = new DayOfMonth[31];</span>
+<span class="fc" id="L85">    private static final DayOfMonth[] VALUES = new DayOfMonth[31];</span>
     static {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (int i = 0; i &lt; 31; i++) {</span>
-<span class="fc" id="L87">            VALUES[i] = new DayOfMonth(i + 1);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (int i = 0; i &lt; 31; i++) {</span>
+<span class="fc" id="L88">            VALUES[i] = new DayOfMonth(i + 1);</span>
         }
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L90">    }</span>
 
     /**
      * The day-of-month being represented, from 1 to 31.
@@ -107,7 +108,7 @@ public final class DayOfMonth
      * @return the current day-of-month using the system clock and default time-zone, not null
      */
     public static DayOfMonth now() {
-<span class="fc" id="L110">        return now(Clock.systemDefaultZone());</span>
+<span class="fc" id="L111">        return now(Clock.systemDefaultZone());</span>
     }
 
     /**
@@ -123,7 +124,7 @@ public final class DayOfMonth
      * @return the current day-of-month using the system clock, not null
      */
     public static DayOfMonth now(ZoneId zone) {
-<span class="fc" id="L126">        return now(Clock.system(zone));</span>
+<span class="fc" id="L127">        return now(Clock.system(zone));</span>
     }
 
     /**
@@ -137,8 +138,8 @@ public final class DayOfMonth
      * @return the current day-of-month, not null
      */
     public static DayOfMonth now(Clock clock) {
-<span class="fc" id="L140">        final LocalDate now = LocalDate.now(clock);  // called once</span>
-<span class="fc" id="L141">        return DayOfMonth.of(now.getDayOfMonth());</span>
+<span class="fc" id="L141">        final LocalDate now = LocalDate.now(clock);  // called once</span>
+<span class="fc" id="L142">        return DayOfMonth.of(now.getDayOfMonth());</span>
     }
 
     //-----------------------------------------------------------------------
@@ -153,9 +154,9 @@ public final class DayOfMonth
      */
     public static DayOfMonth of(int dayOfMonth) {
         try {
-<span class="fc" id="L156">            return VALUES[dayOfMonth - 1];</span>
-<span class="fc" id="L157">        } catch (IndexOutOfBoundsException ex) {</span>
-<span class="fc" id="L158">            throw new DateTimeException(&quot;Invalid value for DayOfMonth: &quot; + dayOfMonth);</span>
+<span class="fc" id="L157">            return VALUES[dayOfMonth - 1];</span>
+<span class="fc" id="L158">        } catch (IndexOutOfBoundsException ex) {</span>
+<span class="fc" id="L159">            throw new DateTimeException(&quot;Invalid value for DayOfMonth: &quot; + dayOfMonth);</span>
         }
     }
 
@@ -179,18 +180,18 @@ public final class DayOfMonth
      * @throws DateTimeException if unable to convert to a {@code DayOfMonth}
      */
     public static DayOfMonth from(TemporalAccessor temporal) {
-<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (temporal instanceof DayOfMonth) {</span>
-<span class="fc" id="L183">            return (DayOfMonth) temporal;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (temporal instanceof DayOfMonth) {</span>
+<span class="fc" id="L184">            return (DayOfMonth) temporal;</span>
         }
-<span class="fc" id="L185">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
+<span class="fc" id="L186">        Objects.requireNonNull(temporal, &quot;temporal&quot;);</span>
         try {
-<span class="fc bfc" id="L187" title="All 2 branches covered.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
-<span class="fc" id="L188">                temporal = LocalDate.from(temporal);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            if (IsoChronology.INSTANCE.equals(Chronology.from(temporal)) == false) {</span>
+<span class="fc" id="L189">                temporal = LocalDate.from(temporal);</span>
             }
-<span class="fc" id="L190">            return of(temporal.get(DAY_OF_MONTH));</span>
-<span class="fc" id="L191">        } catch (DateTimeException ex) {</span>
-<span class="fc" id="L192">            throw new DateTimeException(&quot;Unable to obtain DayOfMonth from TemporalAccessor: &quot; +</span>
-<span class="fc" id="L193">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+<span class="fc" id="L191">            return of(temporal.get(DAY_OF_MONTH));</span>
+<span class="fc" id="L192">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L193">            throw new DateTimeException(&quot;Unable to obtain DayOfMonth from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L194">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
         }
     }
 
@@ -200,9 +201,9 @@ public final class DayOfMonth
      *
      * @param dayOfMonth  the day-of-month to represent
      */
-<span class="fc" id="L203">    private DayOfMonth(int dayOfMonth) {</span>
-<span class="fc" id="L204">        this.day = dayOfMonth;</span>
-<span class="fc" id="L205">    }</span>
+<span class="fc" id="L204">    private DayOfMonth(int dayOfMonth) {</span>
+<span class="fc" id="L205">        this.day = dayOfMonth;</span>
+<span class="fc" id="L206">    }</span>
 
     /**
      * Validates the input.
@@ -210,7 +211,7 @@ public final class DayOfMonth
      * @return the valid object, not null
      */
     private Object readResolve() {
-<span class="fc" id="L213">        return of(day);</span>
+<span class="fc" id="L214">        return of(day);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -220,7 +221,7 @@ public final class DayOfMonth
      * @return the day-of-month, from 1 to 31
      */
     public int getValue() {
-<span class="fc" id="L223">        return day;</span>
+<span class="fc" id="L224">        return day;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -249,10 +250,10 @@ public final class DayOfMonth
      */
     @Override
     public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L253" title="All 2 branches covered.">            return field == DAY_OF_MONTH;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">            return field == DAY_OF_MONTH;</span>
         }
-<span class="fc bfc" id="L255" title="All 4 branches covered.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="fc bfc" id="L256" title="All 4 branches covered.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -281,7 +282,7 @@ public final class DayOfMonth
      */
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc" id="L284">        return TemporalAccessor.super.range(field);</span>
+<span class="fc" id="L285">        return TemporalAccessor.super.range(field);</span>
     }
 
     /**
@@ -312,7 +313,7 @@ public final class DayOfMonth
      */
     @Override
     public int get(TemporalField field) {
-<span class="fc" id="L315">        return TemporalAccessor.super.get(field);</span>
+<span class="fc" id="L316">        return TemporalAccessor.super.get(field);</span>
     }
 
     /**
@@ -340,12 +341,12 @@ public final class DayOfMonth
      */
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L343" title="All 2 branches covered.">        if (field == DAY_OF_MONTH) {</span>
-<span class="fc" id="L344">            return day;</span>
-<span class="fc bfc" id="L345" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L346">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">        if (field == DAY_OF_MONTH) {</span>
+<span class="fc" id="L345">            return day;</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L347">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="fc" id="L348">        return field.getFrom(this);</span>
+<span class="fc" id="L349">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -359,21 +360,16 @@ public final class DayOfMonth
      * @return true if the year and month are valid for this day
      */
     public boolean isValidYearMonth(YearMonth yearMonth) {
-<span class="fc bfc" id="L362" title="All 4 branches covered.">        return yearMonth != null &amp;&amp; yearMonth.isValidDay(day);</span>
+<span class="fc bfc" id="L363" title="All 4 branches covered.">        return yearMonth != null &amp;&amp; yearMonth.isValidDay(day);</span>
     }
 
     //-----------------------------------------------------------------------
     /**
      * Queries this day-of-month using the specified query.
      * &lt;p&gt;
-     * This queries this day-of-month using the specified query strategy object.
-     * The {@code TemporalQuery} object defines the logic to be used to
-     * obtain the result. Read the documentation of the query to understand
-     * what the result of this method will be.
-     * &lt;p&gt;
-     * The result of this method is obtained by invoking the
-     * {@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
-     * specified query passing {@code this} as the argument.
+     * {@link TemporalQueries#chronology()} and {@link TemporalQueries#precision()} are directly supported.
+     * Otherwise, the result of this method is obtained by invoking
+     * {@link TemporalAccessor#query(TemporalQuery)} on the parent interface.
      *
      * @param &lt;R&gt; the type of the result
      * @param query  the query to invoke, not null
@@ -384,10 +380,12 @@ public final class DayOfMonth
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
     public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L387" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L388">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L384">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L386">            return (R) ChronoUnit.DAYS;</span>
         }
-<span class="fc" id="L390">        return TemporalAccessor.super.query(query);</span>
+<span class="fc" id="L388">        return TemporalAccessor.super.query(query);</span>
     }
 
     /**
@@ -418,10 +416,10 @@ public final class DayOfMonth
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="fc bfc" id="L421" title="All 2 branches covered.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
-<span class="fc" id="L422">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
+<span class="fc" id="L420">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
-<span class="fc" id="L424">        return temporal.with(DAY_OF_MONTH, day);</span>
+<span class="fc" id="L422">        return temporal.with(DAY_OF_MONTH, day);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -442,7 +440,7 @@ public final class DayOfMonth
      * @return the year-month formed from this year and the specified month, not null
      */
     public MonthDay atMonth(Month month) {
-<span class="fc" id="L445">        return MonthDay.of(month, Math.min(day, month.maxLength()));</span>
+<span class="fc" id="L443">        return MonthDay.of(month, Math.min(day, month.maxLength()));</span>
     }
 
     /**
@@ -463,7 +461,7 @@ public final class DayOfMonth
      * @throws DateTimeException if the month is invalid
      */
     public MonthDay atMonth(int month) {
-<span class="fc" id="L466">        return atMonth(Month.of(month));</span>
+<span class="fc" id="L464">        return atMonth(Month.of(month));</span>
     }
 
     /**
@@ -478,7 +476,7 @@ public final class DayOfMonth
      * @return the local date formed from this year and the specified year-month, not null
      */
     public LocalDate atYearMonth(YearMonth yearMonth) {
-<span class="fc" id="L481">        return yearMonth.atDay(Math.min(day, yearMonth.lengthOfMonth()));</span>
+<span class="fc" id="L479">        return yearMonth.atDay(Math.min(day, yearMonth.lengthOfMonth()));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -493,7 +491,7 @@ public final class DayOfMonth
      */
     @Override
     public int compareTo(DayOfMonth other) {
-<span class="fc" id="L496">        return day - other.day;</span>
+<span class="fc" id="L494">        return day - other.day;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -505,13 +503,13 @@ public final class DayOfMonth
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L509">            return true;</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L507">            return true;</span>
         }
-<span class="fc bfc" id="L511" title="All 2 branches covered.">        if (obj instanceof DayOfMonth) {</span>
-<span class="pc bpc" id="L512" title="1 of 2 branches missed.">            return day == ((DayOfMonth) obj).day;</span>
+<span class="fc bfc" id="L509" title="All 2 branches covered.">        if (obj instanceof DayOfMonth) {</span>
+<span class="pc bpc" id="L510" title="1 of 2 branches missed.">            return day == ((DayOfMonth) obj).day;</span>
         }
-<span class="fc" id="L514">        return false;</span>
+<span class="fc" id="L512">        return false;</span>
     }
 
     /**
@@ -521,7 +519,7 @@ public final class DayOfMonth
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L524">        return day;</span>
+<span class="fc" id="L522">        return day;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -532,7 +530,7 @@ public final class DayOfMonth
      */
     @Override
     public String toString() {
-<span class="fc" id="L535">        return &quot;DayOfMonth:&quot; + day;</span>
+<span class="fc" id="L533">        return &quot;DayOfMonth:&quot; + day;</span>
     }
 
 }

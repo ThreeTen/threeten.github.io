@@ -1,4 +1,3 @@
-module:org.threeten.extra
 org.threeten.extra
 org.threeten.extra.chrono
 org.threeten.extra.scale

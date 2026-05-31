@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"org.threeten.extra"}]
+moduleSearchIndex = [];updateSearchResults();
