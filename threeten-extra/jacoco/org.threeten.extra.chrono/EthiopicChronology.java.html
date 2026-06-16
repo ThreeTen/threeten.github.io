@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 
 /**
  * The Ethiopic calendar system.
@@ -62,7 +63,7 @@ import java.util.Map;
  *  For the previous era the year increases from one as time goes backwards.
  * &lt;li&gt;proleptic-year - The proleptic year is the same as the year-of-era for the
  *  current era. For the previous era, years have zero, then negative values.
- * &lt;li&gt;month-of-year - There are 13 months in a Ethiopic year, numbered from 1 to 13.
+ * &lt;li&gt;month-of-year - There are 13 months in an Ethiopic year, numbered from 1 to 13.
  * &lt;li&gt;day-of-month - There are 30 days in each of the first 12 Ethiopic months, numbered 1 to 30.
  *  The 13th month has 5 days, or 6 in a leap year, numbered 1 to 5 or 1 to 6.
  * &lt;li&gt;day-of-year - There are 365 days in a standard Ethiopic year and 366 in a leap year.
@@ -80,7 +81,7 @@ public final class EthiopicChronology
     /**
      * Singleton instance for the Ethiopic chronology.
      */
-<span class="fc" id="L83">    public static final EthiopicChronology INSTANCE = new EthiopicChronology();</span>
+<span class="fc" id="L84">    public static final EthiopicChronology INSTANCE = new EthiopicChronology();</span>
 
     /**
      * Serialization version.
@@ -92,8 +93,8 @@ public final class EthiopicChronology
      * @deprecated Use the singleton {@link #INSTANCE} instead.
      */
     @Deprecated
-<span class="fc" id="L95">    public EthiopicChronology() {</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L96">    public EthiopicChronology() {</span>
+<span class="fc" id="L97">    }</span>
 
     /**
      * Resolve singleton.
@@ -101,7 +102,7 @@ public final class EthiopicChronology
      * @return the singleton instance, not null
      */
     private Object readResolve() {
-<span class="nc" id="L104">        return INSTANCE;</span>
+<span class="nc" id="L105">        return INSTANCE;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -116,7 +117,7 @@ public final class EthiopicChronology
      */
     @Override
     public String getId() {
-<span class="fc" id="L119">        return &quot;Ethiopic&quot;;</span>
+<span class="fc" id="L120">        return &quot;Ethiopic&quot;;</span>
     }
 
     /**
@@ -133,7 +134,7 @@ public final class EthiopicChronology
      */
     @Override
     public String getCalendarType() {
-<span class="fc" id="L136">        return &quot;ethiopic&quot;;</span>
+<span class="fc" id="L137">        return &quot;ethiopic&quot;;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -151,7 +152,7 @@ public final class EthiopicChronology
      */
     @Override
     public EthiopicDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
-<span class="fc" id="L154">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+<span class="fc" id="L155">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
     }
 
     /**
@@ -166,7 +167,7 @@ public final class EthiopicChronology
      */
     @Override
     public EthiopicDate date(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L169">        return EthiopicDate.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L170">        return EthiopicDate.of(prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -182,7 +183,7 @@ public final class EthiopicChronology
      */
     @Override
     public EthiopicDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
-<span class="fc" id="L185">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+<span class="fc" id="L186">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
     }
 
     /**
@@ -196,7 +197,7 @@ public final class EthiopicChronology
      */
     @Override
     public EthiopicDate dateYearDay(int prolepticYear, int dayOfYear) {
-<span class="fc" id="L199">        return EthiopicDate.ofYearDay(prolepticYear, dayOfYear);</span>
+<span class="fc" id="L200">        return EthiopicDate.ofYearDay(prolepticYear, dayOfYear);</span>
     }
 
     /**
@@ -208,7 +209,7 @@ public final class EthiopicChronology
      */
     @Override  // override with covariant return type
     public EthiopicDate dateEpochDay(long epochDay) {
-<span class="fc" id="L211">        return EthiopicDate.ofEpochDay(epochDay);</span>
+<span class="fc" id="L212">        return EthiopicDate.ofEpochDay(epochDay);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -226,7 +227,7 @@ public final class EthiopicChronology
      */
     @Override  // override with covariant return type
     public EthiopicDate dateNow() {
-<span class="nc" id="L229">        return EthiopicDate.now();</span>
+<span class="nc" id="L230">        return EthiopicDate.now();</span>
     }
 
     /**
@@ -244,7 +245,7 @@ public final class EthiopicChronology
      */
     @Override  // override with covariant return type
     public EthiopicDate dateNow(ZoneId zone) {
-<span class="nc" id="L247">        return EthiopicDate.now(zone);</span>
+<span class="nc" id="L248">        return EthiopicDate.now(zone);</span>
     }
 
     /**
@@ -260,12 +261,12 @@ public final class EthiopicChronology
      */
     @Override  // override with covariant return type
     public EthiopicDate dateNow(Clock clock) {
-<span class="nc" id="L263">        return EthiopicDate.now(clock);</span>
+<span class="nc" id="L264">        return EthiopicDate.now(clock);</span>
     }
 
     //-------------------------------------------------------------------------
     /**
-     * Obtains a Ethiopic local date from another date-time object.
+     * Obtains an Ethiopic local date from another date-time object.
      *
      * @param temporal  the date-time object to convert, not null
      * @return the Ethiopic local date, not null
@@ -273,11 +274,11 @@ public final class EthiopicChronology
      */
     @Override
     public EthiopicDate date(TemporalAccessor temporal) {
-<span class="fc" id="L276">        return EthiopicDate.from(temporal);</span>
+<span class="fc" id="L277">        return EthiopicDate.from(temporal);</span>
     }
 
     /**
-     * Obtains a Ethiopic local date-time from another date-time object.
+     * Obtains an Ethiopic local date-time from another date-time object.
      *
      * @param temporal  the date-time object to convert, not null
      * @return the Ethiopic local date-time, not null
@@ -286,11 +287,11 @@ public final class EthiopicChronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;EthiopicDate&gt; localDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L289">        return (ChronoLocalDateTime&lt;EthiopicDate&gt;) super.localDateTime(temporal);</span>
+<span class="nc" id="L290">        return (ChronoLocalDateTime&lt;EthiopicDate&gt;) super.localDateTime(temporal);</span>
     }
 
     /**
-     * Obtains a Ethiopic zoned date-time from another date-time object.
+     * Obtains an Ethiopic zoned date-time from another date-time object.
      *
      * @param temporal  the date-time object to convert, not null
      * @return the Ethiopic zoned date-time, not null
@@ -299,11 +300,11 @@ public final class EthiopicChronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;EthiopicDate&gt; zonedDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L302">        return (ChronoZonedDateTime&lt;EthiopicDate&gt;) super.zonedDateTime(temporal);</span>
+<span class="nc" id="L303">        return (ChronoZonedDateTime&lt;EthiopicDate&gt;) super.zonedDateTime(temporal);</span>
     }
 
     /**
-     * Obtains a Ethiopic zoned date-time in this chronology from an {@code Instant}.
+     * Obtains an Ethiopic zoned date-time in this chronology from an {@code Instant}.
      *
      * @param instant  the instant to create the date-time from, not null
      * @param zone  the time-zone, not null
@@ -313,32 +314,32 @@ public final class EthiopicChronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;EthiopicDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
-<span class="nc" id="L316">        return (ChronoZonedDateTime&lt;EthiopicDate&gt;) super.zonedDateTime(instant, zone);</span>
+<span class="nc" id="L317">        return (ChronoZonedDateTime&lt;EthiopicDate&gt;) super.zonedDateTime(instant, zone);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public int prolepticYear(Era era, int yearOfEra) {
-<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        if (era instanceof EthiopicEra == false) {</span>
-<span class="nc" id="L323">            throw new ClassCastException(&quot;Era must be EthiopicEra&quot;);</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">        if (!(era instanceof EthiopicEra)) {</span>
+<span class="nc" id="L324">            throw new ClassCastException(&quot;Era must be EthiopicEra&quot;);</span>
         }
-<span class="fc bfc" id="L325" title="All 2 branches covered.">        return (era == EthiopicEra.INCARNATION ? yearOfEra : 1 - yearOfEra);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        return (era == EthiopicEra.INCARNATION ? yearOfEra : 1 - yearOfEra);</span>
     }
 
     @Override
     public EthiopicEra eraOf(int eraValue) {
-<span class="fc" id="L330">        return EthiopicEra.of(eraValue);</span>
+<span class="fc" id="L331">        return EthiopicEra.of(eraValue);</span>
     }
 
     @Override
     public List&lt;Era&gt; eras() {
-<span class="fc" id="L335">        return Arrays.&lt;Era&gt;asList(EthiopicEra.values());</span>
+<span class="fc" id="L336">        return Arrays.asList(EthiopicEra.values());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override  // override for return type
-    public EthiopicDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
-<span class="nc" id="L341">        return (EthiopicDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    public @Nullable EthiopicDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L342">        return (EthiopicDate) super.resolveDate(fieldValues, resolverStyle);</span>
     }
 
 }

@@ -68,20 +68,12 @@ abstract class AbstractNileChronology
      * Range of days.
      */
 <span class="fc" id="L70">    static final ValueRange DOM_RANGE = ValueRange.of(1, 5, 30);</span>
-    /**
-     * Range of days.
-     */
-<span class="fc" id="L74">    static final ValueRange DOM_RANGE_NONLEAP = ValueRange.of(1, 5);</span>
-    /**
-     * Range of days.
-     */
-<span class="fc" id="L78">    static final ValueRange DOM_RANGE_LEAP = ValueRange.of(1, 6);</span>
 
     /**
      * Private constructor.
      */
-<span class="fc" id="L83">    AbstractNileChronology() {</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L75">    AbstractNileChronology() {</span>
+<span class="fc" id="L76">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -96,29 +88,29 @@ abstract class AbstractNileChronology
      */
     @Override
     public boolean isLeapYear(long prolepticYear) {
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        return Math.floorMod(prolepticYear, 4) == 3;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        return Math.floorMod(prolepticYear, 4) == 3;</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(ChronoField field) {
-<span class="fc bfc" id="L105" title="All 7 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L97" title="All 7 branches covered.">        switch (field) {</span>
             case DAY_OF_MONTH:
-<span class="fc" id="L107">                return DOM_RANGE;</span>
+<span class="fc" id="L99">                return DOM_RANGE;</span>
             case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L109">                return ALIGNED_WOM_RANGE;</span>
+<span class="fc" id="L101">                return ALIGNED_WOM_RANGE;</span>
             case MONTH_OF_YEAR:
-<span class="fc" id="L111">                return MOY_RANGE;</span>
+<span class="fc" id="L103">                return MOY_RANGE;</span>
             case PROLEPTIC_MONTH:
-<span class="fc" id="L113">                return PROLEPTIC_MONTH_RANGE;</span>
+<span class="fc" id="L105">                return PROLEPTIC_MONTH_RANGE;</span>
             case YEAR_OF_ERA:
-<span class="fc" id="L115">                return YOE_RANGE;</span>
+<span class="fc" id="L107">                return YOE_RANGE;</span>
             case YEAR:
-<span class="fc" id="L117">                return YEAR_RANGE;</span>
+<span class="fc" id="L109">                return YEAR_RANGE;</span>
             default:
                 break;
         }
-<span class="fc" id="L121">        return field.range();</span>
+<span class="fc" id="L113">        return field.range();</span>
     }
 
 }

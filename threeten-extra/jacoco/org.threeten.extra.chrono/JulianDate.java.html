@@ -84,7 +84,7 @@ public final class JulianDate
      */
     private static final int JULIAN_0001_TO_ISO_1970 = 678577 + 40587;  // MJD values
     /**
-     * The days per 4 year cycle.
+     * The days per 4-year cycle.
      */
     private static final int DAYS_PER_CYCLE = (365 * 4) + 1;
 
@@ -209,7 +209,7 @@ public final class JulianDate
 <span class="fc" id="L209">        JulianChronology.YEAR_RANGE.checkValidValue(prolepticYear, YEAR);</span>
 <span class="fc" id="L210">        DAY_OF_YEAR.checkValidValue(dayOfYear);</span>
 <span class="fc" id="L211">        boolean leap = JulianChronology.INSTANCE.isLeapYear(prolepticYear);</span>
-<span class="fc bfc" id="L212" title="All 4 branches covered.">        if (dayOfYear == 366 &amp;&amp; leap == false) {</span>
+<span class="fc bfc" id="L212" title="All 4 branches covered.">        if (dayOfYear == 366 &amp;&amp; !leap) {</span>
 <span class="fc" id="L213">            throw new DateTimeException(&quot;Invalid date 'DayOfYear 366' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
         }
 <span class="fc" id="L215">        Month moy = Month.of((dayOfYear - 1) / 31 + 1);</span>
@@ -347,7 +347,7 @@ public final class JulianDate
 
     @Override
     ValueRange rangeAlignedWeekOfMonth() {
-<span class="fc bfc" id="L350" title="All 4 branches covered.">        return ValueRange.of(1, month == 2 &amp;&amp; isLeapYear() == false ? 4 : 5);</span>
+<span class="fc bfc" id="L350" title="All 4 branches covered.">        return ValueRange.of(1, month == 2 &amp;&amp; !isLeapYear() ? 4 : 5);</span>
     }
 
     @Override
@@ -457,7 +457,7 @@ public final class JulianDate
     //-----------------------------------------------------------------------
     @Override
     public long toEpochDay() {
-<span class="fc" id="L460">        long year = (long) prolepticYear;</span>
+<span class="fc" id="L460">        long year = prolepticYear;</span>
 <span class="fc" id="L461">        long julianEpochDay = ((year - 1) * 365) + Math.floorDiv((year - 1), 4) + (getDayOfYear() - 1);</span>
 <span class="fc" id="L462">        return julianEpochDay - JULIAN_0001_TO_ISO_1970;</span>
     }

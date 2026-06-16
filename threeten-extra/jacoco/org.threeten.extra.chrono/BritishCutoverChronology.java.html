@@ -52,6 +52,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * The British Julian-Gregorian cutover calendar system.
  * &lt;p&gt;
@@ -106,11 +108,11 @@ public final class BritishCutoverChronology
     /**
      * Singleton instance for the Coptic chronology.
      */
-<span class="fc" id="L109">    public static final BritishCutoverChronology INSTANCE = new BritishCutoverChronology();</span>
+<span class="fc" id="L111">    public static final BritishCutoverChronology INSTANCE = new BritishCutoverChronology();</span>
     /**
      * The cutover date, Thursday 14th September 1752.
      */
-<span class="fc" id="L113">    public static final LocalDate CUTOVER = LocalDate.of(1752, 9, 14);</span>
+<span class="fc" id="L115">    public static final LocalDate CUTOVER = LocalDate.of(1752, 9, 14);</span>
     /**
      * The number of cutover days.
      */
@@ -127,35 +129,35 @@ public final class BritishCutoverChronology
     /**
      * Range of day-of-year.
      */
-<span class="fc" id="L130">    static final ValueRange DOY_RANGE = ValueRange.of(1, 355, 366);</span>
+<span class="fc" id="L132">    static final ValueRange DOY_RANGE = ValueRange.of(1, 355, 366);</span>
     /**
      * Range of aligned-week-of-month.
      */
-<span class="fc" id="L134">    static final ValueRange ALIGNED_WOM_RANGE = ValueRange.of(1, 3, 5);</span>
+<span class="fc" id="L136">    static final ValueRange ALIGNED_WOM_RANGE = ValueRange.of(1, 3, 5);</span>
     /**
      * Range of aligned-week-of-year.
      */
-<span class="fc" id="L138">    static final ValueRange ALIGNED_WOY_RANGE = ValueRange.of(1, 51, 53);</span>
+<span class="fc" id="L140">    static final ValueRange ALIGNED_WOY_RANGE = ValueRange.of(1, 51, 53);</span>
     /**
      * Range of proleptic-year.
      */
-<span class="fc" id="L142">    static final ValueRange YEAR_RANGE = ValueRange.of(-999_998, 999_999);</span>
+<span class="fc" id="L144">    static final ValueRange YEAR_RANGE = ValueRange.of(-999_998, 999_999);</span>
     /**
      * Range of year.
      */
-<span class="fc" id="L146">    static final ValueRange YOE_RANGE = ValueRange.of(1, 999_999);</span>
+<span class="fc" id="L148">    static final ValueRange YOE_RANGE = ValueRange.of(1, 999_999);</span>
     /**
      * Range of proleptic month.
      */
-<span class="fc" id="L150">    static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-999_998 * 12L, 999_999 * 12L + 11);</span>
+<span class="fc" id="L152">    static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-999_998 * 12L, 999_999 * 12L + 11);</span>
 
     /**
      * Private constructor, that is public to satisfy the {@code ServiceLoader}.
      * @deprecated Use the singleton {@link #INSTANCE} instead.
      */
     @Deprecated
-<span class="fc" id="L157">    public BritishCutoverChronology() {</span>
-<span class="fc" id="L158">    }</span>
+<span class="fc" id="L159">    public BritishCutoverChronology() {</span>
+<span class="fc" id="L160">    }</span>
 
     /**
      * Resolve singleton.
@@ -163,7 +165,7 @@ public final class BritishCutoverChronology
      * @return the singleton instance, not null
      */
     private Object readResolve() {
-<span class="nc" id="L166">        return INSTANCE;</span>
+<span class="nc" id="L168">        return INSTANCE;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -176,7 +178,7 @@ public final class BritishCutoverChronology
      * @return the first date after the cutover, not null
      */
     public LocalDate getCutover() {
-<span class="fc" id="L179">        return CUTOVER;</span>
+<span class="fc" id="L181">        return CUTOVER;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -191,7 +193,7 @@ public final class BritishCutoverChronology
      */
     @Override
     public String getId() {
-<span class="fc" id="L194">        return &quot;BritishCutover&quot;;</span>
+<span class="fc" id="L196">        return &quot;BritishCutover&quot;;</span>
     }
 
     /**
@@ -204,8 +206,8 @@ public final class BritishCutoverChronology
      * @see #getId()
      */
     @Override
-    public String getCalendarType() {
-<span class="fc" id="L208">        return null;</span>
+    public @Nullable String getCalendarType() {
+<span class="fc" id="L210">        return null;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -227,7 +229,7 @@ public final class BritishCutoverChronology
      */
     @Override
     public BritishCutoverDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
-<span class="fc" id="L230">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+<span class="fc" id="L232">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
     }
 
     /**
@@ -246,7 +248,7 @@ public final class BritishCutoverChronology
      */
     @Override
     public BritishCutoverDate date(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L249">        return BritishCutoverDate.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L251">        return BritishCutoverDate.of(prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -264,7 +266,7 @@ public final class BritishCutoverChronology
      */
     @Override
     public BritishCutoverDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
-<span class="fc" id="L267">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+<span class="fc" id="L269">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
     }
 
     /**
@@ -280,7 +282,7 @@ public final class BritishCutoverChronology
      */
     @Override
     public BritishCutoverDate dateYearDay(int prolepticYear, int dayOfYear) {
-<span class="fc" id="L283">        return BritishCutoverDate.ofYearDay(prolepticYear, dayOfYear);</span>
+<span class="fc" id="L285">        return BritishCutoverDate.ofYearDay(prolepticYear, dayOfYear);</span>
     }
 
     /**
@@ -292,7 +294,7 @@ public final class BritishCutoverChronology
      */
     @Override  // override with covariant return type
     public BritishCutoverDate dateEpochDay(long epochDay) {
-<span class="fc" id="L295">        return BritishCutoverDate.ofEpochDay(epochDay);</span>
+<span class="fc" id="L297">        return BritishCutoverDate.ofEpochDay(epochDay);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -310,7 +312,7 @@ public final class BritishCutoverChronology
      */
     @Override  // override with covariant return type
     public BritishCutoverDate dateNow() {
-<span class="nc" id="L313">        return BritishCutoverDate.now();</span>
+<span class="nc" id="L315">        return BritishCutoverDate.now();</span>
     }
 
     /**
@@ -328,7 +330,7 @@ public final class BritishCutoverChronology
      */
     @Override  // override with covariant return type
     public BritishCutoverDate dateNow(ZoneId zone) {
-<span class="nc" id="L331">        return BritishCutoverDate.now(zone);</span>
+<span class="nc" id="L333">        return BritishCutoverDate.now(zone);</span>
     }
 
     /**
@@ -344,7 +346,7 @@ public final class BritishCutoverChronology
      */
     @Override  // override with covariant return type
     public BritishCutoverDate dateNow(Clock clock) {
-<span class="nc" id="L347">        return BritishCutoverDate.now(clock);</span>
+<span class="nc" id="L349">        return BritishCutoverDate.now(clock);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -357,7 +359,7 @@ public final class BritishCutoverChronology
      */
     @Override
     public BritishCutoverDate date(TemporalAccessor temporal) {
-<span class="fc" id="L360">        return BritishCutoverDate.from(temporal);</span>
+<span class="fc" id="L362">        return BritishCutoverDate.from(temporal);</span>
     }
 
     /**
@@ -370,7 +372,7 @@ public final class BritishCutoverChronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;BritishCutoverDate&gt; localDateTime(TemporalAccessor temporal) {
-<span class="fc" id="L373">        return (ChronoLocalDateTime&lt;BritishCutoverDate&gt;) super.localDateTime(temporal);</span>
+<span class="fc" id="L375">        return (ChronoLocalDateTime&lt;BritishCutoverDate&gt;) super.localDateTime(temporal);</span>
     }
 
     /**
@@ -383,7 +385,7 @@ public final class BritishCutoverChronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;BritishCutoverDate&gt; zonedDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L386">        return (ChronoZonedDateTime&lt;BritishCutoverDate&gt;) super.zonedDateTime(temporal);</span>
+<span class="nc" id="L388">        return (ChronoZonedDateTime&lt;BritishCutoverDate&gt;) super.zonedDateTime(temporal);</span>
     }
 
     /**
@@ -397,7 +399,7 @@ public final class BritishCutoverChronology
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;BritishCutoverDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
-<span class="nc" id="L400">        return (ChronoZonedDateTime&lt;BritishCutoverDate&gt;) super.zonedDateTime(instant, zone);</span>
+<span class="nc" id="L402">        return (ChronoZonedDateTime&lt;BritishCutoverDate&gt;) super.zonedDateTime(instant, zone);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -414,56 +416,56 @@ public final class BritishCutoverChronology
      */
     @Override
     public boolean isLeapYear(long prolepticYear) {
-<span class="fc bfc" id="L417" title="All 2 branches covered.">        if (prolepticYear &lt;= CUTOVER_YEAR) {</span>
-<span class="fc" id="L418">            return JulianChronology.INSTANCE.isLeapYear(prolepticYear);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (prolepticYear &lt;= CUTOVER_YEAR) {</span>
+<span class="fc" id="L420">            return JulianChronology.INSTANCE.isLeapYear(prolepticYear);</span>
         }
-<span class="fc" id="L420">        return IsoChronology.INSTANCE.isLeapYear(prolepticYear);</span>
+<span class="fc" id="L422">        return IsoChronology.INSTANCE.isLeapYear(prolepticYear);</span>
     }
 
     @Override
     public int prolepticYear(Era era, int yearOfEra) {
-<span class="fc bfc" id="L425" title="All 2 branches covered.">        if (era instanceof JulianEra == false) {</span>
-<span class="fc" id="L426">            throw new ClassCastException(&quot;Era must be JulianEra&quot;);</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">        if (!(era instanceof JulianEra)) {</span>
+<span class="fc" id="L428">            throw new ClassCastException(&quot;Era must be JulianEra&quot;);</span>
         }
-<span class="fc bfc" id="L428" title="All 2 branches covered.">        return (era == JulianEra.AD ? yearOfEra : 1 - yearOfEra);</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">        return (era == JulianEra.AD ? yearOfEra : 1 - yearOfEra);</span>
     }
 
     @Override
     public JulianEra eraOf(int eraValue) {
-<span class="fc" id="L433">        return JulianEra.of(eraValue);</span>
+<span class="fc" id="L435">        return JulianEra.of(eraValue);</span>
     }
 
     @Override
     public List&lt;Era&gt; eras() {
-<span class="fc" id="L438">        return Arrays.&lt;Era&gt;asList(JulianEra.values());</span>
+<span class="fc" id="L440">        return Arrays.asList(JulianEra.values());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(ChronoField field) {
-<span class="fc bfc" id="L444" title="All 7 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L446" title="All 7 branches covered.">        switch (field) {</span>
             case DAY_OF_YEAR:
-<span class="fc" id="L446">                return DOY_RANGE;</span>
+<span class="fc" id="L448">                return DOY_RANGE;</span>
             case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L448">                return ALIGNED_WOM_RANGE;</span>
+<span class="fc" id="L450">                return ALIGNED_WOM_RANGE;</span>
             case ALIGNED_WEEK_OF_YEAR:
-<span class="fc" id="L450">                return ALIGNED_WOY_RANGE;</span>
+<span class="fc" id="L452">                return ALIGNED_WOY_RANGE;</span>
             case PROLEPTIC_MONTH:
-<span class="fc" id="L452">                return PROLEPTIC_MONTH_RANGE;</span>
+<span class="fc" id="L454">                return PROLEPTIC_MONTH_RANGE;</span>
             case YEAR_OF_ERA:
-<span class="fc" id="L454">                return YOE_RANGE;</span>
+<span class="fc" id="L456">                return YOE_RANGE;</span>
             case YEAR:
-<span class="fc" id="L456">                return YEAR_RANGE;</span>
+<span class="fc" id="L458">                return YEAR_RANGE;</span>
             default:
                 break;
         }
-<span class="fc" id="L460">        return field.range();</span>
+<span class="fc" id="L462">        return field.range();</span>
     }
 
     //-----------------------------------------------------------------------
     @Override  // override for return type
-    public BritishCutoverDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
-<span class="nc" id="L466">        return (BritishCutoverDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    public @Nullable BritishCutoverDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L468">        return (BritishCutoverDate) super.resolveDate(fieldValues, resolverStyle);</span>
     }
 
 }

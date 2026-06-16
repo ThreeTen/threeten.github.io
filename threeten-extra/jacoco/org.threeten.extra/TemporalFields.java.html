@@ -53,6 +53,8 @@ import java.time.temporal.UnsupportedTemporalTypeException;
 import java.time.temporal.ValueRange;
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Additional Temporal fields.
  * &lt;p&gt;
@@ -95,7 +97,7 @@ public final class TemporalFields {
      * &lt;p&gt;
      * This unit is an immutable and thread-safe singleton.
      */
-<span class="fc" id="L98">    public static final TemporalField DAY_OF_HALF = DayOfHalfField.INSTANCE;</span>
+<span class="fc" id="L100">    public static final TemporalField DAY_OF_HALF = DayOfHalfField.INSTANCE;</span>
     /**
      * The field that represents the half-of-year.
      * &lt;p&gt;
@@ -110,7 +112,7 @@ public final class TemporalFields {
      * &lt;p&gt;
      * This unit is an immutable and thread-safe singleton.
      */
-<span class="fc" id="L113">    public static final TemporalField HALF_OF_YEAR = HalfOfYearField.INSTANCE;</span>
+<span class="fc" id="L115">    public static final TemporalField HALF_OF_YEAR = HalfOfYearField.INSTANCE;</span>
     /**
      * Unit that represents the concept of a half-year.
      * For the ISO calendar system, it is equal to 6 months.
@@ -118,7 +120,7 @@ public final class TemporalFields {
      * &lt;p&gt;
      * This unit is an immutable and thread-safe singleton.
      */
-<span class="fc" id="L121">    public static final TemporalUnit HALF_YEARS = HalfUnit.INSTANCE;</span>
+<span class="fc" id="L123">    public static final TemporalUnit HALF_YEARS = HalfUnit.INSTANCE;</span>
 
     /**
      * Restricted constructor.
@@ -130,121 +132,121 @@ public final class TemporalFields {
     /**
      * Implementation of day-of-half.
      */
-<span class="fc" id="L133">    private static enum DayOfHalfField implements TemporalField {</span>
-<span class="fc" id="L134">        INSTANCE;</span>
+<span class="fc" id="L135">    private static enum DayOfHalfField implements TemporalField {</span>
+<span class="fc" id="L136">        INSTANCE;</span>
 
-<span class="fc" id="L136">        private static final ValueRange RANGE = ValueRange.of(1, 181, 184);</span>
+<span class="fc" id="L138">        private static final ValueRange RANGE = ValueRange.of(1, 181, 184);</span>
         private static final long serialVersionUID = 262362728L;
 
         //-----------------------------------------------------------------------
         @Override
         public TemporalUnit getBaseUnit() {
-<span class="fc" id="L142">            return DAYS;</span>
+<span class="fc" id="L144">            return DAYS;</span>
         }
 
         @Override
         public TemporalUnit getRangeUnit() {
-<span class="fc" id="L147">            return HALF_YEARS;</span>
+<span class="fc" id="L149">            return HALF_YEARS;</span>
         }
 
         @Override
         public boolean isDateBased() {
-<span class="fc" id="L152">            return true;</span>
+<span class="fc" id="L154">            return true;</span>
         }
 
         @Override
         public boolean isTimeBased() {
-<span class="fc" id="L157">            return false;</span>
+<span class="fc" id="L159">            return false;</span>
         }
 
         @Override
         public ValueRange range() {
-<span class="fc" id="L162">            return RANGE;</span>
+<span class="fc" id="L164">            return RANGE;</span>
         }
 
         //-----------------------------------------------------------------------
         @Override
         public boolean isSupportedBy(TemporalAccessor temporal) {
-<span class="fc bfc" id="L168" title="All 2 branches covered.">            return temporal.isSupported(DAY_OF_YEAR) &amp;&amp;</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">                    temporal.isSupported(MONTH_OF_YEAR) &amp;&amp;</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">                    temporal.isSupported(YEAR);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            return temporal.isSupported(DAY_OF_YEAR) &amp;&amp;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">                    temporal.isSupported(MONTH_OF_YEAR) &amp;&amp;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">                    temporal.isSupported(YEAR);</span>
         }
 
         @Override
         public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (!temporal.isSupported(this)) {</span>
-<span class="nc" id="L176">                throw new DateTimeException(&quot;Unsupported field: DayOfHalf&quot;);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">            if (!temporal.isSupported(this)) {</span>
+<span class="nc" id="L178">                throw new DateTimeException(&quot;Unsupported field: DayOfHalf&quot;);</span>
             }
-<span class="fc" id="L178">            long hoy = temporal.getLong(HALF_OF_YEAR);</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">            if (hoy == 1) {</span>
-<span class="fc" id="L180">                long year = temporal.getLong(YEAR);</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">                return (IsoChronology.INSTANCE.isLeapYear(year) ? ValueRange.of(1, 182) : ValueRange.of(1, 181));</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            } else if (hoy == 2) {</span>
-<span class="fc" id="L183">                return ValueRange.of(1, 184);</span>
+<span class="fc" id="L180">            long hoy = temporal.getLong(HALF_OF_YEAR);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            if (hoy == 1) {</span>
+<span class="fc" id="L182">                long year = temporal.getLong(YEAR);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">                return (IsoChronology.INSTANCE.isLeapYear(year) ? ValueRange.of(1, 182) : ValueRange.of(1, 181));</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">            } else if (hoy == 2) {</span>
+<span class="fc" id="L185">                return ValueRange.of(1, 184);</span>
             } // else value not from 1 to 2, so drop through
-<span class="nc" id="L185">            return range();</span>
+<span class="nc" id="L187">            return range();</span>
         }
 
         @Override
         public long getFrom(TemporalAccessor temporal) {
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (isSupportedBy(temporal) == false) {</span>
-<span class="nc" id="L191">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: DayOfHalf&quot;);</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">            if (!isSupportedBy(temporal)) {</span>
+<span class="nc" id="L193">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: DayOfHalf&quot;);</span>
             }
-<span class="fc" id="L193">            int doy = temporal.get(DAY_OF_YEAR);</span>
-<span class="fc" id="L194">            int moy = temporal.get(MONTH_OF_YEAR);</span>
-<span class="fc" id="L195">            long year = temporal.getLong(YEAR);</span>
-<span class="pc bpc" id="L196" title="1 of 4 branches missed.">            return moy &lt;= 6 ? doy : doy - 181 - (IsoChronology.INSTANCE.isLeapYear(year) ? 1 : 0);</span>
+<span class="fc" id="L195">            int doy = temporal.get(DAY_OF_YEAR);</span>
+<span class="fc" id="L196">            int moy = temporal.get(MONTH_OF_YEAR);</span>
+<span class="fc" id="L197">            long year = temporal.getLong(YEAR);</span>
+<span class="pc bpc" id="L198" title="1 of 4 branches missed.">            return moy &lt;= 6 ? doy : doy - 181 - (IsoChronology.INSTANCE.isLeapYear(year) ? 1 : 0);</span>
         }
 
         @SuppressWarnings(&quot;unchecked&quot;)
         @Override
         public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
             // calls getFrom() to check if supported
-<span class="fc" id="L203">            long curValue = getFrom(temporal);</span>
-<span class="fc" id="L204">            range().checkValidValue(newValue, this);  // leniently check from 1 to 184</span>
-<span class="fc" id="L205">            return (R) temporal.with(DAY_OF_YEAR, temporal.getLong(DAY_OF_YEAR) + (newValue - curValue));</span>
+<span class="fc" id="L205">            long curValue = getFrom(temporal);</span>
+<span class="fc" id="L206">            range().checkValidValue(newValue, this);  // leniently check from 1 to 184</span>
+<span class="fc" id="L207">            return (R) temporal.with(DAY_OF_YEAR, temporal.getLong(DAY_OF_YEAR) + (newValue - curValue));</span>
         }
 
         //-----------------------------------------------------------------------
         @Override
-        public ChronoLocalDate resolve(
+        public @Nullable ChronoLocalDate resolve(
                 Map&lt;TemporalField, Long&gt; fieldValues,
                 TemporalAccessor partialTemporal,
                 ResolverStyle resolverStyle) {
 
-<span class="fc" id="L215">            Long yearLong = fieldValues.get(YEAR);</span>
-<span class="fc" id="L216">            Long hoyLong = fieldValues.get(HALF_OF_YEAR);</span>
-<span class="fc bfc" id="L217" title="All 4 branches covered.">            if (yearLong == null || hoyLong == null) {</span>
-<span class="fc" id="L218">                return null;</span>
+<span class="fc" id="L217">            Long yearLong = fieldValues.get(YEAR);</span>
+<span class="fc" id="L218">            Long hoyLong = fieldValues.get(HALF_OF_YEAR);</span>
+<span class="fc bfc" id="L219" title="All 4 branches covered.">            if (yearLong == null || hoyLong == null) {</span>
+<span class="fc" id="L220">                return null;</span>
             }
-<span class="fc" id="L220">            int y = YEAR.checkValidIntValue(yearLong);  // always validate</span>
-<span class="fc" id="L221">            long doh = fieldValues.get(DAY_OF_HALF);</span>
+<span class="fc" id="L222">            int y = YEAR.checkValidIntValue(yearLong);  // always validate</span>
+<span class="fc" id="L223">            long doh = fieldValues.get(DAY_OF_HALF);</span>
             LocalDate date;
-<span class="fc bfc" id="L223" title="All 2 branches covered.">            if (resolverStyle == ResolverStyle.LENIENT) {</span>
-<span class="fc" id="L224">                date = LocalDate.of(y, 1, 1).plusMonths(Math.multiplyExact(Math.subtractExact(hoyLong, 1), 6));</span>
-<span class="fc" id="L225">                doh = Math.subtractExact(doh, 1);</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">            if (resolverStyle == ResolverStyle.LENIENT) {</span>
+<span class="fc" id="L226">                date = LocalDate.of(y, 1, 1).plusMonths(Math.multiplyExact(Math.subtractExact(hoyLong, 1), 6));</span>
+<span class="fc" id="L227">                doh = Math.subtractExact(doh, 1);</span>
             } else {
-<span class="fc" id="L227">                int qoy = HALF_OF_YEAR.range().checkValidIntValue(hoyLong, HALF_OF_YEAR);  // validated</span>
-<span class="fc" id="L228">                date = LocalDate.of(y, ((qoy - 1) * 6) + 1, 1);</span>
-<span class="fc bfc" id="L229" title="All 4 branches covered.">                if (doh &lt; 1 || doh &gt; 181) {</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">                    if (resolverStyle == ResolverStyle.STRICT) {</span>
-<span class="fc" id="L231">                        rangeRefinedBy(date).checkValidValue(doh, this);  // only allow exact range</span>
+<span class="fc" id="L229">                int qoy = HALF_OF_YEAR.range().checkValidIntValue(hoyLong, HALF_OF_YEAR);  // validated</span>
+<span class="fc" id="L230">                date = LocalDate.of(y, ((qoy - 1) * 6) + 1, 1);</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">                if (doh &lt; 1 || doh &gt; 181) {</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">                    if (resolverStyle == ResolverStyle.STRICT) {</span>
+<span class="fc" id="L233">                        rangeRefinedBy(date).checkValidValue(doh, this);  // only allow exact range</span>
                     } else {  // SMART
-<span class="fc" id="L233">                        range().checkValidValue(doh, this);  // allow 1-184 rolling into next quarter</span>
+<span class="fc" id="L235">                        range().checkValidValue(doh, this);  // allow 1-184 rolling into next quarter</span>
                     }
                 }
-<span class="fc" id="L236">                doh--;</span>
+<span class="fc" id="L238">                doh--;</span>
             }
-<span class="fc" id="L238">            fieldValues.remove(this);</span>
-<span class="fc" id="L239">            fieldValues.remove(YEAR);</span>
-<span class="fc" id="L240">            fieldValues.remove(HALF_OF_YEAR);</span>
-<span class="fc" id="L241">            return date.plusDays(doh);</span>
+<span class="fc" id="L240">            fieldValues.remove(this);</span>
+<span class="fc" id="L241">            fieldValues.remove(YEAR);</span>
+<span class="fc" id="L242">            fieldValues.remove(HALF_OF_YEAR);</span>
+<span class="fc" id="L243">            return date.plusDays(doh);</span>
         }
 
         //-----------------------------------------------------------------------
         @Override
         public String toString() {
-<span class="fc" id="L247">            return &quot;DayOfHalf&quot;;</span>
+<span class="fc" id="L249">            return &quot;DayOfHalf&quot;;</span>
         }
     }
 
@@ -252,68 +254,68 @@ public final class TemporalFields {
     /**
      * Implementation of half-of-year.
      */
-<span class="fc" id="L255">    private static enum HalfOfYearField implements TemporalField {</span>
-<span class="fc" id="L256">        INSTANCE;</span>
+<span class="fc" id="L257">    private static enum HalfOfYearField implements TemporalField {</span>
+<span class="fc" id="L258">        INSTANCE;</span>
 
         private static final long serialVersionUID = -29115701L;
 
         //-----------------------------------------------------------------------
         @Override
         public TemporalUnit getBaseUnit() {
-<span class="fc" id="L263">            return HALF_YEARS;</span>
+<span class="fc" id="L265">            return HALF_YEARS;</span>
         }
 
         @Override
         public TemporalUnit getRangeUnit() {
-<span class="fc" id="L268">            return YEARS;</span>
+<span class="fc" id="L270">            return YEARS;</span>
         }
 
         @Override
         public boolean isDateBased() {
-<span class="fc" id="L273">            return true;</span>
+<span class="fc" id="L275">            return true;</span>
         }
 
         @Override
         public boolean isTimeBased() {
-<span class="fc" id="L278">            return false;</span>
+<span class="fc" id="L280">            return false;</span>
         }
 
         @Override
         public ValueRange range() {
-<span class="fc" id="L283">            return ValueRange.of(1, 2);</span>
+<span class="fc" id="L285">            return ValueRange.of(1, 2);</span>
         }
 
         @Override
         public boolean isSupportedBy(TemporalAccessor temporal) {
-<span class="fc" id="L288">            return temporal.isSupported(QUARTER_OF_YEAR);</span>
+<span class="fc" id="L290">            return temporal.isSupported(QUARTER_OF_YEAR);</span>
         }
 
         @Override
         public ValueRange rangeRefinedBy(TemporalAccessor temporal) {
-<span class="fc" id="L293">            return range();</span>
+<span class="fc" id="L295">            return range();</span>
         }
 
         @Override
         public long getFrom(TemporalAccessor temporal) {
-<span class="fc bfc" id="L298" title="All 2 branches covered.">            if (isSupportedBy(temporal) == false) {</span>
-<span class="fc" id="L299">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: HalfOfYear&quot;);</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">            if (!isSupportedBy(temporal)) {</span>
+<span class="fc" id="L301">                throw new UnsupportedTemporalTypeException(&quot;Unsupported field: HalfOfYear&quot;);</span>
             }
-<span class="fc" id="L301">            long qoy = temporal.get(QUARTER_OF_YEAR);</span>
-<span class="fc bfc" id="L302" title="All 2 branches covered.">            return qoy &lt;= 2 ? 1 : 2;</span>
+<span class="fc" id="L303">            long qoy = temporal.get(QUARTER_OF_YEAR);</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">            return qoy &lt;= 2 ? 1 : 2;</span>
         }
 
         @SuppressWarnings(&quot;unchecked&quot;)
         @Override
         public &lt;R extends Temporal&gt; R adjustInto(R temporal, long newValue) {
             // calls getFrom() to check if supported
-<span class="fc" id="L309">            long curValue = getFrom(temporal);</span>
-<span class="fc" id="L310">            range().checkValidValue(newValue, this);  // strictly check from 1 to 2</span>
-<span class="fc" id="L311">            return (R) temporal.with(MONTH_OF_YEAR, temporal.getLong(MONTH_OF_YEAR) + (newValue - curValue) * 6);</span>
+<span class="fc" id="L311">            long curValue = getFrom(temporal);</span>
+<span class="fc" id="L312">            range().checkValidValue(newValue, this);  // strictly check from 1 to 2</span>
+<span class="fc" id="L313">            return (R) temporal.with(MONTH_OF_YEAR, temporal.getLong(MONTH_OF_YEAR) + (newValue - curValue) * 6);</span>
         }
 
         @Override
         public String toString() {
-<span class="fc" id="L316">            return &quot;HalfOfYear&quot;;</span>
+<span class="fc" id="L318">            return &quot;HalfOfYear&quot;;</span>
         }
     }
 
@@ -321,55 +323,55 @@ public final class TemporalFields {
     /**
      * Implementation of the half-year unit.
      */
-<span class="fc" id="L324">    private static enum HalfUnit implements TemporalUnit {</span>
+<span class="fc" id="L326">    private static enum HalfUnit implements TemporalUnit {</span>
 
         /**
          * Unit that represents the concept of a week-based-year.
          */
-<span class="fc" id="L329">        INSTANCE;</span>
+<span class="fc" id="L331">        INSTANCE;</span>
 
         @Override
         public Duration getDuration() {
-<span class="nc" id="L333">            return Duration.ofSeconds(31556952L / 2);</span>
+<span class="nc" id="L335">            return Duration.ofSeconds(31556952L / 2);</span>
         }
 
         @Override
         public boolean isDurationEstimated() {
-<span class="nc" id="L338">            return true;</span>
+<span class="nc" id="L340">            return true;</span>
         }
 
         @Override
         public boolean isDateBased() {
-<span class="fc" id="L343">            return true;</span>
+<span class="fc" id="L345">            return true;</span>
         }
 
         @Override
         public boolean isTimeBased() {
-<span class="fc" id="L348">            return false;</span>
+<span class="fc" id="L350">            return false;</span>
         }
 
         @Override
         public boolean isSupportedBy(Temporal temporal) {
-<span class="fc" id="L353">            return temporal.isSupported(QUARTER_OF_YEAR);</span>
+<span class="fc" id="L355">            return temporal.isSupported(QUARTER_OF_YEAR);</span>
         }
 
         @SuppressWarnings(&quot;unchecked&quot;)
         @Override
         public &lt;R extends Temporal&gt; R addTo(R temporal, long amount) {
-<span class="fc" id="L359">            return (R) temporal.plus(Math.multiplyExact(amount, 2), QUARTER_YEARS);</span>
+<span class="fc" id="L361">            return (R) temporal.plus(Math.multiplyExact(amount, 2), QUARTER_YEARS);</span>
         }
 
         @Override
         public long between(Temporal temporal1Inclusive, Temporal temporal2Exclusive) {
-<span class="pc bpc" id="L364" title="1 of 2 branches missed.">            if (temporal1Inclusive.getClass() != temporal2Exclusive.getClass()) {</span>
-<span class="nc" id="L365">                return temporal1Inclusive.until(temporal2Exclusive, this);</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">            if (temporal1Inclusive.getClass() != temporal2Exclusive.getClass()) {</span>
+<span class="nc" id="L367">                return temporal1Inclusive.until(temporal2Exclusive, this);</span>
             }
-<span class="fc" id="L367">            return temporal1Inclusive.until(temporal2Exclusive, QUARTER_YEARS) / 2;</span>
+<span class="fc" id="L369">            return temporal1Inclusive.until(temporal2Exclusive, QUARTER_YEARS) / 2;</span>
         }
 
         @Override
         public String toString() {
-<span class="fc" id="L372">            return &quot;HalfYears&quot;;</span>
+<span class="fc" id="L374">            return &quot;HalfYears&quot;;</span>
         }
     }
 

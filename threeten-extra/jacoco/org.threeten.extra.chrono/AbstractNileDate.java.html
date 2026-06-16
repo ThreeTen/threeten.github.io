@@ -90,7 +90,7 @@ abstract class AbstractNileDate
 
     @Override
     public long toEpochDay() {
-<span class="fc" id="L93">        long year = (long) getProlepticYear();</span>
+<span class="fc" id="L93">        long year = getProlepticYear();</span>
 <span class="fc" id="L94">        long calendarEpochDay = ((year - 1) * 365) + Math.floorDiv(year, 4) + (getDayOfYear() - 1);</span>
 <span class="fc" id="L95">        return calendarEpochDay - getEpochDayDifference();</span>
     }

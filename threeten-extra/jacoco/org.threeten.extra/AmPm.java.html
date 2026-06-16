@@ -50,6 +50,8 @@ import java.time.temporal.ValueRange;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * A half-day before or after midday, with the values 'AM' and 'PM'.
  * &lt;p&gt;
@@ -71,18 +73,18 @@ import java.util.Locale;
  * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
  * This is an immutable and thread-safe enum.
  */
-<span class="fc" id="L74">public enum AmPm implements TemporalAccessor, TemporalAdjuster {</span>
+<span class="fc" id="L76">public enum AmPm implements TemporalAccessor, TemporalAdjuster {</span>
 
     /**
      * The singleton instance for the morning, AM - ante meridiem.
      * This has the numeric value of {@code 0}.
      */
-<span class="fc" id="L80">    AM,</span>
+<span class="fc" id="L82">    AM,</span>
     /**
      * The singleton instance for the afternoon, PM - post meridiem.
      * This has the numeric value of {@code 1}.
      */
-<span class="fc" id="L85">    PM;</span>
+<span class="fc" id="L87">    PM;</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -97,13 +99,13 @@ import java.util.Locale;
      * @throws DateTimeException if the am-pm is invalid
      */
     public static AmPm of(int amPmValue) {
-<span class="fc bfc" id="L100" title="All 3 branches covered.">        switch (amPmValue) {</span>
+<span class="fc bfc" id="L102" title="All 3 branches covered.">        switch (amPmValue) {</span>
             case 0:
-<span class="fc" id="L102">                return AM;</span>
+<span class="fc" id="L104">                return AM;</span>
             case 1:
-<span class="fc" id="L104">                return PM;</span>
+<span class="fc" id="L106">                return PM;</span>
             default:
-<span class="fc" id="L106">                throw new DateTimeException(&quot;Invalid value for AM/PM: &quot; + amPmValue);</span>
+<span class="fc" id="L108">                throw new DateTimeException(&quot;Invalid value for AM/PM: &quot; + amPmValue);</span>
         }
     }
 
@@ -118,8 +120,8 @@ import java.util.Locale;
      * @throws DateTimeException if the hour-of-day is invalid
      */
     public static AmPm ofHour(int hourOfDay) {
-<span class="fc" id="L121">        HOUR_OF_DAY.checkValidValue(hourOfDay);</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        return hourOfDay &lt; 12 ? AM : PM;</span>
+<span class="fc" id="L123">        HOUR_OF_DAY.checkValidValue(hourOfDay);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        return hourOfDay &lt; 12 ? AM : PM;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -140,14 +142,14 @@ import java.util.Locale;
      * @throws DateTimeException if unable to convert to a {@code AmPm}
      */
     public static AmPm from(TemporalAccessor temporal) {
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (temporal instanceof AmPm) {</span>
-<span class="nc" id="L144">            return (AmPm) temporal;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        if (temporal instanceof AmPm) {</span>
+<span class="nc" id="L146">            return (AmPm) temporal;</span>
         }
         try {
-<span class="fc" id="L147">            return of(temporal.get(AMPM_OF_DAY));</span>
-<span class="fc" id="L148">        } catch (DateTimeException ex) {</span>
-<span class="fc" id="L149">            throw new DateTimeException(&quot;Unable to obtain AmPm from TemporalAccessor: &quot; +</span>
-<span class="fc" id="L150">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+<span class="fc" id="L149">            return of(temporal.get(AMPM_OF_DAY));</span>
+<span class="fc" id="L150">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L151">            throw new DateTimeException(&quot;Unable to obtain AmPm from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L152">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
         }
     }
 
@@ -160,7 +162,7 @@ import java.util.Locale;
      * @return the AM/PM value, from 0 (AM) to 1 (PM)
      */
     public int getValue() {
-<span class="fc" id="L163">        return ordinal();</span>
+<span class="fc" id="L165">        return ordinal();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -178,7 +180,7 @@ import java.util.Locale;
      * @return the text value of the am-pm, not null
      */
     public String getDisplayName(TextStyle style, Locale locale) {
-<span class="fc" id="L181">        return new DateTimeFormatterBuilder().appendText(AMPM_OF_DAY, style).toFormatter(locale).format(this);</span>
+<span class="fc" id="L183">        return new DateTimeFormatterBuilder().appendText(AMPM_OF_DAY, style).toFormatter(locale).format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -202,11 +204,11 @@ import java.util.Locale;
      * @return true if the field is supported on this am-pm, false if not
      */
     @Override
-    public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">            return field == AMPM_OF_DAY;</span>
+    public boolean isSupported(@Nullable TemporalField field) {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">            return field == AMPM_OF_DAY;</span>
         }
-<span class="pc bpc" id="L209" title="3 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L211" title="3 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -233,12 +235,12 @@ import java.util.Locale;
      */
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc bfc" id="L236" title="All 2 branches covered.">        if (field == AMPM_OF_DAY) {</span>
-<span class="fc" id="L237">            return field.range();</span>
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L239">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        if (field == AMPM_OF_DAY) {</span>
+<span class="fc" id="L239">            return field.range();</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L241">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L241">        return field.rangeRefinedBy(this);</span>
+<span class="nc" id="L243">        return field.rangeRefinedBy(this);</span>
     }
 
     /**
@@ -268,10 +270,10 @@ import java.util.Locale;
      */
     @Override
     public int get(TemporalField field) {
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (field == AMPM_OF_DAY) {</span>
-<span class="fc" id="L272">            return getValue();</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (field == AMPM_OF_DAY) {</span>
+<span class="fc" id="L274">            return getValue();</span>
         }
-<span class="nc" id="L274">        return range(field).checkValidIntValue(getLong(field), field);</span>
+<span class="nc" id="L276">        return range(field).checkValidIntValue(getLong(field), field);</span>
     }
 
     /**
@@ -298,12 +300,12 @@ import java.util.Locale;
      */
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L301" title="All 2 branches covered.">        if (field == AMPM_OF_DAY) {</span>
-<span class="fc" id="L302">            return getValue();</span>
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L304">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        if (field == AMPM_OF_DAY) {</span>
+<span class="fc" id="L304">            return getValue();</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L306">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L306">        return field.getFrom(this);</span>
+<span class="nc" id="L308">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -322,11 +324,11 @@ import java.util.Locale;
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
-    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L326" title="All 2 branches covered.">        if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L327">            return (R) HALF_DAYS;</span>
+    public &lt;R extends @Nullable Object&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L328" title="All 2 branches covered.">        if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L329">            return (R) HALF_DAYS;</span>
         }
-<span class="fc" id="L329">        return TemporalAccessor.super.query(query);</span>
+<span class="fc" id="L331">        return TemporalAccessor.super.query(query);</span>
     }
 
     /**
@@ -356,7 +358,7 @@ import java.util.Locale;
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L359">        return temporal.with(AMPM_OF_DAY, getValue());</span>
+<span class="fc" id="L361">        return temporal.with(AMPM_OF_DAY, getValue());</span>
     }
 
 }

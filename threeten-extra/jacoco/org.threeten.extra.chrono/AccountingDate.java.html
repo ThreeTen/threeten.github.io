@@ -57,6 +57,8 @@ import java.time.temporal.TemporalUnit;
 import java.time.temporal.ValueRange;
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * A date in an Accounting calendar system.
  * &lt;p&gt;
@@ -88,7 +90,7 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
     /**
      * Number of days in a long (400-year) cycle.
      */
-    private static final int DAYS_PER_LONG_CYCLE = 400 * 365 + 3 * 24 + 1 * 25;
+    private static final int DAYS_PER_LONG_CYCLE = 400 * 365 + 3 * 24 + 25;
 
     /**
      * The chronology for manipulating this date.
@@ -124,7 +126,7 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     public static AccountingDate now(AccountingChronology chronology) {
-<span class="nc" id="L127">        return now(chronology, Clock.systemDefaultZone());</span>
+<span class="nc" id="L129">        return now(chronology, Clock.systemDefaultZone());</span>
     }
 
     /**
@@ -144,7 +146,7 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     public static AccountingDate now(AccountingChronology chronology, ZoneId zone) {
-<span class="nc" id="L147">        return now(chronology, Clock.system(zone));</span>
+<span class="nc" id="L149">        return now(chronology, Clock.system(zone));</span>
     }
 
     /**
@@ -162,8 +164,8 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     public static AccountingDate now(AccountingChronology chronology, Clock clock) {
-<span class="fc" id="L165">        LocalDate now = LocalDate.now(clock);</span>
-<span class="nc" id="L166">        return ofEpochDay(chronology, now.toEpochDay());</span>
+<span class="fc" id="L167">        LocalDate now = LocalDate.now(clock);</span>
+<span class="nc" id="L168">        return ofEpochDay(chronology, now.toEpochDay());</span>
     }
 
     /**
@@ -182,7 +184,7 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  or if an AccountingChronology was not provided
      */
     public static AccountingDate of(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L185">        return create(chronology, prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L187">        return create(chronology, prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -207,10 +209,10 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     public static AccountingDate from(AccountingChronology chronology, TemporalAccessor temporal) {
-<span class="pc bpc" id="L210" title="1 of 4 branches missed.">        if (temporal instanceof AccountingDate &amp;&amp; ((AccountingDate) temporal).getChronology().equals(chronology)) {</span>
-<span class="fc" id="L211">            return (AccountingDate) temporal;</span>
+<span class="pc bpc" id="L212" title="1 of 4 branches missed.">        if (temporal instanceof AccountingDate &amp;&amp; ((AccountingDate) temporal).getChronology().equals(chronology)) {</span>
+<span class="fc" id="L213">            return (AccountingDate) temporal;</span>
         }
-<span class="fc" id="L213">        return ofEpochDay(chronology, temporal.getLong(EPOCH_DAY));</span>
+<span class="fc" id="L215">        return ofEpochDay(chronology, temporal.getLong(EPOCH_DAY));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -230,20 +232,20 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     static AccountingDate ofYearDay(AccountingChronology chronology, int prolepticYear, int dayOfYear) {
-<span class="fc" id="L233">        Objects.requireNonNull(chronology, &quot;A previously setup chronology is required.&quot;);</span>
-<span class="fc" id="L234">        YEAR.checkValidValue(prolepticYear);</span>
-<span class="fc" id="L235">        DAY_OF_YEAR_RANGE.checkValidValue(dayOfYear, DAY_OF_YEAR);</span>
-<span class="fc" id="L236">        boolean leap = chronology.isLeapYear(prolepticYear);</span>
-<span class="fc bfc" id="L237" title="All 4 branches covered.">        if (dayOfYear &gt; WEEKS_IN_YEAR * DAYS_IN_WEEK &amp;&amp; !leap) {</span>
-<span class="fc" id="L238">            throw new DateTimeException(&quot;Invalid date 'DayOfYear &quot; + dayOfYear + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+<span class="fc" id="L235">        Objects.requireNonNull(chronology, &quot;A previously setup chronology is required.&quot;);</span>
+<span class="fc" id="L236">        YEAR.checkValidValue(prolepticYear);</span>
+<span class="fc" id="L237">        DAY_OF_YEAR_RANGE.checkValidValue(dayOfYear, DAY_OF_YEAR);</span>
+<span class="fc" id="L238">        boolean leap = chronology.isLeapYear(prolepticYear);</span>
+<span class="fc bfc" id="L239" title="All 4 branches covered.">        if (dayOfYear &gt; WEEKS_IN_YEAR * DAYS_IN_WEEK &amp;&amp; !leap) {</span>
+<span class="fc" id="L240">            throw new DateTimeException(&quot;Invalid date 'DayOfYear &quot; + dayOfYear + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
         }
 
-<span class="fc bfc" id="L241" title="All 2 branches covered.">        int month = (leap ? chronology.getDivision().getMonthFromElapsedWeeks((dayOfYear - 1) / DAYS_IN_WEEK, chronology.getLeapWeekInMonth())</span>
-<span class="fc" id="L242">                : chronology.getDivision().getMonthFromElapsedWeeks((dayOfYear - 1) / DAYS_IN_WEEK));</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        int dayOfMonth = dayOfYear - (leap ? chronology.getDivision().getWeeksAtStartOfMonth(month, chronology.getLeapWeekInMonth())</span>
-<span class="fc" id="L244">                : chronology.getDivision().getWeeksAtStartOfMonth(month)) * DAYS_IN_WEEK;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        int month = (leap ? chronology.getDivision().getMonthFromElapsedWeeks((dayOfYear - 1) / DAYS_IN_WEEK, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L244">                : chronology.getDivision().getMonthFromElapsedWeeks((dayOfYear - 1) / DAYS_IN_WEEK));</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        int dayOfMonth = dayOfYear - (leap ? chronology.getDivision().getWeeksAtStartOfMonth(month, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L246">                : chronology.getDivision().getWeeksAtStartOfMonth(month)) * DAYS_IN_WEEK;</span>
 
-<span class="fc" id="L246">        return new AccountingDate(chronology, prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L248">        return new AccountingDate(chronology, prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -257,37 +259,37 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     static AccountingDate ofEpochDay(AccountingChronology chronology, long epochDay) {
-<span class="fc" id="L260">        EPOCH_DAY.range().checkValidValue(epochDay, EPOCH_DAY);  // validate outer bounds</span>
+<span class="fc" id="L262">        EPOCH_DAY.range().checkValidValue(epochDay, EPOCH_DAY);  // validate outer bounds</span>
         // Use Accounting 1 to help with 0-counts.  Leap years can occur at any time.
-<span class="fc" id="L262">        long accountingEpochDay = epochDay + chronology.getDays0001ToIso1970();</span>
+<span class="fc" id="L264">        long accountingEpochDay = epochDay + chronology.getDays0001ToIso1970();</span>
 
-<span class="fc" id="L264">        int longCycle = (int) Math.floorDiv(accountingEpochDay, DAYS_PER_LONG_CYCLE);</span>
-<span class="fc" id="L265">        int daysInLongCycle = (int) Math.floorMod(accountingEpochDay, DAYS_PER_LONG_CYCLE);</span>
+<span class="fc" id="L266">        int longCycle = (int) Math.floorDiv(accountingEpochDay, DAYS_PER_LONG_CYCLE);</span>
+<span class="fc" id="L267">        int daysInLongCycle = (int) Math.floorMod(accountingEpochDay, DAYS_PER_LONG_CYCLE);</span>
 
         // Value is an estimate, as the floating leap-years make this difficult.
-<span class="fc" id="L268">        int year = (daysInLongCycle - (daysInLongCycle / 365 + daysInLongCycle / (4 * 365 + 1) - daysInLongCycle / (100 * 365 + 24)) / 7) / (DAYS_IN_WEEK * WEEKS_IN_YEAR);</span>
-<span class="fc" id="L269">        int yearStart = (int) (WEEKS_IN_YEAR * (year - 1) + chronology.previousLeapYears(year)) * DAYS_IN_WEEK;</span>
+<span class="fc" id="L270">        int year = (daysInLongCycle - (daysInLongCycle / 365 + daysInLongCycle / (4 * 365 + 1) - daysInLongCycle / (100 * 365 + 24)) / 7) / (DAYS_IN_WEEK * WEEKS_IN_YEAR);</span>
+<span class="fc" id="L271">        int yearStart = (int) (WEEKS_IN_YEAR * (year - 1) + chronology.previousLeapYears(year)) * DAYS_IN_WEEK;</span>
 
         // Despite the year being an estimate, the effect should still be within a few days.
-<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (yearStart &gt; daysInLongCycle) {</span>
-<span class="fc" id="L273">            year--;</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">            yearStart -= (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK;</span>
-<span class="fc bfc" id="L275" title="All 4 branches covered.">        } else if (daysInLongCycle - yearStart &gt;= (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK) {</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">            yearStart += (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK;</span>
-<span class="fc" id="L277">            year++;</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">        if (yearStart &gt; daysInLongCycle) {</span>
+<span class="fc" id="L275">            year--;</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">            yearStart -= (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK;</span>
+<span class="fc bfc" id="L277" title="All 4 branches covered.">        } else if (daysInLongCycle - yearStart &gt;= (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK) {</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">            yearStart += (WEEKS_IN_YEAR + (chronology.isLeapYear(year) ? 1 : 0)) * DAYS_IN_WEEK;</span>
+<span class="fc" id="L279">            year++;</span>
         }
 
-<span class="fc" id="L280">        return ofYearDay(chronology, year + 400 * longCycle, daysInLongCycle - yearStart + 1);</span>
+<span class="fc" id="L282">        return ofYearDay(chronology, year + 400 * longCycle, daysInLongCycle - yearStart + 1);</span>
     }
 
     private static AccountingDate resolvePreviousValid(AccountingChronology chronology, int prolepticYear, int month, int day) {
-<span class="fc" id="L284">        day = Math.min(day, lengthOfMonth(chronology, prolepticYear, month));</span>
-<span class="fc" id="L285">        return new AccountingDate(chronology, prolepticYear, month, day);</span>
+<span class="fc" id="L286">        day = Math.min(day, lengthOfMonth(chronology, prolepticYear, month));</span>
+<span class="fc" id="L287">        return new AccountingDate(chronology, prolepticYear, month, day);</span>
     }
 
     private static int lengthOfMonth(AccountingChronology chronology, int prolepticYear, int month) {
-<span class="fc bfc" id="L289" title="All 2 branches covered.">        return (chronology.isLeapYear(prolepticYear) ? chronology.getDivision().getWeeksInMonth(month, chronology.getLeapWeekInMonth())</span>
-<span class="fc" id="L290">                : chronology.getDivision().getWeeksInMonth(month)) * DAYS_IN_WEEK;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        return (chronology.isLeapYear(prolepticYear) ? chronology.getDivision().getWeeksInMonth(month, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L292">                : chronology.getDivision().getWeeksInMonth(month)) * DAYS_IN_WEEK;</span>
     }
 
     /**
@@ -301,20 +303,20 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      *  NullPointerException if an AccountingChronology was not provided
      */
     static AccountingDate create(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L304">        Objects.requireNonNull(chronology, &quot;A previously setup chronology is required.&quot;);</span>
-<span class="fc" id="L305">        YEAR.checkValidValue(prolepticYear);</span>
-<span class="fc" id="L306">        chronology.range(MONTH_OF_YEAR).checkValidValue(month, MONTH_OF_YEAR);</span>
+<span class="fc" id="L306">        Objects.requireNonNull(chronology, &quot;A previously setup chronology is required.&quot;);</span>
+<span class="fc" id="L307">        YEAR.checkValidValue(prolepticYear);</span>
+<span class="fc" id="L308">        chronology.range(MONTH_OF_YEAR).checkValidValue(month, MONTH_OF_YEAR);</span>
 
-<span class="fc bfc" id="L308" title="All 4 branches covered.">        if (dayOfMonth &lt; 1 || dayOfMonth &gt; lengthOfMonth(chronology, prolepticYear, month)) {</span>
-<span class="fc bfc" id="L309" title="All 4 branches covered.">            if (month == chronology.getLeapWeekInMonth() &amp;&amp; dayOfMonth &lt; (chronology.getDivision().getWeeksInMonth(month) + 1) * DAYS_IN_WEEK</span>
-<span class="fc bfc" id="L310" title="All 2 branches covered.">                    &amp;&amp; !chronology.isLeapYear(prolepticYear)) {</span>
-<span class="fc" id="L311">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot;/&quot; + dayOfMonth + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+<span class="fc bfc" id="L310" title="All 4 branches covered.">        if (dayOfMonth &lt; 1 || dayOfMonth &gt; lengthOfMonth(chronology, prolepticYear, month)) {</span>
+<span class="fc bfc" id="L311" title="All 4 branches covered.">            if (month == chronology.getLeapWeekInMonth() &amp;&amp; dayOfMonth &lt; (chronology.getDivision().getWeeksInMonth(month) + 1) * DAYS_IN_WEEK</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">                    &amp;&amp; !chronology.isLeapYear(prolepticYear)) {</span>
+<span class="fc" id="L313">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot;/&quot; + dayOfMonth + &quot;' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
             } else {
-<span class="fc" id="L313">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot;/&quot; + dayOfMonth + &quot;'&quot;);</span>
+<span class="fc" id="L315">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot;/&quot; + dayOfMonth + &quot;'&quot;);</span>
             }
         }
 
-<span class="fc" id="L317">        return new AccountingDate(chronology, prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L319">        return new AccountingDate(chronology, prolepticYear, month, dayOfMonth);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -326,12 +328,12 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      * @param month  the Accounting month (period), from 1 to 12 or 1 to 13
      * @param dayOfMonth  the Accounting day-of-month, from 1 to 35 or 1 to 42
      */
-<span class="fc" id="L329">    private AccountingDate(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {</span>
-<span class="fc" id="L330">        this.chronology = chronology;</span>
-<span class="fc" id="L331">        this.prolepticYear = prolepticYear;</span>
-<span class="fc" id="L332">        this.month = (short) month;</span>
-<span class="fc" id="L333">        this.day = (short) dayOfMonth;</span>
-<span class="fc" id="L334">    }</span>
+<span class="fc" id="L331">    private AccountingDate(AccountingChronology chronology, int prolepticYear, int month, int dayOfMonth) {</span>
+<span class="fc" id="L332">        this.chronology = chronology;</span>
+<span class="fc" id="L333">        this.prolepticYear = prolepticYear;</span>
+<span class="fc" id="L334">        this.month = (short) month;</span>
+<span class="fc" id="L335">        this.day = (short) dayOfMonth;</span>
+<span class="fc" id="L336">    }</span>
 
     /**
      * Validates the object.
@@ -339,50 +341,51 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      * @return the resolved date, not null
      */
     private Object readResolve() {
-<span class="nc" id="L342">        return AccountingDate.create(chronology, prolepticYear, month, day);</span>
+<span class="nc" id="L344">        Objects.requireNonNull(chronology, &quot;chronology&quot;);</span>
+<span class="nc" id="L345">        return AccountingDate.create(chronology, prolepticYear, month, day);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     int getProlepticYear() {
-<span class="fc" id="L348">        return prolepticYear;</span>
+<span class="fc" id="L351">        return prolepticYear;</span>
     }
 
     @Override
     int getMonth() {
-<span class="fc" id="L353">        return month;</span>
+<span class="fc" id="L356">        return month;</span>
     }
 
     @Override
     int getDayOfMonth() {
-<span class="fc" id="L358">        return day;</span>
+<span class="fc" id="L361">        return day;</span>
     }
 
     @Override
     int getDayOfYear() {
-<span class="fc bfc" id="L363" title="All 2 branches covered.">        int weeksAtStartOfMonth = (isLeapYear() ? chronology.getDivision().getWeeksAtStartOfMonth(month, chronology.getLeapWeekInMonth())</span>
-<span class="fc" id="L364">                : chronology.getDivision().getWeeksAtStartOfMonth(month));</span>
-<span class="fc" id="L365">        return weeksAtStartOfMonth * DAYS_IN_WEEK + day;</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        int weeksAtStartOfMonth = (isLeapYear() ? chronology.getDivision().getWeeksAtStartOfMonth(month, chronology.getLeapWeekInMonth())</span>
+<span class="fc" id="L367">                : chronology.getDivision().getWeeksAtStartOfMonth(month));</span>
+<span class="fc" id="L368">        return weeksAtStartOfMonth * DAYS_IN_WEEK + day;</span>
     }
 
     @Override
     AbstractDate withDayOfYear(int value) {
-<span class="fc" id="L370">        return plusDays(value - getDayOfYear());</span>
+<span class="fc" id="L373">        return plusDays(value - getDayOfYear());</span>
     }
 
     @Override
     int lengthOfYearInMonths() {
-<span class="fc" id="L375">        return chronology.getDivision().lengthOfYearInMonths();</span>
+<span class="fc" id="L378">        return chronology.getDivision().lengthOfYearInMonths();</span>
     }
 
     @Override
     ValueRange rangeAlignedWeekOfMonth() {
-<span class="fc" id="L380">        return ValueRange.of(1, (lengthOfMonth() - 1) / DAYS_IN_WEEK + 1);</span>
+<span class="fc" id="L383">        return ValueRange.of(1, (lengthOfMonth() - 1) / DAYS_IN_WEEK + 1);</span>
     }
 
     @Override
     AccountingDate resolvePrevious(int newYear, int newMonth, int dayOfMonth) {
-<span class="fc" id="L385">        return resolvePreviousValid(chronology, newYear, newMonth, dayOfMonth);</span>
+<span class="fc" id="L388">        return resolvePreviousValid(chronology, newYear, newMonth, dayOfMonth);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -396,74 +399,74 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      */
     @Override
     public AccountingChronology getChronology() {
-<span class="fc" id="L399">        return chronology;</span>
+<span class="fc" id="L402">        return chronology;</span>
     }
 
     @Override
     public int lengthOfMonth() {
-<span class="fc" id="L404">        return lengthOfMonth(chronology, prolepticYear, month);</span>
+<span class="fc" id="L407">        return lengthOfMonth(chronology, prolepticYear, month);</span>
     }
 
     @Override
     public int lengthOfYear() {
-<span class="fc bfc" id="L409" title="All 2 branches covered.">        return (WEEKS_IN_YEAR + (isLeapYear() ? 1 : 0)) * DAYS_IN_WEEK;</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">        return (WEEKS_IN_YEAR + (isLeapYear() ? 1 : 0)) * DAYS_IN_WEEK;</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
     public AccountingDate with(TemporalAdjuster adjuster) {
-<span class="fc" id="L415">        return (AccountingDate) adjuster.adjustInto(this);</span>
+<span class="fc" id="L418">        return (AccountingDate) adjuster.adjustInto(this);</span>
     }
 
     @Override
     public AccountingDate with(TemporalField field, long newValue) {
-<span class="fc" id="L420">        return (AccountingDate) super.with(field, newValue);</span>
+<span class="fc" id="L423">        return (AccountingDate) super.with(field, newValue);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public AccountingDate plus(TemporalAmount amount) {
-<span class="fc" id="L426">        return (AccountingDate) amount.addTo(this);</span>
+<span class="fc" id="L429">        return (AccountingDate) amount.addTo(this);</span>
     }
 
     @Override
     public AccountingDate plus(long amountToAdd, TemporalUnit unit) {
-<span class="fc" id="L431">        return (AccountingDate) super.plus(amountToAdd, unit);</span>
+<span class="fc" id="L434">        return (AccountingDate) super.plus(amountToAdd, unit);</span>
     }
 
     @Override
     public AccountingDate minus(TemporalAmount amount) {
-<span class="fc" id="L436">        return (AccountingDate) amount.subtractFrom(this);</span>
+<span class="fc" id="L439">        return (AccountingDate) amount.subtractFrom(this);</span>
     }
 
     @Override
     public AccountingDate minus(long amountToSubtract, TemporalUnit unit) {
-<span class="pc bpc" id="L441" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
     }
 
     //-------------------------------------------------------------------------
     @Override  // for covariant return type
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;AccountingDate&gt; atTime(LocalTime localTime) {
-<span class="nc" id="L448">        return (ChronoLocalDateTime&lt;AccountingDate&gt;) super.atTime(localTime);</span>
+<span class="nc" id="L451">        return (ChronoLocalDateTime&lt;AccountingDate&gt;) super.atTime(localTime);</span>
     }
 
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L453">        return super.until(AccountingDate.from(chronology, endExclusive), unit);</span>
+<span class="fc" id="L456">        return super.until(AccountingDate.from(chronology, endExclusive), unit);</span>
     }
 
     @Override
     public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
-<span class="fc" id="L458">        return super.doUntil(AccountingDate.from(chronology, endDateExclusive));</span>
+<span class="fc" id="L461">        return super.doUntil(AccountingDate.from(chronology, endDateExclusive));</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public long toEpochDay() {
-<span class="fc" id="L464">        long year = prolepticYear;</span>
-<span class="fc" id="L465">        long accountingEpochDay = ((year - 1) * WEEKS_IN_YEAR + chronology.previousLeapYears(year)) * DAYS_IN_WEEK + (getDayOfYear() - 1);</span>
-<span class="fc" id="L466">        return accountingEpochDay - chronology.getDays0001ToIso1970();</span>
+<span class="fc" id="L467">        long year = prolepticYear;</span>
+<span class="fc" id="L468">        long accountingEpochDay = ((year - 1) * WEEKS_IN_YEAR + chronology.previousLeapYears(year)) * DAYS_IN_WEEK + (getDayOfYear() - 1);</span>
+<span class="fc" id="L469">        return accountingEpochDay - chronology.getDays0001ToIso1970();</span>
     }
 
     //-------------------------------------------------------------------------
@@ -480,18 +483,18 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      * @return true if this is equal to the other date
      */
     @Override
-    public boolean equals(Object obj) {
-<span class="fc bfc" id="L484" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L485">            return true;</span>
+    public boolean equals(@Nullable Object obj) {
+<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L488">            return true;</span>
         }
-<span class="fc bfc" id="L487" title="All 2 branches covered.">        if (obj instanceof AccountingDate) {</span>
-<span class="fc" id="L488">            AccountingDate other = (AccountingDate) obj;</span>
-<span class="fc bfc" id="L489" title="All 6 branches covered.">            return this.prolepticYear == other.prolepticYear &amp;&amp;</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">        if (obj instanceof AccountingDate) {</span>
+<span class="fc" id="L491">            AccountingDate other = (AccountingDate) obj;</span>
+<span class="fc bfc" id="L492" title="All 6 branches covered.">            return this.prolepticYear == other.prolepticYear &amp;&amp;</span>
                     this.month == other.month &amp;&amp;
                     this.day == other.day &amp;&amp;
-<span class="fc bfc" id="L492" title="All 2 branches covered.">                    this.chronology.equals(other.chronology);</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">                    this.chronology.equals(other.chronology);</span>
         }
-<span class="fc" id="L494">        return false;</span>
+<span class="fc" id="L497">        return false;</span>
     }
 
     /**
@@ -501,7 +504,7 @@ public final class AccountingDate extends AbstractDate implements ChronoLocalDat
      */
     @Override  // override for performance
     public int hashCode() {
-<span class="fc" id="L504">        return chronology.hashCode() ^</span>
+<span class="fc" id="L507">        return chronology.hashCode() ^</span>
                 ((prolepticYear &amp; 0xFFFFF800) ^ ((prolepticYear &lt;&lt; 11) + (month &lt;&lt; 6) + (day)));
     }
 }

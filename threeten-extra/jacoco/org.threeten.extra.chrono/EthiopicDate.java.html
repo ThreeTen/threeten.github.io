@@ -203,7 +203,7 @@ public final class EthiopicDate
     static EthiopicDate ofYearDay(int prolepticYear, int dayOfYear) {
 <span class="fc" id="L204">        EthiopicChronology.YEAR_RANGE.checkValidValue(prolepticYear, YEAR);</span>
 <span class="fc" id="L205">        DAY_OF_YEAR.range().checkValidValue(dayOfYear, DAY_OF_YEAR);</span>
-<span class="pc bpc" id="L206" title="1 of 4 branches missed.">        if (dayOfYear == 366 &amp;&amp; EthiopicChronology.INSTANCE.isLeapYear(prolepticYear) == false) {</span>
+<span class="pc bpc" id="L206" title="1 of 4 branches missed.">        if (dayOfYear == 366 &amp;&amp; !EthiopicChronology.INSTANCE.isLeapYear(prolepticYear)) {</span>
 <span class="fc" id="L207">            throw new DateTimeException(&quot;Invalid date 'Pagumen 6' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
         }
 <span class="fc" id="L209">        return new EthiopicDate(prolepticYear, (dayOfYear - 1) / 30 + 1, (dayOfYear - 1) % 30 + 1);</span>

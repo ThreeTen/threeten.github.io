@@ -53,6 +53,8 @@ import java.time.temporal.UnsupportedTemporalTypeException;
 import java.time.temporal.ValueRange;
 import java.util.Locale;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * A half-of-year, such as 'H2'.
  * &lt;p&gt;
@@ -69,18 +71,18 @@ import java.util.Locale;
  * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
  * This is an immutable and thread-safe enum.
  */
-<span class="fc" id="L72">public enum Half implements TemporalAccessor, TemporalAdjuster {</span>
+<span class="fc" id="L74">public enum Half implements TemporalAccessor, TemporalAdjuster {</span>
 
     /**
      * The singleton instance for the first half-of-year, from January to June.
      * This has the numeric value of {@code 1}.
      */
-<span class="fc" id="L78">    H1,</span>
+<span class="fc" id="L80">    H1,</span>
     /**
      * The singleton instance for the second half-of-year, from July to December.
      * This has the numeric value of {@code 2}.
      */
-<span class="fc" id="L83">    H2;</span>
+<span class="fc" id="L85">    H2;</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -95,13 +97,13 @@ import java.util.Locale;
      * @throws DateTimeException if the half-of-year is invalid
      */
     public static Half of(int halfOfYear) {
-<span class="fc bfc" id="L98" title="All 3 branches covered.">        switch (halfOfYear) {</span>
+<span class="fc bfc" id="L100" title="All 3 branches covered.">        switch (halfOfYear) {</span>
             case 1:
-<span class="fc" id="L100">                return H1;</span>
+<span class="fc" id="L102">                return H1;</span>
             case 2:
-<span class="fc" id="L102">                return H2;</span>
+<span class="fc" id="L104">                return H2;</span>
             default:
-<span class="fc" id="L104">                throw new DateTimeException(&quot;Invalid value for Half: &quot; + halfOfYear);</span>
+<span class="fc" id="L106">                throw new DateTimeException(&quot;Invalid value for Half: &quot; + halfOfYear);</span>
         }
     }
 
@@ -118,8 +120,8 @@ import java.util.Locale;
      * @throws DateTimeException if the month-of-year is invalid
      */
     public static Half ofMonth(int monthOfYear) {
-<span class="fc" id="L121">        MONTH_OF_YEAR.range().checkValidValue(monthOfYear, MONTH_OF_YEAR);</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        return of(monthOfYear &lt;= 6 ? 1 : 2);</span>
+<span class="fc" id="L123">        MONTH_OF_YEAR.range().checkValidValue(monthOfYear, MONTH_OF_YEAR);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        return of(monthOfYear &lt;= 6 ? 1 : 2);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -142,21 +144,21 @@ import java.util.Locale;
      * @throws DateTimeException if unable to convert to a {@code Half}
      */
     public static Half from(TemporalAccessor temporal) {
-<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (temporal instanceof Half) {</span>
-<span class="fc" id="L146">            return (Half) temporal;</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">        } else if (temporal instanceof Month) {</span>
-<span class="fc" id="L148">            Month month = (Month) temporal;</span>
-<span class="fc" id="L149">            return of(month.ordinal() / 6 + 1);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (temporal instanceof Half) {</span>
+<span class="fc" id="L148">            return (Half) temporal;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        } else if (temporal instanceof Month) {</span>
+<span class="fc" id="L150">            Month month = (Month) temporal;</span>
+<span class="fc" id="L151">            return of(month.ordinal() / 6 + 1);</span>
         }
         try {
             TemporalAccessor adjusted =
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                    !IsoChronology.INSTANCE.equals(Chronology.from(temporal)) ? LocalDate.from(temporal) : temporal;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                    !IsoChronology.INSTANCE.equals(Chronology.from(temporal)) ? LocalDate.from(temporal) : temporal;</span>
             // need to use getLong() as JDK Parsed class get() doesn't work properly
-<span class="fc" id="L155">            int qoy = Math.toIntExact(adjusted.getLong(HALF_OF_YEAR));</span>
-<span class="fc" id="L156">            return of(qoy);</span>
-<span class="fc" id="L157">        } catch (DateTimeException ex) {</span>
-<span class="fc" id="L158">            throw new DateTimeException(&quot;Unable to obtain Half from TemporalAccessor: &quot; +</span>
-<span class="fc" id="L159">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
+<span class="fc" id="L157">            int qoy = Math.toIntExact(adjusted.getLong(HALF_OF_YEAR));</span>
+<span class="fc" id="L158">            return of(qoy);</span>
+<span class="fc" id="L159">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L160">            throw new DateTimeException(&quot;Unable to obtain Half from TemporalAccessor: &quot; +</span>
+<span class="fc" id="L161">                    temporal + &quot; of type &quot; + temporal.getClass().getName(), ex);</span>
         }
     }
 
@@ -170,7 +172,7 @@ import java.util.Locale;
      * @return the half-of-year, from 1 (H1) to 2 (H2)
      */
     public int getValue() {
-<span class="fc" id="L173">        return ordinal() + 1;</span>
+<span class="fc" id="L175">        return ordinal() + 1;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -188,7 +190,7 @@ import java.util.Locale;
      * @return the text value of the half-of-year, not null
      */
     public String getDisplayName(TextStyle style, Locale locale) {
-<span class="fc" id="L191">        return new DateTimeFormatterBuilder().appendText(HALF_OF_YEAR, style).toFormatter(locale).format(this);</span>
+<span class="fc" id="L193">        return new DateTimeFormatterBuilder().appendText(HALF_OF_YEAR, style).toFormatter(locale).format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -212,13 +214,13 @@ import java.util.Locale;
      * @return true if the field is supported on this half-of-year, false if not
      */
     @Override
-    public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
-<span class="fc" id="L217">            return true;</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L219">            return false;</span>
+    public boolean isSupported(@Nullable TemporalField field) {
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L219">            return true;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L221">            return false;</span>
         }
-<span class="pc bpc" id="L221" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L223" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -245,12 +247,12 @@ import java.util.Locale;
      */
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc bfc" id="L248" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
-<span class="fc" id="L249">            return field.range();</span>
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L251">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L251">            return field.range();</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L253">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L253">        return TemporalAccessor.super.range(field);</span>
+<span class="nc" id="L255">        return TemporalAccessor.super.range(field);</span>
     }
 
     /**
@@ -280,12 +282,12 @@ import java.util.Locale;
      */
     @Override
     public int get(TemporalField field) {
-<span class="fc bfc" id="L283" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
-<span class="fc" id="L284">            return getValue();</span>
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L286">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L286">            return getValue();</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L288">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L288">        return TemporalAccessor.super.get(field);</span>
+<span class="nc" id="L290">        return TemporalAccessor.super.get(field);</span>
     }
 
     /**
@@ -312,12 +314,12 @@ import java.util.Locale;
      */
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L315" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
-<span class="fc" id="L316">            return getValue();</span>
-<span class="pc bpc" id="L317" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
-<span class="fc" id="L318">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        if (field == HALF_OF_YEAR) {</span>
+<span class="fc" id="L318">            return getValue();</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc" id="L320">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L320">        return field.getFrom(this);</span>
+<span class="nc" id="L322">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -333,8 +335,8 @@ import java.util.Locale;
      * @return the resulting half, not null
      */
     public Half plus(long halves) {
-<span class="fc" id="L336">        int amount = (int) halves % 2;</span>
-<span class="fc" id="L337">        return values()[(ordinal() + (amount + 2)) % 2];</span>
+<span class="fc" id="L338">        int amount = (int) halves % 2;</span>
+<span class="fc" id="L339">        return values()[(ordinal() + (amount + 2)) % 2];</span>
     }
 
     /**
@@ -349,7 +351,7 @@ import java.util.Locale;
      * @return the resulting half, not null
      */
     public Half minus(long halves) {
-<span class="fc" id="L352">        return plus(-(halves % 2));</span>
+<span class="fc" id="L354">        return plus(-(halves % 2));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -365,7 +367,7 @@ import java.util.Locale;
      * @return the length of this half in days, 181, 182 or 184
      */
     public int length(boolean leapYear) {
-<span class="fc bfc" id="L368" title="All 4 branches covered.">        return this == H1 ? (leapYear ? 182 : 181) : 184;</span>
+<span class="fc bfc" id="L370" title="All 4 branches covered.">        return this == H1 ? (leapYear ? 182 : 181) : 184;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -378,7 +380,7 @@ import java.util.Locale;
      * @return the first month in the half, not null
      */
     public Month firstMonth() {
-<span class="fc bfc" id="L381" title="All 2 branches covered.">        return this == H1 ? Month.JANUARY : Month.JULY;</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        return this == H1 ? Month.JANUARY : Month.JULY;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -397,13 +399,13 @@ import java.util.Locale;
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
-    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L401" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L402">            return (R) IsoChronology.INSTANCE;</span>
-<span class="fc bfc" id="L403" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L404">            return (R) HALF_YEARS;</span>
+    public &lt;R extends @Nullable Object&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L403" title="All 2 branches covered.">        if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L404">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L406">            return (R) HALF_YEARS;</span>
         }
-<span class="fc" id="L406">        return TemporalAccessor.super.query(query);</span>
+<span class="fc" id="L408">        return TemporalAccessor.super.query(query);</span>
     }
 
     /**
@@ -440,10 +442,10 @@ import java.util.Locale;
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        if (Chronology.from(temporal).equals(IsoChronology.INSTANCE) == false) {</span>
-<span class="nc" id="L444">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
+<span class="pc bpc" id="L445" title="1 of 2 branches missed.">        if (!Chronology.from(temporal).equals(IsoChronology.INSTANCE)) {</span>
+<span class="nc" id="L446">            throw new DateTimeException(&quot;Adjustment only supported on ISO date-time&quot;);</span>
         }
-<span class="fc" id="L446">        return temporal.with(HALF_OF_YEAR, getValue());</span>
+<span class="fc" id="L448">        return temporal.with(HALF_OF_YEAR, getValue());</span>
     }
 
 }

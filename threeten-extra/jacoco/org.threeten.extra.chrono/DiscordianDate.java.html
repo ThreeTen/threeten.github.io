@@ -91,11 +91,11 @@ public final class DiscordianDate
      */
     private static final int DISCORDIAN_1167_TO_ISO_1970 = 719162;
     /**
-     * The days per short 4 year cycle.
+     * The days per short 4-year cycle.
      */
     private static final int DAYS_PER_SHORT_CYCLE = (365 * 4) + 1;
     /**
-     * The days per 100 year cycle.
+     * The days per 100-year cycle.
      */
     private static final int DAYS_PER_CYCLE = (DAYS_PER_SHORT_CYCLE * 25) - 1;
     /**
@@ -288,25 +288,23 @@ public final class DiscordianDate
     }
 
     private static DiscordianDate resolvePreviousValid(int prolepticYear, int month, int day) {
-<span class="fc bfc" id="L291" title="All 2 branches covered.">        switch (month) {</span>
-            case 0:
-<span class="fc" id="L293">                day = 0;</span>
-<span class="fc bfc" id="L294" title="All 2 branches covered.">                if (DiscordianChronology.INSTANCE.isLeapYear(prolepticYear)) {</span>
-<span class="fc" id="L295">                    break;</span>
-                }
-<span class="fc" id="L297">                month = 1;</span>
-                // fall through
-            default:
-<span class="fc bfc" id="L300" title="All 2 branches covered.">                if (day == 0) {</span>
-<span class="fc" id="L301">                    day = ST_TIBS_OFFSET;</span>
-                }
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        if (month == 0) {</span>
+<span class="fc" id="L292">            day = 0;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">            if (DiscordianChronology.INSTANCE.isLeapYear(prolepticYear)) {</span>
+<span class="fc" id="L294">                return new DiscordianDate(prolepticYear, month, day);</span>
+            }
+<span class="fc" id="L296">            month = 1;</span>
+            // fall through
         }
-<span class="fc" id="L304">        return new DiscordianDate(prolepticYear, month, day);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (day == 0) {</span>
+<span class="fc" id="L300">            day = ST_TIBS_OFFSET;</span>
+        }
+<span class="fc" id="L302">        return new DiscordianDate(prolepticYear, month, day);</span>
     }
 
     private static long getLeapYearsBefore(long year) {
-<span class="fc" id="L308">        long offsetYear = year - OFFSET_FROM_ISO_0000 - 1;</span>
-<span class="fc" id="L309">        return Math.floorDiv(offsetYear, 4) - Math.floorDiv(offsetYear, 100) + Math.floorDiv(offsetYear, 400);</span>
+<span class="fc" id="L306">        long offsetYear = year - OFFSET_FROM_ISO_0000 - 1;</span>
+<span class="fc" id="L307">        return Math.floorDiv(offsetYear, 4) - Math.floorDiv(offsetYear, 100) + Math.floorDiv(offsetYear, 400);</span>
     }
 
     /**
@@ -320,19 +318,19 @@ public final class DiscordianDate
      *  or if the day-of-year is invalid for the month-year
      */
     static DiscordianDate create(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L323">        DiscordianChronology.YEAR_RANGE.checkValidValue(prolepticYear, YEAR);</span>
-<span class="fc" id="L324">        DiscordianChronology.MONTH_OF_YEAR_RANGE.checkValidValue(month, MONTH_OF_YEAR);</span>
-<span class="fc" id="L325">        DiscordianChronology.DAY_OF_MONTH_RANGE.checkValidValue(dayOfMonth, DAY_OF_MONTH);</span>
+<span class="fc" id="L321">        DiscordianChronology.YEAR_RANGE.checkValidValue(prolepticYear, YEAR);</span>
+<span class="fc" id="L322">        DiscordianChronology.MONTH_OF_YEAR_RANGE.checkValidValue(month, MONTH_OF_YEAR);</span>
+<span class="fc" id="L323">        DiscordianChronology.DAY_OF_MONTH_RANGE.checkValidValue(dayOfMonth, DAY_OF_MONTH);</span>
 
-<span class="fc bfc" id="L327" title="All 4 branches covered.">        if (month == 0 || dayOfMonth == 0) {</span>
-<span class="fc bfc" id="L328" title="All 4 branches covered.">            if (month != 0 || dayOfMonth != 0) {</span>
-<span class="fc" id="L329">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot; &quot; + dayOfMonth + &quot;' as St. Tib's Day is the only special day inserted in a non-existent month.&quot;);</span>
-<span class="fc bfc" id="L330" title="All 2 branches covered.">            } else if (!DiscordianChronology.INSTANCE.isLeapYear(prolepticYear)) {</span>
-<span class="fc" id="L331">                throw new DateTimeException(&quot;Invalid date 'St. Tibs Day' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
+<span class="fc bfc" id="L325" title="All 4 branches covered.">        if (month == 0 || dayOfMonth == 0) {</span>
+<span class="fc bfc" id="L326" title="All 4 branches covered.">            if (month != 0 || dayOfMonth != 0) {</span>
+<span class="fc" id="L327">                throw new DateTimeException(&quot;Invalid date '&quot; + month + &quot; &quot; + dayOfMonth + &quot;' as St. Tib's Day is the only special day inserted in a non-existent month.&quot;);</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">            } else if (!DiscordianChronology.INSTANCE.isLeapYear(prolepticYear)) {</span>
+<span class="fc" id="L329">                throw new DateTimeException(&quot;Invalid date 'St. Tibs Day' as '&quot; + prolepticYear + &quot;' is not a leap year&quot;);</span>
             }
         }
 
-<span class="fc" id="L335">        return new DiscordianDate(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L333">        return new DiscordianDate(prolepticYear, month, dayOfMonth);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -343,11 +341,11 @@ public final class DiscordianDate
      * @param month  the Discordian month, from 1 to 5
      * @param dayOfMonth  the Discordian day-of-month, from 1 to 73
      */
-<span class="fc" id="L346">    private DiscordianDate(int prolepticYear, int month, int dayOfMonth) {</span>
-<span class="fc" id="L347">        this.prolepticYear = prolepticYear;</span>
-<span class="fc" id="L348">        this.month = (short) month;</span>
-<span class="fc" id="L349">        this.day = (short) dayOfMonth;</span>
-<span class="fc" id="L350">    }</span>
+<span class="fc" id="L344">    private DiscordianDate(int prolepticYear, int month, int dayOfMonth) {</span>
+<span class="fc" id="L345">        this.prolepticYear = prolepticYear;</span>
+<span class="fc" id="L346">        this.month = (short) month;</span>
+<span class="fc" id="L347">        this.day = (short) dayOfMonth;</span>
+<span class="fc" id="L348">    }</span>
 
     /**
      * Validates the object.
@@ -355,131 +353,131 @@ public final class DiscordianDate
      * @return the resolved date, not null
      */
     private Object readResolve() {
-<span class="nc" id="L358">        return DiscordianDate.create(prolepticYear, month, day);</span>
+<span class="nc" id="L356">        return DiscordianDate.create(prolepticYear, month, day);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     int getProlepticYear() {
-<span class="fc" id="L364">        return prolepticYear;</span>
+<span class="fc" id="L362">        return prolepticYear;</span>
     }
 
     @Override
     int getMonth() {
-<span class="fc" id="L369">        return month;</span>
+<span class="fc" id="L367">        return month;</span>
     }
 
     @Override
     int getDayOfMonth() {
-<span class="fc" id="L374">        return day;</span>
+<span class="fc" id="L372">        return day;</span>
     }
 
     @Override
     int getDayOfYear() {
         // St. Tib's Day isn't part of any month, but would be the 60th day of the year.
-<span class="pc bpc" id="L380" title="1 of 4 branches missed.">        if (month == 0 &amp;&amp; day == 0) {</span>
-<span class="fc" id="L381">            return ST_TIBS_OFFSET;</span>
+<span class="pc bpc" id="L378" title="1 of 4 branches missed.">        if (month == 0 &amp;&amp; day == 0) {</span>
+<span class="fc" id="L379">            return ST_TIBS_OFFSET;</span>
         }
-<span class="fc" id="L383">        int dayOfYear = (month - 1) * DAYS_IN_MONTH + day;</span>
+<span class="fc" id="L381">        int dayOfYear = (month - 1) * DAYS_IN_MONTH + day;</span>
         // If after St. Tib's day, need to offset to account for it.
-<span class="fc bfc" id="L385" title="All 4 branches covered.">        return dayOfYear + (dayOfYear &gt;= ST_TIBS_OFFSET &amp;&amp; isLeapYear() ? 1 : 0);</span>
+<span class="fc bfc" id="L383" title="All 4 branches covered.">        return dayOfYear + (dayOfYear &gt;= ST_TIBS_OFFSET &amp;&amp; isLeapYear() ? 1 : 0);</span>
     }
 
     @Override
     AbstractDate withDayOfYear(int value) {
-<span class="fc" id="L390">        return plusDays(value - getDayOfYear());</span>
+<span class="fc" id="L388">        return plusDays(value - getDayOfYear());</span>
     }
 
     @Override
     int lengthOfWeek() {
-<span class="fc" id="L395">        return DAYS_IN_WEEK;</span>
+<span class="fc" id="L393">        return DAYS_IN_WEEK;</span>
     }
 
     @Override
     int lengthOfYearInMonths() {
-<span class="fc" id="L400">        return MONTHS_IN_YEAR;</span>
+<span class="fc" id="L398">        return MONTHS_IN_YEAR;</span>
     }
 
     @Override
     ValueRange rangeAlignedWeekOfMonth() {
-<span class="fc bfc" id="L405" title="All 2 branches covered.">        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, 15);</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, 15);</span>
     }
 
     @Override
     DiscordianDate resolvePrevious(int newYear, int newMonth, int dayOfMonth) {
-<span class="fc" id="L410">        return resolvePreviousValid(newYear, newMonth, dayOfMonth);</span>
+<span class="fc" id="L408">        return resolvePreviousValid(newYear, newMonth, dayOfMonth);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(TemporalField field) {
-<span class="pc bpc" id="L416" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L417" title="All 2 branches covered.">            if (isSupported(field)) {</span>
-<span class="fc" id="L418">                ChronoField f = (ChronoField) field;</span>
-<span class="fc bfc" id="L419" title="All 7 branches covered.">                switch (f) {</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">            if (isSupported(field)) {</span>
+<span class="fc" id="L416">                ChronoField f = (ChronoField) field;</span>
+<span class="fc bfc" id="L417" title="All 7 branches covered.">                switch (f) {</span>
                     case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-<span class="fc bfc" id="L421" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_WEEK);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_WEEK);</span>
                     case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-<span class="fc bfc" id="L423" title="All 2 branches covered.">                        return ValueRange.of(isLeapYear() ? 0 : 1, DAYS_IN_WEEK);</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">                        return ValueRange.of(isLeapYear() ? 0 : 1, DAYS_IN_WEEK);</span>
                     case ALIGNED_WEEK_OF_YEAR:
-<span class="fc bfc" id="L425" title="All 2 branches covered.">                        return ValueRange.of(isLeapYear() ? 0 : 1, WEEKS_IN_YEAR);</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">                        return ValueRange.of(isLeapYear() ? 0 : 1, WEEKS_IN_YEAR);</span>
                     case DAY_OF_MONTH:
-<span class="fc bfc" id="L427" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_MONTH);</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_MONTH);</span>
                     case DAY_OF_WEEK:
-<span class="fc bfc" id="L429" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_WEEK);</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">                        return month == 0 ? ValueRange.of(0, 0) : ValueRange.of(1, DAYS_IN_WEEK);</span>
                     case MONTH_OF_YEAR:
-<span class="fc bfc" id="L431" title="All 2 branches covered.">                        return ValueRange.of(isLeapYear() ? 0 : 1, MONTHS_IN_YEAR);</span>
+<span class="fc bfc" id="L429" title="All 2 branches covered.">                        return ValueRange.of(isLeapYear() ? 0 : 1, MONTHS_IN_YEAR);</span>
                     default:
                         break;
                 }
             }
         }
-<span class="fc" id="L437">        return super.range(field);</span>
+<span class="fc" id="L435">        return super.range(field);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public long getLong(TemporalField field) {
-<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L444" title="All 5 branches covered.">            switch ((ChronoField) field) {</span>
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L442" title="All 5 branches covered.">            switch ((ChronoField) field) {</span>
                 case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-<span class="fc bfc" id="L446" title="All 2 branches covered.">                    return month == 0 ? 0 : super.getLong(field);</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">                    return month == 0 ? 0 : super.getLong(field);</span>
                 case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-<span class="fc" id="L448">                    return getDayOfWeek();</span>
+<span class="fc" id="L446">                    return getDayOfWeek();</span>
                 case ALIGNED_WEEK_OF_MONTH:
-<span class="fc bfc" id="L450" title="All 2 branches covered.">                    return month == 0 ? 0 : super.getLong(field);</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">                    return month == 0 ? 0 : super.getLong(field);</span>
                 case ALIGNED_WEEK_OF_YEAR:
-<span class="fc bfc" id="L452" title="All 2 branches covered.">                    if (month == 0) {</span>
-<span class="fc" id="L453">                        return 0;</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">                    if (month == 0) {</span>
+<span class="fc" id="L451">                        return 0;</span>
                     } else {
-<span class="pc bpc" id="L455" title="1 of 4 branches missed.">                        return ((getDayOfYear() - (getDayOfYear() &gt;= ST_TIBS_OFFSET &amp;&amp; isLeapYear() ? 1 : 0) - 1) / DAYS_IN_WEEK) + 1;</span>
+<span class="pc bpc" id="L453" title="1 of 4 branches missed.">                        return ((getDayOfYear() - (getDayOfYear() &gt;= ST_TIBS_OFFSET &amp;&amp; isLeapYear() ? 1 : 0) - 1) / DAYS_IN_WEEK) + 1;</span>
                     }
                 default:
                     break;
             }
         }
-<span class="fc" id="L461">        return super.getLong(field);</span>
+<span class="fc" id="L459">        return super.getLong(field);</span>
     }
 
     @Override
     int getDayOfWeek() {
-<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (month == 0) {</span>
-<span class="fc" id="L467">            return 0;</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        if (month == 0) {</span>
+<span class="fc" id="L465">            return 0;</span>
         }
         // Need to offset to account for added day.
-<span class="pc bpc" id="L470" title="1 of 4 branches missed.">        int dayOfYear = getDayOfYear() - (getDayOfYear() &gt;= ST_TIBS_OFFSET &amp;&amp; isLeapYear() ? 1 : 0);</span>
-<span class="fc" id="L471">        return (dayOfYear - 1) % DAYS_IN_WEEK + 1;</span>
+<span class="pc bpc" id="L468" title="1 of 4 branches missed.">        int dayOfYear = getDayOfYear() - (getDayOfYear() &gt;= ST_TIBS_OFFSET &amp;&amp; isLeapYear() ? 1 : 0);</span>
+<span class="fc" id="L469">        return (dayOfYear - 1) % DAYS_IN_WEEK + 1;</span>
     }
 
     @Override
     long getProlepticMonth() {
         // Consider St. Tib's day to be part of the 1st month for this count.
-<span class="fc bfc" id="L477" title="All 2 branches covered.">        return prolepticYear * MONTHS_IN_YEAR + (month == 0 ? 1 : month) - 1;</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        return ((long) prolepticYear) * MONTHS_IN_YEAR + (month == 0 ? 1 : month) - 1;</span>
     }
 
     long getProlepticWeek() {
         // Consider St. Tib's day to be part of the 12th week for this count.
-<span class="fc bfc" id="L482" title="All 2 branches covered.">        return ((long) prolepticYear) * WEEKS_IN_YEAR + (month == 0 ? ST_TIBS_OFFSET / DAYS_IN_WEEK : getLong(ALIGNED_WEEK_OF_YEAR)) - 1;</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">        return ((long) prolepticYear) * WEEKS_IN_YEAR + (month == 0 ? ST_TIBS_OFFSET / DAYS_IN_WEEK : getLong(ALIGNED_WEEK_OF_YEAR)) - 1;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -493,7 +491,7 @@ public final class DiscordianDate
      */
     @Override
     public DiscordianChronology getChronology() {
-<span class="fc" id="L496">        return DiscordianChronology.INSTANCE;</span>
+<span class="fc" id="L494">        return DiscordianChronology.INSTANCE;</span>
     }
 
     /**
@@ -506,29 +504,29 @@ public final class DiscordianDate
      */
     @Override
     public DiscordianEra getEra() {
-<span class="fc" id="L509">        return DiscordianEra.YOLD;</span>
+<span class="fc" id="L507">        return DiscordianEra.YOLD;</span>
     }
 
     @Override
     public int lengthOfMonth() {
-<span class="fc bfc" id="L514" title="All 2 branches covered.">        return month == 0 ? 1 : DAYS_IN_MONTH;</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">        return month == 0 ? 1 : DAYS_IN_MONTH;</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
     public DiscordianDate with(TemporalAdjuster adjuster) {
-<span class="fc" id="L520">        return (DiscordianDate) adjuster.adjustInto(this);</span>
+<span class="fc" id="L518">        return (DiscordianDate) adjuster.adjustInto(this);</span>
     }
 
     @Override
     public DiscordianDate with(TemporalField field, long newValue) {
-<span class="pc bpc" id="L525" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
-<span class="fc" id="L526">            ChronoField f = (ChronoField) field;</span>
-<span class="fc" id="L527">            DiscordianChronology.INSTANCE.range(f).checkValidValue(newValue, f);</span>
-<span class="fc" id="L528">            int nvalue = (int) newValue;</span>
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc" id="L524">            ChronoField f = (ChronoField) field;</span>
+<span class="fc" id="L525">            DiscordianChronology.INSTANCE.range(f).checkValidValue(newValue, f);</span>
+<span class="fc" id="L526">            int nvalue = (int) newValue;</span>
             // trying to move to St Tibs
-<span class="fc bfc" id="L530" title="All 4 branches covered.">            if (nvalue == 0 &amp;&amp; isLeapYear()) {</span>
-<span class="pc bpc" id="L531" title="1 of 2 branches missed.">                switch (f) {</span>
+<span class="fc bfc" id="L528" title="All 4 branches covered.">            if (nvalue == 0 &amp;&amp; isLeapYear()) {</span>
+<span class="pc bpc" id="L529" title="1 of 2 branches missed.">                switch (f) {</span>
                     case DAY_OF_WEEK:
                     case ALIGNED_DAY_OF_WEEK_IN_MONTH:
                     case ALIGNED_DAY_OF_WEEK_IN_YEAR:
@@ -536,211 +534,208 @@ public final class DiscordianDate
                     case ALIGNED_WEEK_OF_YEAR:
                     case DAY_OF_MONTH:
                     case MONTH_OF_YEAR:
-<span class="fc bfc" id="L539" title="All 2 branches covered.">                        if (month == 0) {</span>
-<span class="fc" id="L540">                            return this;</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">                        if (month == 0) {</span>
+<span class="fc" id="L538">                            return this;</span>
                         }
-<span class="fc" id="L542">                        return DiscordianDate.create(prolepticYear, 0, 0);</span>
+<span class="fc" id="L540">                        return DiscordianDate.create(prolepticYear, 0, 0);</span>
                     default:
                         break;
                 }
             }
             // currently on St Tibs
-<span class="fc bfc" id="L548" title="All 2 branches covered.">            if (month == 0) {</span>
-<span class="fc bfc" id="L549" title="All 2 branches covered.">                switch (f) {</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">            if (month == 0) {</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">                switch (f) {</span>
                     case YEAR:
                     case YEAR_OF_ERA:
-<span class="fc bfc" id="L552" title="All 2 branches covered.">                        if (DiscordianChronology.INSTANCE.isLeapYear(nvalue)) {</span>
-<span class="fc" id="L553">                            return DiscordianDate.create(nvalue, 0, 0);</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">                        if (DiscordianChronology.INSTANCE.isLeapYear(nvalue)) {</span>
+<span class="fc" id="L551">                            return DiscordianDate.create(nvalue, 0, 0);</span>
                         }
                         // fall through
                     default:
-<span class="fc" id="L557">                        return DiscordianDate.create(prolepticYear, 1, 60).with(field, newValue);</span>
+<span class="fc" id="L555">                        return DiscordianDate.create(prolepticYear, 1, 60).with(field, newValue);</span>
                 }
             }
             // validate range (generally excluding zero value)
-<span class="fc" id="L561">            range(f).checkValidValue(newValue, f);</span>
-<span class="fc bfc" id="L562" title="All 3 branches covered.">            switch (f) {</span>
+<span class="fc" id="L559">            range(f).checkValidValue(newValue, f);</span>
+<span class="fc bfc" id="L560" title="All 3 branches covered.">            switch (f) {</span>
                 case DAY_OF_WEEK:
                 case ALIGNED_DAY_OF_WEEK_IN_MONTH:
                 case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-<span class="pc bpc" id="L566" title="2 of 6 branches missed.">                    if (month == 1</span>
+<span class="pc bpc" id="L564" title="2 of 6 branches missed.">                    if (month == 1</span>
                             &amp;&amp; day &gt;= ST_TIBS_OFFSET - DAYS_IN_WEEK + 1 &amp;&amp; day &lt; ST_TIBS_OFFSET + 1
-<span class="pc bpc" id="L568" title="1 of 2 branches missed.">                            &amp;&amp; isLeapYear()) {</span>
-<span class="fc" id="L569">                        int currentDayOfWeek = getDayOfWeek();</span>
+<span class="pc bpc" id="L566" title="1 of 2 branches missed.">                            &amp;&amp; isLeapYear()) {</span>
+<span class="fc" id="L567">                        int currentDayOfWeek = getDayOfWeek();</span>
                         // St. Tib's Day is between the 4th and 5th days of the week...
-<span class="pc bpc" id="L571" title="3 of 4 branches missed.">                        if (currentDayOfWeek &lt; DAYS_IN_WEEK &amp;&amp; nvalue == DAYS_IN_WEEK) {</span>
-<span class="nc" id="L572">                            return (DiscordianDate) plusDays(nvalue - currentDayOfWeek + 1);</span>
-<span class="pc bpc" id="L573" title="1 of 4 branches missed.">                        } else if (currentDayOfWeek == DAYS_IN_WEEK &amp;&amp; nvalue &lt; DAYS_IN_WEEK) {</span>
-<span class="fc" id="L574">                            return (DiscordianDate) plusDays(nvalue - currentDayOfWeek - 1);</span>
+<span class="pc bpc" id="L569" title="3 of 4 branches missed.">                        if (currentDayOfWeek &lt; DAYS_IN_WEEK &amp;&amp; nvalue == DAYS_IN_WEEK) {</span>
+<span class="nc" id="L570">                            return (DiscordianDate) plusDays(nvalue - currentDayOfWeek + 1);</span>
+<span class="pc bpc" id="L571" title="1 of 4 branches missed.">                        } else if (currentDayOfWeek == DAYS_IN_WEEK &amp;&amp; nvalue &lt; DAYS_IN_WEEK) {</span>
+<span class="fc" id="L572">                            return (DiscordianDate) plusDays(nvalue - currentDayOfWeek - 1);</span>
                         }
-<span class="fc" id="L576">                    }</span>
+<span class="fc" id="L574">                    }</span>
                     break;
                 case ALIGNED_WEEK_OF_MONTH:
                 case ALIGNED_WEEK_OF_YEAR:
-<span class="pc bpc" id="L580" title="1 of 6 branches missed.">                    if ((month == 1 || field == ALIGNED_WEEK_OF_YEAR) &amp;&amp; isLeapYear()) {</span>
+<span class="pc bpc" id="L578" title="1 of 6 branches missed.">                    if ((month == 1 || field == ALIGNED_WEEK_OF_YEAR) &amp;&amp; isLeapYear()) {</span>
                         // St. Tib's Day is in the middle of the 12th week...
-<span class="fc" id="L582">                        int alignedWeek = (int) getLong(field);</span>
-<span class="fc" id="L583">                        int currentDayOfWeek = getDayOfWeek();</span>
-<span class="pc bpc" id="L584" title="5 of 12 branches missed.">                        if ((alignedWeek &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))</span>
+<span class="fc" id="L580">                        int alignedWeek = (int) getLong(field);</span>
+<span class="fc" id="L581">                        int currentDayOfWeek = getDayOfWeek();</span>
+<span class="pc bpc" id="L582" title="5 of 12 branches missed.">                        if ((alignedWeek &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))</span>
                                 &amp;&amp; (nvalue &lt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek &lt; DAYS_IN_WEEK))) {
-<span class="fc" id="L586">                            return (DiscordianDate) plusDays((newValue - alignedWeek) * DAYS_IN_WEEK - 1);</span>
-<span class="pc bpc" id="L587" title="9 of 12 branches missed.">                        } else if ((nvalue &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))</span>
+<span class="fc" id="L584">                            return (DiscordianDate) plusDays((newValue - alignedWeek) * DAYS_IN_WEEK - 1);</span>
+<span class="pc bpc" id="L585" title="9 of 12 branches missed.">                        } else if ((nvalue &gt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (nvalue == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek == DAYS_IN_WEEK))</span>
                                 &amp;&amp; (alignedWeek &lt; ST_TIBS_OFFSET / DAYS_IN_WEEK || (alignedWeek == ST_TIBS_OFFSET / DAYS_IN_WEEK &amp;&amp; currentDayOfWeek &lt; DAYS_IN_WEEK))) {
-<span class="nc" id="L589">                            return (DiscordianDate) plusDays((newValue - alignedWeek) * lengthOfWeek() + 1);</span>
+<span class="nc" id="L587">                            return (DiscordianDate) plusDays((newValue - alignedWeek) * lengthOfWeek() + 1);</span>
                         }
-<span class="fc" id="L591">                    }</span>
+<span class="fc" id="L589">                    }</span>
                     break;
                 default:
                     break;
             }
         }
-<span class="fc" id="L597">        return (DiscordianDate) super.with(field, newValue);</span>
+<span class="fc" id="L595">        return (DiscordianDate) super.with(field, newValue);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public DiscordianDate plus(TemporalAmount amount) {
-<span class="fc" id="L603">        return (DiscordianDate) amount.addTo(this);</span>
+<span class="fc" id="L601">        return (DiscordianDate) amount.addTo(this);</span>
     }
 
     @Override
     public DiscordianDate plus(long amountToAdd, TemporalUnit unit) {
-<span class="pc bpc" id="L608" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc" id="L609">            ChronoUnit f = (ChronoUnit) unit;</span>
-<span class="fc bfc" id="L610" title="All 3 branches covered.">            switch (f) {</span>
+<span class="pc bpc" id="L606" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc" id="L607">            ChronoUnit f = (ChronoUnit) unit;</span>
+<span class="fc bfc" id="L608" title="All 3 branches covered.">            switch (f) {</span>
                 case WEEKS:
-<span class="fc" id="L612">                    return plusWeeks(amountToAdd);</span>
+<span class="fc" id="L610">                    return plusWeeks(amountToAdd);</span>
                 case MONTHS:
-<span class="fc" id="L614">                    return plusMonths(amountToAdd);</span>
+<span class="fc" id="L612">                    return plusMonths(amountToAdd);</span>
                 default:
                     break;
             }
         }
-<span class="fc" id="L619">        return (DiscordianDate) super.plus(amountToAdd, unit);</span>
+<span class="fc" id="L617">        return (DiscordianDate) super.plus(amountToAdd, unit);</span>
     }
 
     @Override
     DiscordianDate plusMonths(long months) {
-<span class="fc bfc" id="L624" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L625">            return this;</span>
+<span class="fc bfc" id="L622" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L623">            return this;</span>
         }
-<span class="fc" id="L627">        long calcEm = Math.addExact(getProlepticMonth(), months);</span>
-<span class="fc" id="L628">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, MONTHS_IN_YEAR));</span>
-<span class="fc" id="L629">        int newMonth = (int) (Math.floorMod(calcEm, MONTHS_IN_YEAR) + 1);</span>
+<span class="fc" id="L625">        long calcEm = Math.addExact(getProlepticMonth(), months);</span>
+<span class="fc" id="L626">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, MONTHS_IN_YEAR));</span>
+<span class="fc" id="L627">        int newMonth = (int) (Math.floorMod(calcEm, MONTHS_IN_YEAR) + 1);</span>
         // If the starting date was St. Tib's Day, attempt to retain that status.
-<span class="fc bfc" id="L631" title="All 4 branches covered.">        if (month == 0 &amp;&amp; newMonth == 1) {</span>
-<span class="fc" id="L632">            newMonth = 0;</span>
+<span class="fc bfc" id="L629" title="All 4 branches covered.">        if (month == 0 &amp;&amp; newMonth == 1) {</span>
+<span class="fc" id="L630">            newMonth = 0;</span>
         }
-<span class="fc" id="L634">        return resolvePrevious(newYear, newMonth, day);</span>
+<span class="fc" id="L632">        return resolvePrevious(newYear, newMonth, day);</span>
     }
 
     @Override
     DiscordianDate plusWeeks(long weeks) {
-<span class="fc bfc" id="L639" title="All 2 branches covered.">        if (weeks == 0) {</span>
-<span class="fc" id="L640">            return this;</span>
+<span class="fc bfc" id="L637" title="All 2 branches covered.">        if (weeks == 0) {</span>
+<span class="fc" id="L638">            return this;</span>
         }
-<span class="fc" id="L642">        long calcEm = Math.addExact(getProlepticWeek(), weeks);</span>
-<span class="fc" id="L643">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, WEEKS_IN_YEAR));</span>
+<span class="fc" id="L640">        long calcEm = Math.addExact(getProlepticWeek(), weeks);</span>
+<span class="fc" id="L641">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, WEEKS_IN_YEAR));</span>
         // Give St. Tib's Day the same day-of-week as the day after it.
-<span class="fc bfc" id="L645" title="All 2 branches covered.">        int newDayOfYear = (int) (Math.floorMod(calcEm, WEEKS_IN_YEAR)) * DAYS_IN_WEEK + (month == 0 ? DAYS_IN_WEEK : get(DAY_OF_WEEK));</span>
+<span class="fc bfc" id="L643" title="All 2 branches covered.">        int newDayOfYear = (int) (Math.floorMod(calcEm, WEEKS_IN_YEAR)) * DAYS_IN_WEEK + (month == 0 ? DAYS_IN_WEEK : get(DAY_OF_WEEK));</span>
         // Need to offset day-of-year if leap year, and not heading to St. Tib's Day again.
-<span class="pc bpc" id="L647" title="2 of 8 branches missed.">        if (DiscordianChronology.INSTANCE.isLeapYear(newYear)</span>
+<span class="pc bpc" id="L645" title="2 of 8 branches missed.">        if (DiscordianChronology.INSTANCE.isLeapYear(newYear)</span>
                 &amp;&amp; (newDayOfYear &gt; ST_TIBS_OFFSET || (newDayOfYear == ST_TIBS_OFFSET &amp;&amp; month != 0))) {
-<span class="fc" id="L649">            newDayOfYear++;</span>
+<span class="fc" id="L647">            newDayOfYear++;</span>
         }
-<span class="fc" id="L651">        return ofYearDay(newYear, newDayOfYear);</span>
+<span class="fc" id="L649">        return ofYearDay(newYear, newDayOfYear);</span>
     }
 
     @Override
     public DiscordianDate minus(TemporalAmount amount) {
-<span class="fc" id="L656">        return (DiscordianDate) amount.subtractFrom(this);</span>
+<span class="fc" id="L654">        return (DiscordianDate) amount.subtractFrom(this);</span>
     }
 
     @Override
     public DiscordianDate minus(long amountToSubtract, TemporalUnit unit) {
-<span class="pc bpc" id="L661" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+<span class="pc bpc" id="L659" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
     }
 
     //-------------------------------------------------------------------------
     @Override  // for covariant return type
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;DiscordianDate&gt; atTime(LocalTime localTime) {
-<span class="nc" id="L668">        return (ChronoLocalDateTime&lt;DiscordianDate&gt;) super.atTime(localTime);</span>
+<span class="nc" id="L666">        return (ChronoLocalDateTime&lt;DiscordianDate&gt;) super.atTime(localTime);</span>
     }
 
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L673">        return until(DiscordianDate.from(endExclusive), unit);</span>
+<span class="fc" id="L671">        return until(DiscordianDate.from(endExclusive), unit);</span>
     }
 
     @Override
     long until(AbstractDate end, TemporalUnit unit) {
-<span class="pc bpc" id="L678" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc bfc" id="L679" title="All 2 branches covered.">            switch ((ChronoUnit) unit) {</span>
-                case WEEKS:
-<span class="fc" id="L681">                    return weeksUntil(DiscordianDate.from(end));</span>
-                default:
-                    break;
+<span class="pc bpc" id="L676" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L677" title="All 2 branches covered.">            if (unit == ChronoUnit.WEEKS) {</span>
+<span class="fc" id="L678">                return weeksUntil(DiscordianDate.from(end));</span>
             }
         }
-<span class="fc" id="L686">        return super.until(end, unit);</span>
+<span class="fc" id="L681">        return super.until(end, unit);</span>
     }
 
     long weeksUntil(DiscordianDate end) {
-<span class="fc" id="L690">        long weekStart = this.getProlepticWeek() * 8L;</span>
-<span class="fc" id="L691">        long weekEnd = end.getProlepticWeek() * 8L;</span>
+<span class="fc" id="L685">        long weekStart = this.getProlepticWeek() * 8L;</span>
+<span class="fc" id="L686">        long weekEnd = end.getProlepticWeek() * 8L;</span>
         // Toggle offset for St. Tib's Day based on the direction traveled.
-<span class="fc bfc" id="L693" title="All 6 branches covered.">        long packed1 = weekStart + (this.month == 0 &amp;&amp; end.month != 0 ? (weekEnd &gt; weekStart ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : this.getDayOfWeek());  // no overflow</span>
-<span class="fc bfc" id="L694" title="All 6 branches covered.">        long packed2 = weekEnd + (end.month == 0 &amp;&amp; this.month != 0 ? (weekStart &gt; weekEnd ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : end.getDayOfWeek());  // no overflow</span>
-<span class="fc" id="L695">        return (packed2 - packed1) / 8L;</span>
+<span class="fc bfc" id="L688" title="All 6 branches covered.">        long packed1 = weekStart + (this.month == 0 &amp;&amp; end.month != 0 ? (weekEnd &gt; weekStart ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : this.getDayOfWeek());  // no overflow</span>
+<span class="fc bfc" id="L689" title="All 6 branches covered.">        long packed2 = weekEnd + (end.month == 0 &amp;&amp; this.month != 0 ? (weekStart &gt; weekEnd ? DAYS_IN_WEEK : DAYS_IN_WEEK - 1) : end.getDayOfWeek());  // no overflow</span>
+<span class="fc" id="L690">        return (packed2 - packed1) / 8L;</span>
     }
 
     @Override
     long monthsUntil(AbstractDate end) {
-<span class="fc" id="L700">        DiscordianDate discordianEnd = DiscordianDate.from(end);</span>
-<span class="fc" id="L701">        long monthStart = this.getProlepticMonth() * 128L;</span>
-<span class="fc" id="L702">        long monthEnd = discordianEnd.getProlepticMonth() * 128L;</span>
+<span class="fc" id="L695">        DiscordianDate discordianEnd = DiscordianDate.from(end);</span>
+<span class="fc" id="L696">        long monthStart = this.getProlepticMonth() * 128L;</span>
+<span class="fc" id="L697">        long monthEnd = discordianEnd.getProlepticMonth() * 128L;</span>
         // Toggle offset for St. Tib's Day based on the direction traveled.
-<span class="fc bfc" id="L704" title="All 6 branches covered.">        long packed1 = monthStart + (this.month == 0 &amp;&amp; discordianEnd.month != 0 ? (monthEnd &gt; monthStart ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : this.getDayOfMonth());  // no overflow</span>
-<span class="fc bfc" id="L705" title="All 6 branches covered.">        long packed2 = monthEnd + (discordianEnd.month == 0 &amp;&amp; this.month != 0 ? (monthStart &gt; monthEnd ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : end.getDayOfMonth());  // no overflow</span>
-<span class="fc" id="L706">        return (packed2 - packed1) / 128L;</span>
+<span class="fc bfc" id="L699" title="All 6 branches covered.">        long packed1 = monthStart + (this.month == 0 &amp;&amp; discordianEnd.month != 0 ? (monthEnd &gt; monthStart ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : this.getDayOfMonth());  // no overflow</span>
+<span class="fc bfc" id="L700" title="All 6 branches covered.">        long packed2 = monthEnd + (discordianEnd.month == 0 &amp;&amp; this.month != 0 ? (monthStart &gt; monthEnd ? ST_TIBS_OFFSET : ST_TIBS_OFFSET - 1) : end.getDayOfMonth());  // no overflow</span>
+<span class="fc" id="L701">        return (packed2 - packed1) / 128L;</span>
     }
 
     @Override
     public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
-<span class="fc" id="L711">        long monthsUntil = monthsUntil(DiscordianDate.from(endDateExclusive));</span>
+<span class="fc" id="L706">        long monthsUntil = monthsUntil(DiscordianDate.from(endDateExclusive));</span>
 
-<span class="fc" id="L713">        int years = Math.toIntExact(monthsUntil / MONTHS_IN_YEAR);</span>
-<span class="fc" id="L714">        int months = (int) (monthsUntil % MONTHS_IN_YEAR);</span>
-<span class="fc" id="L715">        int days = (int) this.plusMonths(monthsUntil).daysUntil(endDateExclusive);</span>
+<span class="fc" id="L708">        int years = Math.toIntExact(monthsUntil / MONTHS_IN_YEAR);</span>
+<span class="fc" id="L709">        int months = (int) (monthsUntil % MONTHS_IN_YEAR);</span>
+<span class="fc" id="L710">        int days = (int) this.plusMonths(monthsUntil).daysUntil(endDateExclusive);</span>
 
-<span class="fc" id="L717">        return DiscordianChronology.INSTANCE.period(years, months, days);</span>
+<span class="fc" id="L712">        return DiscordianChronology.INSTANCE.period(years, months, days);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public long toEpochDay() {
-<span class="fc" id="L723">        long year = prolepticYear;</span>
-<span class="fc" id="L724">        long discordianEpochDay = ((year - OFFSET_FROM_ISO_0000 - 1) * 365) + getLeapYearsBefore(year) + (getDayOfYear() - 1);</span>
-<span class="fc" id="L725">        return discordianEpochDay - DISCORDIAN_1167_TO_ISO_1970;</span>
+<span class="fc" id="L718">        long year = prolepticYear;</span>
+<span class="fc" id="L719">        long discordianEpochDay = ((year - OFFSET_FROM_ISO_0000 - 1) * 365) + getLeapYearsBefore(year) + (getDayOfYear() - 1);</span>
+<span class="fc" id="L720">        return discordianEpochDay - DISCORDIAN_1167_TO_ISO_1970;</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
     public String toString() {
-<span class="fc" id="L731">        StringBuilder buf = new StringBuilder(30);</span>
-<span class="fc" id="L732">        buf.append(DiscordianChronology.INSTANCE.toString())</span>
-<span class="fc" id="L733">                .append(&quot; &quot;)</span>
-<span class="fc" id="L734">                .append(DiscordianEra.YOLD)</span>
-<span class="fc" id="L735">                .append(&quot; &quot;)</span>
-<span class="fc" id="L736">                .append(prolepticYear);</span>
-<span class="fc bfc" id="L737" title="All 2 branches covered.">        if (month == 0) {</span>
-<span class="fc" id="L738">            buf.append(&quot; St. Tib's Day&quot;);</span>
+<span class="fc" id="L726">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L727">        buf.append(DiscordianChronology.INSTANCE)</span>
+<span class="fc" id="L728">                .append(&quot; &quot;)</span>
+<span class="fc" id="L729">                .append(DiscordianEra.YOLD)</span>
+<span class="fc" id="L730">                .append(&quot; &quot;)</span>
+<span class="fc" id="L731">                .append(prolepticYear);</span>
+<span class="fc bfc" id="L732" title="All 2 branches covered.">        if (month == 0) {</span>
+<span class="fc" id="L733">            buf.append(&quot; St. Tib's Day&quot;);</span>
         } else {
-<span class="fc" id="L740">            buf.append(&quot;-&quot;).append(month)</span>
-<span class="fc bfc" id="L741" title="All 2 branches covered.">                    .append(day &lt; 10 ? &quot;-0&quot; : &quot;-&quot;).append(day);</span>
+<span class="fc" id="L735">            buf.append(&quot;-&quot;).append(month)</span>
+<span class="fc bfc" id="L736" title="All 2 branches covered.">                    .append(day &lt; 10 ? &quot;-0&quot; : &quot;-&quot;).append(day);</span>
         }
-<span class="fc" id="L743">        return buf.toString();</span>
+<span class="fc" id="L738">        return buf.toString();</span>
     }
 
 }

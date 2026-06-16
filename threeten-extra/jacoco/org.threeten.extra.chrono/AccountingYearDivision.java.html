@@ -207,7 +207,7 @@ import java.util.Arrays;
 
 <span class="fc" id="L208">        int month = Arrays.binarySearch(elapsedWeeks, weeksElapsed);</span>
         // Binary search returns 0-indexed if found, negative - 1 for insert position if not.
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        month = (month &gt;= 0 ? month + 1 : 0 - month - 1);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        month = (month &gt;= 0 ? month + 1 : -month - 1);</span>
         // Need to move to previous month if there was a leap week and in the first week.
 <span class="fc bfc" id="L212" title="All 6 branches covered.">        return leapWeekInMonth == 0 || month &lt;= leapWeekInMonth || weeksElapsed &gt; elapsedWeeks[month - 1] ? month : month - 1;</span>
     }

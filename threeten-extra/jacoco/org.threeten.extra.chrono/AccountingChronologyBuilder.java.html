@@ -34,6 +34,8 @@ package org.threeten.extra.chrono;
 import java.time.DateTimeException;
 import java.time.DayOfWeek;
 import java.time.Month;
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Builder to create Accounting calendars.
@@ -43,7 +45,7 @@ import java.time.Month;
  * &lt;ul&gt;
  * &lt;li&gt;ending day-of-week - The day-of-week on which a given accounting year ends.
  * &lt;li&gt;last-in-month vs. nearest-end-of-month - Whether the ending day-of-week is the last in the month,
- * or the nearest to the end of the month (will sometimes be in the &lt;i&gt;next&lt;/i&gt; month.
+ * or the nearest to the end of the month (will sometimes be in the &lt;i&gt;next&lt;/i&gt; month).
  * &lt;li&gt;month end - Which Gregorian/ISO end-of-month the year ends in/is nearest to.
  * &lt;li&gt;year division - How many 'months' (periods) to divide the accounting year into,
  * and how many weeks are in each.
@@ -63,7 +65,7 @@ public final class AccountingChronologyBuilder {
     /**
      * The day of the week on which a given Accounting year ends.
      */
-    private DayOfWeek endsOn;
+    private @Nullable DayOfWeek endsOn;
     /**
      * Whether the calendar ends in the last week of a given Gregorian/ISO month,
      * or nearest to the last day of the month (will sometimes be in the next month).
@@ -72,11 +74,11 @@ public final class AccountingChronologyBuilder {
     /**
      * Which Gregorian/ISO end-of-month the year ends in/is nearest to.
      */
-    private Month end;
+    private @Nullable Month end;
     /**
      * How to divide an accounting year.
      */
-    private AccountingYearDivision division;
+    private @Nullable AccountingYearDivision division;
     /**
      * The month which will have the leap-week added.
      */
@@ -90,20 +92,19 @@ public final class AccountingChronologyBuilder {
     /**
      * Constructs a new instance of the builder.
      */
-<span class="fc" id="L93">    public AccountingChronologyBuilder() {</span>
+<span class="fc" id="L95">    public AccountingChronologyBuilder() {</span>
         // Nothing to setup in the constructor.
-<span class="fc" id="L95">    }</span>
+<span class="fc" id="L97">    }</span>
 
     /**
      * Sets the day-of-week on which a given Accounting calendar year ends.
      *
-     * @param endsOn The day-of-week on which a given Accounting calendar year ends.
-     *
-     * @return this, for chaining, not null.
+     * @param endsOn the day-of-week on which a given Accounting calendar year ends
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder endsOn(DayOfWeek endsOn) {
-<span class="fc" id="L105">        this.endsOn = endsOn;</span>
-<span class="fc" id="L106">        return this;</span>
+<span class="fc" id="L106">        this.endsOn = Objects.requireNonNull(endsOn, &quot;endsOn&quot;);</span>
+<span class="fc" id="L107">        return this;</span>
     }
 
     /**
@@ -111,13 +112,12 @@ public final class AccountingChronologyBuilder {
      * Calendars setup this way will occasionally end in the start of the &lt;i&gt;next&lt;/i&gt; month.
      * For example, for July, the month ends on any day from July 28th to August 3rd.
      *
-     * @param end The Gregorian/ISO month-end a given Accounting calendar year ends nearest to.
-     *
-     * @return this, for chaining, not null.
+     * @param end the Gregorian/ISO month-end a given Accounting calendar year ends nearest to
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder nearestEndOf(Month end) {
 <span class="fc" id="L119">        this.inLastWeek = false;</span>
-<span class="fc" id="L120">        this.end = end;</span>
+<span class="fc" id="L120">        this.end = Objects.requireNonNull(end, &quot;end&quot;);</span>
 <span class="fc" id="L121">        return this;</span>
     }
 
@@ -126,69 +126,68 @@ public final class AccountingChronologyBuilder {
      * Calendars setup this way will always end in the last week of the given month.
      * For example, for July, the month ends on any day from July 25th to July 31st.
      *
-     * @param end The Gregorian/ISO month-end a given Accounting calendar year ends in the last week of.
-     *
-     * @return this, for chaining, not null.
+     * @param end the Gregorian/ISO month-end a given Accounting calendar year ends in the last week of
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder inLastWeekOf(Month end) {
-<span class="fc" id="L134">        this.inLastWeek = true;</span>
-<span class="fc" id="L135">        this.end = end;</span>
-<span class="fc" id="L136">        return this;</span>
+<span class="fc" id="L133">        this.inLastWeek = true;</span>
+<span class="fc" id="L134">        this.end = Objects.requireNonNull(end, &quot;end&quot;);</span>
+<span class="fc" id="L135">        return this;</span>
     }
 
     /**
      * Sets how a given Accounting year will be divided.
      *
-     * @param division How to divide a given calendar year.
-     *
-     * @return this, for chaining, not null.
+     * @param division how to divide a given calendar year
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder withDivision(AccountingYearDivision division) {
-<span class="fc" id="L147">        this.division = division;</span>
-<span class="fc" id="L148">        return this;</span>
+<span class="fc" id="L145">        this.division = Objects.requireNonNull(division, &quot;division&quot;);</span>
+<span class="fc" id="L146">        return this;</span>
     }
 
     /**
      * Sets the month in which the leap-week occurs.
      *
-     * @param leapWeekInMonth The month in which the leap-week occurs.
-     *
-     * @return this, for chaining, not null.
+     * @param leapWeekInMonth the month in which the leap-week occurs
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder leapWeekInMonth(int leapWeekInMonth) {
-<span class="fc" id="L159">        this.leapWeekInMonth = leapWeekInMonth;</span>
-<span class="fc" id="L160">        return this;</span>
+<span class="fc" id="L156">        this.leapWeekInMonth = leapWeekInMonth;</span>
+<span class="fc" id="L157">        return this;</span>
     }
 
     /**
      * Sets the proleptic accounting year to end in the matching Iso year.
      *
-     * @return this, for chaining, not null.
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder accountingYearEndsInIsoYear() {
-<span class="fc" id="L169">        this.yearOffset = 0;</span>
-<span class="fc" id="L170">        return this;</span>
+<span class="fc" id="L166">        this.yearOffset = 0;</span>
+<span class="fc" id="L167">        return this;</span>
     }
 
 
     /**
      * Sets the proleptic accounting year to start in the matching Iso year.
      *
-     * @return this, for chaining, not null.
+     * @return this, for chaining, not null
      */
     public AccountingChronologyBuilder accountingYearStartsInIsoYear() {
-<span class="fc" id="L180">        this.yearOffset = 1;</span>
-<span class="fc" id="L181">        return this;</span>
+<span class="fc" id="L177">        this.yearOffset = 1;</span>
+<span class="fc" id="L178">        return this;</span>
     }
 
     /**
      * Completes this builder by creating the {@code AccountingChronology}.
      *
-     * @return the created chronology, not null.
-     * @throws DateTimeException if the chronology cannot be built.
+     * @return the created chronology, not null
+     * @throws IllegalStateException if any of the required fields are invalid
+     * @throws DateTimeException if the chronology cannot be built
      */
     public AccountingChronology toChronology() {
-<span class="fc" id="L191">        return AccountingChronology.create(endsOn, end, inLastWeek, division, leapWeekInMonth, yearOffset);</span>
+        //noinspection DataFlowIssue - nullness checked in the constructor of AccountingChronology
+<span class="fc" id="L190">        return AccountingChronology.create(endsOn, end, inLastWeek, division, leapWeekInMonth, yearOffset);</span>
     }
 
 }

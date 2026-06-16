@@ -360,7 +360,7 @@ public final class Temporals {
 <span class="fc bfc" id="L360" title="All 4 branches covered.">            if (unit.equals(ERAS) || unit.equals(FOREVER)) {</span>
 <span class="fc" id="L361">                throw new UnsupportedTemporalTypeException(&quot;Unsupported TemporalUnit: &quot; + unit);</span>
             }
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">        } else if (unit.equals(IsoFields.QUARTER_YEARS) == false) {</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">        } else if (!unit.equals(IsoFields.QUARTER_YEARS)) {</span>
 <span class="nc" id="L364">            throw new UnsupportedTemporalTypeException(&quot;Unsupported TemporalUnit: &quot; + unit);</span>
         }
 <span class="fc" id="L366">    }</span>

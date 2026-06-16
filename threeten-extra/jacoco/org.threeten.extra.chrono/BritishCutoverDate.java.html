@@ -56,6 +56,8 @@ import java.time.temporal.TemporalUnit;
 import java.time.temporal.ValueRange;
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * A date in the British Cutover calendar system.
  * &lt;p&gt;
@@ -81,7 +83,7 @@ public final class BritishCutoverDate
     /**
      * The underlying Julian date if before the cutover.
      */
-    private final transient JulianDate julianDate;
+    private final transient @Nullable JulianDate julianDate;
 
     //-----------------------------------------------------------------------
     /**
@@ -96,7 +98,7 @@ public final class BritishCutoverDate
      * @return the current date using the system clock and default time-zone, not null
      */
     public static BritishCutoverDate now() {
-<span class="nc" id="L99">        return now(Clock.systemDefaultZone());</span>
+<span class="nc" id="L101">        return now(Clock.systemDefaultZone());</span>
     }
 
     /**
@@ -112,7 +114,7 @@ public final class BritishCutoverDate
      * @return the current date using the system clock, not null
      */
     public static BritishCutoverDate now(ZoneId zone) {
-<span class="nc" id="L115">        return now(Clock.system(zone));</span>
+<span class="nc" id="L117">        return now(Clock.system(zone));</span>
     }
 
     /**
@@ -127,7 +129,7 @@ public final class BritishCutoverDate
      * @throws DateTimeException if the current date cannot be obtained
      */
     public static BritishCutoverDate now(Clock clock) {
-<span class="nc" id="L130">        return new BritishCutoverDate(LocalDate.now(clock));</span>
+<span class="nc" id="L132">        return new BritishCutoverDate(LocalDate.now(clock));</span>
     }
 
     /**
@@ -150,7 +152,7 @@ public final class BritishCutoverDate
      *  or if the day-of-month is invalid for the month-year
      */
     public static BritishCutoverDate of(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L153">        return BritishCutoverDate.create(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L155">        return BritishCutoverDate.create(prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -171,10 +173,10 @@ public final class BritishCutoverDate
      * @throws DateTimeException if unable to convert to a {@code BritishCutoverDate}
      */
     public static BritishCutoverDate from(TemporalAccessor temporal) {
-<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (temporal instanceof BritishCutoverDate) {</span>
-<span class="fc" id="L175">            return (BritishCutoverDate) temporal;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (temporal instanceof BritishCutoverDate) {</span>
+<span class="fc" id="L177">            return (BritishCutoverDate) temporal;</span>
         }
-<span class="fc" id="L177">        return new BritishCutoverDate(LocalDate.from(temporal));</span>
+<span class="fc" id="L179">        return new BritishCutoverDate(LocalDate.from(temporal));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -192,15 +194,15 @@ public final class BritishCutoverDate
      *  or if the day-of-year is invalid for the year
      */
     static BritishCutoverDate ofYearDay(int prolepticYear, int dayOfYear) {
-<span class="fc bfc" id="L195" title="All 6 branches covered.">        if (prolepticYear &lt; CUTOVER_YEAR || (prolepticYear == CUTOVER_YEAR &amp;&amp; dayOfYear &lt;= 246)) {</span>
-<span class="fc" id="L196">            JulianDate julian = JulianDate.ofYearDay(prolepticYear, dayOfYear);</span>
-<span class="fc" id="L197">            return new BritishCutoverDate(julian);</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">        } else if (prolepticYear == CUTOVER_YEAR) {</span>
-<span class="fc" id="L199">            LocalDate iso = LocalDate.ofYearDay(prolepticYear, dayOfYear + CUTOVER_DAYS);</span>
-<span class="fc" id="L200">            return new BritishCutoverDate(iso);</span>
+<span class="fc bfc" id="L197" title="All 6 branches covered.">        if (prolepticYear &lt; CUTOVER_YEAR || (prolepticYear == CUTOVER_YEAR &amp;&amp; dayOfYear &lt;= 246)) {</span>
+<span class="fc" id="L198">            JulianDate julian = JulianDate.ofYearDay(prolepticYear, dayOfYear);</span>
+<span class="fc" id="L199">            return new BritishCutoverDate(julian);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        } else if (prolepticYear == CUTOVER_YEAR) {</span>
+<span class="fc" id="L201">            LocalDate iso = LocalDate.ofYearDay(prolepticYear, dayOfYear + CUTOVER_DAYS);</span>
+<span class="fc" id="L202">            return new BritishCutoverDate(iso);</span>
         } else {
-<span class="fc" id="L202">            LocalDate iso = LocalDate.ofYearDay(prolepticYear, dayOfYear);</span>
-<span class="fc" id="L203">            return new BritishCutoverDate(iso);</span>
+<span class="fc" id="L204">            LocalDate iso = LocalDate.ofYearDay(prolepticYear, dayOfYear);</span>
+<span class="fc" id="L205">            return new BritishCutoverDate(iso);</span>
         }
     }
 
@@ -213,7 +215,7 @@ public final class BritishCutoverDate
      * @throws DateTimeException if the epoch-day is out of range
      */
     static BritishCutoverDate ofEpochDay(final long epochDay) {
-<span class="fc" id="L216">        return new BritishCutoverDate(LocalDate.ofEpochDay(epochDay));</span>
+<span class="fc" id="L218">        return new BritishCutoverDate(LocalDate.ofEpochDay(epochDay));</span>
     }
 
     /**
@@ -227,16 +229,16 @@ public final class BritishCutoverDate
      *  or if the day-of-month is invalid for the month-year
      */
     static BritishCutoverDate create(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (prolepticYear &lt; CUTOVER_YEAR) {</span>
-<span class="fc" id="L231">            JulianDate julian = JulianDate.of(prolepticYear, month, dayOfMonth);</span>
-<span class="fc" id="L232">            return new BritishCutoverDate(julian);</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        if (prolepticYear &lt; CUTOVER_YEAR) {</span>
+<span class="fc" id="L233">            JulianDate julian = JulianDate.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L234">            return new BritishCutoverDate(julian);</span>
         } else {
-<span class="fc" id="L234">            LocalDate iso = LocalDate.of(prolepticYear, month, dayOfMonth);</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">            if (iso.isBefore(CUTOVER)) {</span>
-<span class="fc" id="L236">                JulianDate julian = JulianDate.of(prolepticYear, month, dayOfMonth);</span>
-<span class="fc" id="L237">                return new BritishCutoverDate(julian);</span>
+<span class="fc" id="L236">            LocalDate iso = LocalDate.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">            if (iso.isBefore(CUTOVER)) {</span>
+<span class="fc" id="L238">                JulianDate julian = JulianDate.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L239">                return new BritishCutoverDate(julian);</span>
             }
-<span class="fc" id="L239">            return new BritishCutoverDate(iso);</span>
+<span class="fc" id="L241">            return new BritishCutoverDate(iso);</span>
         }
     }
 
@@ -246,22 +248,22 @@ public final class BritishCutoverDate
      *
      * @param isoDate  the standard local date, not null
      */
-<span class="fc" id="L249">    BritishCutoverDate(LocalDate isoDate) {</span>
-<span class="fc" id="L250">        Objects.requireNonNull(isoDate, &quot;isoDate&quot;);</span>
-<span class="fc" id="L251">        this.isoDate = isoDate;</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">        this.julianDate = (isoDate.isBefore(CUTOVER) ? JulianDate.from(isoDate) : null);</span>
-<span class="fc" id="L253">    }</span>
+<span class="fc" id="L251">    BritishCutoverDate(LocalDate isoDate) {</span>
+<span class="fc" id="L252">        Objects.requireNonNull(isoDate, &quot;isoDate&quot;);</span>
+<span class="fc" id="L253">        this.isoDate = isoDate;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        this.julianDate = (isoDate.isBefore(CUTOVER) ? JulianDate.from(isoDate) : null);</span>
+<span class="fc" id="L255">    }</span>
 
     /**
      * Creates an instance from a Julian date.
      *
      * @param julianDate  the Julian date before the cutover, not null
      */
-<span class="fc" id="L260">    BritishCutoverDate(JulianDate julianDate) {</span>
-<span class="fc" id="L261">        Objects.requireNonNull(julianDate, &quot;julianDate&quot;);</span>
-<span class="fc" id="L262">        this.isoDate = LocalDate.from(julianDate);</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        this.julianDate = (isoDate.isBefore(CUTOVER) ? julianDate : null);</span>
-<span class="fc" id="L264">    }</span>
+<span class="fc" id="L262">    BritishCutoverDate(JulianDate julianDate) {</span>
+<span class="fc" id="L263">        Objects.requireNonNull(julianDate, &quot;julianDate&quot;);</span>
+<span class="fc" id="L264">        this.isoDate = LocalDate.from(julianDate);</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">        this.julianDate = (isoDate.isBefore(CUTOVER) ? julianDate : null);</span>
+<span class="fc" id="L266">    }</span>
 
     /**
      * Validates the object.
@@ -269,111 +271,112 @@ public final class BritishCutoverDate
      * @return the resolved date, not null
      */
     private Object readResolve() {
-<span class="nc" id="L272">        return new BritishCutoverDate(isoDate);</span>
+<span class="nc" id="L274">        Objects.requireNonNull(isoDate, &quot;isoDate&quot;);</span>
+<span class="nc" id="L275">        return new BritishCutoverDate(isoDate);</span>
     }
 
     //-----------------------------------------------------------------------
     private boolean isCutoverYear() {
-<span class="fc bfc" id="L277" title="All 4 branches covered.">        return isoDate.getYear() == CUTOVER_YEAR &amp;&amp; isoDate.getDayOfYear() &gt; CUTOVER_DAYS;</span>
+<span class="fc bfc" id="L280" title="All 4 branches covered.">        return isoDate.getYear() == CUTOVER_YEAR &amp;&amp; isoDate.getDayOfYear() &gt; CUTOVER_DAYS;</span>
     }
 
     private boolean isCutoverMonth() {
-<span class="fc bfc" id="L281" title="All 6 branches covered.">        return isoDate.getYear() == CUTOVER_YEAR &amp;&amp; isoDate.getMonthValue() == 9 &amp;&amp; isoDate.getDayOfMonth() &gt; CUTOVER_DAYS;</span>
+<span class="fc bfc" id="L284" title="All 6 branches covered.">        return isoDate.getYear() == CUTOVER_YEAR &amp;&amp; isoDate.getMonthValue() == 9 &amp;&amp; isoDate.getDayOfMonth() &gt; CUTOVER_DAYS;</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
     int getAlignedDayOfWeekInMonth() {
-<span class="fc bfc" id="L287" title="All 4 branches covered.">        if (isCutoverMonth() &amp;&amp; julianDate == null) {</span>
-<span class="fc" id="L288">            return ((getDayOfMonth() - 1 - CUTOVER_DAYS) % lengthOfWeek()) + 1;</span>
+<span class="fc bfc" id="L290" title="All 4 branches covered.">        if (isCutoverMonth() &amp;&amp; julianDate == null) {</span>
+<span class="fc" id="L291">            return ((getDayOfMonth() - 1 - CUTOVER_DAYS) % lengthOfWeek()) + 1;</span>
         }
-<span class="fc" id="L290">        return super.getAlignedDayOfWeekInMonth();</span>
+<span class="fc" id="L293">        return super.getAlignedDayOfWeekInMonth();</span>
     }
 
     @Override
     int getAlignedWeekOfMonth() {
-<span class="fc bfc" id="L295" title="All 4 branches covered.">        if (isCutoverMonth() &amp;&amp; julianDate == null) {</span>
-<span class="fc" id="L296">            return ((getDayOfMonth() - 1 - CUTOVER_DAYS) / lengthOfWeek()) + 1;</span>
+<span class="fc bfc" id="L298" title="All 4 branches covered.">        if (isCutoverMonth() &amp;&amp; julianDate == null) {</span>
+<span class="fc" id="L299">            return ((getDayOfMonth() - 1 - CUTOVER_DAYS) / lengthOfWeek()) + 1;</span>
         }
-<span class="fc" id="L298">        return super.getAlignedWeekOfMonth();</span>
+<span class="fc" id="L301">        return super.getAlignedWeekOfMonth();</span>
     }
 
     @Override
     int getProlepticYear() {
-<span class="fc bfc" id="L303" title="All 2 branches covered.">        return (julianDate != null ? julianDate.getProlepticYear() : isoDate.getYear());</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        return (julianDate != null ? julianDate.getProlepticYear() : isoDate.getYear());</span>
     }
 
     @Override
     int getMonth() {
-<span class="fc bfc" id="L308" title="All 2 branches covered.">        return (julianDate != null ? julianDate.getMonth() : isoDate.getMonthValue());</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">        return (julianDate != null ? julianDate.getMonth() : isoDate.getMonthValue());</span>
     }
 
     @Override
     int getDayOfMonth() {
-<span class="fc bfc" id="L313" title="All 2 branches covered.">        return (julianDate != null ? julianDate.getDayOfMonth() : isoDate.getDayOfMonth());</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">        return (julianDate != null ? julianDate.getDayOfMonth() : isoDate.getDayOfMonth());</span>
     }
 
     @Override
     int getDayOfYear() {
-<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (julianDate != null) {</span>
-<span class="fc" id="L319">            return julianDate.getDayOfYear();</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        if (julianDate != null) {</span>
+<span class="fc" id="L322">            return julianDate.getDayOfYear();</span>
         }
-<span class="fc bfc" id="L321" title="All 2 branches covered.">        if (isoDate.getYear() == CUTOVER_YEAR) {</span>
-<span class="fc" id="L322">            return isoDate.getDayOfYear() - CUTOVER_DAYS;</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">        if (isoDate.getYear() == CUTOVER_YEAR) {</span>
+<span class="fc" id="L325">            return isoDate.getDayOfYear() - CUTOVER_DAYS;</span>
         }
-<span class="fc" id="L324">        return isoDate.getDayOfYear();</span>
+<span class="fc" id="L327">        return isoDate.getDayOfYear();</span>
     }
 
     @Override
     public ValueRange rangeChrono(ChronoField field) {
-<span class="fc bfc" id="L329" title="All 5 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L332" title="All 5 branches covered.">        switch (field) {</span>
             case DAY_OF_MONTH:
                 // short length, but value range still 1 to 30
-<span class="fc bfc" id="L332" title="All 2 branches covered.">                if (isCutoverMonth()) {</span>
-<span class="fc" id="L333">                    return ValueRange.of(1, 30);</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">                if (isCutoverMonth()) {</span>
+<span class="fc" id="L336">                    return ValueRange.of(1, 30);</span>
                 }
-<span class="fc" id="L335">                return ValueRange.of(1, lengthOfMonth());</span>
+<span class="fc" id="L338">                return ValueRange.of(1, lengthOfMonth());</span>
             case DAY_OF_YEAR:
                 // 1 to 355 in cutover year, otherwise 1 to 365/366
-<span class="fc" id="L338">                return ValueRange.of(1, lengthOfYear());</span>
+<span class="fc" id="L341">                return ValueRange.of(1, lengthOfYear());</span>
             case ALIGNED_WEEK_OF_MONTH:
                 // 1 to 3 in cutover month, otherwise 1 to 4/5
-<span class="fc" id="L341">                return rangeAlignedWeekOfMonth();</span>
+<span class="fc" id="L344">                return rangeAlignedWeekOfMonth();</span>
             case ALIGNED_WEEK_OF_YEAR:
                 // 1 to 51 in cutover year, otherwise 1 to 53
-<span class="fc bfc" id="L344" title="All 2 branches covered.">                if (isCutoverYear()) {</span>
-<span class="fc" id="L345">                    return ValueRange.of(1, 51);</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">                if (isCutoverYear()) {</span>
+<span class="fc" id="L348">                    return ValueRange.of(1, 51);</span>
                 }
-<span class="fc" id="L347">                return ChronoField.ALIGNED_WEEK_OF_YEAR.range();</span>
+<span class="fc" id="L350">                return ChronoField.ALIGNED_WEEK_OF_YEAR.range();</span>
             default:
-<span class="fc" id="L349">                return getChronology().range(field);</span>
+<span class="fc" id="L352">                return getChronology().range(field);</span>
         }
     }
 
     @Override
     ValueRange rangeAlignedWeekOfMonth() {
-<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (isCutoverMonth()) {</span>
-<span class="fc" id="L356">            return ValueRange.of(1, 3);</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        if (isCutoverMonth()) {</span>
+<span class="fc" id="L359">            return ValueRange.of(1, 3);</span>
         }
-<span class="fc bfc" id="L358" title="All 4 branches covered.">        return ValueRange.of(1, getMonth() == 2 &amp;&amp; isLeapYear() == false ? 4 : 5);</span>
+<span class="fc bfc" id="L361" title="All 4 branches covered.">        return ValueRange.of(1, getMonth() == 2 &amp;&amp; !isLeapYear() ? 4 : 5);</span>
     }
 
     @Override
     BritishCutoverDate resolvePrevious(int year, int month, int dayOfMonth) {
-<span class="fc bfc" id="L363" title="All 3 branches covered.">        switch (month) {</span>
+<span class="fc bfc" id="L366" title="All 3 branches covered.">        switch (month) {</span>
             case 2:
-<span class="fc bfc" id="L365" title="All 2 branches covered.">                dayOfMonth = Math.min(dayOfMonth, getChronology().isLeapYear(year) ? 29 : 28);</span>
-<span class="fc" id="L366">                break;</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">                dayOfMonth = Math.min(dayOfMonth, getChronology().isLeapYear(year) ? 29 : 28);</span>
+<span class="fc" id="L369">                break;</span>
             case 4:
             case 6:
             case 9:
             case 11:
-<span class="fc" id="L371">                dayOfMonth = Math.min(dayOfMonth, 30);</span>
-<span class="fc" id="L372">                break;</span>
+<span class="fc" id="L374">                dayOfMonth = Math.min(dayOfMonth, 30);</span>
+<span class="fc" id="L375">                break;</span>
             default:
                 break;
         }
-<span class="fc" id="L376">        return create(year, month, dayOfMonth);</span>
+<span class="fc" id="L379">        return create(year, month, dayOfMonth);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -387,7 +390,7 @@ public final class BritishCutoverDate
      */
     @Override
     public BritishCutoverChronology getChronology() {
-<span class="fc" id="L390">        return BritishCutoverChronology.INSTANCE;</span>
+<span class="fc" id="L393">        return BritishCutoverChronology.INSTANCE;</span>
     }
 
     /**
@@ -400,7 +403,7 @@ public final class BritishCutoverDate
      */
     @Override
     public JulianEra getEra() {
-<span class="fc bfc" id="L403" title="All 2 branches covered.">        return (getProlepticYear() &gt;= 1 ? JulianEra.AD : JulianEra.BC);</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        return (getProlepticYear() &gt;= 1 ? JulianEra.AD : JulianEra.BC);</span>
     }
 
     /**
@@ -413,10 +416,10 @@ public final class BritishCutoverDate
      */
     @Override
     public int lengthOfMonth() {
-<span class="fc bfc" id="L416" title="All 2 branches covered.">        if (isCutoverMonth()) {</span>
-<span class="fc" id="L417">            return 19;</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        if (isCutoverMonth()) {</span>
+<span class="fc" id="L420">            return 19;</span>
         }
-<span class="fc bfc" id="L419" title="All 2 branches covered.">        return (julianDate != null ? julianDate.lengthOfMonth() : isoDate.lengthOfMonth());</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        return (julianDate != null ? julianDate.lengthOfMonth() : isoDate.lengthOfMonth());</span>
     }
 
     /**
@@ -429,113 +432,113 @@ public final class BritishCutoverDate
      */
     @Override
     public int lengthOfYear() {
-<span class="fc bfc" id="L432" title="All 2 branches covered.">        if (isCutoverYear()) {</span>
-<span class="fc" id="L433">            return 355;</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">        if (isCutoverYear()) {</span>
+<span class="fc" id="L436">            return 355;</span>
         }
-<span class="fc bfc" id="L435" title="All 2 branches covered.">        return (julianDate != null ? julianDate.lengthOfYear() : isoDate.lengthOfYear());</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">        return (julianDate != null ? julianDate.lengthOfYear() : isoDate.lengthOfYear());</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
     public BritishCutoverDate with(TemporalAdjuster adjuster) {
-<span class="fc" id="L441">        return (BritishCutoverDate) adjuster.adjustInto(this);</span>
+<span class="fc" id="L444">        return (BritishCutoverDate) adjuster.adjustInto(this);</span>
     }
 
     @Override
     public BritishCutoverDate with(TemporalField field, long newValue) {
-<span class="fc" id="L446">        return (BritishCutoverDate) super.with(field, newValue);</span>
+<span class="fc" id="L449">        return (BritishCutoverDate) super.with(field, newValue);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public BritishCutoverDate plus(TemporalAmount amount) {
-<span class="fc" id="L452">        return (BritishCutoverDate) amount.addTo(this);</span>
+<span class="fc" id="L455">        return (BritishCutoverDate) amount.addTo(this);</span>
     }
 
     @Override
     public BritishCutoverDate plus(long amountToAdd, TemporalUnit unit) {
-<span class="fc" id="L457">        return (BritishCutoverDate) super.plus(amountToAdd, unit);</span>
+<span class="fc" id="L460">        return (BritishCutoverDate) super.plus(amountToAdd, unit);</span>
     }
 
     @Override
     public BritishCutoverDate minus(TemporalAmount amount) {
-<span class="fc" id="L462">        return (BritishCutoverDate) amount.subtractFrom(this);</span>
+<span class="fc" id="L465">        return (BritishCutoverDate) amount.subtractFrom(this);</span>
     }
 
     @Override
     public BritishCutoverDate minus(long amountToSubtract, TemporalUnit unit) {
-<span class="pc bpc" id="L467" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+<span class="pc bpc" id="L470" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
     }
 
     //-------------------------------------------------------------------------
     @Override  // for covariant return type
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;BritishCutoverDate&gt; atTime(LocalTime localTime) {
-<span class="fc" id="L474">        return (ChronoLocalDateTime&lt;BritishCutoverDate&gt;) super.atTime(localTime);</span>
+<span class="fc" id="L477">        return (ChronoLocalDateTime&lt;BritishCutoverDate&gt;) super.atTime(localTime);</span>
     }
 
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L479">        return super.until(BritishCutoverDate.from(endExclusive), unit);</span>
+<span class="fc" id="L482">        return super.until(BritishCutoverDate.from(endExclusive), unit);</span>
     }
 
     @Override
     public ChronoPeriod until(ChronoLocalDate endDateExclusive) {
-<span class="fc" id="L484">        BritishCutoverDate end = BritishCutoverDate.from(endDateExclusive);</span>
-<span class="fc" id="L485">        long totalMonths = end.getProlepticMonth() - this.getProlepticMonth();  // safe</span>
-<span class="fc" id="L486">        int days = end.getDayOfMonth() - this.getDayOfMonth();</span>
-<span class="fc bfc" id="L487" title="All 4 branches covered.">        if (totalMonths == 0 &amp;&amp; isCutoverMonth()) {</span>
-<span class="fc bfc" id="L488" title="All 4 branches covered.">            if (julianDate != null &amp;&amp; end.julianDate == null) {</span>
-<span class="fc" id="L489">                days -= CUTOVER_DAYS;</span>
-<span class="fc bfc" id="L490" title="All 4 branches covered.">            } else if (julianDate == null &amp;&amp; end.julianDate != null) {</span>
-<span class="fc" id="L491">                days += CUTOVER_DAYS;</span>
+<span class="fc" id="L487">        BritishCutoverDate end = BritishCutoverDate.from(endDateExclusive);</span>
+<span class="fc" id="L488">        long totalMonths = end.getProlepticMonth() - this.getProlepticMonth();  // safe</span>
+<span class="fc" id="L489">        int days = end.getDayOfMonth() - this.getDayOfMonth();</span>
+<span class="fc bfc" id="L490" title="All 4 branches covered.">        if (totalMonths == 0 &amp;&amp; isCutoverMonth()) {</span>
+<span class="fc bfc" id="L491" title="All 4 branches covered.">            if (julianDate != null &amp;&amp; end.julianDate == null) {</span>
+<span class="fc" id="L492">                days -= CUTOVER_DAYS;</span>
+<span class="fc bfc" id="L493" title="All 4 branches covered.">            } else if (julianDate == null &amp;&amp; end.julianDate != null) {</span>
+<span class="fc" id="L494">                days += CUTOVER_DAYS;</span>
             }
-<span class="fc bfc" id="L493" title="All 2 branches covered.">        } else if (totalMonths &gt; 0) {</span>
-<span class="fc bfc" id="L494" title="All 4 branches covered.">            if (julianDate != null &amp;&amp; end.julianDate == null) {</span>
-<span class="fc" id="L495">                AbstractDate calcDate = this.plusMonths(totalMonths);</span>
-<span class="fc" id="L496">                days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">        } else if (totalMonths &gt; 0) {</span>
+<span class="fc bfc" id="L497" title="All 4 branches covered.">            if (julianDate != null &amp;&amp; end.julianDate == null) {</span>
+<span class="fc" id="L498">                AbstractDate calcDate = this.plusMonths(totalMonths);</span>
+<span class="fc" id="L499">                days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
             }
-<span class="fc bfc" id="L498" title="All 2 branches covered.">            if (days &lt; 0) {</span>
-<span class="fc" id="L499">                totalMonths--;</span>
-<span class="fc" id="L500">                AbstractDate calcDate = this.plusMonths(totalMonths);</span>
-<span class="fc" id="L501">                days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
-<span class="fc" id="L502">            }</span>
-<span class="fc bfc" id="L503" title="All 4 branches covered.">        } else if (totalMonths &lt; 0 &amp;&amp; days &gt; 0) {</span>
-<span class="fc" id="L504">            totalMonths++;</span>
-<span class="fc" id="L505">            AbstractDate calcDate = this.plusMonths(totalMonths);</span>
-<span class="fc" id="L506">            days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">            if (days &lt; 0) {</span>
+<span class="fc" id="L502">                totalMonths--;</span>
+<span class="fc" id="L503">                AbstractDate calcDate = this.plusMonths(totalMonths);</span>
+<span class="fc" id="L504">                days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
+<span class="fc" id="L505">            }</span>
+<span class="fc bfc" id="L506" title="All 4 branches covered.">        } else if (totalMonths &lt; 0 &amp;&amp; days &gt; 0) {</span>
+<span class="fc" id="L507">            totalMonths++;</span>
+<span class="fc" id="L508">            AbstractDate calcDate = this.plusMonths(totalMonths);</span>
+<span class="fc" id="L509">            days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
         }
-<span class="fc" id="L508">        int years = Math.toIntExact(totalMonths / lengthOfYearInMonths());  // safe</span>
-<span class="fc" id="L509">        int months = (int) (totalMonths % lengthOfYearInMonths());  // safe</span>
-<span class="fc" id="L510">        return getChronology().period(years, months, days);</span>
+<span class="fc" id="L511">        int years = Math.toIntExact(totalMonths / lengthOfYearInMonths());  // safe</span>
+<span class="fc" id="L512">        int months = (int) (totalMonths % lengthOfYearInMonths());  // safe</span>
+<span class="fc" id="L513">        return getChronology().period(years, months, days);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public long toEpochDay() {
-<span class="fc" id="L516">        return isoDate.toEpochDay();</span>
+<span class="fc" id="L519">        return isoDate.toEpochDay();</span>
     }
 
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
-    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L522" title="All 2 branches covered.">        if (query == TemporalQueries.localDate()) {</span>
-<span class="fc" id="L523">            return (R) isoDate;</span>
+    public &lt;R extends @Nullable Object&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        if (query == TemporalQueries.localDate()) {</span>
+<span class="fc" id="L526">            return (R) isoDate;</span>
         }
-<span class="fc" id="L525">        return super.query(query);</span>
+<span class="fc" id="L528">        return super.query(query);</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
-    public boolean equals(Object obj) {
-<span class="fc bfc" id="L531" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L532">            return true;</span>
+    public boolean equals(@Nullable Object obj) {
+<span class="fc bfc" id="L534" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L535">            return true;</span>
         }
-<span class="fc bfc" id="L534" title="All 2 branches covered.">        if (obj instanceof BritishCutoverDate) {</span>
-<span class="fc" id="L535">            BritishCutoverDate otherDate = (BritishCutoverDate) obj;</span>
-<span class="fc" id="L536">            return this.isoDate.equals(otherDate.isoDate);</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">        if (obj instanceof BritishCutoverDate) {</span>
+<span class="fc" id="L538">            BritishCutoverDate otherDate = (BritishCutoverDate) obj;</span>
+<span class="fc" id="L539">            return this.isoDate.equals(otherDate.isoDate);</span>
         }
-<span class="fc" id="L538">        return false;</span>
+<span class="fc" id="L541">        return false;</span>
     }
 
     /**
@@ -545,7 +548,7 @@ public final class BritishCutoverDate
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L548">        return getChronology().getId().hashCode() ^ isoDate.hashCode();</span>
+<span class="fc" id="L551">        return getChronology().getId().hashCode() ^ isoDate.hashCode();</span>
     }
 
 }

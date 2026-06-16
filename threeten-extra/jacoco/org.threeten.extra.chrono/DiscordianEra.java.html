@@ -70,12 +70,10 @@ import java.time.chrono.Era;
      * @throws DateTimeException if the value is invalid
      */
     public static DiscordianEra of(int era) {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        switch (era) {</span>
-            case 1:
-<span class="fc" id="L75">                return YOLD;</span>
-            default:
-<span class="fc" id="L77">                throw new DateTimeException(&quot;Invalid era: &quot; + era);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (era == 1) {</span>
+<span class="fc" id="L74">            return YOLD;</span>
         }
+<span class="fc" id="L76">        throw new DateTimeException(&quot;Invalid era: &quot; + era);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -88,7 +86,7 @@ import java.time.chrono.Era;
      */
     @Override
     public int getValue() {
-<span class="nc" id="L91">        return ordinal();</span>
+<span class="nc" id="L89">        return ordinal();</span>
     }
 
 }

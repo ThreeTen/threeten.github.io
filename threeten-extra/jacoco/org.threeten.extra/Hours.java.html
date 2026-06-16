@@ -50,9 +50,10 @@ import java.util.regex.Pattern;
 
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
+import org.jspecify.annotations.Nullable;
 
 /**
- * A hour-based amount of time, such as '4 hours'.
+ * An hour-based amount of time, such as '4 hours'.
  * &lt;p&gt;
  * This class models a quantity or amount of time in terms of hours.
  * It is a type-safe way of representing a number of hours in an application.
@@ -71,7 +72,7 @@ public final class Hours
     /**
      * A constant for zero hours.
      */
-<span class="fc" id="L74">    public static final Hours ZERO = new Hours(0);</span>
+<span class="fc" id="L75">    public static final Hours ZERO = new Hours(0);</span>
 
     /**
      * A serialization identifier for this class.
@@ -86,8 +87,8 @@ public final class Hours
     /**
      * The pattern for parsing.
      */
-<span class="fc" id="L89">    private static final Pattern PATTERN =</span>
-<span class="fc" id="L90">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+<span class="fc" id="L90">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L91">            Pattern.compile(&quot;([-+]?)P&quot;</span>
                     + &quot;(?:([-+]?[0-9]+)D)?&quot;
                     + &quot;(?:T&quot;
                     + &quot;(?:([-+]?[0-9]+)H)?)?&quot;, Pattern.CASE_INSENSITIVE);
@@ -106,10 +107,10 @@ public final class Hours
      * @return the number of hours, not null
      */
     public static Hours of(int hours) {
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (hours == 0) {</span>
-<span class="fc" id="L110">            return ZERO;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L111">            return ZERO;</span>
         } else {
-<span class="fc" id="L112">            return new Hours(hours);</span>
+<span class="fc" id="L113">            return new Hours(hours);</span>
         }
     }
     
@@ -132,23 +133,23 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Hours from(TemporalAmount amount) {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (amount instanceof Hours) {</span>
-<span class="fc" id="L136">            return (Hours) amount;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (amount instanceof Hours) {</span>
+<span class="fc" id="L137">            return (Hours) amount;</span>
         }
-<span class="fc" id="L138">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
-<span class="fc" id="L139">        int hours = 0;</span>
-<span class="fc bfc" id="L140" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
-<span class="fc" id="L141">            long value = amount.get(unit);</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (value != 0) {</span>
-<span class="fc" id="L143">                long[] converted = Temporals.convertAmount(value, unit, HOURS);</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">                if (converted[1] != 0) {</span>
-<span class="nc" id="L145">                    throw new DateTimeException(</span>
+<span class="fc" id="L139">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L140">        int hours = 0;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L142">            long value = amount.get(unit);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            if (value != 0) {</span>
+<span class="fc" id="L144">                long[] converted = Temporals.convertAmount(value, unit, HOURS);</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">                if (converted[1] != 0) {</span>
+<span class="nc" id="L146">                    throw new DateTimeException(</span>
                             &quot;Amount could not be converted to a whole number of hours: &quot; + value + &quot; &quot; + unit);
                 }
-<span class="fc" id="L148">                hours = Math.addExact(hours, Math.toIntExact(converted[0]));</span>
+<span class="fc" id="L149">                hours = Math.addExact(hours, Math.toIntExact(converted[0]));</span>
             }
-<span class="fc" id="L150">        }</span>
-<span class="fc" id="L151">        return of(hours);</span>
+<span class="fc" id="L151">        }</span>
+<span class="fc" id="L152">        return of(hours);</span>
     }
     
     //-----------------------------------------------------------------------
@@ -191,33 +192,33 @@ public final class Hours
      */
     @FromString
     public static Hours parse(CharSequence text) {
-<span class="fc" id="L194">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc" id="L195">        Matcher matcher = PATTERN.matcher(text);</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">        if (matcher.matches()) {</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">            int negate = &quot;-&quot;.equals(matcher.group(1)) ? -1 : 1;</span>
-<span class="fc" id="L198">            String daysStr = matcher.group(2);</span>
-<span class="fc" id="L199">            String hoursStr = matcher.group(3);</span>
-<span class="pc bpc" id="L200" title="1 of 4 branches missed.">            if (daysStr != null || hoursStr != null) {</span>
-<span class="fc" id="L201">                int hours = 0;</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">                if (hoursStr != null) {</span>
+<span class="fc" id="L195">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L196">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">            int negate = &quot;-&quot;.equals(matcher.group(1)) ? -1 : 1;</span>
+<span class="fc" id="L199">            String daysStr = matcher.group(2);</span>
+<span class="fc" id="L200">            String hoursStr = matcher.group(3);</span>
+<span class="pc bpc" id="L201" title="1 of 4 branches missed.">            if (daysStr != null || hoursStr != null) {</span>
+<span class="fc" id="L202">                int hours = 0;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">                if (hoursStr != null) {</span>
                     try {
-<span class="fc" id="L204">                        hours = Integer.parseInt(hoursStr);</span>
-<span class="nc" id="L205">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L206">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours, non-numeric hours&quot;, text, 0, ex);</span>
-<span class="fc" id="L207">                    }</span>
+<span class="fc" id="L205">                        hours = Integer.parseInt(hoursStr);</span>
+<span class="nc" id="L206">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L207">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours, non-numeric hours&quot;, text, 0, ex);</span>
+<span class="fc" id="L208">                    }</span>
                 }
-<span class="fc bfc" id="L209" title="All 2 branches covered.">                if (daysStr != null) {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                if (daysStr != null) {</span>
                     try {
-<span class="fc" id="L211">                        int daysAsHours = Math.multiplyExact(Integer.parseInt(daysStr), HOURS_PER_DAY);</span>
-<span class="fc" id="L212">                        hours = Math.addExact(hours, daysAsHours);</span>
-<span class="nc" id="L213">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L214">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours, non-numeric days&quot;, text, 0, ex);</span>
-<span class="fc" id="L215">                    }</span>
+<span class="fc" id="L212">                        int daysAsHours = Math.multiplyExact(Integer.parseInt(daysStr), HOURS_PER_DAY);</span>
+<span class="fc" id="L213">                        hours = Math.addExact(hours, daysAsHours);</span>
+<span class="nc" id="L214">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L215">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours, non-numeric days&quot;, text, 0, ex);</span>
+<span class="fc" id="L216">                    }</span>
                 }
-<span class="fc" id="L217">                return of(Math.multiplyExact(hours, negate));</span>
+<span class="fc" id="L218">                return of(Math.multiplyExact(hours, negate));</span>
             }
         }
-<span class="fc" id="L220">        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours&quot;, text, 0);</span>
+<span class="fc" id="L221">        throw new DateTimeParseException(&quot;Text cannot be parsed to Hours&quot;, text, 0);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -232,7 +233,7 @@ public final class Hours
      * @return the number of hours between the start and end temporals, not null
      */
     public static Hours between(Temporal startInclusive, Temporal endExclusive) {
-<span class="nc" id="L235">        return of(Math.toIntExact(HOURS.between(startInclusive, endExclusive)));</span>
+<span class="nc" id="L236">        return of(Math.toIntExact(HOURS.between(startInclusive, endExclusive)));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -241,9 +242,9 @@ public final class Hours
      *
      * @param hours  the amount of hours
      */
-<span class="fc" id="L244">    private Hours(int hours) {</span>
-<span class="fc" id="L245">        this.hours = hours;</span>
-<span class="fc" id="L246">    }</span>
+<span class="fc" id="L245">    private Hours(int hours) {</span>
+<span class="fc" id="L246">        this.hours = hours;</span>
+<span class="fc" id="L247">    }</span>
 
     /**
      * Resolves singletons.
@@ -251,7 +252,7 @@ public final class Hours
      * @return the singleton instance
      */
     private Object readResolve() {
-<span class="fc" id="L254">        return Hours.of(hours);</span>
+<span class="fc" id="L255">        return Hours.of(hours);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -267,10 +268,10 @@ public final class Hours
      */
     @Override
     public long get(TemporalUnit unit) {
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">        if (unit == HOURS) {</span>
-<span class="fc" id="L271">            return hours;</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (unit == HOURS) {</span>
+<span class="fc" id="L272">            return hours;</span>
         }
-<span class="nc" id="L273">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="nc" id="L274">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
     }
 
     /**
@@ -285,7 +286,7 @@ public final class Hours
      */
     @Override
     public List&lt;TemporalUnit&gt; getUnits() {
-<span class="fc" id="L288">        return Collections.singletonList(HOURS);</span>
+<span class="fc" id="L289">        return Collections.singletonList(HOURS);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -295,7 +296,7 @@ public final class Hours
      * @return the number of hours
      */
     public int getAmount() {
-<span class="fc" id="L298">        return hours;</span>
+<span class="fc" id="L299">        return hours;</span>
     }
 
     /**
@@ -304,7 +305,7 @@ public final class Hours
      * @return true if the amount is negative, false if the amount is zero or positive
      */
     public boolean isNegative() {
-<span class="fc bfc" id="L307" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
     }
 
     /**
@@ -313,7 +314,7 @@ public final class Hours
      * @return true if the amount is zero, false if not
      */
     public boolean isZero() {
-<span class="fc bfc" id="L316" title="All 2 branches covered.">        return getAmount() == 0;</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        return getAmount() == 0;</span>
     }
 
     /**
@@ -322,7 +323,7 @@ public final class Hours
      * @return true if the amount is positive, false if the amount is zero or negative
      */
     public boolean isPositive() {
-<span class="fc bfc" id="L325" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -339,7 +340,7 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Hours plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L342">        return plus(Hours.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L343">        return plus(Hours.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -352,10 +353,10 @@ public final class Hours
      * @throws ArithmeticException if the result overflows an int
      */
     public Hours plus(int hours) {
-<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (hours == 0) {</span>
-<span class="fc" id="L356">            return this;</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L357">            return this;</span>
         }
-<span class="fc" id="L358">        return of(Math.addExact(this.hours, hours));</span>
+<span class="fc" id="L359">        return of(Math.addExact(this.hours, hours));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -372,7 +373,7 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Hours minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L375">        return minus(Hours.from(amountToSubtract).getAmount());</span>
+<span class="fc" id="L376">        return minus(Hours.from(amountToSubtract).getAmount());</span>
     }
 
     /**
@@ -385,10 +386,10 @@ public final class Hours
      * @throws ArithmeticException if the result overflows an int
      */
     public Hours minus(int hours) {
-<span class="fc bfc" id="L388" title="All 2 branches covered.">        if (hours == 0) {</span>
-<span class="fc" id="L389">            return this;</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L390">            return this;</span>
         }
-<span class="fc" id="L391">        return of(Math.subtractExact(this.hours, hours));</span>
+<span class="fc" id="L392">        return of(Math.subtractExact(this.hours, hours));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -402,10 +403,10 @@ public final class Hours
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Hours multipliedBy(int scalar) {
-<span class="fc bfc" id="L405" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L406">            return this;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L407">            return this;</span>
         }
-<span class="fc" id="L408">        return of(Math.multiplyExact(hours, scalar));</span>
+<span class="fc" id="L409">        return of(Math.multiplyExact(hours, scalar));</span>
     }
 
     /**
@@ -420,10 +421,10 @@ public final class Hours
      * @throws ArithmeticException if the divisor is zero
      */
     public Hours dividedBy(int divisor) {
-<span class="fc bfc" id="L423" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L424">            return this;</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L425">            return this;</span>
         }
-<span class="fc" id="L426">        return of(hours / divisor);</span>
+<span class="fc" id="L427">        return of(hours / divisor);</span>
     }
 
     /**
@@ -436,7 +437,7 @@ public final class Hours
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Hours negated() {
-<span class="fc" id="L439">        return multipliedBy(-1);</span>
+<span class="fc" id="L440">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -451,7 +452,7 @@ public final class Hours
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Hours abs() {
-<span class="fc bfc" id="L454" title="All 2 branches covered.">        return hours &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">        return hours &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -465,7 +466,7 @@ public final class Hours
      */
     @Deprecated
     public Duration toPeriod() {
-<span class="fc" id="L468">        return Duration.ofHours(hours);</span>
+<span class="fc" id="L469">        return Duration.ofHours(hours);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -477,7 +478,7 @@ public final class Hours
      * @return the equivalent duration, not null
      */
     public Duration toDuration() {
-<span class="fc" id="L480">        return Duration.ofHours(hours);</span>
+<span class="fc" id="L481">        return Duration.ofHours(hours);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -507,10 +508,10 @@ public final class Hours
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc bfc" id="L510" title="All 2 branches covered.">        if (hours != 0) {</span>
-<span class="fc" id="L511">            temporal = temporal.plus(hours, HOURS);</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">        if (hours != 0) {</span>
+<span class="fc" id="L512">            temporal = temporal.plus(hours, HOURS);</span>
         }
-<span class="fc" id="L513">        return temporal;</span>
+<span class="fc" id="L514">        return temporal;</span>
     }
 
     /**
@@ -539,10 +540,10 @@ public final class Hours
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc bfc" id="L542" title="All 2 branches covered.">        if (hours != 0) {</span>
-<span class="fc" id="L543">            temporal = temporal.minus(hours, HOURS);</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        if (hours != 0) {</span>
+<span class="fc" id="L544">            temporal = temporal.minus(hours, HOURS);</span>
         }
-<span class="fc" id="L545">        return temporal;</span>
+<span class="fc" id="L546">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -557,9 +558,7 @@ public final class Hours
      */
     @Override
     public int compareTo(Hours otherAmount) {
-<span class="fc" id="L560">        int thisValue = this.hours;</span>
-<span class="fc" id="L561">        int otherValue = otherAmount.hours;</span>
-<span class="fc" id="L562">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L561">        return Integer.compare(this.hours, otherAmount.hours);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -572,15 +571,15 @@ public final class Hours
      * @return true if the other amount is equal to this one
      */
     @Override
-    public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L576" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L577">            return true;</span>
+    public boolean equals(@Nullable Object otherAmount) {
+<span class="fc bfc" id="L575" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L576">            return true;</span>
         }
-<span class="fc bfc" id="L579" title="All 2 branches covered.">        if (otherAmount instanceof Hours) {</span>
-<span class="fc" id="L580">            Hours other = (Hours) otherAmount;</span>
-<span class="fc bfc" id="L581" title="All 2 branches covered.">            return this.hours == other.hours;</span>
+<span class="fc bfc" id="L578" title="All 2 branches covered.">        if (otherAmount instanceof Hours) {</span>
+<span class="fc" id="L579">            Hours other = (Hours) otherAmount;</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">            return this.hours == other.hours;</span>
         }
-<span class="fc" id="L583">        return false;</span>
+<span class="fc" id="L582">        return false;</span>
     }
 
     /**
@@ -590,7 +589,7 @@ public final class Hours
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L593">        return hours;</span>
+<span class="fc" id="L592">        return hours;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -603,7 +602,7 @@ public final class Hours
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L606">        return &quot;PT&quot; + hours + &quot;H&quot;;</span>
+<span class="fc" id="L605">        return &quot;PT&quot; + hours + &quot;H&quot;;</span>
     }
 
 }

@@ -49,6 +49,7 @@ import java.time.temporal.ValueRange;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 
 /**
  * The Julian calendar system.
@@ -88,7 +89,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
     /**
      * Singleton instance for the Julian chronology.
      */
-<span class="fc" id="L91">    public static final JulianChronology INSTANCE = new JulianChronology();</span>
+<span class="fc" id="L92">    public static final JulianChronology INSTANCE = new JulianChronology();</span>
 
     /**
      * Serialization version.
@@ -97,23 +98,23 @@ public final class JulianChronology extends AbstractChronology implements Serial
     /**
      * Range of proleptic-year.
      */
-<span class="fc" id="L100">    static final ValueRange YEAR_RANGE = ValueRange.of(-999_998, 999_999);</span>
+<span class="fc" id="L101">    static final ValueRange YEAR_RANGE = ValueRange.of(-999_998, 999_999);</span>
     /**
      * Range of year.
      */
-<span class="fc" id="L104">    static final ValueRange YOE_RANGE = ValueRange.of(1, 999_999);</span>
+<span class="fc" id="L105">    static final ValueRange YOE_RANGE = ValueRange.of(1, 999_999);</span>
     /**
      * Range of proleptic month.
      */
-<span class="fc" id="L108">    static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-999_998 * 12L, 999_999 * 12L + 11);</span>
+<span class="fc" id="L109">    static final ValueRange PROLEPTIC_MONTH_RANGE = ValueRange.of(-999_998 * 12L, 999_999 * 12L + 11);</span>
 
     /**
      * Private constructor, that is public to satisfy the {@code ServiceLoader}.
      * @deprecated Use the singleton {@link #INSTANCE} instead.
      */
     @Deprecated
-<span class="fc" id="L115">    public JulianChronology() {</span>
-<span class="fc" id="L116">    }</span>
+<span class="fc" id="L116">    public JulianChronology() {</span>
+<span class="fc" id="L117">    }</span>
 
     /**
      * Resolve singleton.
@@ -121,7 +122,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      * @return the singleton instance, not null
      */
     private Object readResolve() {
-<span class="nc" id="L124">        return INSTANCE;</span>
+<span class="nc" id="L125">        return INSTANCE;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -136,7 +137,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public String getId() {
-<span class="fc" id="L139">        return &quot;Julian&quot;;</span>
+<span class="fc" id="L140">        return &quot;Julian&quot;;</span>
     }
 
     /**
@@ -151,7 +152,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public String getCalendarType() {
-<span class="fc" id="L154">        return &quot;julian&quot;;</span>
+<span class="fc" id="L155">        return &quot;julian&quot;;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -169,7 +170,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public JulianDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
-<span class="fc" id="L172">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+<span class="fc" id="L173">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
     }
 
     /**
@@ -184,7 +185,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public JulianDate date(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L187">        return JulianDate.of(prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L188">        return JulianDate.of(prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -200,7 +201,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public JulianDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
-<span class="fc" id="L203">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+<span class="fc" id="L204">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
     }
 
     /**
@@ -214,7 +215,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public JulianDate dateYearDay(int prolepticYear, int dayOfYear) {
-<span class="fc" id="L217">        return JulianDate.ofYearDay(prolepticYear, dayOfYear);</span>
+<span class="fc" id="L218">        return JulianDate.ofYearDay(prolepticYear, dayOfYear);</span>
     }
 
     /**
@@ -226,7 +227,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override  // override with covariant return type
     public JulianDate dateEpochDay(long epochDay) {
-<span class="fc" id="L229">        return JulianDate.ofEpochDay(epochDay);</span>
+<span class="fc" id="L230">        return JulianDate.ofEpochDay(epochDay);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -244,7 +245,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override  // override with covariant return type
     public JulianDate dateNow() {
-<span class="nc" id="L247">        return JulianDate.now();</span>
+<span class="nc" id="L248">        return JulianDate.now();</span>
     }
 
     /**
@@ -262,7 +263,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override  // override with covariant return type
     public JulianDate dateNow(ZoneId zone) {
-<span class="nc" id="L265">        return JulianDate.now(zone);</span>
+<span class="nc" id="L266">        return JulianDate.now(zone);</span>
     }
 
     /**
@@ -278,7 +279,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override  // override with covariant return type
     public JulianDate dateNow(Clock clock) {
-<span class="nc" id="L281">        return JulianDate.now(clock);</span>
+<span class="nc" id="L282">        return JulianDate.now(clock);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -291,7 +292,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public JulianDate date(TemporalAccessor temporal) {
-<span class="fc" id="L294">        return JulianDate.from(temporal);</span>
+<span class="fc" id="L295">        return JulianDate.from(temporal);</span>
     }
 
     /**
@@ -304,7 +305,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;JulianDate&gt; localDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L307">        return (ChronoLocalDateTime&lt;JulianDate&gt;) super.localDateTime(temporal);</span>
+<span class="nc" id="L308">        return (ChronoLocalDateTime&lt;JulianDate&gt;) super.localDateTime(temporal);</span>
     }
 
     /**
@@ -317,7 +318,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;JulianDate&gt; zonedDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L320">        return (ChronoZonedDateTime&lt;JulianDate&gt;) super.zonedDateTime(temporal);</span>
+<span class="nc" id="L321">        return (ChronoZonedDateTime&lt;JulianDate&gt;) super.zonedDateTime(temporal);</span>
     }
 
     /**
@@ -331,7 +332,7 @@ public final class JulianChronology extends AbstractChronology implements Serial
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;JulianDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
-<span class="nc" id="L334">        return (ChronoZonedDateTime&lt;JulianDate&gt;) super.zonedDateTime(instant, zone);</span>
+<span class="nc" id="L335">        return (ChronoZonedDateTime&lt;JulianDate&gt;) super.zonedDateTime(instant, zone);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -347,47 +348,47 @@ public final class JulianChronology extends AbstractChronology implements Serial
      */
     @Override
     public boolean isLeapYear(long prolepticYear) {
-<span class="fc bfc" id="L350" title="All 2 branches covered.">        return (prolepticYear % 4) == 0;</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">        return (prolepticYear % 4) == 0;</span>
     }
 
     @Override
     public int prolepticYear(Era era, int yearOfEra) {
-<span class="fc bfc" id="L355" title="All 2 branches covered.">        if (era instanceof JulianEra == false) {</span>
-<span class="fc" id="L356">            throw new ClassCastException(&quot;Era must be JulianEra&quot;);</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">        if (!(era instanceof JulianEra)) {</span>
+<span class="fc" id="L357">            throw new ClassCastException(&quot;Era must be JulianEra&quot;);</span>
         }
-<span class="fc bfc" id="L358" title="All 2 branches covered.">        return (era == JulianEra.AD ? yearOfEra : 1 - yearOfEra);</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">        return (era == JulianEra.AD ? yearOfEra : 1 - yearOfEra);</span>
     }
 
     @Override
     public JulianEra eraOf(int eraValue) {
-<span class="fc" id="L363">        return JulianEra.of(eraValue);</span>
+<span class="fc" id="L364">        return JulianEra.of(eraValue);</span>
     }
 
     @Override
     public List&lt;Era&gt; eras() {
-<span class="fc" id="L368">        return Arrays.&lt;Era&gt;asList(JulianEra.values());</span>
+<span class="fc" id="L369">        return Arrays.asList(JulianEra.values());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(ChronoField field) {
-<span class="fc bfc" id="L374" title="All 4 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L375" title="All 4 branches covered.">        switch (field) {</span>
             case PROLEPTIC_MONTH:
-<span class="fc" id="L376">                return PROLEPTIC_MONTH_RANGE;</span>
+<span class="fc" id="L377">                return PROLEPTIC_MONTH_RANGE;</span>
             case YEAR_OF_ERA:
-<span class="fc" id="L378">                return YOE_RANGE;</span>
+<span class="fc" id="L379">                return YOE_RANGE;</span>
             case YEAR:
-<span class="fc" id="L380">                return YEAR_RANGE;</span>
+<span class="fc" id="L381">                return YEAR_RANGE;</span>
             default:
                 break;
         }
-<span class="fc" id="L384">        return field.range();</span>
+<span class="fc" id="L385">        return field.range();</span>
     }
 
     //-----------------------------------------------------------------------
     @Override  // override for return type
-    public JulianDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
-<span class="nc" id="L390">        return (JulianDate) super.resolveDate(fieldValues, resolverStyle);</span>
+    public @Nullable JulianDate resolveDate(Map&lt;TemporalField, Long&gt; fieldValues, ResolverStyle resolverStyle) {
+<span class="nc" id="L391">        return (JulianDate) super.resolveDate(fieldValues, resolverStyle);</span>
     }
 
 }

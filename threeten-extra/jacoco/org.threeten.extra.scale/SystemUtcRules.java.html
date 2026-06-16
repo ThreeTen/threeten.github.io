@@ -78,7 +78,7 @@ final class SystemUtcRules extends UtcRules implements Serializable {
     /**
      * The table of leap second dates.
      */
-<span class="fc" id="L81">    private AtomicReference&lt;Data&gt; dataRef = new AtomicReference&lt;Data&gt;(loadLeapSeconds());</span>
+<span class="fc" id="L81">    private final AtomicReference&lt;Data&gt; dataRef = new AtomicReference&lt;&gt;(loadLeapSeconds());</span>
 
     /** Data holder. */
     private static final class Data implements Serializable {
@@ -154,7 +154,7 @@ final class SystemUtcRules extends UtcRules implements Serializable {
 <span class="fc" id="L154">        offsets[offsets.length - 1] = offset;</span>
 <span class="fc" id="L155">        taiSeconds[taiSeconds.length - 1] = tai(mjDay, offset);</span>
 <span class="fc" id="L156">        Data newData = new Data(dates, offsets, taiSeconds);</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (dataRef.compareAndSet(data, newData) == false) {</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (!dataRef.compareAndSet(data, newData)) {</span>
 <span class="nc" id="L158">            throw new ConcurrentModificationException(&quot;Unable to update leap second rules as they have already been updated&quot;);</span>
         }
 <span class="fc" id="L160">    }</span>
@@ -211,7 +211,7 @@ final class SystemUtcRules extends UtcRules implements Serializable {
      * Loads the rules from files in the class loader, often jar files.
      *
      * @return the list of loaded rules, not null
-     * @throws Exception if an error occurs
+     * @throws RuntimeException if an error occurs
      */
     private static Data loadLeapSeconds() {
 <span class="fc" id="L217">        Data bestData = null;</span>
@@ -258,36 +258,37 @@ final class SystemUtcRules extends UtcRules implements Serializable {
      * Loads the leap second rules from a URL, often in a jar file.
      *
      * @param url  the jar file to load, not null
-     * @throws Exception if an error occurs
+     * @throws RuntimeException if an error occurs
+     * @throws IOException if an error occurs
      */
-    private static Data loadLeapSeconds(URL url) throws ClassNotFoundException, IOException {
+    private static Data loadLeapSeconds(URL url) throws IOException {
         List&lt;String&gt; lines;
-<span class="fc" id="L265">        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {</span>
-<span class="fc" id="L266">            lines = reader.lines().collect(Collectors.toList());</span>
+<span class="fc" id="L266">        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {</span>
+<span class="fc" id="L267">            lines = reader.lines().collect(Collectors.toList());</span>
         }
-<span class="fc" id="L268">        List&lt;Long&gt; dates = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L269">        List&lt;Integer&gt; offsets = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">        for (String line : lines) {</span>
-<span class="fc" id="L271">            line = line.trim();</span>
-<span class="pc bpc" id="L272" title="1 of 4 branches missed.">            if (line.isEmpty() || line.startsWith(&quot;#&quot;)) {</span>
-<span class="fc" id="L273">                continue;</span>
+<span class="fc" id="L269">        List&lt;Long&gt; dates = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L270">        List&lt;Integer&gt; offsets = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        for (String line : lines) {</span>
+<span class="fc" id="L272">            line = line.trim();</span>
+<span class="pc bpc" id="L273" title="1 of 4 branches missed.">            if (line.isEmpty() || line.startsWith(&quot;#&quot;)) {</span>
+<span class="fc" id="L274">                continue;</span>
             }
-<span class="fc" id="L275">            Matcher matcher = LEAP_FILE_FORMAT.matcher(line);</span>
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            if (matcher.matches() == false) {</span>
-<span class="nc" id="L277">                throw new StreamCorruptedException(&quot;Invalid leap second file&quot;);</span>
+<span class="fc" id="L276">            Matcher matcher = LEAP_FILE_FORMAT.matcher(line);</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">            if (!matcher.matches()) {</span>
+<span class="nc" id="L278">                throw new StreamCorruptedException(&quot;Invalid leap second file&quot;);</span>
             }
-<span class="fc" id="L279">            dates.add(LocalDate.parse(matcher.group(1)).getLong(JulianFields.MODIFIED_JULIAN_DAY));</span>
-<span class="fc" id="L280">            offsets.add(Integer.valueOf(matcher.group(2)));</span>
-<span class="fc" id="L281">        }</span>
-<span class="fc" id="L282">        long[] datesData = new long[dates.size()];</span>
-<span class="fc" id="L283">        int[] offsetsData = new int[dates.size()];</span>
-<span class="fc" id="L284">        long[] taiData = new long[dates.size()];</span>
-<span class="fc bfc" id="L285" title="All 2 branches covered.">        for (int i = 0; i &lt; datesData.length; i++) {</span>
-<span class="fc" id="L286">            datesData[i] = dates.get(i);</span>
-<span class="fc" id="L287">            offsetsData[i] = offsets.get(i);</span>
-<span class="fc" id="L288">            taiData[i] = tai(datesData[i], offsetsData[i]);</span>
+<span class="fc" id="L280">            dates.add(LocalDate.parse(matcher.group(1)).getLong(JulianFields.MODIFIED_JULIAN_DAY));</span>
+<span class="fc" id="L281">            offsets.add(Integer.valueOf(matcher.group(2)));</span>
+<span class="fc" id="L282">        }</span>
+<span class="fc" id="L283">        long[] datesData = new long[dates.size()];</span>
+<span class="fc" id="L284">        int[] offsetsData = new int[dates.size()];</span>
+<span class="fc" id="L285">        long[] taiData = new long[dates.size()];</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        for (int i = 0; i &lt; datesData.length; i++) {</span>
+<span class="fc" id="L287">            datesData[i] = dates.get(i);</span>
+<span class="fc" id="L288">            offsetsData[i] = offsets.get(i);</span>
+<span class="fc" id="L289">            taiData[i] = tai(datesData[i], offsetsData[i]);</span>
         }
-<span class="fc" id="L290">        return new Data(datesData, offsetsData, taiData);</span>
+<span class="fc" id="L291">        return new Data(datesData, offsetsData, taiData);</span>
     }
 
     /**
@@ -298,7 +299,7 @@ final class SystemUtcRules extends UtcRules implements Serializable {
      * @return the TAI seconds
      */
     private static long tai(long changeMjd, int offset) {
-<span class="fc" id="L301">        return (changeMjd + 1 - OFFSET_MJD_TAI) * SECS_PER_DAY + offset;</span>
+<span class="fc" id="L302">        return (changeMjd + 1 - OFFSET_MJD_TAI) * SECS_PER_DAY + offset;</span>
     }
 
 }

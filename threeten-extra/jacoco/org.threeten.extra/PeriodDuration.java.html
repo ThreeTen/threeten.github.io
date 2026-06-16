@@ -61,6 +61,7 @@ import java.util.Objects;
 
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
+import org.jspecify.annotations.Nullable;
 
 /**
  * An amount of time in the ISO-8601 calendar system that combines a period and a duration.
@@ -70,7 +71,7 @@ import org.joda.convert.ToString;
  * A duration is a time-based amount of time, consisting of seconds and nanoseconds.
  * See the {@link Period} and {@link Duration} classes for more details.
  * &lt;p&gt;
- * The days in a period take account of daylight saving changes (23 or 25 hour days).
+ * The days in a period take account of daylight saving changes (23 or 25-hour days).
  * When performing calculations, the period is added first, then the duration.
  * &lt;p&gt;
  * The model is of a directed amount, meaning that the amount may be negative.
@@ -87,7 +88,7 @@ public final class PeriodDuration
     /**
      * A constant for a duration of zero.
      */
-<span class="fc" id="L90">    public static final PeriodDuration ZERO = new PeriodDuration(Period.ZERO, Duration.ZERO);</span>
+<span class="fc" id="L91">    public static final PeriodDuration ZERO = new PeriodDuration(Period.ZERO, Duration.ZERO);</span>
 
     /**
      * A serialization identifier for this class.
@@ -96,8 +97,8 @@ public final class PeriodDuration
     /**
      * The supported units.
      */
-<span class="fc" id="L99">    private static final List&lt;TemporalUnit&gt; SUPPORTED_UNITS =</span>
-<span class="fc" id="L100">            Collections.unmodifiableList(Arrays.&lt;TemporalUnit&gt;asList(YEARS, MONTHS, DAYS, SECONDS, NANOS));</span>
+<span class="fc" id="L100">    private static final List&lt;TemporalUnit&gt; SUPPORTED_UNITS =</span>
+<span class="fc" id="L101">            Collections.unmodifiableList(Arrays.&lt;TemporalUnit&gt;asList(YEARS, MONTHS, DAYS, SECONDS, NANOS));</span>
     /**
      * The number of seconds per day.
      */
@@ -131,9 +132,9 @@ public final class PeriodDuration
      * @return the combined period-duration, not null
      */
     public static PeriodDuration of(Period period, Duration duration) {
-<span class="fc" id="L134">        Objects.requireNonNull(period, &quot;The period must not be null&quot;);</span>
-<span class="fc" id="L135">        Objects.requireNonNull(duration, &quot;The duration must not be null&quot;);</span>
-<span class="fc" id="L136">        return new PeriodDuration(period, duration);</span>
+<span class="fc" id="L135">        Objects.requireNonNull(period, &quot;The period must not be null&quot;);</span>
+<span class="fc" id="L136">        Objects.requireNonNull(duration, &quot;The duration must not be null&quot;);</span>
+<span class="fc" id="L137">        return new PeriodDuration(period, duration);</span>
     }
 
     /**
@@ -145,8 +146,8 @@ public final class PeriodDuration
      * @return the combined period-duration, not null
      */
     public static PeriodDuration of(Period period) {
-<span class="fc" id="L148">        Objects.requireNonNull(period, &quot;The period must not be null&quot;);</span>
-<span class="fc" id="L149">        return new PeriodDuration(period, Duration.ZERO);</span>
+<span class="fc" id="L149">        Objects.requireNonNull(period, &quot;The period must not be null&quot;);</span>
+<span class="fc" id="L150">        return new PeriodDuration(period, Duration.ZERO);</span>
     }
 
     /**
@@ -158,8 +159,8 @@ public final class PeriodDuration
      * @return the combined period-duration, not null
      */
     public static PeriodDuration of(Duration duration) {
-<span class="fc" id="L161">        Objects.requireNonNull(duration, &quot;The duration must not be null&quot;);</span>
-<span class="fc" id="L162">        return new PeriodDuration(Period.ZERO, duration);</span>
+<span class="fc" id="L162">        Objects.requireNonNull(duration, &quot;The duration must not be null&quot;);</span>
+<span class="fc" id="L163">        return new PeriodDuration(Period.ZERO, duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -183,56 +184,56 @@ public final class PeriodDuration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static PeriodDuration from(TemporalAmount amount) {
-<span class="fc bfc" id="L186" title="All 2 branches covered.">        if (amount instanceof PeriodDuration) {</span>
-<span class="fc" id="L187">            return (PeriodDuration) amount;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (amount instanceof PeriodDuration) {</span>
+<span class="fc" id="L188">            return (PeriodDuration) amount;</span>
         }
-<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (amount instanceof Period) {</span>
-<span class="fc" id="L190">            return PeriodDuration.of((Period) amount);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (amount instanceof Period) {</span>
+<span class="fc" id="L191">            return PeriodDuration.of((Period) amount);</span>
         }
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (amount instanceof Duration) {</span>
-<span class="fc" id="L193">            return PeriodDuration.of((Duration) amount);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (amount instanceof Duration) {</span>
+<span class="fc" id="L194">            return PeriodDuration.of((Duration) amount);</span>
         }
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        if (amount instanceof ChronoPeriod) {</span>
-<span class="nc bnc" id="L196" title="All 2 branches missed.">            if (IsoChronology.INSTANCE.equals(((ChronoPeriod) amount).getChronology()) == false) {</span>
-<span class="nc" id="L197">                throw new DateTimeException(&quot;Period requires ISO chronology: &quot; + amount);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (amount instanceof ChronoPeriod) {</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            if (!IsoChronology.INSTANCE.equals(((ChronoPeriod) amount).getChronology())) {</span>
+<span class="nc" id="L198">                throw new DateTimeException(&quot;Period requires ISO chronology: &quot; + amount);</span>
             }
         }
-<span class="fc" id="L200">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
-<span class="fc" id="L201">        int years = 0;</span>
-<span class="fc" id="L202">        int months = 0;</span>
-<span class="fc" id="L203">        int days = 0;</span>
-<span class="fc" id="L204">        Duration duration = Duration.ZERO;</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
-<span class="fc" id="L206">            long value = amount.get(unit);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">            if (value != 0) {</span>
+<span class="fc" id="L201">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="fc" id="L202">        int years = 0;</span>
+<span class="fc" id="L203">        int months = 0;</span>
+<span class="fc" id="L204">        int days = 0;</span>
+<span class="fc" id="L205">        Duration duration = Duration.ZERO;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="fc" id="L207">            long value = amount.get(unit);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">            if (value != 0) {</span>
                 // ignore unless non-zero
-<span class="fc bfc" id="L209" title="All 2 branches covered.">                if (unit.isDurationEstimated()) {</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">                    if (unit == ChronoUnit.DAYS) {</span>
-<span class="fc" id="L211">                        days = Math.addExact(days, Math.toIntExact(value));</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">                    } else if (unit == ChronoUnit.WEEKS) {</span>
-<span class="fc" id="L213">                        days = Math.addExact(days, Math.toIntExact(Math.multiplyExact(value, 7)));</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">                    } else if (unit == ChronoUnit.MONTHS) {</span>
-<span class="fc" id="L215">                        months = Math.addExact(months, Math.toIntExact(value));</span>
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">                    } else if (unit == IsoFields.QUARTER_YEARS) {</span>
-<span class="nc" id="L217">                        months = Math.addExact(months, Math.toIntExact(Math.multiplyExact(value, 3)));</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                    } else if (unit == ChronoUnit.YEARS) {</span>
-<span class="fc" id="L219">                        years = Math.addExact(years, Math.toIntExact(value));</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.DECADES) {</span>
-<span class="nc" id="L221">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 10)));</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.CENTURIES) {</span>
-<span class="nc" id="L223">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 100)));</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.MILLENNIA) {</span>
-<span class="nc" id="L225">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 1000)));</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                if (unit.isDurationEstimated()) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">                    if (unit == ChronoUnit.DAYS) {</span>
+<span class="fc" id="L212">                        days = Math.addExact(days, Math.toIntExact(value));</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">                    } else if (unit == ChronoUnit.WEEKS) {</span>
+<span class="fc" id="L214">                        days = Math.addExact(days, Math.toIntExact(Math.multiplyExact(value, 7)));</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">                    } else if (unit == ChronoUnit.MONTHS) {</span>
+<span class="fc" id="L216">                        months = Math.addExact(months, Math.toIntExact(value));</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">                    } else if (unit == IsoFields.QUARTER_YEARS) {</span>
+<span class="nc" id="L218">                        months = Math.addExact(months, Math.toIntExact(Math.multiplyExact(value, 3)));</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">                    } else if (unit == ChronoUnit.YEARS) {</span>
+<span class="fc" id="L220">                        years = Math.addExact(years, Math.toIntExact(value));</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.DECADES) {</span>
+<span class="nc" id="L222">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 10)));</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.CENTURIES) {</span>
+<span class="nc" id="L224">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 100)));</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                    } else if (unit == ChronoUnit.MILLENNIA) {</span>
+<span class="nc" id="L226">                        years = Math.addExact(years, Math.toIntExact(Math.multiplyExact(value, 1000)));</span>
                     } else {
-<span class="nc" id="L227">                        throw new DateTimeException(&quot;Unknown unit: &quot; + unit);</span>
+<span class="nc" id="L228">                        throw new DateTimeException(&quot;Unknown unit: &quot; + unit);</span>
                     }
                 } else {
                     // total of exact durations
-<span class="fc" id="L231">                    duration = duration.plus(amount.get(unit), unit);</span>
+<span class="fc" id="L232">                    duration = duration.plus(amount.get(unit), unit);</span>
                 }
             }
-<span class="fc" id="L234">        }</span>
-<span class="fc" id="L235">        return PeriodDuration.of(Period.of(years, months, days), duration);</span>
+<span class="fc" id="L235">        }</span>
+<span class="fc" id="L236">        return PeriodDuration.of(Period.of(years, months, days), duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -281,28 +282,28 @@ public final class PeriodDuration
      */
     @FromString
     public static PeriodDuration parse(CharSequence text) {
-<span class="fc" id="L284">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc" id="L285">        String upper = text.toString().toUpperCase(Locale.ENGLISH);</span>
-<span class="fc" id="L286">        String negate = &quot;&quot;;</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">        if (upper.startsWith(&quot;+&quot;)) {</span>
-<span class="fc" id="L288">            upper = upper.substring(1);</span>
-<span class="fc bfc" id="L289" title="All 2 branches covered.">        } else if (upper.startsWith(&quot;-&quot;)) {</span>
-<span class="fc" id="L290">            upper = upper.substring(1);</span>
-<span class="fc" id="L291">            negate = &quot;-&quot;;</span>
+<span class="fc" id="L285">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L286">        String upper = text.toString().toUpperCase(Locale.ENGLISH);</span>
+<span class="fc" id="L287">        String negate = &quot;&quot;;</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (upper.startsWith(&quot;+&quot;)) {</span>
+<span class="fc" id="L289">            upper = upper.substring(1);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        } else if (upper.startsWith(&quot;-&quot;)) {</span>
+<span class="fc" id="L291">            upper = upper.substring(1);</span>
+<span class="fc" id="L292">            negate = &quot;-&quot;;</span>
         }
         // duration only, parse original text so it does negation
-<span class="fc bfc" id="L294" title="All 2 branches covered.">        if (upper.startsWith(&quot;PT&quot;)) {</span>
-<span class="fc" id="L295">            return PeriodDuration.of(Duration.parse(text));</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">        if (upper.startsWith(&quot;PT&quot;)) {</span>
+<span class="fc" id="L296">            return PeriodDuration.of(Duration.parse(text));</span>
         }
         // period only, parse original text so it does negation
-<span class="fc" id="L298">        int tpos = upper.indexOf('T');</span>
-<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (tpos &lt; 0) {</span>
-<span class="fc" id="L300">            return PeriodDuration.of(Period.parse(text));</span>
+<span class="fc" id="L299">        int tpos = upper.indexOf('T');</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        if (tpos &lt; 0) {</span>
+<span class="fc" id="L301">            return PeriodDuration.of(Period.parse(text));</span>
         }
         // period and duration
-<span class="fc" id="L303">        Period period = Period.parse(negate + upper.substring(0, tpos));</span>
-<span class="fc" id="L304">        Duration duration = Duration.parse(negate + &quot;P&quot; + upper.substring(tpos));</span>
-<span class="fc" id="L305">        return PeriodDuration.of(period, duration);</span>
+<span class="fc" id="L304">        Period period = Period.parse(negate + upper.substring(0, tpos));</span>
+<span class="fc" id="L305">        Duration duration = Duration.parse(negate + &quot;P&quot; + upper.substring(tpos));</span>
+<span class="fc" id="L306">        return PeriodDuration.of(period, duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -322,18 +323,18 @@ public final class PeriodDuration
      * @return the number of days between this date and the end date, not null
      */
     public static PeriodDuration between(Temporal startInclusive, Temporal endExclusive) {
-<span class="fc" id="L325">        LocalDate startDate = startInclusive.query(TemporalQueries.localDate());</span>
-<span class="fc" id="L326">        LocalDate endDate = endExclusive.query(TemporalQueries.localDate());</span>
-<span class="fc" id="L327">        Period period = Period.ZERO;</span>
-<span class="fc bfc" id="L328" title="All 4 branches covered.">        if (startDate != null &amp;&amp; endDate != null) {</span>
-<span class="fc" id="L329">            period = Period.between(startDate, endDate);</span>
+<span class="fc" id="L326">        LocalDate startDate = startInclusive.query(TemporalQueries.localDate());</span>
+<span class="fc" id="L327">        LocalDate endDate = endExclusive.query(TemporalQueries.localDate());</span>
+<span class="fc" id="L328">        Period period = Period.ZERO;</span>
+<span class="fc bfc" id="L329" title="All 4 branches covered.">        if (startDate != null &amp;&amp; endDate != null) {</span>
+<span class="fc" id="L330">            period = Period.between(startDate, endDate);</span>
         }
-<span class="fc" id="L331">        LocalTime startTime = startInclusive.query(TemporalQueries.localTime());</span>
-<span class="fc" id="L332">        LocalTime endTime = endExclusive.query(TemporalQueries.localTime());</span>
-<span class="fc bfc" id="L333" title="All 2 branches covered.">        startTime = startTime != null ? startTime : LocalTime.MIDNIGHT;</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">        endTime = endTime != null ? endTime : LocalTime.MIDNIGHT;</span>
-<span class="fc" id="L335">        Duration duration = Duration.between(startTime, endTime);</span>
-<span class="fc" id="L336">        return PeriodDuration.of(period, duration);</span>
+<span class="fc" id="L332">        LocalTime startTime = startInclusive.query(TemporalQueries.localTime());</span>
+<span class="fc" id="L333">        LocalTime endTime = endExclusive.query(TemporalQueries.localTime());</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">        startTime = startTime != null ? startTime : LocalTime.MIDNIGHT;</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        endTime = endTime != null ? endTime : LocalTime.MIDNIGHT;</span>
+<span class="fc" id="L336">        Duration duration = Duration.between(startTime, endTime);</span>
+<span class="fc" id="L337">        return PeriodDuration.of(period, duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -343,10 +344,10 @@ public final class PeriodDuration
      * @param period  the period
      * @param duration  the duration
      */
-<span class="fc" id="L346">    private PeriodDuration(Period period, Duration duration) {</span>
-<span class="fc" id="L347">        this.period = period;</span>
-<span class="fc" id="L348">        this.duration = duration;</span>
-<span class="fc" id="L349">    }</span>
+<span class="fc" id="L347">    private PeriodDuration(Period period, Duration duration) {</span>
+<span class="fc" id="L348">        this.period = period;</span>
+<span class="fc" id="L349">        this.duration = duration;</span>
+<span class="fc" id="L350">    }</span>
 
     /**
      * Resolves singletons.
@@ -354,7 +355,9 @@ public final class PeriodDuration
      * @return the singleton instance
      */
     private Object readResolve() {
-<span class="fc" id="L357">        return PeriodDuration.of(period, duration);</span>
+<span class="fc" id="L358">        Objects.requireNonNull(period, &quot;period&quot;);</span>
+<span class="fc" id="L359">        Objects.requireNonNull(duration, &quot;duration&quot;);</span>
+<span class="fc" id="L360">        return PeriodDuration.of(period, duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -373,23 +376,23 @@ public final class PeriodDuration
      */
     @Override
     public long get(TemporalUnit unit) {
-<span class="pc bpc" id="L376" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc bfc" id="L377" title="All 6 branches covered.">            switch ((ChronoUnit) unit) {</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L380" title="All 6 branches covered.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
-<span class="fc" id="L379">                    return period.getYears();</span>
+<span class="fc" id="L382">                    return period.getYears();</span>
                 case MONTHS:
-<span class="fc" id="L381">                    return period.getMonths();</span>
+<span class="fc" id="L384">                    return period.getMonths();</span>
                 case DAYS:
-<span class="fc" id="L383">                    return period.getDays();</span>
+<span class="fc" id="L386">                    return period.getDays();</span>
                 case SECONDS:
-<span class="fc" id="L385">                    return duration.getSeconds();</span>
+<span class="fc" id="L388">                    return duration.getSeconds();</span>
                 case NANOS:
-<span class="fc" id="L387">                    return duration.getNano();</span>
+<span class="fc" id="L390">                    return duration.getNano();</span>
                 default:
                     break;
             }
         }
-<span class="fc" id="L392">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L395">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
     }
 
     /**
@@ -405,7 +408,7 @@ public final class PeriodDuration
      */
     @Override
     public List&lt;TemporalUnit&gt; getUnits() {
-<span class="fc" id="L408">        return SUPPORTED_UNITS;</span>
+<span class="fc" id="L411">        return SUPPORTED_UNITS;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -415,7 +418,7 @@ public final class PeriodDuration
      * @return the period part
      */
     public Period getPeriod() {
-<span class="fc" id="L418">        return period;</span>
+<span class="fc" id="L421">        return period;</span>
     }
 
     /**
@@ -427,7 +430,7 @@ public final class PeriodDuration
      * @return the updated period-duration
      */
     public PeriodDuration withPeriod(Period period) {
-<span class="fc" id="L430">        return PeriodDuration.of(period, duration);</span>
+<span class="fc" id="L433">        return PeriodDuration.of(period, duration);</span>
     }
 
     /**
@@ -436,7 +439,7 @@ public final class PeriodDuration
      * @return the duration part
      */
     public Duration getDuration() {
-<span class="fc" id="L439">        return duration;</span>
+<span class="fc" id="L442">        return duration;</span>
     }
 
     /**
@@ -448,7 +451,7 @@ public final class PeriodDuration
      * @return the updated period-duration
      */
     public PeriodDuration withDuration(Duration duration) {
-<span class="nc" id="L451">        return PeriodDuration.of(period, duration);</span>
+<span class="nc" id="L454">        return PeriodDuration.of(period, duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -461,7 +464,7 @@ public final class PeriodDuration
      * @return true if this period is zero-length
      */
     public boolean isZero() {
-<span class="fc bfc" id="L464" title="All 4 branches covered.">        return period.isZero() &amp;&amp; duration.isZero();</span>
+<span class="fc bfc" id="L467" title="All 4 branches covered.">        return period.isZero() &amp;&amp; duration.isZero();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -479,8 +482,8 @@ public final class PeriodDuration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public PeriodDuration plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L482">        PeriodDuration other = PeriodDuration.from(amountToAdd);</span>
-<span class="fc" id="L483">        return of(period.plus(other.period), duration.plus(other.duration));</span>
+<span class="fc" id="L485">        PeriodDuration other = PeriodDuration.from(amountToAdd);</span>
+<span class="fc" id="L486">        return of(period.plus(other.period), duration.plus(other.duration));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -498,8 +501,8 @@ public final class PeriodDuration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public PeriodDuration minus(TemporalAmount amountToAdd) {
-<span class="fc" id="L501">        PeriodDuration other = PeriodDuration.from(amountToAdd);</span>
-<span class="fc" id="L502">        return of(period.minus(other.period), duration.minus(other.duration));</span>
+<span class="fc" id="L504">        PeriodDuration other = PeriodDuration.from(amountToAdd);</span>
+<span class="fc" id="L505">        return of(period.minus(other.period), duration.minus(other.duration));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -513,10 +516,10 @@ public final class PeriodDuration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public PeriodDuration multipliedBy(int scalar) {
-<span class="fc bfc" id="L516" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L517">            return this;</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L520">            return this;</span>
         }
-<span class="fc" id="L519">        return of(period.multipliedBy(scalar), duration.multipliedBy(scalar));</span>
+<span class="fc" id="L522">        return of(period.multipliedBy(scalar), duration.multipliedBy(scalar));</span>
     }
 
     /**
@@ -529,7 +532,7 @@ public final class PeriodDuration
      *  the amount is {@code Long.MIN_VALUE}
      */
     public PeriodDuration negated() {
-<span class="fc" id="L532">        return multipliedBy(-1);</span>
+<span class="fc" id="L535">        return multipliedBy(-1);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -555,7 +558,7 @@ public final class PeriodDuration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public PeriodDuration normalizedYears() {
-<span class="fc" id="L558">        return withPeriod(period.normalized());</span>
+<span class="fc" id="L561">        return withPeriod(period.normalized());</span>
     }
 
     /**
@@ -580,13 +583,13 @@ public final class PeriodDuration
      * @throws ArithmeticException if numeric overflow occurs
      */
     public PeriodDuration normalizedStandardDays() {
-<span class="fc" id="L583">        long totalSecs = period.getDays() * SECONDS_PER_DAY + duration.getSeconds();</span>
-<span class="fc" id="L584">        int splitDays = Math.toIntExact(totalSecs / SECONDS_PER_DAY);</span>
-<span class="fc" id="L585">        long splitSecs = totalSecs % SECONDS_PER_DAY;</span>
-<span class="pc bpc" id="L586" title="1 of 4 branches missed.">        if (splitDays == period.getDays() &amp;&amp; splitSecs == duration.getSeconds()) {</span>
-<span class="fc" id="L587">            return this;</span>
+<span class="fc" id="L586">        long totalSecs = period.getDays() * SECONDS_PER_DAY + duration.getSeconds();</span>
+<span class="fc" id="L587">        int splitDays = Math.toIntExact(totalSecs / SECONDS_PER_DAY);</span>
+<span class="fc" id="L588">        long splitSecs = totalSecs % SECONDS_PER_DAY;</span>
+<span class="pc bpc" id="L589" title="1 of 4 branches missed.">        if (splitDays == period.getDays() &amp;&amp; splitSecs == duration.getSeconds()) {</span>
+<span class="fc" id="L590">            return this;</span>
         }
-<span class="fc" id="L589">        return PeriodDuration.of(period.withDays(splitDays), duration.withSeconds(splitSecs));</span>
+<span class="fc" id="L592">        return PeriodDuration.of(period.withDays(splitDays), duration.withSeconds(splitSecs));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -606,7 +609,7 @@ public final class PeriodDuration
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc" id="L609">        return temporal.plus(period).plus(duration);</span>
+<span class="fc" id="L612">        return temporal.plus(period).plus(duration);</span>
     }
 
     /**
@@ -625,7 +628,7 @@ public final class PeriodDuration
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc" id="L628">        return temporal.minus(period).minus(duration);</span>
+<span class="fc" id="L631">        return temporal.minus(period).minus(duration);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -650,24 +653,24 @@ public final class PeriodDuration
      */
     public PeriodDuration truncatedTo(TemporalUnit unit) {
         // Duration.truncatedTo(TemporalUnit) was only added in Java 9, so we implement it here
-<span class="fc" id="L653">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
-<span class="fc bfc" id="L654" title="All 2 branches covered.">        if (unit == ChronoUnit.NANOS) {</span>
-<span class="fc" id="L655">            return this;</span>
+<span class="fc" id="L656">        Objects.requireNonNull(unit, &quot;unit&quot;);</span>
+<span class="fc bfc" id="L657" title="All 2 branches covered.">        if (unit == ChronoUnit.NANOS) {</span>
+<span class="fc" id="L658">            return this;</span>
         }
-<span class="fc" id="L657">        Duration unitDuration = unit.getDuration();</span>
-<span class="fc bfc" id="L658" title="All 2 branches covered.">        if (unitDuration.getSeconds() &gt; SECONDS_PER_DAY) {</span>
-<span class="fc" id="L659">            throw new UnsupportedTemporalTypeException(&quot;Unit duration exceeds one day and cannot be used for truncation&quot;);</span>
+<span class="fc" id="L660">        Duration unitDuration = unit.getDuration();</span>
+<span class="fc bfc" id="L661" title="All 2 branches covered.">        if (unitDuration.getSeconds() &gt; SECONDS_PER_DAY) {</span>
+<span class="fc" id="L662">            throw new UnsupportedTemporalTypeException(&quot;Unit duration exceeds one day and cannot be used for truncation&quot;);</span>
         }
-<span class="fc" id="L661">        long unitNanos = unitDuration.toNanos();</span>
-<span class="pc bpc" id="L662" title="1 of 2 branches missed.">        if ((NANOS_PER_DAY % unitNanos) != 0) {</span>
-<span class="nc" id="L663">            throw new UnsupportedTemporalTypeException(&quot;Unit must divide into a standard day without remainder&quot;);</span>
+<span class="fc" id="L664">        long unitNanos = unitDuration.toNanos();</span>
+<span class="pc bpc" id="L665" title="1 of 2 branches missed.">        if ((NANOS_PER_DAY % unitNanos) != 0) {</span>
+<span class="nc" id="L666">            throw new UnsupportedTemporalTypeException(&quot;Unit must divide into a standard day without remainder&quot;);</span>
         }
-<span class="fc" id="L665">        long seconds = duration.getSeconds();</span>
-<span class="fc" id="L666">        long nanos = duration.getNano();</span>
-<span class="fc" id="L667">        long nod = ((seconds % SECONDS_PER_DAY) * NANOS_PER_SECOND) + nanos;</span>
-<span class="fc" id="L668">        long result = (nod / unitNanos) * unitNanos;</span>
-<span class="fc" id="L669">        Duration adjusted = duration.plusNanos(result - nod);</span>
-<span class="fc" id="L670">        return new PeriodDuration(period, adjusted);</span>
+<span class="fc" id="L668">        long seconds = duration.getSeconds();</span>
+<span class="fc" id="L669">        long nanos = duration.getNano();</span>
+<span class="fc" id="L670">        long nod = ((seconds % SECONDS_PER_DAY) * NANOS_PER_SECOND) + nanos;</span>
+<span class="fc" id="L671">        long result = (nod / unitNanos) * unitNanos;</span>
+<span class="fc" id="L672">        Duration adjusted = duration.plusNanos(result - nod);</span>
+<span class="fc" id="L673">        return new PeriodDuration(period, adjusted);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -680,15 +683,15 @@ public final class PeriodDuration
      * @return true if the other amount is equal to this one
      */
     @Override
-    public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L684" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L685">            return true;</span>
+    public boolean equals(@Nullable Object otherAmount) {
+<span class="fc bfc" id="L687" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L688">            return true;</span>
         }
-<span class="fc bfc" id="L687" title="All 2 branches covered.">        if (otherAmount instanceof PeriodDuration) {</span>
-<span class="fc" id="L688">            PeriodDuration other = (PeriodDuration) otherAmount;</span>
-<span class="pc bpc" id="L689" title="1 of 4 branches missed.">            return this.period.equals(other.period) &amp;&amp; this.duration.equals(other.duration);</span>
+<span class="fc bfc" id="L690" title="All 2 branches covered.">        if (otherAmount instanceof PeriodDuration) {</span>
+<span class="fc" id="L691">            PeriodDuration other = (PeriodDuration) otherAmount;</span>
+<span class="pc bpc" id="L692" title="1 of 4 branches missed.">            return this.period.equals(other.period) &amp;&amp; this.duration.equals(other.duration);</span>
         }
-<span class="fc" id="L691">        return false;</span>
+<span class="fc" id="L694">        return false;</span>
     }
 
     /**
@@ -698,7 +701,7 @@ public final class PeriodDuration
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L701">        return period.hashCode() ^ duration.hashCode();</span>
+<span class="fc" id="L704">        return period.hashCode() ^ duration.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -712,13 +715,13 @@ public final class PeriodDuration
     @Override
     @ToString
     public String toString() {
-<span class="fc bfc" id="L715" title="All 2 branches covered.">        if (period.isZero()) {</span>
-<span class="fc" id="L716">            return duration.toString();</span>
+<span class="fc bfc" id="L718" title="All 2 branches covered.">        if (period.isZero()) {</span>
+<span class="fc" id="L719">            return duration.toString();</span>
         }
-<span class="fc bfc" id="L718" title="All 2 branches covered.">        if (duration.isZero()) {</span>
-<span class="fc" id="L719">            return period.toString();</span>
+<span class="fc bfc" id="L721" title="All 2 branches covered.">        if (duration.isZero()) {</span>
+<span class="fc" id="L722">            return period.toString();</span>
         }
-<span class="fc" id="L721">        return period.toString() + duration.toString().substring(1);</span>
+<span class="fc" id="L724">        return period.toString() + duration.toString().substring(1);</span>
     }
 
 }

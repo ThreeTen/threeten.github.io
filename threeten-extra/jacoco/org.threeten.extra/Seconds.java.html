@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A second-based amount of time, such as '8 seconds'.
@@ -73,7 +74,7 @@ public final class Seconds
     /**
      * A constant for zero seconds.
      */
-<span class="fc" id="L76">    public static final Seconds ZERO = new Seconds(0);</span>
+<span class="fc" id="L77">    public static final Seconds ZERO = new Seconds(0);</span>
 
     /**
      * A serialization identifier for this class.
@@ -96,8 +97,8 @@ public final class Seconds
     /**
      * The pattern for parsing.
      */
-<span class="fc" id="L99">    private static final Pattern PATTERN =</span>
-<span class="fc" id="L100">            Pattern.compile(&quot;([-+]?)P&quot;</span>
+<span class="fc" id="L100">    private static final Pattern PATTERN =</span>
+<span class="fc" id="L101">            Pattern.compile(&quot;([-+]?)P&quot;</span>
                     + &quot;(?:([-+]?[0-9]+)D)?&quot;
                     + &quot;(?:T&quot;
                     + &quot;(?:([-+]?[0-9]+)H)?&quot;
@@ -118,10 +119,10 @@ public final class Seconds
      * @return the number of seconds, not null
      */
     public static Seconds of(int seconds) {
-<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (seconds == 0) {</span>
-<span class="fc" id="L122">            return ZERO;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (seconds == 0) {</span>
+<span class="fc" id="L123">            return ZERO;</span>
         }
-<span class="fc" id="L124">        return new Seconds(seconds);</span>
+<span class="fc" id="L125">        return new Seconds(seconds);</span>
     }
 
     /**
@@ -136,10 +137,10 @@ public final class Seconds
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Seconds ofHours(int hours) {
-<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (hours == 0) {</span>
-<span class="fc" id="L140">            return ZERO;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (hours == 0) {</span>
+<span class="fc" id="L141">            return ZERO;</span>
         }
-<span class="fc" id="L142">        return new Seconds(Math.multiplyExact(hours, SECONDS_PER_HOUR));</span>
+<span class="fc" id="L143">        return new Seconds(Math.multiplyExact(hours, SECONDS_PER_HOUR));</span>
     }
 
     /**
@@ -154,10 +155,10 @@ public final class Seconds
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Seconds ofMinutes(int minutes) {
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (minutes == 0) {</span>
-<span class="fc" id="L158">            return ZERO;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (minutes == 0) {</span>
+<span class="fc" id="L159">            return ZERO;</span>
         }
-<span class="fc" id="L160">        return new Seconds(Math.multiplyExact(minutes, SECONDS_PER_MINUTE));</span>
+<span class="fc" id="L161">        return new Seconds(Math.multiplyExact(minutes, SECONDS_PER_MINUTE));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -179,23 +180,23 @@ public final class Seconds
      * @throws ArithmeticException if numeric overflow occurs
      */
     public static Seconds from(TemporalAmount amount) {
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if (amount instanceof Seconds) {</span>
-<span class="fc" id="L183">            return (Seconds) amount;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (amount instanceof Seconds) {</span>
+<span class="fc" id="L184">            return (Seconds) amount;</span>
         }
-<span class="nc" id="L185">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
-<span class="nc" id="L186">        int seconds = 0;</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">        for (TemporalUnit unit : amount.getUnits()) {</span>
-<span class="nc" id="L188">            long value = amount.get(unit);</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">            if (value != 0) {</span>
-<span class="nc" id="L190">                long[] converted = Temporals.convertAmount(value, unit, SECONDS);</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">                if (converted[1] != 0) {</span>
-<span class="nc" id="L192">                    throw new DateTimeException(</span>
+<span class="nc" id="L186">        Objects.requireNonNull(amount, &quot;amount&quot;);</span>
+<span class="nc" id="L187">        int seconds = 0;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (TemporalUnit unit : amount.getUnits()) {</span>
+<span class="nc" id="L189">            long value = amount.get(unit);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">            if (value != 0) {</span>
+<span class="nc" id="L191">                long[] converted = Temporals.convertAmount(value, unit, SECONDS);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                if (converted[1] != 0) {</span>
+<span class="nc" id="L193">                    throw new DateTimeException(</span>
                             &quot;Amount could not be converted to a whole number of seconds: &quot; + value + &quot; &quot; + unit);
                 }
-<span class="nc" id="L195">                seconds = Math.addExact(seconds, Math.toIntExact(converted[0]));</span>
+<span class="nc" id="L196">                seconds = Math.addExact(seconds, Math.toIntExact(converted[0]));</span>
             }
-<span class="nc" id="L197">        }</span>
-<span class="nc" id="L198">        return of(seconds);</span>
+<span class="nc" id="L198">        }</span>
+<span class="nc" id="L199">        return of(seconds);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -242,51 +243,51 @@ public final class Seconds
      */
     @FromString
     public static Seconds parse(CharSequence text) {
-<span class="fc" id="L245">        Objects.requireNonNull(text, &quot;text&quot;);</span>
-<span class="fc" id="L246">        Matcher matcher = PATTERN.matcher(text);</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (matcher.matches()) {</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">            int negate = &quot;-&quot;.equals(matcher.group(1)) ? -1 : 1;</span>
-<span class="fc" id="L249">            String daysStr = matcher.group(2);</span>
-<span class="fc" id="L250">            String hoursStr = matcher.group(3);</span>
-<span class="fc" id="L251">            String minutesStr = matcher.group(4);</span>
-<span class="fc" id="L252">            String secondsStr = matcher.group(5);</span>
-<span class="pc bpc" id="L253" title="1 of 8 branches missed.">            if (daysStr != null || hoursStr != null || minutesStr != null || secondsStr != null) {</span>
-<span class="fc" id="L254">                int seconds = 0;</span>
-<span class="fc bfc" id="L255" title="All 2 branches covered.">                if (secondsStr != null) {</span>
+<span class="fc" id="L246">        Objects.requireNonNull(text, &quot;text&quot;);</span>
+<span class="fc" id="L247">        Matcher matcher = PATTERN.matcher(text);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        if (matcher.matches()) {</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">            int negate = &quot;-&quot;.equals(matcher.group(1)) ? -1 : 1;</span>
+<span class="fc" id="L250">            String daysStr = matcher.group(2);</span>
+<span class="fc" id="L251">            String hoursStr = matcher.group(3);</span>
+<span class="fc" id="L252">            String minutesStr = matcher.group(4);</span>
+<span class="fc" id="L253">            String secondsStr = matcher.group(5);</span>
+<span class="pc bpc" id="L254" title="1 of 8 branches missed.">            if (daysStr != null || hoursStr != null || minutesStr != null || secondsStr != null) {</span>
+<span class="fc" id="L255">                int seconds = 0;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">                if (secondsStr != null) {</span>
                     try {
-<span class="fc" id="L257">                        seconds = Integer.parseInt(secondsStr);</span>
-<span class="nc" id="L258">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L259">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric seconds&quot;, text, 0, ex);</span>
-<span class="fc" id="L260">                    }</span>
+<span class="fc" id="L258">                        seconds = Integer.parseInt(secondsStr);</span>
+<span class="nc" id="L259">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L260">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric seconds&quot;, text, 0, ex);</span>
+<span class="fc" id="L261">                    }</span>
                 }
-<span class="fc bfc" id="L262" title="All 2 branches covered.">                if (minutesStr != null) {</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">                if (minutesStr != null) {</span>
                     try {
-<span class="fc" id="L264">                        int minutesAsSecs = Math.multiplyExact(Integer.parseInt(minutesStr), SECONDS_PER_MINUTE);</span>
-<span class="fc" id="L265">                        seconds = Math.addExact(seconds, minutesAsSecs);</span>
-<span class="nc" id="L266">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L267">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric minutes&quot;, text, 0, ex);</span>
-<span class="fc" id="L268">                    }</span>
+<span class="fc" id="L265">                        int minutesAsSecs = Math.multiplyExact(Integer.parseInt(minutesStr), SECONDS_PER_MINUTE);</span>
+<span class="fc" id="L266">                        seconds = Math.addExact(seconds, minutesAsSecs);</span>
+<span class="nc" id="L267">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L268">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric minutes&quot;, text, 0, ex);</span>
+<span class="fc" id="L269">                    }</span>
                 }
-<span class="fc bfc" id="L270" title="All 2 branches covered.">                if (hoursStr != null) {</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">                if (hoursStr != null) {</span>
                     try {
-<span class="fc" id="L272">                        int hoursAsSecs = Math.multiplyExact(Integer.parseInt(hoursStr), SECONDS_PER_HOUR);</span>
-<span class="fc" id="L273">                        seconds = Math.addExact(seconds, hoursAsSecs);</span>
-<span class="nc" id="L274">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L275">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric hours&quot;, text, 0, ex);</span>
-<span class="fc" id="L276">                    }</span>
+<span class="fc" id="L273">                        int hoursAsSecs = Math.multiplyExact(Integer.parseInt(hoursStr), SECONDS_PER_HOUR);</span>
+<span class="fc" id="L274">                        seconds = Math.addExact(seconds, hoursAsSecs);</span>
+<span class="nc" id="L275">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L276">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric hours&quot;, text, 0, ex);</span>
+<span class="fc" id="L277">                    }</span>
                 }
-<span class="fc bfc" id="L278" title="All 2 branches covered.">                if (daysStr != null) {</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">                if (daysStr != null) {</span>
                     try {
-<span class="fc" id="L280">                        int daysAsSecs = Math.multiplyExact(Integer.parseInt(daysStr), SECONDS_PER_DAY);</span>
-<span class="fc" id="L281">                        seconds = Math.addExact(seconds, daysAsSecs);</span>
-<span class="nc" id="L282">                    } catch (NumberFormatException ex) {</span>
-<span class="nc" id="L283">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric days&quot;, text, 0, ex);</span>
-<span class="fc" id="L284">                    }</span>
+<span class="fc" id="L281">                        int daysAsSecs = Math.multiplyExact(Integer.parseInt(daysStr), SECONDS_PER_DAY);</span>
+<span class="fc" id="L282">                        seconds = Math.addExact(seconds, daysAsSecs);</span>
+<span class="nc" id="L283">                    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L284">                        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds, non-numeric days&quot;, text, 0, ex);</span>
+<span class="fc" id="L285">                    }</span>
                 }
-<span class="fc" id="L286">                return of(Math.multiplyExact(seconds, negate));</span>
+<span class="fc" id="L287">                return of(Math.multiplyExact(seconds, negate));</span>
             }
         }
-<span class="fc" id="L289">        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds&quot;, text, 0);</span>
+<span class="fc" id="L290">        throw new DateTimeParseException(&quot;Text cannot be parsed to Seconds&quot;, text, 0);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -301,7 +302,7 @@ public final class Seconds
      * @return the number of seconds between the start and end temporals, not null
      */
     public static Seconds between(Temporal startInclusive, Temporal endExclusive) {
-<span class="nc" id="L304">        return of(Math.toIntExact(SECONDS.between(startInclusive, endExclusive)));</span>
+<span class="nc" id="L305">        return of(Math.toIntExact(SECONDS.between(startInclusive, endExclusive)));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -310,9 +311,9 @@ public final class Seconds
      *
      * @param seconds  the amount of seconds
      */
-<span class="fc" id="L313">    private Seconds(int seconds) {</span>
-<span class="fc" id="L314">        this.seconds = seconds;</span>
-<span class="fc" id="L315">    }</span>
+<span class="fc" id="L314">    private Seconds(int seconds) {</span>
+<span class="fc" id="L315">        this.seconds = seconds;</span>
+<span class="fc" id="L316">    }</span>
 
     /**
      * Resolves singletons.
@@ -320,7 +321,7 @@ public final class Seconds
      * @return the singleton instance
      */
     private Object readResolve() {
-<span class="fc" id="L323">        return Seconds.of(seconds);</span>
+<span class="fc" id="L324">        return Seconds.of(seconds);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -336,10 +337,10 @@ public final class Seconds
      */
     @Override
     public long get(TemporalUnit unit) {
-<span class="nc bnc" id="L339" title="All 2 branches missed.">        if (unit == SECONDS) {</span>
-<span class="nc" id="L340">            return seconds;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">        if (unit == SECONDS) {</span>
+<span class="nc" id="L341">            return seconds;</span>
         }
-<span class="nc" id="L342">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="nc" id="L343">        throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
     }
 
     /**
@@ -354,7 +355,7 @@ public final class Seconds
      */
     @Override
     public List&lt;TemporalUnit&gt; getUnits() {
-<span class="nc" id="L357">        return Collections.singletonList(SECONDS);</span>
+<span class="nc" id="L358">        return Collections.singletonList(SECONDS);</span>
     }
     
     //-----------------------------------------------------------------------
@@ -364,7 +365,7 @@ public final class Seconds
      * @return the number of seconds
      */
     public int getAmount() {
-<span class="fc" id="L367">        return seconds;</span>
+<span class="fc" id="L368">        return seconds;</span>
     }
 
     /**
@@ -373,7 +374,7 @@ public final class Seconds
      * @return true if the amount is negative, false if the amount is zero or positive
      */
     public boolean isNegative() {
-<span class="fc bfc" id="L376" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">        return getAmount() &lt; 0;</span>
     }
 
     /**
@@ -382,7 +383,7 @@ public final class Seconds
      * @return true if the amount is zero, false if not
      */
     public boolean isZero() {
-<span class="fc bfc" id="L385" title="All 2 branches covered.">        return getAmount() == 0;</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">        return getAmount() == 0;</span>
     }
 
     /**
@@ -391,7 +392,7 @@ public final class Seconds
      * @return true if the amount is positive, false if the amount is zero or negative
      */
     public boolean isPositive() {
-<span class="fc bfc" id="L394" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">        return getAmount() &gt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -408,7 +409,7 @@ public final class Seconds
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Seconds plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L411">        return plus(Seconds.from(amountToAdd).getAmount());</span>
+<span class="fc" id="L412">        return plus(Seconds.from(amountToAdd).getAmount());</span>
     }
 
     /**
@@ -421,10 +422,10 @@ public final class Seconds
      * @throws ArithmeticException if the result overflows an int
      */
     public Seconds plus(int seconds) {
-<span class="fc bfc" id="L424" title="All 2 branches covered.">        if (seconds == 0) {</span>
-<span class="fc" id="L425">            return this;</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        if (seconds == 0) {</span>
+<span class="fc" id="L426">            return this;</span>
         }
-<span class="fc" id="L427">        return of(Math.addExact(this.seconds, seconds));</span>
+<span class="fc" id="L428">        return of(Math.addExact(this.seconds, seconds));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -441,7 +442,7 @@ public final class Seconds
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Seconds minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L444">        return minus(Seconds.from(amountToSubtract).getAmount());</span>
+<span class="fc" id="L445">        return minus(Seconds.from(amountToSubtract).getAmount());</span>
     }
 
     /**
@@ -454,10 +455,10 @@ public final class Seconds
      * @throws ArithmeticException if the result overflows an int
      */
     public Seconds minus(int seconds) {
-<span class="fc bfc" id="L457" title="All 2 branches covered.">        if (seconds == 0) {</span>
-<span class="fc" id="L458">            return this;</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">        if (seconds == 0) {</span>
+<span class="fc" id="L459">            return this;</span>
         }
-<span class="fc" id="L460">        return of(Math.subtractExact(this.seconds, seconds));</span>
+<span class="fc" id="L461">        return of(Math.subtractExact(this.seconds, seconds));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -471,10 +472,10 @@ public final class Seconds
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Seconds multipliedBy(int scalar) {
-<span class="fc bfc" id="L474" title="All 2 branches covered.">        if (scalar == 1) {</span>
-<span class="fc" id="L475">            return this;</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        if (scalar == 1) {</span>
+<span class="fc" id="L476">            return this;</span>
         }
-<span class="fc" id="L477">        return of(Math.multiplyExact(seconds, scalar));</span>
+<span class="fc" id="L478">        return of(Math.multiplyExact(seconds, scalar));</span>
     }
 
     /**
@@ -489,10 +490,10 @@ public final class Seconds
      * @throws ArithmeticException if the divisor is zero
      */
     public Seconds dividedBy(int divisor) {
-<span class="fc bfc" id="L492" title="All 2 branches covered.">        if (divisor == 1) {</span>
-<span class="fc" id="L493">            return this;</span>
+<span class="fc bfc" id="L493" title="All 2 branches covered.">        if (divisor == 1) {</span>
+<span class="fc" id="L494">            return this;</span>
         }
-<span class="fc" id="L495">        return of(seconds / divisor);</span>
+<span class="fc" id="L496">        return of(seconds / divisor);</span>
     }
 
     /**
@@ -505,7 +506,7 @@ public final class Seconds
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Seconds negated() {
-<span class="fc" id="L508">        return multipliedBy(-1);</span>
+<span class="fc" id="L509">        return multipliedBy(-1);</span>
     }
 
     /**
@@ -520,7 +521,7 @@ public final class Seconds
      *  the amount is {@code Long.MIN_VALUE}
      */
     public Seconds abs() {
-<span class="fc bfc" id="L523" title="All 2 branches covered.">        return seconds &lt; 0 ? negated() : this;</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">        return seconds &lt; 0 ? negated() : this;</span>
     }
 
     //-------------------------------------------------------------------------
@@ -532,7 +533,7 @@ public final class Seconds
      * @return the equivalent duration, not null
      */
     public Duration toDuration() {
-<span class="fc" id="L535">        return Duration.ofSeconds(seconds);</span>
+<span class="fc" id="L536">        return Duration.ofSeconds(seconds);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -562,10 +563,10 @@ public final class Seconds
      */
     @Override
     public Temporal addTo(Temporal temporal) {
-<span class="fc bfc" id="L565" title="All 2 branches covered.">        if (seconds != 0) {</span>
-<span class="fc" id="L566">            temporal = temporal.plus(seconds, SECONDS);</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">        if (seconds != 0) {</span>
+<span class="fc" id="L567">            temporal = temporal.plus(seconds, SECONDS);</span>
         }
-<span class="fc" id="L568">        return temporal;</span>
+<span class="fc" id="L569">        return temporal;</span>
     }
 
     /**
@@ -594,10 +595,10 @@ public final class Seconds
      */
     @Override
     public Temporal subtractFrom(Temporal temporal) {
-<span class="fc bfc" id="L597" title="All 2 branches covered.">        if (seconds != 0) {</span>
-<span class="fc" id="L598">            temporal = temporal.minus(seconds, SECONDS);</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">        if (seconds != 0) {</span>
+<span class="fc" id="L599">            temporal = temporal.minus(seconds, SECONDS);</span>
         }
-<span class="fc" id="L600">        return temporal;</span>
+<span class="fc" id="L601">        return temporal;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -612,9 +613,7 @@ public final class Seconds
      */
     @Override
     public int compareTo(Seconds otherAmount) {
-<span class="fc" id="L615">        int thisValue = this.seconds;</span>
-<span class="fc" id="L616">        int otherValue = otherAmount.seconds;</span>
-<span class="fc" id="L617">        return Integer.compare(thisValue, otherValue);</span>
+<span class="fc" id="L616">        return Integer.compare(this.seconds, otherAmount.seconds);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -627,15 +626,15 @@ public final class Seconds
      * @return true if the other amount is equal to this one
      */
     @Override
-    public boolean equals(Object otherAmount) {
-<span class="fc bfc" id="L631" title="All 2 branches covered.">        if (this == otherAmount) {</span>
-<span class="fc" id="L632">            return true;</span>
+    public boolean equals(@Nullable Object otherAmount) {
+<span class="fc bfc" id="L630" title="All 2 branches covered.">        if (this == otherAmount) {</span>
+<span class="fc" id="L631">            return true;</span>
         }
-<span class="fc bfc" id="L634" title="All 2 branches covered.">        if (otherAmount instanceof Seconds) {</span>
-<span class="fc" id="L635">            Seconds other = (Seconds) otherAmount;</span>
-<span class="fc bfc" id="L636" title="All 2 branches covered.">            return this.seconds == other.seconds;</span>
+<span class="fc bfc" id="L633" title="All 2 branches covered.">        if (otherAmount instanceof Seconds) {</span>
+<span class="fc" id="L634">            Seconds other = (Seconds) otherAmount;</span>
+<span class="fc bfc" id="L635" title="All 2 branches covered.">            return this.seconds == other.seconds;</span>
         }
-<span class="fc" id="L638">        return false;</span>
+<span class="fc" id="L637">        return false;</span>
     }
 
     /**
@@ -645,7 +644,7 @@ public final class Seconds
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L648">        return seconds;</span>
+<span class="fc" id="L647">        return seconds;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -658,7 +657,7 @@ public final class Seconds
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L661">        return &quot;PT&quot; + seconds + &quot;S&quot;;</span>
+<span class="fc" id="L660">        return &quot;PT&quot; + seconds + &quot;S&quot;;</span>
     }
 
 }

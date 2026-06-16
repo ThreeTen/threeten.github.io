@@ -69,6 +69,7 @@ import java.util.Objects;
 
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A date with an offset from UTC/Greenwich in the ISO-8601 calendar system,
@@ -98,7 +99,7 @@ public final class OffsetDate
      * This combines {@link LocalDate#MIN} and {@link ZoneOffset#MAX}.
      * This could be used by an application as a &quot;far past&quot; date.
      */
-<span class="fc" id="L101">    public static final OffsetDate MIN = OffsetDate.of(LocalDate.MIN, ZoneOffset.MAX);</span>
+<span class="fc" id="L102">    public static final OffsetDate MIN = OffsetDate.of(LocalDate.MIN, ZoneOffset.MAX);</span>
     /**
      * The maximum supported {@code OffsetDate}, '+999999999-12-31-18:00'.
      * This is the maximum local date in the minimum offset
@@ -106,7 +107,7 @@ public final class OffsetDate
      * This combines {@link LocalDate#MAX} and {@link ZoneOffset#MIN}.
      * This could be used by an application as a &quot;far future&quot; date.
      */
-<span class="fc" id="L109">    public static final OffsetDate MAX = OffsetDate.of(LocalDate.MAX, ZoneOffset.MIN);</span>
+<span class="fc" id="L110">    public static final OffsetDate MAX = OffsetDate.of(LocalDate.MAX, ZoneOffset.MIN);</span>
 
     /**
      * Serialization version.
@@ -141,7 +142,7 @@ public final class OffsetDate
      * @return the current date using the system clock, not null
      */
     public static OffsetDate now() {
-<span class="fc" id="L144">        return now(Clock.systemDefaultZone());</span>
+<span class="fc" id="L145">        return now(Clock.systemDefaultZone());</span>
     }
 
     /**
@@ -158,7 +159,7 @@ public final class OffsetDate
      * @return the current date using the system clock, not null
      */
     public static OffsetDate now(ZoneId zone) {
-<span class="nc" id="L161">        return now(Clock.system(zone));</span>
+<span class="nc" id="L162">        return now(Clock.system(zone));</span>
     }
 
     /**
@@ -174,9 +175,9 @@ public final class OffsetDate
      * @return the current date, not null
      */
     public static OffsetDate now(Clock clock) {
-<span class="fc" id="L177">        Objects.requireNonNull(clock, &quot;clock&quot;);</span>
-<span class="fc" id="L178">        final Instant now = clock.instant();  // called once</span>
-<span class="fc" id="L179">        return ofInstant(now, clock.getZone().getRules().getOffset(now));</span>
+<span class="fc" id="L178">        Objects.requireNonNull(clock, &quot;clock&quot;);</span>
+<span class="fc" id="L179">        final Instant now = clock.instant();  // called once</span>
+<span class="fc" id="L180">        return ofInstant(now, clock.getZone().getRules().getOffset(now));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -188,7 +189,7 @@ public final class OffsetDate
      * @return the offset date, not null
      */
     public static OffsetDate of(LocalDate date, ZoneOffset offset) {
-<span class="fc" id="L191">        return new OffsetDate(date, offset);</span>
+<span class="fc" id="L192">        return new OffsetDate(date, offset);</span>
     }
 
     /**
@@ -209,8 +210,8 @@ public final class OffsetDate
      *  if the day-of-month is invalid for the month-year
      */
     public static OffsetDate of(int year, int month, int dayOfMonth, ZoneOffset offset) {
-<span class="fc" id="L212">        LocalDate d = LocalDate.of(year, month, dayOfMonth);</span>
-<span class="fc" id="L213">        return new OffsetDate(d, offset);</span>
+<span class="fc" id="L213">        LocalDate d = LocalDate.of(year, month, dayOfMonth);</span>
+<span class="fc" id="L214">        return new OffsetDate(d, offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -227,14 +228,14 @@ public final class OffsetDate
      * @return the offset time, not null
      */
     public static OffsetDate ofInstant(Instant instant, ZoneId zone) {
-<span class="fc" id="L230">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
-<span class="fc" id="L231">        Objects.requireNonNull(zone, &quot;zone&quot;);</span>
-<span class="fc" id="L232">        ZoneRules rules = zone.getRules();</span>
-<span class="fc" id="L233">        ZoneOffset offset = rules.getOffset(instant);</span>
-<span class="fc" id="L234">        long epochSec = instant.getEpochSecond() + offset.getTotalSeconds();  // overflow caught later</span>
-<span class="fc" id="L235">        long epochDay = Math.floorDiv(epochSec, SECONDS_PER_DAY);</span>
-<span class="fc" id="L236">        LocalDate date = LocalDate.ofEpochDay(epochDay);</span>
-<span class="fc" id="L237">        return new OffsetDate(date, offset);</span>
+<span class="fc" id="L231">        Objects.requireNonNull(instant, &quot;instant&quot;);</span>
+<span class="fc" id="L232">        Objects.requireNonNull(zone, &quot;zone&quot;);</span>
+<span class="fc" id="L233">        ZoneRules rules = zone.getRules();</span>
+<span class="fc" id="L234">        ZoneOffset offset = rules.getOffset(instant);</span>
+<span class="fc" id="L235">        long epochSec = instant.getEpochSecond() + offset.getTotalSeconds();  // overflow caught later</span>
+<span class="fc" id="L236">        long epochDay = Math.floorDiv(epochSec, SECONDS_PER_DAY);</span>
+<span class="fc" id="L237">        LocalDate date = LocalDate.ofEpochDay(epochDay);</span>
+<span class="fc" id="L238">        return new OffsetDate(date, offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -254,15 +255,15 @@ public final class OffsetDate
      * @throws DateTimeException if unable to convert to an {@code OffsetDate}
      */
     public static OffsetDate from(TemporalAccessor temporal) {
-<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (temporal instanceof OffsetDate) {</span>
-<span class="fc" id="L258">            return (OffsetDate) temporal;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        if (temporal instanceof OffsetDate) {</span>
+<span class="fc" id="L259">            return (OffsetDate) temporal;</span>
         }
         try {
-<span class="fc" id="L261">            LocalDate date = LocalDate.from(temporal);</span>
-<span class="fc" id="L262">            ZoneOffset offset = ZoneOffset.from(temporal);</span>
-<span class="fc" id="L263">            return new OffsetDate(date, offset);</span>
-<span class="fc" id="L264">        } catch (DateTimeException ex) {</span>
-<span class="fc" id="L265">            throw new DateTimeException(&quot;Unable to obtain OffsetDate from TemporalAccessor: &quot; + temporal.getClass(), ex);</span>
+<span class="fc" id="L262">            LocalDate date = LocalDate.from(temporal);</span>
+<span class="fc" id="L263">            ZoneOffset offset = ZoneOffset.from(temporal);</span>
+<span class="fc" id="L264">            return new OffsetDate(date, offset);</span>
+<span class="fc" id="L265">        } catch (DateTimeException ex) {</span>
+<span class="fc" id="L266">            throw new DateTimeException(&quot;Unable to obtain OffsetDate from TemporalAccessor: &quot; + temporal.getClass(), ex);</span>
         }
     }
 
@@ -279,7 +280,7 @@ public final class OffsetDate
      */
     @FromString
     public static OffsetDate parse(CharSequence text) {
-<span class="fc" id="L282">        return parse(text, DateTimeFormatter.ISO_OFFSET_DATE);</span>
+<span class="fc" id="L283">        return parse(text, DateTimeFormatter.ISO_OFFSET_DATE);</span>
     }
 
     /**
@@ -293,8 +294,8 @@ public final class OffsetDate
      * @throws DateTimeParseException if the text cannot be parsed
      */
     public static OffsetDate parse(CharSequence text, DateTimeFormatter formatter) {
-<span class="fc" id="L296">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L297">        return formatter.parse(text, OffsetDate::from);</span>
+<span class="fc" id="L297">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L298">        return formatter.parse(text, OffsetDate::from);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -304,10 +305,10 @@ public final class OffsetDate
      * @param date  the local date, not null
      * @param offset  the zone offset, not null
      */
-<span class="fc" id="L307">    private OffsetDate(LocalDate date, ZoneOffset offset) {</span>
-<span class="fc" id="L308">        this.date = Objects.requireNonNull(date, &quot;date&quot;);</span>
-<span class="fc" id="L309">        this.offset = Objects.requireNonNull(offset, &quot;offset&quot;);</span>
-<span class="fc" id="L310">    }</span>
+<span class="fc" id="L308">    private OffsetDate(LocalDate date, ZoneOffset offset) {</span>
+<span class="fc" id="L309">        this.date = Objects.requireNonNull(date, &quot;date&quot;);</span>
+<span class="fc" id="L310">        this.offset = Objects.requireNonNull(offset, &quot;offset&quot;);</span>
+<span class="fc" id="L311">    }</span>
 
     /**
      * Validates the input.
@@ -315,7 +316,9 @@ public final class OffsetDate
      * @return the valid object, not null
      */
     private Object readResolve() {
-<span class="nc" id="L318">        return of(date, offset);</span>
+<span class="nc" id="L319">        Objects.requireNonNull(date, &quot;date&quot;);</span>
+<span class="nc" id="L320">        Objects.requireNonNull(offset, &quot;offset&quot;);</span>
+<span class="nc" id="L321">        return of(date, offset);</span>
     }
 
     /**
@@ -325,10 +328,10 @@ public final class OffsetDate
      * @param offset  the zone offset to create with, not null
      */
     private OffsetDate with(LocalDate date, ZoneOffset offset) {
-<span class="fc bfc" id="L328" title="All 4 branches covered.">        if (this.date == date &amp;&amp; this.offset.equals(offset)) {</span>
-<span class="fc" id="L329">            return this;</span>
+<span class="fc bfc" id="L331" title="All 4 branches covered.">        if (this.date == date &amp;&amp; this.offset.equals(offset)) {</span>
+<span class="fc" id="L332">            return this;</span>
         }
-<span class="fc" id="L331">        return new OffsetDate(date, offset);</span>
+<span class="fc" id="L334">        return new OffsetDate(date, offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -369,11 +372,11 @@ public final class OffsetDate
      * @return true if the field is supported on this date, false if not
      */
     @Override
-    public boolean isSupported(TemporalField field) {
-<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L374" title="All 4 branches covered.">            return field.isDateBased() || field == OFFSET_SECONDS;</span>
+    public boolean isSupported(@Nullable TemporalField field) {
+<span class="fc bfc" id="L376" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L377" title="All 4 branches covered.">            return field.isDateBased() || field == OFFSET_SECONDS;</span>
         }
-<span class="pc bpc" id="L376" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L379" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -406,11 +409,11 @@ public final class OffsetDate
      * @return true if the unit can be added/subtracted, false if not
      */
     @Override
-    public boolean isSupported(TemporalUnit unit) {
-<span class="fc bfc" id="L410" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc" id="L411">            return unit.isDateBased();</span>
+    public boolean isSupported(@Nullable TemporalUnit unit) {
+<span class="fc bfc" id="L413" title="All 2 branches covered.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc" id="L414">            return unit.isDateBased();</span>
         }
-<span class="pc bpc" id="L413" title="3 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
+<span class="pc bpc" id="L416" title="3 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -439,13 +442,13 @@ public final class OffsetDate
      */
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc bfc" id="L442" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L443" title="All 2 branches covered.">            if (field == OFFSET_SECONDS) {</span>
-<span class="fc" id="L444">                return field.range();</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">            if (field == OFFSET_SECONDS) {</span>
+<span class="fc" id="L447">                return field.range();</span>
             }
-<span class="fc" id="L446">            return date.range(field);</span>
+<span class="fc" id="L449">            return date.range(field);</span>
         }
-<span class="fc" id="L448">        return field.rangeRefinedBy(this);</span>
+<span class="fc" id="L451">        return field.rangeRefinedBy(this);</span>
     }
 
     /**
@@ -477,7 +480,7 @@ public final class OffsetDate
      */
     @Override  // override for Javadoc
     public int get(TemporalField field) {
-<span class="fc" id="L480">        return Temporal.super.get(field);</span>
+<span class="fc" id="L483">        return Temporal.super.get(field);</span>
     }
 
     /**
@@ -505,13 +508,13 @@ public final class OffsetDate
      */
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L509" title="All 2 branches covered.">            if (field == OFFSET_SECONDS) {</span>
-<span class="fc" id="L510">                return getOffset().getTotalSeconds();</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">            if (field == OFFSET_SECONDS) {</span>
+<span class="fc" id="L513">                return getOffset().getTotalSeconds();</span>
             }
-<span class="fc" id="L512">            return date.getLong(field);</span>
+<span class="fc" id="L515">            return date.getLong(field);</span>
         }
-<span class="fc" id="L514">        return field.getFrom(this);</span>
+<span class="fc" id="L517">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -523,7 +526,7 @@ public final class OffsetDate
      * @return the zone offset, not null
      */
     public ZoneOffset getOffset() {
-<span class="fc" id="L526">        return offset;</span>
+<span class="fc" id="L529">        return offset;</span>
     }
 
     /**
@@ -541,8 +544,8 @@ public final class OffsetDate
      * @return an {@code OffsetDate} based on this date with the requested offset, not null
      */
     public OffsetDate withOffsetSameLocal(ZoneOffset offset) {
-<span class="fc" id="L544">        Objects.requireNonNull(offset, &quot;offset&quot;);</span>
-<span class="fc" id="L545">        return with(date, offset);</span>
+<span class="fc" id="L547">        Objects.requireNonNull(offset, &quot;offset&quot;);</span>
+<span class="fc" id="L548">        return with(date, offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -555,7 +558,7 @@ public final class OffsetDate
      * @return the date part of this date, not null
      */
     public LocalDate toLocalDate() {
-<span class="fc" id="L558">        return date;</span>
+<span class="fc" id="L561">        return date;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -570,7 +573,7 @@ public final class OffsetDate
      * @return the year, from MIN_YEAR to MAX_YEAR
      */
     public int getYear() {
-<span class="fc" id="L573">        return date.getYear();</span>
+<span class="fc" id="L576">        return date.getYear();</span>
     }
 
     /**
@@ -584,7 +587,7 @@ public final class OffsetDate
      * @see #getMonth()
      */
     public int getMonthValue() {
-<span class="nc" id="L587">        return date.getMonthValue();</span>
+<span class="nc" id="L590">        return date.getMonthValue();</span>
     }
 
     /**
@@ -599,7 +602,7 @@ public final class OffsetDate
      * @see #getMonthValue()
      */
     public Month getMonth() {
-<span class="fc" id="L602">        return date.getMonth();</span>
+<span class="fc" id="L605">        return date.getMonth();</span>
     }
 
     /**
@@ -610,7 +613,7 @@ public final class OffsetDate
      * @return the day-of-month, from 1 to 31
      */
     public int getDayOfMonth() {
-<span class="fc" id="L613">        return date.getDayOfMonth();</span>
+<span class="fc" id="L616">        return date.getDayOfMonth();</span>
     }
 
     /**
@@ -621,7 +624,7 @@ public final class OffsetDate
      * @return the day-of-year, from 1 to 365, or 366 in a leap year
      */
     public int getDayOfYear() {
-<span class="fc" id="L624">        return date.getDayOfYear();</span>
+<span class="fc" id="L627">        return date.getDayOfYear();</span>
     }
 
     /**
@@ -638,7 +641,7 @@ public final class OffsetDate
      * @return the day-of-week, not null
      */
     public DayOfWeek getDayOfWeek() {
-<span class="fc" id="L641">        return date.getDayOfWeek();</span>
+<span class="fc" id="L644">        return date.getDayOfWeek();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -687,14 +690,14 @@ public final class OffsetDate
     @Override
     public OffsetDate with(TemporalAdjuster adjuster) {
         // optimizations
-<span class="fc bfc" id="L690" title="All 2 branches covered.">        if (adjuster instanceof LocalDate) {</span>
-<span class="fc" id="L691">            return with((LocalDate) adjuster, offset);</span>
-<span class="fc bfc" id="L692" title="All 2 branches covered.">        } else if (adjuster instanceof ZoneOffset) {</span>
-<span class="fc" id="L693">            return with(date, (ZoneOffset) adjuster);</span>
-<span class="fc bfc" id="L694" title="All 2 branches covered.">        } else if (adjuster instanceof OffsetDate) {</span>
-<span class="fc" id="L695">            return (OffsetDate) adjuster;</span>
+<span class="fc bfc" id="L693" title="All 2 branches covered.">        if (adjuster instanceof LocalDate) {</span>
+<span class="fc" id="L694">            return with((LocalDate) adjuster, offset);</span>
+<span class="fc bfc" id="L695" title="All 2 branches covered.">        } else if (adjuster instanceof ZoneOffset) {</span>
+<span class="fc" id="L696">            return with(date, (ZoneOffset) adjuster);</span>
+<span class="fc bfc" id="L697" title="All 2 branches covered.">        } else if (adjuster instanceof OffsetDate) {</span>
+<span class="fc" id="L698">            return (OffsetDate) adjuster;</span>
         }
-<span class="fc" id="L697">        return (OffsetDate) adjuster.adjustInto(this);</span>
+<span class="fc" id="L700">        return (OffsetDate) adjuster.adjustInto(this);</span>
     }
 
     /**
@@ -708,7 +711,7 @@ public final class OffsetDate
      * &lt;p&gt;
      * In some cases, changing the specified field can cause the resulting date to become invalid,
      * such as changing the month from 31st January to February would make the day-of-month invalid.
-     * In cases like this, the field is responsible for resolving the date. Typically it will choose
+     * In cases like this, the field is responsible for resolving the date. Typically, it will choose
      * the previous valid date, which would be the last valid day of February in this example.
      * &lt;p&gt;
      * If the field is a {@link ChronoField} then the adjustment is implemented here.
@@ -718,7 +721,7 @@ public final class OffsetDate
      * then a {@code DateTimeException} will be thrown.
      * &lt;p&gt;
      * The other {@link #isSupported(TemporalField) supported fields} will behave as per
-     * the matching method on {@link LocalDate#with(TemporalField, long)} LocalDate}.
+     * the matching method on {@link LocalDate#with(TemporalField, long) LocalDate}.
      * In this case, the offset is not part of the calculation and will be unchanged.
      * &lt;p&gt;
      * All other {@code ChronoField} instances will throw an {@code UnsupportedTemporalTypeException}.
@@ -739,14 +742,14 @@ public final class OffsetDate
      */
     @Override
     public OffsetDate with(TemporalField field, long newValue) {
-<span class="pc bpc" id="L742" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L743" title="All 2 branches covered.">            if (field == OFFSET_SECONDS) {</span>
-<span class="fc" id="L744">                ChronoField f = (ChronoField) field;</span>
-<span class="fc" id="L745">                return with(date, ZoneOffset.ofTotalSeconds(f.checkValidIntValue(newValue)));</span>
+<span class="pc bpc" id="L745" title="1 of 2 branches missed.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L746" title="All 2 branches covered.">            if (field == OFFSET_SECONDS) {</span>
+<span class="fc" id="L747">                ChronoField f = (ChronoField) field;</span>
+<span class="fc" id="L748">                return with(date, ZoneOffset.ofTotalSeconds(f.checkValidIntValue(newValue)));</span>
             }
-<span class="fc" id="L747">            return with(date.with(field, newValue), offset);</span>
+<span class="fc" id="L750">            return with(date.with(field, newValue), offset);</span>
         }
-<span class="nc" id="L749">        return field.adjustInto(this, newValue);</span>
+<span class="nc" id="L752">        return field.adjustInto(this, newValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -763,7 +766,7 @@ public final class OffsetDate
      * @throws DateTimeException if the year value is invalid
      */
     public OffsetDate withYear(int year) {
-<span class="fc" id="L766">        return with(date.withYear(year), offset);</span>
+<span class="fc" id="L769">        return with(date.withYear(year), offset);</span>
     }
 
     /**
@@ -779,7 +782,7 @@ public final class OffsetDate
      * @throws DateTimeException if the month-of-year value is invalid
      */
     public OffsetDate withMonth(int month) {
-<span class="fc" id="L782">        return with(date.withMonth(month), offset);</span>
+<span class="fc" id="L785">        return with(date.withMonth(month), offset);</span>
     }
 
     /**
@@ -796,7 +799,7 @@ public final class OffsetDate
      *  or if the day-of-month is invalid for the month-year
      */
     public OffsetDate withDayOfMonth(int dayOfMonth) {
-<span class="fc" id="L799">        return with(date.withDayOfMonth(dayOfMonth), offset);</span>
+<span class="fc" id="L802">        return with(date.withDayOfMonth(dayOfMonth), offset);</span>
     }
 
     /**
@@ -812,7 +815,7 @@ public final class OffsetDate
      *  or if the day-of-year is invalid for the year
      */
     public OffsetDate withDayOfYear(int dayOfYear) {
-<span class="fc" id="L815">        return with(date.withDayOfYear(dayOfYear), offset);</span>
+<span class="fc" id="L818">        return with(date.withDayOfYear(dayOfYear), offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -834,7 +837,7 @@ public final class OffsetDate
      */
     @Override
     public OffsetDate plus(TemporalAmount amountToAdd) {
-<span class="fc" id="L837">        return (OffsetDate) amountToAdd.addTo(this);</span>
+<span class="fc" id="L840">        return (OffsetDate) amountToAdd.addTo(this);</span>
     }
 
     /**
@@ -864,10 +867,10 @@ public final class OffsetDate
      */
     @Override
     public OffsetDate plus(long amountToAdd, TemporalUnit unit) {
-<span class="pc bpc" id="L867" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc" id="L868">            return with(date.plus(amountToAdd, unit), offset);</span>
+<span class="pc bpc" id="L870" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc" id="L871">            return with(date.plus(amountToAdd, unit), offset);</span>
         }
-<span class="nc" id="L870">        return unit.addTo(this, amountToAdd);</span>
+<span class="nc" id="L873">        return unit.addTo(this, amountToAdd);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -884,7 +887,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate plusYears(long years) {
-<span class="fc" id="L887">        return with(date.plusYears(years), offset);</span>
+<span class="fc" id="L890">        return with(date.plusYears(years), offset);</span>
     }
 
     /**
@@ -900,7 +903,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate plusMonths(long months) {
-<span class="fc" id="L903">        return with(date.plusMonths(months), offset);</span>
+<span class="fc" id="L906">        return with(date.plusMonths(months), offset);</span>
     }
 
     /**
@@ -916,7 +919,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate plusWeeks(long weeks) {
-<span class="fc" id="L919">        return with(date.plusWeeks(weeks), offset);</span>
+<span class="fc" id="L922">        return with(date.plusWeeks(weeks), offset);</span>
     }
 
     /**
@@ -932,7 +935,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate plusDays(long days) {
-<span class="fc" id="L935">        return with(date.plusDays(days), offset);</span>
+<span class="fc" id="L938">        return with(date.plusDays(days), offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -954,7 +957,7 @@ public final class OffsetDate
      */
     @Override
     public OffsetDate minus(TemporalAmount amountToSubtract) {
-<span class="fc" id="L957">        return (OffsetDate) amountToSubtract.subtractFrom(this);</span>
+<span class="fc" id="L960">        return (OffsetDate) amountToSubtract.subtractFrom(this);</span>
     }
 
     /**
@@ -978,7 +981,7 @@ public final class OffsetDate
      */
     @Override
     public OffsetDate minus(long amountToSubtract, TemporalUnit unit) {
-<span class="pc bpc" id="L981" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
+<span class="pc bpc" id="L984" title="1 of 2 branches missed.">        return (amountToSubtract == Long.MIN_VALUE ? plus(Long.MAX_VALUE, unit).plus(1, unit) : plus(-amountToSubtract, unit));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -995,7 +998,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate minusYears(long years) {
-<span class="fc" id="L998">        return with(date.minusYears(years), offset);</span>
+<span class="fc" id="L1001">        return with(date.minusYears(years), offset);</span>
     }
 
     /**
@@ -1011,7 +1014,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate minusMonths(long months) {
-<span class="fc" id="L1014">        return with(date.minusMonths(months), offset);</span>
+<span class="fc" id="L1017">        return with(date.minusMonths(months), offset);</span>
     }
 
     /**
@@ -1027,7 +1030,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate minusWeeks(long weeks) {
-<span class="fc" id="L1030">        return with(date.minusWeeks(weeks), offset);</span>
+<span class="fc" id="L1033">        return with(date.minusWeeks(weeks), offset);</span>
     }
 
     /**
@@ -1043,7 +1046,7 @@ public final class OffsetDate
      * @throws DateTimeException if the result exceeds the supported date range
      */
     public OffsetDate minusDays(long days) {
-<span class="fc" id="L1046">        return with(date.minusDays(days), offset);</span>
+<span class="fc" id="L1049">        return with(date.minusDays(days), offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1063,17 +1066,17 @@ public final class OffsetDate
      */
     @SuppressWarnings(&quot;unchecked&quot;)
     @Override
-    public &lt;R&gt; R query(TemporalQuery&lt;R&gt; query) {
-<span class="fc bfc" id="L1067" title="All 2 branches covered.">        if (query == TemporalQueries.localDate()) {</span>
-<span class="fc" id="L1068">            return (R) date;</span>
-<span class="fc bfc" id="L1069" title="All 2 branches covered.">        } else if (query == TemporalQueries.chronology()) {</span>
-<span class="fc" id="L1070">            return (R) IsoChronology.INSTANCE;</span>
-<span class="fc bfc" id="L1071" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
-<span class="fc" id="L1072">            return (R) DAYS;</span>
-<span class="fc bfc" id="L1073" title="All 4 branches covered.">        } else if (query == TemporalQueries.offset() || query == TemporalQueries.zone()) {</span>
-<span class="fc" id="L1074">            return (R) getOffset();</span>
+    public &lt;R extends @Nullable Object&gt; R query(TemporalQuery&lt;R&gt; query) {
+<span class="fc bfc" id="L1070" title="All 2 branches covered.">        if (query == TemporalQueries.localDate()) {</span>
+<span class="fc" id="L1071">            return (R) date;</span>
+<span class="fc bfc" id="L1072" title="All 2 branches covered.">        } else if (query == TemporalQueries.chronology()) {</span>
+<span class="fc" id="L1073">            return (R) IsoChronology.INSTANCE;</span>
+<span class="fc bfc" id="L1074" title="All 2 branches covered.">        } else if (query == TemporalQueries.precision()) {</span>
+<span class="fc" id="L1075">            return (R) DAYS;</span>
+<span class="fc bfc" id="L1076" title="All 4 branches covered.">        } else if (query == TemporalQueries.offset() || query == TemporalQueries.zone()) {</span>
+<span class="fc" id="L1077">            return (R) getOffset();</span>
         }
-<span class="fc" id="L1076">        return Temporal.super.query(query);</span>
+<span class="fc" id="L1079">        return Temporal.super.query(query);</span>
     }
 
     /**
@@ -1104,9 +1107,9 @@ public final class OffsetDate
      */
     @Override
     public Temporal adjustInto(Temporal temporal) {
-<span class="fc" id="L1107">        return temporal</span>
-<span class="fc" id="L1108">                .with(OFFSET_SECONDS, getOffset().getTotalSeconds())</span>
-<span class="fc" id="L1109">                .with(EPOCH_DAY, toLocalDate().toEpochDay());</span>
+<span class="fc" id="L1110">        return temporal</span>
+<span class="fc" id="L1111">                .with(OFFSET_SECONDS, getOffset().getTotalSeconds())</span>
+<span class="fc" id="L1112">                .with(EPOCH_DAY, toLocalDate().toEpochDay());</span>
     }
 
     /**
@@ -1161,13 +1164,13 @@ public final class OffsetDate
      */
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
-<span class="fc" id="L1164">        OffsetDate end = OffsetDate.from(endExclusive);</span>
-<span class="pc bpc" id="L1165" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc" id="L1166">            long offsetDiff = end.offset.getTotalSeconds() - offset.getTotalSeconds();</span>
-<span class="fc" id="L1167">            LocalDate endLocal = end.date.plusDays(Math.floorDiv(-offsetDiff, SECONDS_PER_DAY));</span>
-<span class="fc" id="L1168">            return date.until(endLocal, unit);</span>
+<span class="fc" id="L1167">        OffsetDate end = OffsetDate.from(endExclusive);</span>
+<span class="pc bpc" id="L1168" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc" id="L1169">            long offsetDiff = end.offset.getTotalSeconds() - offset.getTotalSeconds();</span>
+<span class="fc" id="L1170">            LocalDate endLocal = end.date.plusDays(Math.floorDiv(-offsetDiff, SECONDS_PER_DAY));</span>
+<span class="fc" id="L1171">            return date.until(endLocal, unit);</span>
         }
-<span class="nc" id="L1170">        return unit.between(this, end);</span>
+<span class="nc" id="L1173">        return unit.between(this, end);</span>
     }
 
     /**
@@ -1180,8 +1183,8 @@ public final class OffsetDate
      * @throws DateTimeException if an error occurs during printing
      */
     public String format(DateTimeFormatter formatter) {
-<span class="fc" id="L1183">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
-<span class="fc" id="L1184">        return formatter.format(this);</span>
+<span class="fc" id="L1186">        Objects.requireNonNull(formatter, &quot;formatter&quot;);</span>
+<span class="fc" id="L1187">        return formatter.format(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1197,7 +1200,7 @@ public final class OffsetDate
      * @return the offset date-time formed from this date and the specified time, not null
      */
     public OffsetDateTime atTime(LocalTime time) {
-<span class="fc" id="L1200">        return OffsetDateTime.of(date, time, offset);</span>
+<span class="fc" id="L1203">        return OffsetDateTime.of(date, time, offset);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1207,9 +1210,9 @@ public final class OffsetDate
      * @return the epoch seconds value
      */
     private long toEpochSecond() {
-<span class="fc" id="L1210">        long epochDay = date.toEpochDay();</span>
-<span class="fc" id="L1211">        long secs = epochDay * SECONDS_PER_DAY;</span>
-<span class="fc" id="L1212">        return secs - offset.getTotalSeconds();</span>
+<span class="fc" id="L1213">        long epochDay = date.toEpochDay();</span>
+<span class="fc" id="L1214">        long secs = epochDay * SECONDS_PER_DAY;</span>
+<span class="fc" id="L1215">        return secs - offset.getTotalSeconds();</span>
     }
 
     /**
@@ -1226,8 +1229,8 @@ public final class OffsetDate
      * @return the number of seconds since the epoch of 1970-01-01T00:00:00Z, may be negative
      */
     public long toEpochSecond(LocalTime time) {
-<span class="fc" id="L1229">        Objects.requireNonNull(time, &quot;time&quot;);</span>
-<span class="fc" id="L1230">        return toEpochSecond() + time.toSecondOfDay();</span>
+<span class="fc" id="L1232">        Objects.requireNonNull(time, &quot;time&quot;);</span>
+<span class="fc" id="L1233">        return toEpochSecond() + time.toSecondOfDay();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1257,14 +1260,14 @@ public final class OffsetDate
      */
     @Override
     public int compareTo(OffsetDate other) {
-<span class="fc bfc" id="L1260" title="All 2 branches covered.">        if (offset.equals(other.offset)) {</span>
-<span class="fc" id="L1261">            return date.compareTo(other.date);</span>
+<span class="fc bfc" id="L1263" title="All 2 branches covered.">        if (offset.equals(other.offset)) {</span>
+<span class="fc" id="L1264">            return date.compareTo(other.date);</span>
         }
-<span class="fc" id="L1263">        int compare = Long.compare(toEpochSecond(), other.toEpochSecond());</span>
-<span class="fc bfc" id="L1264" title="All 2 branches covered.">        if (compare == 0) {</span>
-<span class="fc" id="L1265">            compare = date.compareTo(other.date);</span>
+<span class="fc" id="L1266">        int compare = Long.compare(toEpochSecond(), other.toEpochSecond());</span>
+<span class="fc bfc" id="L1267" title="All 2 branches covered.">        if (compare == 0) {</span>
+<span class="fc" id="L1268">            compare = date.compareTo(other.date);</span>
         }
-<span class="fc" id="L1267">        return compare;</span>
+<span class="fc" id="L1270">        return compare;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1280,7 +1283,7 @@ public final class OffsetDate
      * @return true if this is after the instant of the specified date
      */
     public boolean isAfter(OffsetDate other) {
-<span class="fc bfc" id="L1283" title="All 2 branches covered.">        return toEpochSecond() &gt; other.toEpochSecond();</span>
+<span class="fc bfc" id="L1286" title="All 2 branches covered.">        return toEpochSecond() &gt; other.toEpochSecond();</span>
     }
 
     /**
@@ -1295,7 +1298,7 @@ public final class OffsetDate
      * @return true if this is before the instant of the specified date
      */
     public boolean isBefore(OffsetDate other) {
-<span class="fc bfc" id="L1298" title="All 2 branches covered.">        return toEpochSecond() &lt; other.toEpochSecond();</span>
+<span class="fc bfc" id="L1301" title="All 2 branches covered.">        return toEpochSecond() &lt; other.toEpochSecond();</span>
     }
 
     /**
@@ -1310,7 +1313,7 @@ public final class OffsetDate
      * @return true if the instant equals the instant of the specified date
      */
     public boolean isEqual(OffsetDate other) {
-<span class="fc bfc" id="L1313" title="All 2 branches covered.">        return toEpochSecond() == other.toEpochSecond();</span>
+<span class="fc bfc" id="L1316" title="All 2 branches covered.">        return toEpochSecond() == other.toEpochSecond();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1328,15 +1331,15 @@ public final class OffsetDate
      * @return true if this is equal to the other date
      */
     @Override
-    public boolean equals(Object obj) {
-<span class="fc bfc" id="L1332" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L1333">            return true;</span>
+    public boolean equals(@Nullable Object obj) {
+<span class="fc bfc" id="L1335" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L1336">            return true;</span>
         }
-<span class="fc bfc" id="L1335" title="All 2 branches covered.">        if (obj instanceof OffsetDate) {</span>
-<span class="fc" id="L1336">            OffsetDate other = (OffsetDate) obj;</span>
-<span class="fc bfc" id="L1337" title="All 4 branches covered.">            return date.equals(other.date) &amp;&amp; offset.equals(other.offset);</span>
+<span class="fc bfc" id="L1338" title="All 2 branches covered.">        if (obj instanceof OffsetDate) {</span>
+<span class="fc" id="L1339">            OffsetDate other = (OffsetDate) obj;</span>
+<span class="fc bfc" id="L1340" title="All 4 branches covered.">            return date.equals(other.date) &amp;&amp; offset.equals(other.offset);</span>
         }
-<span class="fc" id="L1339">        return false;</span>
+<span class="fc" id="L1342">        return false;</span>
     }
 
     /**
@@ -1346,7 +1349,7 @@ public final class OffsetDate
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L1349">        return date.hashCode() ^ offset.hashCode();</span>
+<span class="fc" id="L1352">        return date.hashCode() ^ offset.hashCode();</span>
     }
 
     //-----------------------------------------------------------------------
@@ -1360,7 +1363,7 @@ public final class OffsetDate
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L1363">        return date.toString() + offset.toString();</span>
+<span class="fc" id="L1366">        return date.toString() + offset.toString();</span>
     }
 
 }

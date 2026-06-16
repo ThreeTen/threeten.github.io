@@ -54,6 +54,9 @@ import java.time.temporal.ValueRange;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.Objects;
+import org.jspecify.annotations.Nullable;
+
 /**
  * An Accounting calendar system.
  * &lt;p&gt;
@@ -94,19 +97,19 @@ public final class AccountingChronology extends AbstractChronology implements Se
     /**
      * Range of proleptic month for 12-month (period) year.
      */
-<span class="fc" id="L97">    private static final ValueRange PROLEPTIC_MONTH_RANGE_12 = ValueRange.of(-999_999 * 12L, 999_999 * 12L + 11);</span>
+<span class="fc" id="L100">    private static final ValueRange PROLEPTIC_MONTH_RANGE_12 = ValueRange.of(-999_999 * 12L, 999_999 * 12L + 11);</span>
     /**
      * Range of proleptic month for 13-month (period) year.
      */
-<span class="fc" id="L101">    private static final ValueRange PROLEPTIC_MONTH_RANGE_13 = ValueRange.of(-999_999 * 13L, 999_999 * 13L + 12);</span>
+<span class="fc" id="L104">    private static final ValueRange PROLEPTIC_MONTH_RANGE_13 = ValueRange.of(-999_999 * 13L, 999_999 * 13L + 12);</span>
     /**
      * Range of weeks in year.
      */
-<span class="fc" id="L105">    private static final ValueRange ALIGNED_WEEK_OF_YEAR_RANGE = ValueRange.of(1, 52, 53);</span>
+<span class="fc" id="L108">    private static final ValueRange ALIGNED_WEEK_OF_YEAR_RANGE = ValueRange.of(1, 52, 53);</span>
     /**
      * Range of days in year.
      */
-<span class="fc" id="L109">    static final ValueRange DAY_OF_YEAR_RANGE = ValueRange.of(1, 364, 371);</span>
+<span class="fc" id="L112">    static final ValueRange DAY_OF_YEAR_RANGE = ValueRange.of(1, 364, 371);</span>
 
     /**
      * The day of the week on which a given Accounting year ends.
@@ -135,7 +138,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
     private final int yearOffset;
 
     /**
-     * Difference in days between accounting year end and ISO month end, in ISO year 0.
+     * Difference in days between accounting year-end and ISO month end, in ISO year 0.
      */
     private final transient int yearZeroDifference;
     /**
@@ -156,47 +159,50 @@ public final class AccountingChronology extends AbstractChronology implements Se
      * Creates an {@code AccountingChronology} validating the input.
      * Package private as only meant to be called from the builder.
      *
-     * @param endsOn  The day-of-week a given year ends on.
-     * @param end The  month-end the year is based on.
-     * @param inLastWeek  Whether the year ends in the last week of the month, or nearest the end-of-month.
-     * @param division  How the year is divided.
-     * @param leapWeekInMonth  The month in which the leap-week resides.
-     * @return The created Chronology, not null.
-     * @throws DateTimeException if the chronology cannot be built.
+     * @param endsOn  the day-of-week a given year ends on, not null
+     * @param end  the month-end the year is based on, not null
+     * @param inLastWeek  whether the year ends in the last week of the month, or nearest the end-of-month
+     * @param division  how the year is divided, not null
+     * @param leapWeekInMonth  the month in which the leap-week resides, valid for {@code division}, not zero
+     * @return the created Chronology, not null
+     * @throws DateTimeException if the chronology cannot be built
      */
-    static AccountingChronology create(DayOfWeek endsOn, Month end, boolean inLastWeek, AccountingYearDivision division,
-            int leapWeekInMonth, int yearOffset) {
-<span class="fc bfc" id="L169" title="All 8 branches covered.">        if (endsOn == null || end == null || division == null || leapWeekInMonth == 0) {</span>
-<span class="fc" id="L170">            throw new IllegalStateException(&quot;AccountingCronology cannot be built: &quot;</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">                    + (endsOn == null ? &quot;| ending day-of-week |&quot; : &quot;&quot;)</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">                    + (end == null ? &quot;| month ending in/nearest to |&quot; : &quot;&quot;)</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">                    + (division == null ? &quot;| how year divided |&quot; : &quot;&quot;)</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">                    + (leapWeekInMonth == 0 ? &quot;| leap-week month |&quot; : &quot;&quot;)</span>
-                    + &quot; not set.&quot;);
+    static AccountingChronology create(
+            DayOfWeek endsOn,
+            Month end,
+            boolean inLastWeek,
+            AccountingYearDivision division,
+            int leapWeekInMonth,
+            int yearOffset) {
+<span class="fc" id="L177">        Objects.requireNonNull(endsOn, &quot;endsOn&quot;);</span>
+<span class="fc" id="L178">        Objects.requireNonNull(end, &quot;end&quot;);</span>
+<span class="fc" id="L179">        Objects.requireNonNull(division, &quot;division&quot;);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        if (leapWeekInMonth == 0) {</span>
+<span class="fc" id="L181">            throw new IllegalStateException(&quot;AccountingChronology leapWeekInMonth cannot be zero&quot;);</span>
         }
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (!division.getMonthsInYearRange().isValidValue(leapWeekInMonth)) {</span>
-<span class="fc" id="L178">            throw new IllegalStateException(&quot;Leap week cannot not be placed in non-existent month &quot; + leapWeekInMonth</span>
-<span class="fc" id="L179">                    + &quot;, range is [&quot; + division.getMonthsInYearRange() + &quot;].&quot;);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (!division.getMonthsInYearRange().isValidValue(leapWeekInMonth)) {</span>
+<span class="fc" id="L184">            throw new IllegalStateException(&quot;Leap week cannot not be placed in non-existent month &quot; + leapWeekInMonth</span>
+<span class="fc" id="L185">                    + &quot;, range is [&quot; + division.getMonthsInYearRange() + &quot;].&quot;);</span>
         }
 
         // Derive cached information.
-<span class="fc bfc" id="L183" title="All 2 branches covered.">        LocalDate endingLimit = inLastWeek ? LocalDate.of(0 + yearOffset, end, 1).with(TemporalAdjusters.lastDayOfMonth()) :</span>
-<span class="fc" id="L184">                LocalDate.of(0 + yearOffset, end, 1).with(TemporalAdjusters.lastDayOfMonth()).plusDays(3);</span>
-<span class="fc" id="L185">        LocalDate yearZeroEnd = endingLimit.with(TemporalAdjusters.previousOrSame(endsOn));</span>
-<span class="fc" id="L186">        int yearZeroDifference = (int) yearZeroEnd.until(endingLimit, ChronoUnit.DAYS);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        LocalDate endingLimit = inLastWeek ? LocalDate.of(yearOffset, end, 1).with(TemporalAdjusters.lastDayOfMonth()) :</span>
+<span class="fc" id="L190">                LocalDate.of(yearOffset, end, 1).with(TemporalAdjusters.lastDayOfMonth()).plusDays(3);</span>
+<span class="fc" id="L191">        LocalDate yearZeroEnd = endingLimit.with(TemporalAdjusters.previousOrSame(endsOn));</span>
+<span class="fc" id="L192">        int yearZeroDifference = (int) yearZeroEnd.until(endingLimit, ChronoUnit.DAYS);</span>
         // Longest/shortest month lengths and related
-<span class="fc" id="L188">        int longestMonthLength = 0;</span>
-<span class="fc" id="L189">        int shortestMonthLength = Integer.MAX_VALUE;</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">        for (int month = 1; month &lt;= division.getMonthsInYearRange().getMaximum(); month++) {</span>
-<span class="fc" id="L191">            int monthLength = division.getWeeksInMonth(month);</span>
-<span class="fc" id="L192">            shortestMonthLength = Math.min(shortestMonthLength, monthLength);</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">            longestMonthLength = Math.max(longestMonthLength, monthLength + (month == leapWeekInMonth ? 1 : 0));</span>
+<span class="fc" id="L194">        int longestMonthLength = 0;</span>
+<span class="fc" id="L195">        int shortestMonthLength = Integer.MAX_VALUE;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        for (int month = 1; month &lt;= division.getMonthsInYearRange().getMaximum(); month++) {</span>
+<span class="fc" id="L197">            int monthLength = division.getWeeksInMonth(month);</span>
+<span class="fc" id="L198">            shortestMonthLength = Math.min(shortestMonthLength, monthLength);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">            longestMonthLength = Math.max(longestMonthLength, monthLength + (month == leapWeekInMonth ? 1 : 0));</span>
         }
-<span class="fc" id="L195">        ValueRange alignedWeekOfMonthRange = ValueRange.of(1, shortestMonthLength, longestMonthLength);</span>
-<span class="fc" id="L196">        ValueRange dayOfMonthRange = ValueRange.of(1, shortestMonthLength * 7, longestMonthLength * 7);</span>
-<span class="fc" id="L197">        int daysToEpoch = Math.toIntExact(0 - yearZeroEnd.plusDays(1).toEpochDay());</span>
+<span class="fc" id="L201">        ValueRange alignedWeekOfMonthRange = ValueRange.of(1, shortestMonthLength, longestMonthLength);</span>
+<span class="fc" id="L202">        ValueRange dayOfMonthRange = ValueRange.of(1, shortestMonthLength * 7L, longestMonthLength * 7L);</span>
+<span class="fc" id="L203">        int daysToEpoch = Math.toIntExact(-yearZeroEnd.plusDays(1).toEpochDay());</span>
 
-<span class="fc" id="L199">        return new AccountingChronology(endsOn, end, inLastWeek, division, leapWeekInMonth, yearZeroDifference,</span>
+<span class="fc" id="L205">        return new AccountingChronology(endsOn, end, inLastWeek, division, leapWeekInMonth, yearZeroDifference,</span>
                 alignedWeekOfMonthRange, dayOfMonthRange, daysToEpoch, yearOffset);
     }
 
@@ -209,24 +215,24 @@ public final class AccountingChronology extends AbstractChronology implements Se
      * @param inLastWeek  Whether the year ends in the last week of the month, or nearest the end-of-month.
      * @param division  How the year is divided.
      * @param leapWeekInMonth  The month in which the leap-week resides.
-     * @param yearZeroDifference  Difference in days between accounting year end and ISO month end, in ISO year 0.
+     * @param yearZeroDifference  Difference in days between accounting year-end and ISO month end, in ISO year 0.
      * @param alignedWeekOfMonthRange  Range of weeks in month.
      * @param dayOfMonthRange  Range of days in month.
      * @param daysToEpoch  The number of days between the start of Accounting 1 and ISO 1970.
      */
     private AccountingChronology(DayOfWeek endsOn, Month end, boolean inLastWeek, AccountingYearDivision division, int leapWeekInMonth, int yearZeroDifference, ValueRange alignedWeekOfMonthRange,
-<span class="fc" id="L218">            ValueRange dayOfMonthRange, int daysToEpoch, int yearOffset) {</span>
-<span class="fc" id="L219">        this.endsOn = endsOn;</span>
-<span class="fc" id="L220">        this.end = end;</span>
-<span class="fc" id="L221">        this.inLastWeek = inLastWeek;</span>
-<span class="fc" id="L222">        this.division = division;</span>
-<span class="fc" id="L223">        this.leapWeekInMonth = leapWeekInMonth;</span>
-<span class="fc" id="L224">        this.yearZeroDifference = yearZeroDifference;</span>
-<span class="fc" id="L225">        this.alignedWeekOfMonthRange = alignedWeekOfMonthRange;</span>
-<span class="fc" id="L226">        this.dayOfMonthRange = dayOfMonthRange;</span>
-<span class="fc" id="L227">        this.days0001ToIso1970 = daysToEpoch;</span>
-<span class="fc" id="L228">        this.yearOffset = yearOffset;</span>
-<span class="fc" id="L229">    }</span>
+<span class="fc" id="L224">            ValueRange dayOfMonthRange, int daysToEpoch, int yearOffset) {</span>
+<span class="fc" id="L225">        this.endsOn = endsOn;</span>
+<span class="fc" id="L226">        this.end = end;</span>
+<span class="fc" id="L227">        this.inLastWeek = inLastWeek;</span>
+<span class="fc" id="L228">        this.division = division;</span>
+<span class="fc" id="L229">        this.leapWeekInMonth = leapWeekInMonth;</span>
+<span class="fc" id="L230">        this.yearZeroDifference = yearZeroDifference;</span>
+<span class="fc" id="L231">        this.alignedWeekOfMonthRange = alignedWeekOfMonthRange;</span>
+<span class="fc" id="L232">        this.dayOfMonthRange = dayOfMonthRange;</span>
+<span class="fc" id="L233">        this.days0001ToIso1970 = daysToEpoch;</span>
+<span class="fc" id="L234">        this.yearOffset = yearOffset;</span>
+<span class="fc" id="L235">    }</span>
 
     /**
      * Resolve stored instances.
@@ -234,20 +240,22 @@ public final class AccountingChronology extends AbstractChronology implements Se
      * @return a built, validated instance.
      */
     private Object readResolve() {
-<span class="nc" id="L237">        return AccountingChronology.create(endsOn, end, inLastWeek, getDivision(), leapWeekInMonth, yearOffset);</span>
+<span class="nc" id="L243">        Objects.requireNonNull(endsOn, &quot;endsOn&quot;);</span>
+<span class="nc" id="L244">        Objects.requireNonNull(end, &quot;end&quot;);</span>
+<span class="nc" id="L245">        return AccountingChronology.create(endsOn, end, inLastWeek, getDivision(), leapWeekInMonth, yearOffset);</span>
     }
 
     //-----------------------------------------------------------------------
     AccountingYearDivision getDivision() {
-<span class="fc" id="L242">        return division;</span>
+<span class="fc" id="L250">        return division;</span>
     }
 
     int getLeapWeekInMonth() {
-<span class="fc" id="L246">        return leapWeekInMonth;</span>
+<span class="fc" id="L254">        return leapWeekInMonth;</span>
     }
 
     int getDays0001ToIso1970() {
-<span class="fc" id="L250">        return days0001ToIso1970;</span>
+<span class="fc" id="L258">        return days0001ToIso1970;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -264,7 +272,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public String getId() {
-<span class="fc" id="L267">        return &quot;Accounting&quot;;</span>
+<span class="fc" id="L275">        return &quot;Accounting&quot;;</span>
     }
 
     /**
@@ -279,8 +287,8 @@ public final class AccountingChronology extends AbstractChronology implements Se
      * @see #getId()
      */
     @Override
-    public String getCalendarType() {
-<span class="fc" id="L283">        return null;</span>
+    public @Nullable String getCalendarType() {
+<span class="fc" id="L291">        return null;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -298,7 +306,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public AccountingDate date(Era era, int yearOfEra, int month, int dayOfMonth) {
-<span class="fc" id="L301">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
+<span class="fc" id="L309">        return date(prolepticYear(era, yearOfEra), month, dayOfMonth);</span>
     }
 
     /**
@@ -313,7 +321,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public AccountingDate date(int prolepticYear, int month, int dayOfMonth) {
-<span class="fc" id="L316">        return AccountingDate.of(this, prolepticYear, month, dayOfMonth);</span>
+<span class="fc" id="L324">        return AccountingDate.of(this, prolepticYear, month, dayOfMonth);</span>
     }
 
     /**
@@ -329,7 +337,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public AccountingDate dateYearDay(Era era, int yearOfEra, int dayOfYear) {
-<span class="fc" id="L332">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
+<span class="fc" id="L340">        return dateYearDay(prolepticYear(era, yearOfEra), dayOfYear);</span>
     }
 
     /**
@@ -343,7 +351,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public AccountingDate dateYearDay(int prolepticYear, int dayOfYear) {
-<span class="fc" id="L346">        return AccountingDate.ofYearDay(this, prolepticYear, dayOfYear);</span>
+<span class="fc" id="L354">        return AccountingDate.ofYearDay(this, prolepticYear, dayOfYear);</span>
     }
 
     /**
@@ -355,7 +363,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override  // override with covariant return type
     public AccountingDate dateEpochDay(long epochDay) {
-<span class="fc" id="L358">        return AccountingDate.ofEpochDay(this, epochDay);</span>
+<span class="fc" id="L366">        return AccountingDate.ofEpochDay(this, epochDay);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -373,7 +381,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override  // override with covariant return type
     public AccountingDate dateNow() {
-<span class="nc" id="L376">        return AccountingDate.now(this);</span>
+<span class="nc" id="L384">        return AccountingDate.now(this);</span>
     }
 
     /**
@@ -391,7 +399,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override  // override with covariant return type
     public AccountingDate dateNow(ZoneId zone) {
-<span class="nc" id="L394">        return AccountingDate.now(this, zone);</span>
+<span class="nc" id="L402">        return AccountingDate.now(this, zone);</span>
     }
 
     /**
@@ -407,12 +415,12 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override  // override with covariant return type
     public AccountingDate dateNow(Clock clock) {
-<span class="nc" id="L410">        return AccountingDate.now(this, clock);</span>
+<span class="nc" id="L418">        return AccountingDate.now(this, clock);</span>
     }
 
     //-------------------------------------------------------------------------
     /**
-     * Obtains a Accounting local date from another date-time object.
+     * Obtains an Accounting local date from another date-time object.
      *
      * @param temporal  the date-time object to convert, not null
      * @return the Accounting local date, not null
@@ -420,11 +428,11 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public AccountingDate date(TemporalAccessor temporal) {
-<span class="fc" id="L423">        return AccountingDate.from(this, temporal);</span>
+<span class="fc" id="L431">        return AccountingDate.from(this, temporal);</span>
     }
 
     /**
-     * Obtains a Accounting local date-time from another date-time object.
+     * Obtains an Accounting local date-time from another date-time object.
      *
      * @param temporal  the date-time object to convert, not null
      * @return the Accounting local date-time, not null
@@ -433,11 +441,11 @@ public final class AccountingChronology extends AbstractChronology implements Se
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoLocalDateTime&lt;AccountingDate&gt; localDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L436">        return (ChronoLocalDateTime&lt;AccountingDate&gt;) super.localDateTime(temporal);</span>
+<span class="nc" id="L444">        return (ChronoLocalDateTime&lt;AccountingDate&gt;) super.localDateTime(temporal);</span>
     }
 
     /**
-     * Obtains a Accounting zoned date-time from another date-time object.
+     * Obtains an Accounting zoned date-time from another date-time object.
      *
      * @param temporal  the date-time object to convert, not null
      * @return the Accounting zoned date-time, not null
@@ -446,11 +454,11 @@ public final class AccountingChronology extends AbstractChronology implements Se
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;AccountingDate&gt; zonedDateTime(TemporalAccessor temporal) {
-<span class="nc" id="L449">        return (ChronoZonedDateTime&lt;AccountingDate&gt;) super.zonedDateTime(temporal);</span>
+<span class="nc" id="L457">        return (ChronoZonedDateTime&lt;AccountingDate&gt;) super.zonedDateTime(temporal);</span>
     }
 
     /**
-     * Obtains a Accounting zoned date-time in this chronology from an {@code Instant}.
+     * Obtains an Accounting zoned date-time in this chronology from an {@code Instant}.
      *
      * @param instant  the instant to create the date-time from, not null
      * @param zone  the time-zone, not null
@@ -460,7 +468,7 @@ public final class AccountingChronology extends AbstractChronology implements Se
     @Override
     @SuppressWarnings(&quot;unchecked&quot;)
     public ChronoZonedDateTime&lt;AccountingDate&gt; zonedDateTime(Instant instant, ZoneId zone) {
-<span class="nc" id="L463">        return (ChronoZonedDateTime&lt;AccountingDate&gt;) super.zonedDateTime(instant, zone);</span>
+<span class="nc" id="L471">        return (ChronoZonedDateTime&lt;AccountingDate&gt;) super.zonedDateTime(instant, zone);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -477,8 +485,8 @@ public final class AccountingChronology extends AbstractChronology implements Se
      */
     @Override
     public boolean isLeapYear(long prolepticYear) {
-<span class="fc bfc" id="L480" title="All 2 branches covered.">        return Math.floorMod(prolepticYear + getISOLeapYearCount(prolepticYear) + yearZeroDifference, 7) == 0</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">                || Math.floorMod(prolepticYear + getISOLeapYearCount(prolepticYear + 1) + yearZeroDifference, 7) == 0;</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">        return Math.floorMod(prolepticYear + getISOLeapYearCount(prolepticYear) + yearZeroDifference, 7) == 0</span>
+<span class="fc bfc" id="L489" title="All 2 branches covered.">                || Math.floorMod(prolepticYear + getISOLeapYearCount(prolepticYear + 1) + yearZeroDifference, 7) == 0;</span>
     }
 
     /**
@@ -493,8 +501,8 @@ public final class AccountingChronology extends AbstractChronology implements Se
      * @return the count of leap years since year 1.
      */
     private long getISOLeapYearCount(long prolepticYear) {
-<span class="fc bfc" id="L496" title="All 2 branches covered.">        long offsetYear = prolepticYear - (end == Month.JANUARY? 1 : 0) - 1 + yearOffset;</span>
-<span class="fc bfc" id="L497" title="All 4 branches covered.">        return Math.floorDiv(offsetYear, 4) - Math.floorDiv(offsetYear, 100) + Math.floorDiv(offsetYear, 400) + (end == Month.JANUARY &amp;&amp; yearOffset == 0 ? 1 : 0);</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        long offsetYear = prolepticYear - (end == Month.JANUARY? 1 : 0) - 1 + yearOffset;</span>
+<span class="fc bfc" id="L505" title="All 4 branches covered.">        return Math.floorDiv(offsetYear, 4) - Math.floorDiv(offsetYear, 100) + Math.floorDiv(offsetYear, 400) + (end == Month.JANUARY &amp;&amp; yearOffset == 0 ? 1 : 0);</span>
     }
 
     /**
@@ -509,94 +517,94 @@ public final class AccountingChronology extends AbstractChronology implements Se
      * @return the count of leap years since year 1.
      */
     long previousLeapYears(long prolepticYear) {
-<span class="fc" id="L512">        return Math.floorDiv(prolepticYear - 1 + getISOLeapYearCount(prolepticYear) + yearZeroDifference, 7);</span>
+<span class="fc" id="L520">        return Math.floorDiv(prolepticYear - 1 + getISOLeapYearCount(prolepticYear) + yearZeroDifference, 7);</span>
     }
 
     @Override
     public int prolepticYear(Era era, int yearOfEra) {
-<span class="fc bfc" id="L517" title="All 2 branches covered.">        if (!(era instanceof AccountingEra)) {</span>
-<span class="fc" id="L518">            throw new ClassCastException(&quot;Era must be AccountingEra&quot;);</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        if (!(era instanceof AccountingEra)) {</span>
+<span class="fc" id="L526">            throw new ClassCastException(&quot;Era must be AccountingEra&quot;);</span>
         }
-<span class="fc bfc" id="L520" title="All 2 branches covered.">        return (era == AccountingEra.CE ? yearOfEra : 1 - yearOfEra);</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">        return (era == AccountingEra.CE ? yearOfEra : 1 - yearOfEra);</span>
     }
 
     @Override
     public AccountingEra eraOf(int era) {
-<span class="fc" id="L525">        return AccountingEra.of(era);</span>
+<span class="fc" id="L533">        return AccountingEra.of(era);</span>
     }
 
     @Override
     public List&lt;Era&gt; eras() {
-<span class="fc" id="L530">        return Arrays.&lt;Era&gt;asList(AccountingEra.values());</span>
+<span class="fc" id="L538">        return Arrays.asList(AccountingEra.values());</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(ChronoField field) {
-<span class="fc bfc" id="L536" title="All 7 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L544" title="All 7 branches covered.">        switch (field) {</span>
             case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L538">                return alignedWeekOfMonthRange;</span>
+<span class="fc" id="L546">                return alignedWeekOfMonthRange;</span>
             case ALIGNED_WEEK_OF_YEAR:
-<span class="fc" id="L540">                return ALIGNED_WEEK_OF_YEAR_RANGE;</span>
+<span class="fc" id="L548">                return ALIGNED_WEEK_OF_YEAR_RANGE;</span>
             case DAY_OF_MONTH:
-<span class="fc" id="L542">                return dayOfMonthRange;</span>
+<span class="fc" id="L550">                return dayOfMonthRange;</span>
             case DAY_OF_YEAR:
-<span class="fc" id="L544">                return DAY_OF_YEAR_RANGE;</span>
+<span class="fc" id="L552">                return DAY_OF_YEAR_RANGE;</span>
             case MONTH_OF_YEAR:
-<span class="fc" id="L546">                return getDivision().getMonthsInYearRange();</span>
+<span class="fc" id="L554">                return getDivision().getMonthsInYearRange();</span>
             case PROLEPTIC_MONTH:
-<span class="fc bfc" id="L548" title="All 2 branches covered.">                return getDivision() == THIRTEEN_EVEN_MONTHS_OF_4_WEEKS ? PROLEPTIC_MONTH_RANGE_13 : PROLEPTIC_MONTH_RANGE_12;</span>
+<span class="fc bfc" id="L556" title="All 2 branches covered.">                return getDivision() == THIRTEEN_EVEN_MONTHS_OF_4_WEEKS ? PROLEPTIC_MONTH_RANGE_13 : PROLEPTIC_MONTH_RANGE_12;</span>
             default:
                 break;
         }
-<span class="fc" id="L552">        return field.range();</span>
+<span class="fc" id="L560">        return field.range();</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
-    public boolean equals(Object obj) {
-<span class="fc bfc" id="L558" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L559">            return true;</span>
+    public boolean equals(@Nullable Object obj) {
+<span class="fc bfc" id="L566" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L567">            return true;</span>
         }
-<span class="fc bfc" id="L561" title="All 2 branches covered.">        if (obj instanceof AccountingChronology) {</span>
-<span class="fc" id="L562">            AccountingChronology other = (AccountingChronology) obj;</span>
-<span class="pc bpc" id="L563" title="5 of 6 branches missed.">            return this.endsOn == other.endsOn &amp;&amp;</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">        if (obj instanceof AccountingChronology) {</span>
+<span class="fc" id="L570">            AccountingChronology other = (AccountingChronology) obj;</span>
+<span class="pc bpc" id="L571" title="5 of 6 branches missed.">            return this.endsOn == other.endsOn &amp;&amp;</span>
                     this.inLastWeek == other.inLastWeek &amp;&amp;
                     this.end == other.end &amp;&amp;
-<span class="pc bnc" id="L566" title="All 6 branches missed.">                    this.getDivision() == other.getDivision() &amp;&amp;</span>
+<span class="pc bnc" id="L574" title="All 6 branches missed.">                    this.getDivision() == other.getDivision() &amp;&amp;</span>
                     this.leapWeekInMonth == other.leapWeekInMonth &amp;&amp;
                     this.yearOffset == other.yearOffset;
         }
-<span class="fc" id="L570">        return false;</span>
+<span class="fc" id="L578">        return false;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L575">        final int prime = 31;</span>
-<span class="fc" id="L576">        int result = 0;</span>
-<span class="fc" id="L577">        result = prime * result + endsOn.hashCode();</span>
-<span class="pc bpc" id="L578" title="1 of 2 branches missed.">        result = prime * result + (inLastWeek ? 1231 : 1237);</span>
-<span class="fc" id="L579">        result = prime * result + end.hashCode();</span>
-<span class="fc" id="L580">        result = prime * result + leapWeekInMonth;</span>
-<span class="fc" id="L581">        result = prime * result + getDivision().hashCode();</span>
-<span class="fc" id="L582">        result = prime * result + yearOffset;</span>
-<span class="fc" id="L583">        return result;</span>
+<span class="fc" id="L583">        final int prime = 31;</span>
+<span class="fc" id="L584">        int result = 0;</span>
+<span class="fc" id="L585">        result = prime * result + endsOn.hashCode();</span>
+<span class="pc bpc" id="L586" title="1 of 2 branches missed.">        result = prime * result + (inLastWeek ? 1231 : 1237);</span>
+<span class="fc" id="L587">        result = prime * result + end.hashCode();</span>
+<span class="fc" id="L588">        result = prime * result + leapWeekInMonth;</span>
+<span class="fc" id="L589">        result = prime * result + getDivision().hashCode();</span>
+<span class="fc" id="L590">        result = prime * result + yearOffset;</span>
+<span class="fc" id="L591">        return result;</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L588">        StringBuilder bld = new StringBuilder(30);</span>
-<span class="fc" id="L589">        bld.append(getId())</span>
-<span class="fc" id="L590">                .append(&quot; calendar ends on &quot;)</span>
-<span class="fc" id="L591">                .append(endsOn)</span>
-<span class="fc bfc" id="L592" title="All 2 branches covered.">                .append(inLastWeek ? &quot; in last week of &quot; : &quot; nearest end of &quot;)</span>
-<span class="fc" id="L593">                .append(end)</span>
-<span class="fc" id="L594">                .append(&quot;, year divided in &quot;)</span>
-<span class="fc" id="L595">                .append(getDivision())</span>
-<span class="fc" id="L596">                .append(&quot; with leap-week in month &quot;)</span>
-<span class="fc" id="L597">                .append(leapWeekInMonth)</span>
-<span class="fc bfc" id="L598" title="All 2 branches covered.">                .append(yearOffset == 0 ? &quot; ending in the given ISO year&quot; : &quot; starting in the given ISO year&quot;);</span>
-<span class="fc" id="L599">        return bld.toString();</span>
+<span class="fc" id="L596">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L597">        buf.append(getId())</span>
+<span class="fc" id="L598">                .append(&quot; calendar ends on &quot;)</span>
+<span class="fc" id="L599">                .append(endsOn)</span>
+<span class="fc bfc" id="L600" title="All 2 branches covered.">                .append(inLastWeek ? &quot; in last week of &quot; : &quot; nearest end of &quot;)</span>
+<span class="fc" id="L601">                .append(end)</span>
+<span class="fc" id="L602">                .append(&quot;, year divided in &quot;)</span>
+<span class="fc" id="L603">                .append(getDivision())</span>
+<span class="fc" id="L604">                .append(&quot; with leap-week in month &quot;)</span>
+<span class="fc" id="L605">                .append(leapWeekInMonth)</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">                .append(yearOffset == 0 ? &quot; ending in the given ISO year&quot; : &quot; starting in the given ISO year&quot;);</span>
+<span class="fc" id="L607">        return buf.toString();</span>
     }
 
 }

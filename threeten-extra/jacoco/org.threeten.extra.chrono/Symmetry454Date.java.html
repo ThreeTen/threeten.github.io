@@ -643,13 +643,9 @@ public final class Symmetry454Date
     //-----------------------------------------------------------------------
     @Override
     public long toEpochDay() {
-<span class="fc" id="L646">        long epochDay =</span>
-                (long) (this.prolepticYear - 1) * DAYS_IN_YEAR +
-<span class="fc" id="L648">                Symmetry454Chronology.getLeapYearsBefore(this.prolepticYear) * DAYS_IN_WEEK +</span>
-                this.dayOfYear -
-                DAYS_0001_TO_1970 - 1;
-
-<span class="fc" id="L652">        return epochDay;</span>
+<span class="fc" id="L646">        return (long) (this.prolepticYear - 1) * DAYS_IN_YEAR +</span>
+<span class="fc" id="L647">                Symmetry454Chronology.getLeapYearsBefore(this.prolepticYear) * DAYS_IN_WEEK +</span>
+                this.dayOfYear - DAYS_0001_TO_1970 - 1;
     }
 
     /**
@@ -659,17 +655,17 @@ public final class Symmetry454Date
      */
     @Override
     public String toString() {
-<span class="fc" id="L662">        StringBuilder buf = new StringBuilder(30);</span>
-<span class="fc" id="L663">        return buf.append(getChronology().toString())</span>
-<span class="fc" id="L664">                .append(' ')</span>
-<span class="fc" id="L665">                .append(getEra())</span>
-<span class="fc" id="L666">                .append(' ')</span>
-<span class="fc" id="L667">                .append(getYearOfEra())</span>
-<span class="pc bpc" id="L668" title="1 of 4 branches missed.">                .append(this.month &lt; 10 &amp;&amp; this.month &gt; 0 ? &quot;/0&quot; : '/')</span>
-<span class="fc" id="L669">                .append(this.month)</span>
-<span class="fc bfc" id="L670" title="All 2 branches covered.">                .append(this.day &lt; 10 ? &quot;/0&quot; : '/')</span>
-<span class="fc" id="L671">                .append(this.day)</span>
-<span class="fc" id="L672">                .toString();</span>
+<span class="fc" id="L658">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L659">        return buf.append(getChronology().toString())</span>
+<span class="fc" id="L660">                .append(' ')</span>
+<span class="fc" id="L661">                .append(getEra())</span>
+<span class="fc" id="L662">                .append(' ')</span>
+<span class="fc" id="L663">                .append(getYearOfEra())</span>
+<span class="pc bpc" id="L664" title="1 of 4 branches missed.">                .append(this.month &lt; 10 &amp;&amp; this.month &gt; 0 ? &quot;/0&quot; : '/')</span>
+<span class="fc" id="L665">                .append(this.month)</span>
+<span class="fc bfc" id="L666" title="All 2 branches covered.">                .append(this.day &lt; 10 ? &quot;/0&quot; : '/')</span>
+<span class="fc" id="L667">                .append(this.day)</span>
+<span class="fc" id="L668">                .toString();</span>
     }
 
 }

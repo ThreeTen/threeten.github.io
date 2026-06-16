@@ -46,6 +46,7 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 import java.time.temporal.UnsupportedTemporalTypeException;
 import java.time.temporal.ValueRange;
+import org.jspecify.annotations.Nullable;
 
 /**
  * An abstract date based on a year, month and day.
@@ -59,8 +60,8 @@ abstract class AbstractDate
     /**
      * Creates an instance.
      */
-<span class="fc" id="L62">    AbstractDate() {</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L63">    AbstractDate() {</span>
+<span class="fc" id="L64">    }</span>
 
     //-----------------------------------------------------------------------
     abstract int getProlepticYear();
@@ -72,15 +73,15 @@ abstract class AbstractDate
     abstract int getDayOfYear();
 
     AbstractDate withDayOfYear(int value) {
-<span class="fc" id="L75">        return plusDays(value - getDayOfYear());</span>
+<span class="fc" id="L76">        return plusDays(value - getDayOfYear());</span>
     }
 
     int lengthOfWeek() {
-<span class="fc" id="L79">        return 7;</span>
+<span class="fc" id="L80">        return 7;</span>
     }
 
     int lengthOfYearInMonths() {
-<span class="fc" id="L83">        return 12;</span>
+<span class="fc" id="L84">        return 12;</span>
     }
 
     abstract ValueRange rangeAlignedWeekOfMonth();
@@ -88,259 +89,259 @@ abstract class AbstractDate
     abstract AbstractDate resolvePrevious(int newYear, int newMonth, int dayOfMonth);
 
     AbstractDate resolveEpochDay(long epochDay) {
-<span class="fc" id="L91">        return (AbstractDate) getChronology().dateEpochDay(epochDay);</span>
+<span class="fc" id="L92">        return (AbstractDate) getChronology().dateEpochDay(epochDay);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public ValueRange range(TemporalField field) {
-<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">            if (isSupported(field)) {</span>
-<span class="fc" id="L99">                return rangeChrono((ChronoField) field);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            if (isSupported(field)) {</span>
+<span class="fc" id="L100">                return rangeChrono((ChronoField) field);</span>
             }
-<span class="fc" id="L101">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc" id="L102">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="fc" id="L103">        return field.rangeRefinedBy(this);</span>
+<span class="fc" id="L104">        return field.rangeRefinedBy(this);</span>
     }
 
     ValueRange rangeChrono(ChronoField field) {
-<span class="fc bfc" id="L107" title="All 4 branches covered.">        switch (field) {</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">        switch (field) {</span>
             case DAY_OF_MONTH:
-<span class="fc" id="L109">                return ValueRange.of(1, lengthOfMonth());</span>
+<span class="fc" id="L110">                return ValueRange.of(1, lengthOfMonth());</span>
             case DAY_OF_YEAR:
-<span class="fc" id="L111">                return ValueRange.of(1, lengthOfYear());</span>
+<span class="fc" id="L112">                return ValueRange.of(1, lengthOfYear());</span>
             case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L113">                return rangeAlignedWeekOfMonth();</span>
+<span class="fc" id="L114">                return rangeAlignedWeekOfMonth();</span>
             default:
                 break;
         }
-<span class="fc" id="L117">        return getChronology().range(field);</span>
+<span class="fc" id="L118">        return getChronology().range(field);</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public long getLong(TemporalField field) {
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc bfc" id="L124" title="All 14 branches covered.">            switch ((ChronoField) field) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L125" title="All 14 branches covered.">            switch ((ChronoField) field) {</span>
                 case DAY_OF_WEEK:
-<span class="fc" id="L126">                    return getDayOfWeek();</span>
+<span class="fc" id="L127">                    return getDayOfWeek();</span>
                 case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-<span class="fc" id="L128">                    return getAlignedDayOfWeekInMonth();</span>
+<span class="fc" id="L129">                    return getAlignedDayOfWeekInMonth();</span>
                 case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-<span class="fc" id="L130">                    return getAlignedDayOfWeekInYear();</span>
+<span class="fc" id="L131">                    return getAlignedDayOfWeekInYear();</span>
                 case DAY_OF_MONTH:
-<span class="fc" id="L132">                    return getDayOfMonth();</span>
+<span class="fc" id="L133">                    return getDayOfMonth();</span>
                 case DAY_OF_YEAR:
-<span class="fc" id="L134">                    return getDayOfYear();</span>
+<span class="fc" id="L135">                    return getDayOfYear();</span>
                 case EPOCH_DAY:
-<span class="fc" id="L136">                    return toEpochDay();</span>
+<span class="fc" id="L137">                    return toEpochDay();</span>
                 case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L138">                    return getAlignedWeekOfMonth();</span>
+<span class="fc" id="L139">                    return getAlignedWeekOfMonth();</span>
                 case ALIGNED_WEEK_OF_YEAR:
-<span class="fc" id="L140">                    return getAlignedWeekOfYear();</span>
+<span class="fc" id="L141">                    return getAlignedWeekOfYear();</span>
                 case MONTH_OF_YEAR:
-<span class="fc" id="L142">                    return getMonth();</span>
+<span class="fc" id="L143">                    return getMonth();</span>
                 case PROLEPTIC_MONTH:
-<span class="fc" id="L144">                    return getProlepticMonth();</span>
+<span class="fc" id="L145">                    return getProlepticMonth();</span>
                 case YEAR_OF_ERA:
-<span class="fc" id="L146">                    return getYearOfEra();</span>
+<span class="fc" id="L147">                    return getYearOfEra();</span>
                 case YEAR:
-<span class="fc" id="L148">                    return getProlepticYear();</span>
+<span class="fc" id="L149">                    return getProlepticYear();</span>
                 case ERA:
-<span class="fc bfc" id="L150" title="All 2 branches covered.">                    return (getProlepticYear() &gt;= 1 ? 1 : 0);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                    return (getProlepticYear() &gt;= 1 ? 1 : 0);</span>
                 default:
                     break;
             }
-<span class="fc" id="L154">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc" id="L155">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="fc" id="L156">        return field.getFrom(this);</span>
+<span class="fc" id="L157">        return field.getFrom(this);</span>
     }
 
     int getAlignedDayOfWeekInMonth() {
-<span class="fc" id="L160">        return ((getDayOfMonth() - 1) % lengthOfWeek()) + 1;</span>
+<span class="fc" id="L161">        return ((getDayOfMonth() - 1) % lengthOfWeek()) + 1;</span>
     }
 
     int getAlignedDayOfWeekInYear() {
-<span class="fc" id="L164">        return ((getDayOfYear() - 1) % lengthOfWeek()) + 1;</span>
+<span class="fc" id="L165">        return ((getDayOfYear() - 1) % lengthOfWeek()) + 1;</span>
     }
 
     int getAlignedWeekOfMonth() {
-<span class="fc" id="L168">        return ((getDayOfMonth() - 1) / lengthOfWeek()) + 1;</span>
+<span class="fc" id="L169">        return ((getDayOfMonth() - 1) / lengthOfWeek()) + 1;</span>
     }
 
     int getAlignedWeekOfYear() {
-<span class="fc" id="L172">        return ((getDayOfYear() - 1) / lengthOfWeek()) + 1;</span>
+<span class="fc" id="L173">        return ((getDayOfYear() - 1) / lengthOfWeek()) + 1;</span>
     }
 
     int getDayOfWeek() {
-<span class="fc" id="L176">        return (int) (Math.floorMod(toEpochDay() + 3, 7) + 1);</span>
+<span class="fc" id="L177">        return (int) (Math.floorMod(toEpochDay() + 3, 7) + 1);</span>
     }
 
     long getProlepticMonth() {
-<span class="fc" id="L180">        return getProlepticYear() * lengthOfYearInMonths() + getMonth() - 1;</span>
+<span class="fc" id="L181">        return ((long) getProlepticYear()) * lengthOfYearInMonths() + getMonth() - 1;</span>
     }
 
     int getYearOfEra() {
-<span class="fc bfc" id="L184" title="All 2 branches covered.">        return getProlepticYear() &gt;= 1 ? getProlepticYear() : 1 - getProlepticYear();</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        return getProlepticYear() &gt;= 1 ? getProlepticYear() : 1 - getProlepticYear();</span>
     }
 
     //-------------------------------------------------------------------------
     @Override
     public AbstractDate with(TemporalField field, long newValue) {
-<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
-<span class="fc" id="L191">            ChronoField f = (ChronoField) field;</span>
-<span class="fc" id="L192">            getChronology().range(f).checkValidValue(newValue, f);</span>
-<span class="fc" id="L193">            int nvalue = (int) newValue;</span>
-<span class="fc bfc" id="L194" title="All 14 branches covered.">            switch (f) {</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (field instanceof ChronoField) {</span>
+<span class="fc" id="L192">            ChronoField f = (ChronoField) field;</span>
+<span class="fc" id="L193">            getChronology().range(f).checkValidValue(newValue, f);</span>
+<span class="fc" id="L194">            int nvalue = (int) newValue;</span>
+<span class="fc bfc" id="L195" title="All 14 branches covered.">            switch (f) {</span>
                 case DAY_OF_WEEK:
-<span class="fc" id="L196">                    return plusDays(newValue - getDayOfWeek());</span>
+<span class="fc" id="L197">                    return plusDays(newValue - getDayOfWeek());</span>
                 case ALIGNED_DAY_OF_WEEK_IN_MONTH:
-<span class="fc" id="L198">                    return plusDays(newValue - getLong(ALIGNED_DAY_OF_WEEK_IN_MONTH));</span>
+<span class="fc" id="L199">                    return plusDays(newValue - getLong(ALIGNED_DAY_OF_WEEK_IN_MONTH));</span>
                 case ALIGNED_DAY_OF_WEEK_IN_YEAR:
-<span class="fc" id="L200">                    return plusDays(newValue - getLong(ALIGNED_DAY_OF_WEEK_IN_YEAR));</span>
+<span class="fc" id="L201">                    return plusDays(newValue - getLong(ALIGNED_DAY_OF_WEEK_IN_YEAR));</span>
                 case DAY_OF_MONTH:
-<span class="fc" id="L202">                    return resolvePrevious(getProlepticYear(), getMonth(), nvalue);</span>
+<span class="fc" id="L203">                    return resolvePrevious(getProlepticYear(), getMonth(), nvalue);</span>
                 case DAY_OF_YEAR:
-<span class="fc" id="L204">                    return withDayOfYear(nvalue);</span>
+<span class="fc" id="L205">                    return withDayOfYear(nvalue);</span>
                 case EPOCH_DAY:
-<span class="fc" id="L206">                    return resolveEpochDay(newValue);</span>
+<span class="fc" id="L207">                    return resolveEpochDay(newValue);</span>
                 case ALIGNED_WEEK_OF_MONTH:
-<span class="fc" id="L208">                    return plusDays((newValue - getLong(ALIGNED_WEEK_OF_MONTH)) * lengthOfWeek());</span>
+<span class="fc" id="L209">                    return plusDays((newValue - getLong(ALIGNED_WEEK_OF_MONTH)) * lengthOfWeek());</span>
                 case ALIGNED_WEEK_OF_YEAR:
-<span class="fc" id="L210">                    return plusDays((newValue - getLong(ALIGNED_WEEK_OF_YEAR)) * lengthOfWeek());</span>
+<span class="fc" id="L211">                    return plusDays((newValue - getLong(ALIGNED_WEEK_OF_YEAR)) * lengthOfWeek());</span>
                 case MONTH_OF_YEAR:
-<span class="fc" id="L212">                    return resolvePrevious(getProlepticYear(), nvalue, getDayOfMonth());</span>
+<span class="fc" id="L213">                    return resolvePrevious(getProlepticYear(), nvalue, getDayOfMonth());</span>
                 case PROLEPTIC_MONTH:
-<span class="fc" id="L214">                    return plusMonths(newValue - getProlepticMonth());</span>
+<span class="fc" id="L215">                    return plusMonths(newValue - getProlepticMonth());</span>
                 case YEAR_OF_ERA:
-<span class="fc bfc" id="L216" title="All 2 branches covered.">                    return resolvePrevious(getProlepticYear() &gt;= 1 ? nvalue : 1 - nvalue, getMonth(), getDayOfMonth());</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                    return resolvePrevious(getProlepticYear() &gt;= 1 ? nvalue : 1 - nvalue, getMonth(), getDayOfMonth());</span>
                 case YEAR:
-<span class="fc" id="L218">                    return resolvePrevious(nvalue, getMonth(), getDayOfMonth());</span>
+<span class="fc" id="L219">                    return resolvePrevious(nvalue, getMonth(), getDayOfMonth());</span>
                 case ERA:
-<span class="fc bfc" id="L220" title="All 2 branches covered.">                    return newValue == getLong(ERA) ? this : resolvePrevious(1 - getProlepticYear(), getMonth(), getDayOfMonth());</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">                    return newValue == getLong(ERA) ? this : resolvePrevious(1 - getProlepticYear(), getMonth(), getDayOfMonth());</span>
                 default:
                     break;
             }
-<span class="fc" id="L224">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
+<span class="fc" id="L225">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="fc" id="L226">        return field.adjustInto(this, newValue);</span>
+<span class="fc" id="L227">        return field.adjustInto(this, newValue);</span>
     }
 
     @Override
     public AbstractDate plus(long amountToAdd, TemporalUnit unit) {
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc" id="L232">            ChronoUnit f = (ChronoUnit) unit;</span>
-<span class="fc bfc" id="L233" title="All 9 branches covered.">            switch (f) {</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc" id="L233">            ChronoUnit f = (ChronoUnit) unit;</span>
+<span class="fc bfc" id="L234" title="All 9 branches covered.">            switch (f) {</span>
                 case DAYS:
-<span class="fc" id="L235">                    return plusDays(amountToAdd);</span>
+<span class="fc" id="L236">                    return plusDays(amountToAdd);</span>
                 case WEEKS:
-<span class="fc" id="L237">                    return plusWeeks(amountToAdd);</span>
+<span class="fc" id="L238">                    return plusWeeks(amountToAdd);</span>
                 case MONTHS:
-<span class="fc" id="L239">                    return plusMonths(amountToAdd);</span>
+<span class="fc" id="L240">                    return plusMonths(amountToAdd);</span>
                 case YEARS:
-<span class="fc" id="L241">                    return plusYears(amountToAdd);</span>
+<span class="fc" id="L242">                    return plusYears(amountToAdd);</span>
                 case DECADES:
-<span class="fc" id="L243">                    return plusYears(Math.multiplyExact(amountToAdd, 10));</span>
+<span class="fc" id="L244">                    return plusYears(Math.multiplyExact(amountToAdd, 10));</span>
                 case CENTURIES:
-<span class="fc" id="L245">                    return plusYears(Math.multiplyExact(amountToAdd, 100));</span>
+<span class="fc" id="L246">                    return plusYears(Math.multiplyExact(amountToAdd, 100));</span>
                 case MILLENNIA:
-<span class="fc" id="L247">                    return plusYears(Math.multiplyExact(amountToAdd, 1000));</span>
+<span class="fc" id="L248">                    return plusYears(Math.multiplyExact(amountToAdd, 1000));</span>
                 case ERAS:
-<span class="fc" id="L249">                    return with(ERA, Math.addExact(getLong(ERA), amountToAdd));</span>
+<span class="fc" id="L250">                    return with(ERA, Math.addExact(getLong(ERA), amountToAdd));</span>
                 default:
                     break;
             }
-<span class="fc" id="L253">            throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L254">            throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
         }
-<span class="nc" id="L255">        return unit.addTo(this, amountToAdd);</span>
+<span class="nc" id="L256">        return unit.addTo(this, amountToAdd);</span>
     }
 
     AbstractDate plusYears(long yearsToAdd) {
-<span class="fc bfc" id="L259" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
-<span class="fc" id="L260">            return this;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (yearsToAdd == 0) {</span>
+<span class="fc" id="L261">            return this;</span>
         }
-<span class="fc" id="L262">        int newYear = YEAR.checkValidIntValue(Math.addExact(getProlepticYear(), yearsToAdd));</span>
-<span class="fc" id="L263">        return resolvePrevious(newYear, getMonth(), getDayOfMonth());</span>
+<span class="fc" id="L263">        int newYear = YEAR.checkValidIntValue(Math.addExact(getProlepticYear(), yearsToAdd));</span>
+<span class="fc" id="L264">        return resolvePrevious(newYear, getMonth(), getDayOfMonth());</span>
     }
 
     AbstractDate plusMonths(long months) {
-<span class="fc bfc" id="L267" title="All 2 branches covered.">        if (months == 0) {</span>
-<span class="fc" id="L268">            return this;</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (months == 0) {</span>
+<span class="fc" id="L269">            return this;</span>
         }
-<span class="fc" id="L270">        long curEm = getProlepticMonth();</span>
-<span class="fc" id="L271">        long calcEm = Math.addExact(curEm, months);</span>
-<span class="fc" id="L272">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, lengthOfYearInMonths()));</span>
-<span class="fc" id="L273">        int newMonth = (int) (Math.floorMod(calcEm, lengthOfYearInMonths()) + 1);</span>
-<span class="fc" id="L274">        return resolvePrevious(newYear, newMonth, getDayOfMonth());</span>
+<span class="fc" id="L271">        long curEm = getProlepticMonth();</span>
+<span class="fc" id="L272">        long calcEm = Math.addExact(curEm, months);</span>
+<span class="fc" id="L273">        int newYear = Math.toIntExact(Math.floorDiv(calcEm, lengthOfYearInMonths()));</span>
+<span class="fc" id="L274">        int newMonth = (int) (Math.floorMod(calcEm, lengthOfYearInMonths()) + 1);</span>
+<span class="fc" id="L275">        return resolvePrevious(newYear, newMonth, getDayOfMonth());</span>
     }
 
     AbstractDate plusWeeks(long amountToAdd) {
-<span class="fc" id="L278">        return plusDays(Math.multiplyExact(amountToAdd, lengthOfWeek()));</span>
+<span class="fc" id="L279">        return plusDays(Math.multiplyExact(amountToAdd, lengthOfWeek()));</span>
     }
 
     AbstractDate plusDays(long days) {
-<span class="fc bfc" id="L282" title="All 2 branches covered.">        if (days == 0) {</span>
-<span class="fc" id="L283">            return this;</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        if (days == 0) {</span>
+<span class="fc" id="L284">            return this;</span>
         }
-<span class="fc" id="L285">        return resolveEpochDay(Math.addExact(toEpochDay(), days));</span>
+<span class="fc" id="L286">        return resolveEpochDay(Math.addExact(toEpochDay(), days));</span>
     }
 
     //-------------------------------------------------------------------------
     long until(AbstractDate end, TemporalUnit unit) {
-<span class="pc bpc" id="L290" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
-<span class="fc bfc" id="L291" title="All 9 branches covered.">            switch ((ChronoUnit) unit) {</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L292" title="All 9 branches covered.">            switch ((ChronoUnit) unit) {</span>
                 case DAYS:
-<span class="fc" id="L293">                    return daysUntil(end);</span>
+<span class="fc" id="L294">                    return daysUntil(end);</span>
                 case WEEKS:
-<span class="fc" id="L295">                    return weeksUntil(end);</span>
+<span class="fc" id="L296">                    return weeksUntil(end);</span>
                 case MONTHS:
-<span class="fc" id="L297">                    return monthsUntil(end);</span>
+<span class="fc" id="L298">                    return monthsUntil(end);</span>
                 case YEARS:
-<span class="fc" id="L299">                    return monthsUntil(end) / lengthOfYearInMonths();</span>
+<span class="fc" id="L300">                    return monthsUntil(end) / lengthOfYearInMonths();</span>
                 case DECADES:
-<span class="fc" id="L301">                    return monthsUntil(end) / (lengthOfYearInMonths() * 10);</span>
+<span class="fc" id="L302">                    return monthsUntil(end) / (lengthOfYearInMonths() * 10L);</span>
                 case CENTURIES:
-<span class="fc" id="L303">                    return monthsUntil(end) / (lengthOfYearInMonths() * 100);</span>
+<span class="fc" id="L304">                    return monthsUntil(end) / (lengthOfYearInMonths() * 100L);</span>
                 case MILLENNIA:
-<span class="fc" id="L305">                    return monthsUntil(end) / (lengthOfYearInMonths() * 1000);</span>
+<span class="fc" id="L306">                    return monthsUntil(end) / (lengthOfYearInMonths() * 1000L);</span>
                 case ERAS:
-<span class="fc" id="L307">                    return end.getLong(ERA) - getLong(ERA);</span>
+<span class="fc" id="L308">                    return end.getLong(ERA) - getLong(ERA);</span>
                 default:
                     break;
             }
-<span class="fc" id="L311">            throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L312">            throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
         }
-<span class="nc" id="L313">        return unit.between(this, end);</span>
+<span class="nc" id="L314">        return unit.between(this, end);</span>
     }
 
     long daysUntil(ChronoLocalDate end) {
-<span class="fc" id="L317">        return end.toEpochDay() - toEpochDay();  // no overflow</span>
+<span class="fc" id="L318">        return end.toEpochDay() - toEpochDay();  // no overflow</span>
     }
 
     long weeksUntil(AbstractDate end) {
-<span class="fc" id="L321">        return daysUntil(end) / lengthOfWeek();</span>
+<span class="fc" id="L322">        return daysUntil(end) / lengthOfWeek();</span>
     }
 
     long monthsUntil(AbstractDate end) {
-<span class="fc" id="L325">        long packed1 = getProlepticMonth() * 256L + getDayOfMonth();  // no overflow</span>
-<span class="fc" id="L326">        long packed2 = end.getProlepticMonth() * 256L + end.getDayOfMonth();  // no overflow</span>
-<span class="fc" id="L327">        return (packed2 - packed1) / 256L;</span>
+<span class="fc" id="L326">        long packed1 = getProlepticMonth() * 256L + getDayOfMonth();  // no overflow</span>
+<span class="fc" id="L327">        long packed2 = end.getProlepticMonth() * 256L + end.getDayOfMonth();  // no overflow</span>
+<span class="fc" id="L328">        return (packed2 - packed1) / 256L;</span>
     }
 
     ChronoPeriod doUntil(AbstractDate end) {
-<span class="fc" id="L331">        long totalMonths = end.getProlepticMonth() - this.getProlepticMonth();  // safe</span>
-<span class="fc" id="L332">        int days = end.getDayOfMonth() - this.getDayOfMonth();</span>
-<span class="pc bpc" id="L333" title="3 of 4 branches missed.">        if (totalMonths &gt; 0 &amp;&amp; days &lt; 0) {</span>
-<span class="nc" id="L334">            totalMonths--;</span>
-<span class="nc" id="L335">            AbstractDate calcDate = this.plusMonths(totalMonths);</span>
-<span class="nc" id="L336">            days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
-<span class="pc bpc" id="L337" title="3 of 4 branches missed.">        } else if (totalMonths &lt; 0 &amp;&amp; days &gt; 0) {</span>
-<span class="nc" id="L338">            totalMonths++;</span>
-<span class="nc" id="L339">            days -= end.lengthOfMonth();</span>
+<span class="fc" id="L332">        long totalMonths = end.getProlepticMonth() - this.getProlepticMonth();  // safe</span>
+<span class="fc" id="L333">        int days = end.getDayOfMonth() - this.getDayOfMonth();</span>
+<span class="pc bpc" id="L334" title="3 of 4 branches missed.">        if (totalMonths &gt; 0 &amp;&amp; days &lt; 0) {</span>
+<span class="nc" id="L335">            totalMonths--;</span>
+<span class="nc" id="L336">            AbstractDate calcDate = this.plusMonths(totalMonths);</span>
+<span class="nc" id="L337">            days = (int) (end.toEpochDay() - calcDate.toEpochDay());  // safe</span>
+<span class="pc bpc" id="L338" title="3 of 4 branches missed.">        } else if (totalMonths &lt; 0 &amp;&amp; days &gt; 0) {</span>
+<span class="nc" id="L339">            totalMonths++;</span>
+<span class="nc" id="L340">            days -= end.lengthOfMonth();</span>
         }
-<span class="fc" id="L341">        long years = totalMonths / lengthOfYearInMonths();  // safe</span>
-<span class="fc" id="L342">        int months = (int) (totalMonths % lengthOfYearInMonths());  // safe</span>
-<span class="fc" id="L343">        return getChronology().period(Math.toIntExact(years), months, days);</span>
+<span class="fc" id="L342">        long years = totalMonths / lengthOfYearInMonths();  // safe</span>
+<span class="fc" id="L343">        int months = (int) (totalMonths % lengthOfYearInMonths());  // safe</span>
+<span class="fc" id="L344">        return getChronology().period(Math.toIntExact(years), months, days);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -357,17 +358,17 @@ abstract class AbstractDate
      * @return true if this is equal to the other date
      */
     @Override  // override for performance
-    public boolean equals(Object obj) {
-<span class="fc bfc" id="L361" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L362">            return true;</span>
+    public boolean equals(@Nullable Object obj) {
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L363">            return true;</span>
         }
-<span class="fc bfc" id="L364" title="All 4 branches covered.">        if (obj != null &amp;&amp; this.getClass() == obj.getClass()) {</span>
-<span class="fc" id="L365">            AbstractDate otherDate = (AbstractDate) obj;</span>
-<span class="fc bfc" id="L366" title="All 2 branches covered.">            return this.getProlepticYear() == otherDate.getProlepticYear() &amp;&amp;</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">                    this.getMonth() == otherDate.getMonth() &amp;&amp;</span>
-<span class="fc bfc" id="L368" title="All 2 branches covered.">                    this.getDayOfMonth() == otherDate.getDayOfMonth();</span>
+<span class="fc bfc" id="L365" title="All 4 branches covered.">        if (obj != null &amp;&amp; this.getClass() == obj.getClass()) {</span>
+<span class="fc" id="L366">            AbstractDate otherDate = (AbstractDate) obj;</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">            return this.getProlepticYear() == otherDate.getProlepticYear() &amp;&amp;</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">                    this.getMonth() == otherDate.getMonth() &amp;&amp;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">                    this.getDayOfMonth() == otherDate.getDayOfMonth();</span>
         }
-<span class="fc" id="L370">        return false;</span>
+<span class="fc" id="L371">        return false;</span>
     }
 
     /**
@@ -377,22 +378,22 @@ abstract class AbstractDate
      */
     @Override  // override for performance
     public int hashCode() {
-<span class="fc" id="L380">        return getChronology().getId().hashCode() ^</span>
-<span class="fc" id="L381">                ((getProlepticYear() &amp; 0xFFFFF800) ^ ((getProlepticYear() &lt;&lt; 11) +</span>
-<span class="fc" id="L382">                        (getMonth() &lt;&lt; 6) + (getDayOfMonth())));</span>
+<span class="fc" id="L381">        return getChronology().getId().hashCode() ^</span>
+<span class="fc" id="L382">                ((getProlepticYear() &amp; 0xFFFFF800) ^ ((getProlepticYear() &lt;&lt; 11) +</span>
+<span class="fc" id="L383">                        (getMonth() &lt;&lt; 6) + (getDayOfMonth())));</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L387">        StringBuilder buf = new StringBuilder(30);</span>
-<span class="fc" id="L388">        buf.append(getChronology().toString())</span>
-<span class="fc" id="L389">                .append(&quot; &quot;)</span>
-<span class="fc" id="L390">                .append(getEra())</span>
-<span class="fc" id="L391">                .append(&quot; &quot;)</span>
-<span class="fc" id="L392">                .append(getYearOfEra())</span>
-<span class="fc bfc" id="L393" title="All 2 branches covered.">                .append(getMonth() &lt; 10 ? &quot;-0&quot; : &quot;-&quot;).append(getMonth())</span>
-<span class="fc bfc" id="L394" title="All 2 branches covered.">                .append(getDayOfMonth() &lt; 10 ? &quot;-0&quot; : &quot;-&quot;).append(getDayOfMonth());</span>
-<span class="fc" id="L395">        return buf.toString();</span>
+<span class="fc" id="L388">        StringBuilder buf = new StringBuilder(30);</span>
+<span class="fc" id="L389">        buf.append(getChronology().toString())</span>
+<span class="fc" id="L390">                .append(&quot; &quot;)</span>
+<span class="fc" id="L391">                .append(getEra())</span>
+<span class="fc" id="L392">                .append(&quot; &quot;)</span>
+<span class="fc" id="L393">                .append(getYearOfEra())</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">                .append(getMonth() &lt; 10 ? &quot;-0&quot; : &quot;-&quot;).append(getMonth())</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">                .append(getDayOfMonth() &lt; 10 ? &quot;-0&quot; : &quot;-&quot;).append(getDayOfMonth());</span>
+<span class="fc" id="L396">        return buf.toString();</span>
     }
 
 }

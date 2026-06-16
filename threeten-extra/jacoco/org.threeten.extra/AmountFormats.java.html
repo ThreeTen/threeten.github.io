@@ -298,13 +298,13 @@ public final class AmountFormats {
 <span class="fc" id="L298">        int millis = duration.getNano() / NANOS_PER_MILLIS;</span>
 <span class="fc" id="L299">        int[] values = {</span>
 <span class="fc" id="L300">            normPeriod.getYears(), normPeriod.getMonths(), weeks, days,</span>
-            (int) hours, mins, secs, millis};
+            hours, mins, secs, millis};
 <span class="fc" id="L302">        return wb.format(values);</span>
     }
 
     // are the signs opposite
     private static boolean oppositeSigns(int a, int b) {
-<span class="pc bpc" id="L307" title="3 of 6 branches missed.">        return a &lt; 0 ? (b &gt;= 0) : (b &lt; 0);</span>
+<span class="pc bpc" id="L307" title="1 of 6 branches missed.">        return (a &lt; 0) == (b &gt;= 0);</span>
     }
 
     /**
@@ -491,19 +491,18 @@ public final class AmountFormats {
     // find the duration unit at the beginning of the input text, if present.
     private static Optional&lt;DurationUnit&gt; findUnit(CharSequence text) {
 <span class="fc" id="L493">        return DURATION_UNITS.stream()</span>
-<span class="fc" id="L494">            .sequential()</span>
-<span class="fc" id="L495">            .filter(du -&gt; du.prefixMatchesUnit(text))</span>
-<span class="fc" id="L496">            .findFirst();</span>
+<span class="fc" id="L494">            .filter(du -&gt; du.prefixMatchesUnit(text))</span>
+<span class="fc" id="L495">            .findFirst();</span>
     }
 
     // consume the indicated {@code prefix} if it exists at the beginning of the
     // text, returning the
     // remaining string if the prefix was consumed.
     private static Optional&lt;CharSequence&gt; consumePrefix(CharSequence text, char prefix) {
-<span class="fc bfc" id="L503" title="All 4 branches covered.">        if (text.length() &gt; 0 &amp;&amp; text.charAt(0) == prefix) {</span>
-<span class="fc" id="L504">            return Optional.of(text.subSequence(1, text.length()));</span>
+<span class="fc bfc" id="L502" title="All 4 branches covered.">        if (text.length() &gt; 0 &amp;&amp; text.charAt(0) == prefix) {</span>
+<span class="fc" id="L503">            return Optional.of(text.subSequence(1, text.length()));</span>
         }
-<span class="fc" id="L506">        return Optional.empty();</span>
+<span class="fc" id="L505">        return Optional.empty();</span>
     }
 
     private AmountFormats() {
@@ -516,33 +515,33 @@ public final class AmountFormats {
         private final String separator;
         private final String lastSeparator;
 
-<span class="fc" id="L519">        public WordBased(UnitFormat[] units, String separator, String lastSeparator) {</span>
-<span class="fc" id="L520">            this.units = units;</span>
-<span class="fc" id="L521">            this.separator = separator;</span>
-<span class="fc" id="L522">            this.lastSeparator = lastSeparator;</span>
-<span class="fc" id="L523">        }</span>
+<span class="fc" id="L518">        public WordBased(UnitFormat[] units, String separator, String lastSeparator) {</span>
+<span class="fc" id="L519">            this.units = units;</span>
+<span class="fc" id="L520">            this.separator = separator;</span>
+<span class="fc" id="L521">            this.lastSeparator = lastSeparator;</span>
+<span class="fc" id="L522">        }</span>
 
         String format(int[] values) {
-<span class="fc" id="L526">            StringBuilder buf = new StringBuilder(32);</span>
-<span class="fc" id="L527">            int nonZeroCount = 0;</span>
-<span class="fc bfc" id="L528" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
-<span class="fc bfc" id="L529" title="All 2 branches covered.">                if (values[i] != 0) {</span>
-<span class="fc" id="L530">                    nonZeroCount++;</span>
+<span class="fc" id="L525">            StringBuilder buf = new StringBuilder(32);</span>
+<span class="fc" id="L526">            int nonZeroCount = 0;</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">            for (int value : values) {</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">                if (value != 0) {</span>
+<span class="fc" id="L529">                    nonZeroCount++;</span>
                 }
             }
-<span class="fc" id="L533">            int count = 0;</span>
-<span class="fc bfc" id="L534" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
-<span class="fc bfc" id="L535" title="All 6 branches covered.">                if (values[i] != 0 || (count == 0 &amp;&amp; i == values.length - 1)) {</span>
-<span class="fc" id="L536">                    units[i].formatTo(values[i], buf);</span>
-<span class="fc bfc" id="L537" title="All 2 branches covered.">                    if (count &lt; nonZeroCount - 2) {</span>
-<span class="fc" id="L538">                        buf.append(separator);</span>
-<span class="fc bfc" id="L539" title="All 2 branches covered.">                    } else if (count == nonZeroCount - 2) {</span>
-<span class="fc" id="L540">                        buf.append(lastSeparator);</span>
+<span class="fc" id="L532">            int count = 0;</span>
+<span class="fc bfc" id="L533" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="fc bfc" id="L534" title="All 6 branches covered.">                if (values[i] != 0 || (count == 0 &amp;&amp; i == values.length - 1)) {</span>
+<span class="fc" id="L535">                    units[i].formatTo(values[i], buf);</span>
+<span class="fc bfc" id="L536" title="All 2 branches covered.">                    if (count &lt; nonZeroCount - 2) {</span>
+<span class="fc" id="L537">                        buf.append(separator);</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">                    } else if (count == nonZeroCount - 2) {</span>
+<span class="fc" id="L539">                        buf.append(lastSeparator);</span>
                     }
-<span class="fc" id="L542">                    count++;</span>
+<span class="fc" id="L541">                    count++;</span>
                 }
             }
-<span class="fc" id="L545">            return buf.toString();</span>
+<span class="fc" id="L544">            return buf.toString();</span>
         }
     }
 
@@ -550,16 +549,16 @@ public final class AmountFormats {
     static interface UnitFormat {
 
         static UnitFormat of(ResourceBundle bundle, String keyStem) {
-<span class="fc bfc" id="L553" title="All 2 branches covered.">            if (bundle.containsKey(keyStem + &quot;s.predicates&quot;)) {</span>
-<span class="fc" id="L554">                String predicateList = bundle.getString(keyStem + &quot;s.predicates&quot;);</span>
-<span class="fc" id="L555">                String textList = bundle.getString(keyStem + &quot;s.list&quot;);</span>
-<span class="fc" id="L556">                String[] regexes = SPLITTER.split(predicateList);</span>
-<span class="fc" id="L557">                String[] text = SPLITTER.split(textList);</span>
-<span class="fc" id="L558">                return new PredicateFormat(regexes, text);</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">            if (bundle.containsKey(keyStem + &quot;s.predicates&quot;)) {</span>
+<span class="fc" id="L553">                String predicateList = bundle.getString(keyStem + &quot;s.predicates&quot;);</span>
+<span class="fc" id="L554">                String textList = bundle.getString(keyStem + &quot;s.list&quot;);</span>
+<span class="fc" id="L555">                String[] regexes = SPLITTER.split(predicateList);</span>
+<span class="fc" id="L556">                String[] text = SPLITTER.split(textList);</span>
+<span class="fc" id="L557">                return new PredicateFormat(regexes, text);</span>
             } else {
-<span class="fc" id="L560">                String single = bundle.getString(keyStem);</span>
-<span class="fc" id="L561">                String plural = bundle.getString(keyStem + &quot;s&quot;);</span>
-<span class="fc" id="L562">                return new SinglePluralFormat(single, plural);</span>
+<span class="fc" id="L559">                String single = bundle.getString(keyStem);</span>
+<span class="fc" id="L560">                String plural = bundle.getString(keyStem + &quot;s&quot;);</span>
+<span class="fc" id="L561">                return new SinglePluralFormat(single, plural);</span>
             }
         }
 
@@ -571,15 +570,15 @@ public final class AmountFormats {
         private final String single;
         private final String plural;
 
-<span class="fc" id="L574">        SinglePluralFormat(String single, String plural) {</span>
-<span class="fc" id="L575">            this.single = single;</span>
-<span class="fc" id="L576">            this.plural = plural;</span>
-<span class="fc" id="L577">        }</span>
+<span class="fc" id="L573">        SinglePluralFormat(String single, String plural) {</span>
+<span class="fc" id="L574">            this.single = single;</span>
+<span class="fc" id="L575">            this.plural = plural;</span>
+<span class="fc" id="L576">        }</span>
 
         @Override
         public void formatTo(int value, StringBuilder buf) {
-<span class="fc bfc" id="L581" title="All 4 branches covered.">            buf.append(value).append(value == 1 || value == -1 ? single : plural);</span>
-<span class="fc" id="L582">        }</span>
+<span class="fc bfc" id="L580" title="All 4 branches covered.">            buf.append(value).append(value == 1 || value == -1 ? single : plural);</span>
+<span class="fc" id="L581">        }</span>
     }
 
     // data holder for predicate formats
@@ -587,35 +586,35 @@ public final class AmountFormats {
         private final IntPredicate[] predicates;
         private final String[] text;
 
-<span class="fc" id="L590">        PredicateFormat(String[] predicateStrs, String[] text) {</span>
-<span class="pc bpc" id="L591" title="1 of 2 branches missed.">            if (predicateStrs.length + 1 != text.length) {</span>
-<span class="nc" id="L592">                throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
+<span class="fc" id="L589">        PredicateFormat(String[] predicateStrs, String[] text) {</span>
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">            if (predicateStrs.length + 1 != text.length) {</span>
+<span class="nc" id="L591">                throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
             }
-<span class="fc" id="L594">            this.predicates = Stream.of(predicateStrs)</span>
-<span class="fc" id="L595">                    .map(predicateStr -&gt; findPredicate(predicateStr))</span>
-<span class="fc" id="L596">                    .toArray(IntPredicate[]::new);</span>
-<span class="fc" id="L597">            this.text = text;</span>
-<span class="fc" id="L598">        }</span>
+<span class="fc" id="L593">            this.predicates = Stream.of(predicateStrs)</span>
+<span class="fc" id="L594">                    .map(this::findPredicate)</span>
+<span class="fc" id="L595">                    .toArray(IntPredicate[]::new);</span>
+<span class="fc" id="L596">            this.text = text;</span>
+<span class="fc" id="L597">        }</span>
 
         private IntPredicate findPredicate(String predicateStr) {
-<span class="pc bpc" id="L601" title="1 of 4 branches missed.">            switch (predicateStr) {</span>
-<span class="fc" id="L602">                case &quot;One&quot;: return PREDICATE_1;</span>
-<span class="fc" id="L603">                case &quot;End234NotTeens&quot;: return PREDICATE_END234_NOTTEENS;</span>
-<span class="fc" id="L604">                case &quot;End1Not11&quot;: return PREDICATE_END1_NOT11;</span>
-<span class="nc" id="L605">                default: throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
+<span class="pc bpc" id="L600" title="1 of 4 branches missed.">            switch (predicateStr) {</span>
+<span class="fc" id="L601">                case &quot;One&quot;: return PREDICATE_1;</span>
+<span class="fc" id="L602">                case &quot;End234NotTeens&quot;: return PREDICATE_END234_NOTTEENS;</span>
+<span class="fc" id="L603">                case &quot;End1Not11&quot;: return PREDICATE_END1_NOT11;</span>
+<span class="nc" id="L604">                default: throw new IllegalStateException(&quot;Invalid word-based resource&quot;);</span>
             }
         }
 
         @Override
         public void formatTo(int value, StringBuilder buf) {
-<span class="fc bfc" id="L611" title="All 2 branches covered.">            for (int i = 0; i &lt; predicates.length; i++) {</span>
-<span class="fc bfc" id="L612" title="All 2 branches covered.">                if (predicates[i].test(value)) {</span>
-<span class="fc" id="L613">                    buf.append(value).append(text[i]);</span>
-<span class="fc" id="L614">                    return;</span>
+<span class="fc bfc" id="L610" title="All 2 branches covered.">            for (int i = 0; i &lt; predicates.length; i++) {</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">                if (predicates[i].test(value)) {</span>
+<span class="fc" id="L612">                    buf.append(value).append(text[i]);</span>
+<span class="fc" id="L613">                    return;</span>
                 }
             }
-<span class="fc" id="L617">            buf.append(value).append(text[predicates.length]);</span>
-<span class="fc" id="L618">        }</span>
+<span class="fc" id="L616">            buf.append(value).append(text[predicates.length]);</span>
+<span class="fc" id="L617">        }</span>
     }
 
      // -------------------------------------------------------------------------
@@ -624,27 +623,27 @@ public final class AmountFormats {
         private final String abbrev;
         private final Duration value;
 
-<span class="fc" id="L627">        private DurationUnit(String abbrev, Duration value) {</span>
-<span class="fc" id="L628">            this.abbrev = abbrev;</span>
-<span class="fc" id="L629">            this.value = value;</span>
-<span class="fc" id="L630">        }</span>
+<span class="fc" id="L626">        private DurationUnit(String abbrev, Duration value) {</span>
+<span class="fc" id="L627">            this.abbrev = abbrev;</span>
+<span class="fc" id="L628">            this.value = value;</span>
+<span class="fc" id="L629">        }</span>
 
         // whether the input text starts with the unit abbreviation.
         boolean prefixMatchesUnit(CharSequence text) {
-<span class="fc bfc" id="L634" title="All 2 branches covered.">            return text.length() &gt;= abbrev.length()</span>
-<span class="fc bfc" id="L635" title="All 2 branches covered.">                    &amp;&amp; abbrev.equals(text.subSequence(0, abbrev.length()));</span>
+<span class="fc bfc" id="L633" title="All 2 branches covered.">            return text.length() &gt;= abbrev.length()</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">                    &amp;&amp; abbrev.contentEquals(text.subSequence(0, abbrev.length()));</span>
         }
 
         // consume the duration unit and returning the remaining text.
         CharSequence consumeDurationUnit(CharSequence text) {
-<span class="fc" id="L640">            return text.subSequence(abbrev.length(), text.length());</span>
+<span class="fc" id="L639">            return text.subSequence(abbrev.length(), text.length());</span>
         }
 
         // scale the unit by the input scalingFunction, returning a value if
         // one is produced, or an empty result when the operation results in an
         // arithmetic overflow.
         Duration scaleBy(Function&lt;Duration, Duration&gt; scaleFunc) {
-<span class="fc" id="L647">            return scaleFunc.apply(value);</span>
+<span class="fc" id="L646">            return scaleFunc.apply(value);</span>
         }
     }
 
@@ -660,18 +659,18 @@ public final class AmountFormats {
         private final CharSequence remainingText;
         private final DurationScalar scalar;
 
-<span class="fc" id="L663">        private ParsedUnitPart(CharSequence remainingText, DurationScalar scalar) {</span>
-<span class="fc" id="L664">            this.remainingText = remainingText;</span>
-<span class="fc" id="L665">            this.scalar = scalar;</span>
-<span class="fc" id="L666">        }</span>
+<span class="fc" id="L662">        private ParsedUnitPart(CharSequence remainingText, DurationScalar scalar) {</span>
+<span class="fc" id="L663">            this.remainingText = remainingText;</span>
+<span class="fc" id="L664">            this.scalar = scalar;</span>
+<span class="fc" id="L665">        }</span>
 
         @Override
         public Duration applyTo(DurationUnit unit) {
-<span class="fc" id="L670">            return scalar.applyTo(unit);</span>
+<span class="fc" id="L669">            return scalar.applyTo(unit);</span>
         }
 
         CharSequence remainingText() {
-<span class="fc" id="L674">            return remainingText;</span>
+<span class="fc" id="L673">            return remainingText;</span>
         }
     }
 
@@ -679,13 +678,13 @@ public final class AmountFormats {
     static final class IntegerScalarPart implements DurationScalar {
         private final long value;
 
-<span class="fc" id="L682">        private IntegerScalarPart(long value) {</span>
-<span class="fc" id="L683">            this.value = value;</span>
-<span class="fc" id="L684">        }</span>
+<span class="fc" id="L681">        private IntegerScalarPart(long value) {</span>
+<span class="fc" id="L682">            this.value = value;</span>
+<span class="fc" id="L683">        }</span>
 
         @Override
         public Duration applyTo(DurationUnit unit) {
-<span class="fc" id="L688">            return unit.scaleBy(d -&gt; d.multipliedBy(value));</span>
+<span class="fc" id="L687">            return unit.scaleBy(d -&gt; d.multipliedBy(value));</span>
         }
     }
 
@@ -695,17 +694,17 @@ public final class AmountFormats {
         private final long value;
         private final long scale;
 
-<span class="fc" id="L698">        private FractionScalarPart(long value, long scale) {</span>
-<span class="fc" id="L699">            this.value = value;</span>
-<span class="fc" id="L700">            this.scale = scale;</span>
-<span class="fc" id="L701">        }</span>
+<span class="fc" id="L697">        private FractionScalarPart(long value, long scale) {</span>
+<span class="fc" id="L698">            this.value = value;</span>
+<span class="fc" id="L699">            this.scale = scale;</span>
+<span class="fc" id="L700">        }</span>
 
         @Override
         public Duration applyTo(DurationUnit unit) {
-<span class="fc bfc" id="L705" title="All 2 branches covered.">            if (value == 0) {</span>
-<span class="fc" id="L706">                return Duration.ZERO;</span>
+<span class="fc bfc" id="L704" title="All 2 branches covered.">            if (value == 0) {</span>
+<span class="fc" id="L705">                return Duration.ZERO;</span>
             }
-<span class="fc" id="L708">            return unit.scaleBy(d -&gt; d.multipliedBy(value).dividedBy(scale));</span>
+<span class="fc" id="L707">            return unit.scaleBy(d -&gt; d.multipliedBy(value).dividedBy(scale));</span>
         }
     }
 }
