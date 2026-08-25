@@ -81,69 +81,79 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#intersection(org.threeten.extra.LocalDateRange)" class="member-name-link">intersection</a><wbr>(<a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a>&nbsp;other)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#from(java.time.temporal.Temporal)" class="member-name-link">from</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/Temporal.html" title="class or interface in java.time.temporal" class="external-link">Temporal</a>&nbsp;temporal)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Obtains a range of dates from a temporal object.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#intersection(org.threeten.extra.LocalDateRange)" class="member-name-link">intersection</a><wbr>(<a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a>&nbsp;other)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Calculates the range that is the intersection of this range and the specified range.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#of(java.time.LocalDate,java.time.LocalDate)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive,
+<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#of(java.time.LocalDate,java.time.LocalDate)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;endExclusive)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Obtains a half-open range of dates, including the start and excluding the end.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#of(java.time.LocalDate,java.time.Period)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive,
+<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#of(java.time.LocalDate,java.time.Period)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/time/Period.html" title="class or interface in java.time" class="external-link">Period</a>&nbsp;period)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Obtains an instance of <code>LocalDateRange</code> from the start and a period.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofClosed(java.time.LocalDate,java.time.LocalDate)" class="member-name-link">ofClosed</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive,
+<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofClosed(java.time.LocalDate,java.time.LocalDate)" class="member-name-link">ofClosed</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;endInclusive)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Obtains a closed range of dates, including the start and end.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofEmpty(java.time.LocalDate)" class="member-name-link">ofEmpty</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;date)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofEmpty(java.time.LocalDate)" class="member-name-link">ofEmpty</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;date)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Obtains an empty date range located at the specified date.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofUnbounded()" class="member-name-link">ofUnbounded</a>()</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofUnbounded()" class="member-name-link">ofUnbounded</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Obtains a range that is unbounded at the start and end.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofUnboundedEnd(java.time.LocalDate)" class="member-name-link">ofUnboundedEnd</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofUnboundedEnd(java.time.LocalDate)" class="member-name-link">ofUnboundedEnd</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;startInclusive)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Obtains a range from and including the specified start date.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofUnboundedStart(java.time.LocalDate)" class="member-name-link">ofUnboundedStart</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;endExclusive)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#ofUnboundedStart(java.time.LocalDate)" class="member-name-link">ofUnboundedStart</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;endExclusive)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Obtains a range up to, but not including, the specified end date.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#parse(java.lang.CharSequence)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;text)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static <a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#parse(java.lang.CharSequence)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;text)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Obtains an instance of <code>LocalDateRange</code> from a text string such as
  <code>2007-12-03/2007-12-04</code>, where the end date is exclusive.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#span(org.threeten.extra.LocalDateRange)" class="member-name-link">span</a><wbr>(<a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a>&nbsp;other)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#span(org.threeten.extra.LocalDateRange)" class="member-name-link">span</a><wbr>(<a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a>&nbsp;other)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Calculates the smallest range that encloses this range and the specified range.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#union(org.threeten.extra.LocalDateRange)" class="member-name-link">union</a><wbr>(<a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a>&nbsp;other)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#union(org.threeten.extra.LocalDateRange)" class="member-name-link">union</a><wbr>(<a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a>&nbsp;other)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Calculates the range that is the union of this range and the specified range.</div>
 </div>
+<div class="col-first even-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#withEnd(java.time.temporal.TemporalAdjuster)" class="member-name-link">withEnd</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAdjuster.html" title="class or interface in java.time.temporal" class="external-link">TemporalAdjuster</a>&nbsp;adjuster)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns a copy of this range with the exclusive end date adjusted.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#withEnd(java.time.temporal.TemporalAdjuster)" class="member-name-link">withEnd</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAdjuster.html" title="class or interface in java.time.temporal" class="external-link">TemporalAdjuster</a>&nbsp;adjuster)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#withEndInclusive(java.time.temporal.TemporalAdjuster)" class="member-name-link">withEndInclusive</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAdjuster.html" title="class or interface in java.time.temporal" class="external-link">TemporalAdjuster</a>&nbsp;adjuster)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Returns a copy of this range with the end date adjusted.</div>
+<div class="block">Returns a copy of this range with the inclusive end date adjusted.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../LocalDateRange.html" title="class in org.threeten.extra">LocalDateRange</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">LocalDateRange.</span><code><a href="../LocalDateRange.html#withStart(java.time.temporal.TemporalAdjuster)" class="member-name-link">withStart</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAdjuster.html" title="class or interface in java.time.temporal" class="external-link">TemporalAdjuster</a>&nbsp;adjuster)</code></div>
