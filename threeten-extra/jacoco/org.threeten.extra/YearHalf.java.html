@@ -404,7 +404,7 @@ public final class YearHalf
 <span class="fc bfc" id="L404" title="All 2 branches covered.">        if (unit == HALF_YEARS) {</span>
 <span class="fc" id="L405">            return true;</span>
 <span class="fc bfc" id="L406" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L407" title="1 of 10 branches missed.">            return unit == YEARS || unit == DECADES || unit == CENTURIES || unit == MILLENNIA || unit == ERAS;</span>
+<span class="fc bfc" id="L407" title="All 10 branches covered.">            return unit == YEARS || unit == DECADES || unit == CENTURIES || unit == MILLENNIA || unit == ERAS;</span>
         }
 <span class="pc bpc" id="L409" title="1 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
     }
@@ -841,7 +841,7 @@ public final class YearHalf
 <span class="fc bfc" id="L841" title="All 2 branches covered.">        if (unit == HALF_YEARS) {</span>
 <span class="fc" id="L842">            return plusHalves(amountToAdd);</span>
 <span class="pc bpc" id="L843" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L844" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
+<span class="pc bpc" id="L844" title="4 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
 <span class="fc" id="L846">                    return plusYears(amountToAdd);</span>
                 case DECADES:
@@ -853,7 +853,7 @@ public final class YearHalf
                 case ERAS:
 <span class="nc" id="L854">                    return with(ERA, Math.addExact(getLong(ERA), amountToAdd));</span>
                 default:
-<span class="nc" id="L856">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
+<span class="fc" id="L856">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
 <span class="nc" id="L859">        return unit.addTo(this, amountToAdd);</span>

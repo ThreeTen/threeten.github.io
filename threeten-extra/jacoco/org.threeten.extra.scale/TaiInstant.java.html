@@ -228,6 +228,15 @@ public final class TaiInstant
 <span class="fc" id="L228">        this.nanos = nanoOfSecond;</span>
 <span class="fc" id="L229">    }</span>
 
+    /**
+     * Resolves the serialized state through the validating factory.
+     *
+     * @return the validated TAI instant, not null
+     */
+    private Object readResolve() {
+<span class="fc" id="L237">        return TaiInstant.ofTaiSeconds(seconds, nanos);</span>
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Gets the number of seconds from the TAI epoch of 1958-01-01T00:00:00(TAI).
@@ -239,7 +248,7 @@ public final class TaiInstant
      * @return the seconds from the epoch of 1958-01-01T00:00:00(TAI)
      */
     public long getTaiSeconds() {
-<span class="fc" id="L242">        return seconds;</span>
+<span class="fc" id="L251">        return seconds;</span>
     }
 
     /**
@@ -256,7 +265,7 @@ public final class TaiInstant
      * @return a {@code TaiInstant} based on this instant with the requested second, not null
      */
     public TaiInstant withTaiSeconds(long taiSeconds) {
-<span class="fc" id="L259">        return ofTaiSeconds(taiSeconds, nanos);</span>
+<span class="fc" id="L268">        return ofTaiSeconds(taiSeconds, nanos);</span>
     }
 
     /**
@@ -269,7 +278,7 @@ public final class TaiInstant
      * @return the nanoseconds within the second, from 0 to 999,999,999
      */
     public int getNano() {
-<span class="fc" id="L272">        return nanos;</span>
+<span class="fc" id="L281">        return nanos;</span>
     }
 
     /**
@@ -285,10 +294,10 @@ public final class TaiInstant
      * @throws IllegalArgumentException if nanoOfSecond is out of range
      */
     public TaiInstant withNano(int nanoOfSecond) {
-<span class="fc bfc" id="L288" title="All 4 branches covered.">        if (nanoOfSecond &lt; 0 || nanoOfSecond &gt;= NANOS_PER_SECOND) {</span>
-<span class="fc" id="L289">            throw new IllegalArgumentException(&quot;NanoOfSecond must be from 0 to 999,999,999&quot;);</span>
+<span class="fc bfc" id="L297" title="All 4 branches covered.">        if (nanoOfSecond &lt; 0 || nanoOfSecond &gt;= NANOS_PER_SECOND) {</span>
+<span class="fc" id="L298">            throw new IllegalArgumentException(&quot;NanoOfSecond must be from 0 to 999,999,999&quot;);</span>
         }
-<span class="fc" id="L291">        return ofTaiSeconds(seconds, nanoOfSecond);</span>
+<span class="fc" id="L300">        return ofTaiSeconds(seconds, nanoOfSecond);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -307,14 +316,14 @@ public final class TaiInstant
      * @throws ArithmeticException if the calculation exceeds the supported range
      */
     public TaiInstant plus(Duration duration) {
-<span class="fc" id="L310">        long secsToAdd = duration.getSeconds();</span>
-<span class="fc" id="L311">        int nanosToAdd = duration.getNano();</span>
-<span class="fc bfc" id="L312" title="All 2 branches covered.">        if ((secsToAdd | nanosToAdd) == 0) {</span>
-<span class="fc" id="L313">            return this;</span>
+<span class="fc" id="L319">        long secsToAdd = duration.getSeconds();</span>
+<span class="fc" id="L320">        int nanosToAdd = duration.getNano();</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        if ((secsToAdd | nanosToAdd) == 0) {</span>
+<span class="fc" id="L322">            return this;</span>
         }
-<span class="fc" id="L315">        long secs = Math.addExact(seconds, secsToAdd);</span>
-<span class="fc" id="L316">        long nanoAdjustment = ((long) nanos) + nanosToAdd;  // safe int+int</span>
-<span class="fc" id="L317">        return ofTaiSeconds(secs, nanoAdjustment);</span>
+<span class="fc" id="L324">        long secs = Math.addExact(seconds, secsToAdd);</span>
+<span class="fc" id="L325">        long nanoAdjustment = ((long) nanos) + nanosToAdd;  // safe int+int</span>
+<span class="fc" id="L326">        return ofTaiSeconds(secs, nanoAdjustment);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -333,14 +342,14 @@ public final class TaiInstant
      * @throws ArithmeticException if the calculation exceeds the supported range
      */
     public TaiInstant minus(Duration duration) {
-<span class="fc" id="L336">        long secsToSubtract = duration.getSeconds();</span>
-<span class="fc" id="L337">        int nanosToSubtract = duration.getNano();</span>
-<span class="fc bfc" id="L338" title="All 2 branches covered.">        if ((secsToSubtract | nanosToSubtract) == 0) {</span>
-<span class="fc" id="L339">            return this;</span>
+<span class="fc" id="L345">        long secsToSubtract = duration.getSeconds();</span>
+<span class="fc" id="L346">        int nanosToSubtract = duration.getNano();</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">        if ((secsToSubtract | nanosToSubtract) == 0) {</span>
+<span class="fc" id="L348">            return this;</span>
         }
-<span class="fc" id="L341">        long secs = Math.subtractExact(seconds, secsToSubtract);</span>
-<span class="fc" id="L342">        long nanoAdjustment = ((long) nanos) - nanosToSubtract;  // safe int+int</span>
-<span class="fc" id="L343">        return ofTaiSeconds(secs, nanoAdjustment);</span>
+<span class="fc" id="L350">        long secs = Math.subtractExact(seconds, secsToSubtract);</span>
+<span class="fc" id="L351">        long nanoAdjustment = ((long) nanos) - nanosToSubtract;  // safe int+int</span>
+<span class="fc" id="L352">        return ofTaiSeconds(secs, nanoAdjustment);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -356,9 +365,9 @@ public final class TaiInstant
      * @throws ArithmeticException if the calculation exceeds the supported range
      */
     public Duration durationUntil(TaiInstant otherInstant) {
-<span class="fc" id="L359">        long durSecs = Math.subtractExact(otherInstant.seconds, seconds);</span>
-<span class="fc" id="L360">        long durNanos = otherInstant.nanos - nanos;</span>
-<span class="fc" id="L361">        return Duration.ofSeconds(durSecs, durNanos);</span>
+<span class="fc" id="L368">        long durSecs = Math.subtractExact(otherInstant.seconds, seconds);</span>
+<span class="fc" id="L369">        long durNanos = otherInstant.nanos - nanos;</span>
+<span class="fc" id="L370">        return Duration.ofSeconds(durSecs, durNanos);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -377,7 +386,7 @@ public final class TaiInstant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Instant toInstant() {
-<span class="fc" id="L380">        return UtcRules.system().convertToInstant(this);</span>
+<span class="fc" id="L389">        return UtcRules.system().convertToInstant(this);</span>
     }
 
     /**
@@ -396,7 +405,7 @@ public final class TaiInstant
      * @throws ArithmeticException if numeric overflow occurs
      */
     public UtcInstant toUtcInstant() {
-<span class="fc" id="L399">        return UtcRules.system().convertToUtc(this);</span>
+<span class="fc" id="L408">        return UtcRules.system().convertToUtc(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -408,11 +417,11 @@ public final class TaiInstant
      */
     @Override
     public int compareTo(TaiInstant otherInstant) {
-<span class="fc" id="L411">        int cmp = Long.compare(seconds, otherInstant.seconds);</span>
-<span class="fc bfc" id="L412" title="All 2 branches covered.">        if (cmp != 0) {</span>
-<span class="fc" id="L413">            return cmp;</span>
+<span class="fc" id="L420">        int cmp = Long.compare(seconds, otherInstant.seconds);</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">        if (cmp != 0) {</span>
+<span class="fc" id="L422">            return cmp;</span>
         }
-<span class="fc" id="L415">        return nanos - otherInstant.nanos;</span>
+<span class="fc" id="L424">        return nanos - otherInstant.nanos;</span>
     }
 
     /**
@@ -425,7 +434,7 @@ public final class TaiInstant
      * @throws NullPointerException if otherInstant is null
      */
     public boolean isAfter(TaiInstant otherInstant) {
-<span class="fc bfc" id="L428" title="All 2 branches covered.">        return compareTo(otherInstant) &gt; 0;</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">        return compareTo(otherInstant) &gt; 0;</span>
     }
 
     /**
@@ -438,7 +447,7 @@ public final class TaiInstant
      * @throws NullPointerException if otherInstant is null
      */
     public boolean isBefore(TaiInstant otherInstant) {
-<span class="fc bfc" id="L441" title="All 2 branches covered.">        return compareTo(otherInstant) &lt; 0;</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">        return compareTo(otherInstant) &lt; 0;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -450,15 +459,15 @@ public final class TaiInstant
      */
     @Override
     public boolean equals(@Nullable Object otherInstant) {
-<span class="fc bfc" id="L453" title="All 2 branches covered.">        if (this == otherInstant) {</span>
-<span class="fc" id="L454">            return true;</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">        if (this == otherInstant) {</span>
+<span class="fc" id="L463">            return true;</span>
         }
-<span class="fc bfc" id="L456" title="All 2 branches covered.">        if (otherInstant instanceof TaiInstant) {</span>
-<span class="fc" id="L457">            TaiInstant other = (TaiInstant) otherInstant;</span>
-<span class="fc bfc" id="L458" title="All 4 branches covered.">            return this.seconds == other.seconds &amp;&amp;</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">        if (otherInstant instanceof TaiInstant) {</span>
+<span class="fc" id="L466">            TaiInstant other = (TaiInstant) otherInstant;</span>
+<span class="fc bfc" id="L467" title="All 4 branches covered.">            return this.seconds == other.seconds &amp;&amp;</span>
                     this.nanos == other.nanos;
         }
-<span class="fc" id="L461">        return false;</span>
+<span class="fc" id="L470">        return false;</span>
     }
 
     /**
@@ -469,7 +478,7 @@ public final class TaiInstant
     @Override
     public int hashCode() {
         // TODO: Evaluate hash code
-<span class="fc" id="L472">        return (Long.hashCode(seconds)) + 51 * nanos;</span>
+<span class="fc" id="L481">        return (Long.hashCode(seconds)) + 51 * nanos;</span>
     }
 
     //-----------------------------------------------------------------------
@@ -485,13 +494,13 @@ public final class TaiInstant
     @Override
     @ToString
     public String toString() {
-<span class="fc" id="L488">        StringBuilder buf = new StringBuilder();</span>
-<span class="fc" id="L489">        buf.append(seconds);</span>
-<span class="fc" id="L490">        int pos = buf.length();</span>
-<span class="fc" id="L491">        buf.append(nanos + NANOS_PER_SECOND);</span>
-<span class="fc" id="L492">        buf.setCharAt(pos, '.');</span>
-<span class="fc" id="L493">        buf.append(&quot;s(TAI)&quot;);</span>
-<span class="fc" id="L494">        return buf.toString();</span>
+<span class="fc" id="L497">        StringBuilder buf = new StringBuilder();</span>
+<span class="fc" id="L498">        buf.append(seconds);</span>
+<span class="fc" id="L499">        int pos = buf.length();</span>
+<span class="fc" id="L500">        buf.append(nanos + NANOS_PER_SECOND);</span>
+<span class="fc" id="L501">        buf.setCharAt(pos, '.');</span>
+<span class="fc" id="L502">        buf.append(&quot;s(TAI)&quot;);</span>
+<span class="fc" id="L503">        return buf.toString();</span>
     }
 
 }

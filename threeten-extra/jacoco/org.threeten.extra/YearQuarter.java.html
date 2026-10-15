@@ -370,7 +370,7 @@ public final class YearQuarter
 <span class="fc bfc" id="L370" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc bfc" id="L371" title="All 6 branches covered.">            return field == YEAR || field == YEAR_OF_ERA || field == ERA;</span>
         }
-<span class="pc bpc" id="L373" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="fc bfc" id="L373" title="All 4 branches covered.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -405,9 +405,9 @@ public final class YearQuarter
 <span class="fc bfc" id="L405" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
 <span class="fc" id="L406">            return true;</span>
 <span class="fc bfc" id="L407" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
-<span class="pc bpc" id="L408" title="1 of 10 branches missed.">            return unit == YEARS || unit == DECADES || unit == CENTURIES || unit == MILLENNIA || unit == ERAS;</span>
+<span class="fc bfc" id="L408" title="All 10 branches covered.">            return unit == YEARS || unit == DECADES || unit == CENTURIES || unit == MILLENNIA || unit == ERAS;</span>
         }
-<span class="pc bpc" id="L410" title="3 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
+<span class="pc bpc" id="L410" title="1 of 4 branches missed.">        return unit != null &amp;&amp; unit.isSupportedBy(this);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -475,7 +475,7 @@ public final class YearQuarter
     public int get(TemporalField field) {
 <span class="fc bfc" id="L476" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L477">            return quarter.getValue();</span>
-<span class="pc bpc" id="L478" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L478" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc bfc" id="L479" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
                 case YEAR_OF_ERA:
 <span class="pc bpc" id="L481" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
@@ -487,7 +487,7 @@ public final class YearQuarter
 <span class="fc" id="L487">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
             }
         }
-<span class="nc" id="L490">        return Temporal.super.get(field);</span>
+<span class="fc" id="L490">        return Temporal.super.get(field);</span>
     }
 
     /**
@@ -517,7 +517,7 @@ public final class YearQuarter
     public long getLong(TemporalField field) {
 <span class="fc bfc" id="L518" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L519">            return quarter.getValue();</span>
-<span class="pc bpc" id="L520" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L520" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc bfc" id="L521" title="All 4 branches covered.">            switch ((ChronoField) field) {</span>
                 case YEAR_OF_ERA:
 <span class="pc bpc" id="L523" title="1 of 2 branches missed.">                    return (year &lt; 1 ? 1 - year : year);</span>
@@ -529,7 +529,7 @@ public final class YearQuarter
 <span class="fc" id="L529">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
             }
         }
-<span class="nc" id="L532">        return field.getFrom(this);</span>
+<span class="fc" id="L532">        return field.getFrom(this);</span>
     }
 
     private long getProlepticQuarter() {
@@ -714,7 +714,7 @@ public final class YearQuarter
     public YearQuarter with(TemporalField field, long newValue) {
 <span class="fc bfc" id="L715" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L716">            return withQuarter(QUARTER_OF_YEAR.range().checkValidIntValue(newValue, QUARTER_OF_YEAR));</span>
-<span class="pc bpc" id="L717" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc" id="L718">            ChronoField f = (ChronoField) field;</span>
 <span class="fc" id="L719">            f.checkValidValue(newValue);</span>
 <span class="pc bpc" id="L720" title="2 of 4 branches missed.">            switch (f) {</span>
@@ -728,7 +728,7 @@ public final class YearQuarter
 <span class="fc" id="L728">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
             }
         }
-<span class="nc" id="L731">        return field.adjustInto(this, newValue);</span>
+<span class="fc" id="L731">        return field.adjustInto(this, newValue);</span>
     }
 
     //-----------------------------------------------------------------------
@@ -841,7 +841,7 @@ public final class YearQuarter
     public YearQuarter plus(long amountToAdd, TemporalUnit unit) {
 <span class="fc bfc" id="L842" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
 <span class="fc" id="L843">            return plusQuarters(amountToAdd);</span>
-<span class="pc bpc" id="L844" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
 <span class="pc bpc" id="L845" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
 <span class="fc" id="L847">                    return plusYears(amountToAdd);</span>
@@ -857,7 +857,7 @@ public final class YearQuarter
 <span class="nc" id="L857">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
-<span class="nc" id="L860">        return unit.addTo(this, amountToAdd);</span>
+<span class="fc" id="L860">        return unit.addTo(this, amountToAdd);</span>
     }
 
     /**
@@ -1087,7 +1087,7 @@ public final class YearQuarter
 <span class="fc" id="L1087">        long quartersUntil = end.getProlepticQuarter() - getProlepticQuarter();  // no overflow</span>
 <span class="fc bfc" id="L1088" title="All 2 branches covered.">        if (unit == QUARTER_YEARS) {</span>
 <span class="fc" id="L1089">            return quartersUntil;</span>
-<span class="pc bpc" id="L1090" title="1 of 2 branches missed.">        } else if (unit instanceof ChronoUnit) {</span>
+<span class="fc bfc" id="L1090" title="All 2 branches covered.">        } else if (unit instanceof ChronoUnit) {</span>
 <span class="pc bpc" id="L1091" title="5 of 6 branches missed.">            switch ((ChronoUnit) unit) {</span>
                 case YEARS:
 <span class="fc" id="L1093">                    return quartersUntil / 4;</span>
@@ -1103,7 +1103,7 @@ public final class YearQuarter
 <span class="nc" id="L1103">                    throw new UnsupportedTemporalTypeException(&quot;Unsupported unit: &quot; + unit);</span>
             }
         }
-<span class="nc" id="L1106">        return unit.between(this, end);</span>
+<span class="fc" id="L1106">        return unit.between(this, end);</span>
     }
 
     /**

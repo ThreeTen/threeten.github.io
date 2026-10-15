@@ -240,7 +240,7 @@ import org.jspecify.annotations.Nullable;
 <span class="fc bfc" id="L240" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc" id="L241">            return false;</span>
         }
-<span class="pc bpc" id="L243" title="3 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
+<span class="pc bpc" id="L243" title="1 of 4 branches missed.">        return field != null &amp;&amp; field.isSupportedBy(this);</span>
     }
 
     /**
@@ -269,10 +269,10 @@ import org.jspecify.annotations.Nullable;
     public ValueRange range(TemporalField field) {
 <span class="fc bfc" id="L270" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L271">            return field.range();</span>
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc" id="L273">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L275">        return TemporalAccessor.super.range(field);</span>
+<span class="fc" id="L275">        return TemporalAccessor.super.range(field);</span>
     }
 
     /**
@@ -304,10 +304,10 @@ import org.jspecify.annotations.Nullable;
     public int get(TemporalField field) {
 <span class="fc bfc" id="L305" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L306">            return getValue();</span>
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc" id="L308">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L310">        return TemporalAccessor.super.get(field);</span>
+<span class="fc" id="L310">        return TemporalAccessor.super.get(field);</span>
     }
 
     /**
@@ -336,10 +336,10 @@ import org.jspecify.annotations.Nullable;
     public long getLong(TemporalField field) {
 <span class="fc bfc" id="L337" title="All 2 branches covered.">        if (field == QUARTER_OF_YEAR) {</span>
 <span class="fc" id="L338">            return getValue();</span>
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">        } else if (field instanceof ChronoField) {</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        } else if (field instanceof ChronoField) {</span>
 <span class="fc" id="L340">            throw new UnsupportedTemporalTypeException(&quot;Unsupported field: &quot; + field);</span>
         }
-<span class="nc" id="L342">        return field.getFrom(this);</span>
+<span class="fc" id="L342">        return field.getFrom(this);</span>
     }
 
     //-----------------------------------------------------------------------
