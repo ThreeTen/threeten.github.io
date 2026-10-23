@@ -103,11 +103,8 @@ loadScripts(document, 'script');</script>
  These are used by default in <code>UtcInstant</code> and <code>TaiInstant</code>.
  Using other rules requires manual use of this class.
  <p>
- The system rules can be updated using a <code>LeapSeconds.txt</code> file.
- You can create your own version of this file, place it on the classpath,
- and it will be used. Due to Java 9 module restrictions, the file is located
- under META-INF to avoid module encapsulation problems -
- <code>META-INF/org/threeten/extra/scale/LeapSeconds.txt</code>.
+ Leap seconds are to be discontinued in 2027, and no new leap seconds are to be added.
+ As such, the built-in leap second data from <a href="#system()"><code>system()</code></a> is sufficient for most applications.
 
  <h3 id="implementation-requirements--heading">Implementation Requirements:</h3>
  This is an abstract class and must be implemented with care
@@ -255,8 +252,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="UtcRules.html" title="class in org.threeten.extra.scale">UtcRules</a></span>&nbsp;<span class="element-name">system</span>()</div>
 <div class="block">Gets the system default leap second rules.
  <p>
- The system default rules are serializable, immutable and thread-safe.
- They will remain up to date as new leap seconds are added.</div>
+ The built-in system default rules are serializable, immutable and thread-safe.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the system rules, not null</dd>

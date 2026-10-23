@@ -267,7 +267,7 @@ public final class Symmetry010Date
     static Symmetry010Date ofEpochDay(long epochDay) {
 <span class="fc" id="L268">        EPOCH_DAY_RANGE.checkValidValue(epochDay + 3, ChronoField.EPOCH_DAY);</span>
 <span class="fc" id="L269">        long zeroDay = epochDay + DAYS_0001_TO_1970 + 1;</span>
-<span class="fc" id="L270">        long year = 1 + ((293 * zeroDay) / DAYS_PER_CYCLE);</span>
+<span class="fc" id="L270">        long year = 1 + Math.floorDiv(293 * zeroDay, DAYS_PER_CYCLE);</span>
 <span class="fc" id="L271">        long doy = zeroDay - (DAYS_IN_YEAR * (year - 1) + Symmetry010Chronology.getLeapYearsBefore(year) * DAYS_IN_WEEK);</span>
 
 <span class="fc bfc" id="L273" title="All 2 branches covered.">        if (doy &lt; 1) {</span>

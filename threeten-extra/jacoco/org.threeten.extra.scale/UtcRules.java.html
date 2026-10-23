@@ -45,11 +45,8 @@ import java.util.ConcurrentModificationException;
  * These are used by default in {@code UtcInstant} and {@code TaiInstant}.
  * Using other rules requires manual use of this class.
  * &lt;p&gt;
- * The system rules can be updated using a {@code LeapSeconds.txt} file.
- * You can create your own version of this file, place it on the classpath,
- * and it will be used. Due to Java 9 module restrictions, the file is located
- * under META-INF to avoid module encapsulation problems -
- * {@code META-INF/org/threeten/extra/scale/LeapSeconds.txt}.
+ * Leap seconds are to be discontinued in 2027, and no new leap seconds are to be added.
+ * As such, the built-in leap second data from {@link #system()} is sufficient for most applications.
  *
  * &lt;h3&gt;Implementation Requirements:&lt;/h3&gt;
  * This is an abstract class and must be implemented with care
@@ -79,13 +76,12 @@ public abstract class UtcRules {
     /**
      * Gets the system default leap second rules.
      * &lt;p&gt;
-     * The system default rules are serializable, immutable and thread-safe.
-     * They will remain up to date as new leap seconds are added.
+     * The built-in system default rules are serializable, immutable and thread-safe.
      *
      * @return the system rules, not null
      */
     public static UtcRules system() {
-<span class="fc" id="L88">        return SystemUtcRules.INSTANCE;</span>
+<span class="fc" id="L84">        return SystemUtcRules.INSTANCE;</span>
     }
 
     /**
@@ -111,15 +107,15 @@ public abstract class UtcRules {
      * @throws ConcurrentModificationException if another thread updates the rules at the same time
      */
     public static void registerLeapSecond(long mjDay, int leapAdjustment) {
-<span class="nc" id="L114">        SystemUtcRules.INSTANCE.register(mjDay, leapAdjustment);</span>
-<span class="nc" id="L115">    }</span>
+<span class="nc" id="L110">        SystemUtcRules.INSTANCE.register(mjDay, leapAdjustment);</span>
+<span class="nc" id="L111">    }</span>
 
     //-----------------------------------------------------------------------
     /**
      * Creates an instance of the rules.
      */
-<span class="fc" id="L121">    protected UtcRules() {</span>
-<span class="fc" id="L122">    }</span>
+<span class="fc" id="L117">    protected UtcRules() {</span>
+<span class="fc" id="L118">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -185,12 +181,12 @@ public abstract class UtcRules {
      * @throws DateTimeException if nanoOfDay is out of range
      */
     public void validateModifiedJulianDay(long mjDay, long nanoOfDay) {
-<span class="fc" id="L188">        long leapSecs = getLeapSecondAdjustment(mjDay);</span>
-<span class="fc" id="L189">        long maxNanos = (SECS_PER_DAY + leapSecs) * NANOS_PER_SECOND;</span>
-<span class="fc bfc" id="L190" title="All 4 branches covered.">        if (nanoOfDay &lt; 0 || nanoOfDay &gt;= maxNanos) {</span>
-<span class="fc" id="L191">            throw new DateTimeException(&quot;Nanosecond-of-day must be between 0 and &quot; + maxNanos + &quot; on date &quot; + mjDay);</span>
+<span class="fc" id="L184">        long leapSecs = getLeapSecondAdjustment(mjDay);</span>
+<span class="fc" id="L185">        long maxNanos = (SECS_PER_DAY + leapSecs) * NANOS_PER_SECOND;</span>
+<span class="fc bfc" id="L186" title="All 4 branches covered.">        if (nanoOfDay &lt; 0 || nanoOfDay &gt;= maxNanos) {</span>
+<span class="fc" id="L187">            throw new DateTimeException(&quot;Nanosecond-of-day must be between 0 and &quot; + maxNanos + &quot; on date &quot; + mjDay);</span>
         }
-<span class="fc" id="L193">    }</span>
+<span class="fc" id="L189">    }</span>
 
     //-----------------------------------------------------------------------
     /**
@@ -205,12 +201,12 @@ public abstract class UtcRules {
      * @throws ArithmeticException if numeric overflow occurs
      */
     public TaiInstant convertToTai(UtcInstant utcInstant) {
-<span class="fc" id="L208">        long mjd = utcInstant.getModifiedJulianDay();</span>
-<span class="fc" id="L209">        long nod = utcInstant.getNanoOfDay();</span>
-<span class="fc" id="L210">        long taiUtcDaySeconds = Math.multiplyExact(Math.subtractExact(mjd, OFFSET_MJD_TAI), SECS_PER_DAY);</span>
-<span class="fc" id="L211">        long taiSecs = Math.addExact(taiUtcDaySeconds, nod / NANOS_PER_SECOND + getTaiOffset(mjd));</span>
-<span class="fc" id="L212">        int nos = (int) (nod % NANOS_PER_SECOND);</span>
-<span class="fc" id="L213">        return TaiInstant.ofTaiSeconds(taiSecs, nos);</span>
+<span class="fc" id="L204">        long mjd = utcInstant.getModifiedJulianDay();</span>
+<span class="fc" id="L205">        long nod = utcInstant.getNanoOfDay();</span>
+<span class="fc" id="L206">        long taiUtcDaySeconds = Math.multiplyExact(Math.subtractExact(mjd, OFFSET_MJD_TAI), SECS_PER_DAY);</span>
+<span class="fc" id="L207">        long taiSecs = Math.addExact(taiUtcDaySeconds, nod / NANOS_PER_SECOND + getTaiOffset(mjd));</span>
+<span class="fc" id="L208">        int nos = (int) (nod % NANOS_PER_SECOND);</span>
+<span class="fc" id="L209">        return TaiInstant.ofTaiSeconds(taiSecs, nos);</span>
     }
 
     /**
@@ -249,17 +245,17 @@ public abstract class UtcRules {
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Instant convertToInstant(UtcInstant utcInstant) {
-<span class="fc" id="L252">        long mjd = utcInstant.getModifiedJulianDay();</span>
-<span class="fc" id="L253">        long utcNanos = utcInstant.getNanoOfDay();</span>
-<span class="fc" id="L254">        long epochDay = Math.subtractExact(mjd, OFFSET_MJD_EPOCH);</span>
-<span class="fc" id="L255">        long epochSec = Math.multiplyExact(epochDay, SECS_PER_DAY);</span>
-<span class="fc" id="L256">        int leapAdj = getLeapSecondAdjustment(mjd);</span>
-<span class="fc" id="L257">        long startSlsNanos = (SECS_PER_DAY + leapAdj - 1000) * NANOS_PER_SECOND;</span>
-<span class="fc" id="L258">        long slsNanos = utcNanos;</span>
-<span class="fc bfc" id="L259" title="All 4 branches covered.">        if (leapAdj != 0 &amp;&amp; utcNanos &gt;= startSlsNanos) {</span>
-<span class="fc" id="L260">            slsNanos = utcNanos - leapAdj * (utcNanos - startSlsNanos) / 1000;  // apply UTC-SLS mapping</span>
+<span class="fc" id="L248">        long mjd = utcInstant.getModifiedJulianDay();</span>
+<span class="fc" id="L249">        long utcNanos = utcInstant.getNanoOfDay();</span>
+<span class="fc" id="L250">        long epochDay = Math.subtractExact(mjd, OFFSET_MJD_EPOCH);</span>
+<span class="fc" id="L251">        long epochSec = Math.multiplyExact(epochDay, SECS_PER_DAY);</span>
+<span class="fc" id="L252">        int leapAdj = getLeapSecondAdjustment(mjd);</span>
+<span class="fc" id="L253">        long startSlsNanos = (SECS_PER_DAY + leapAdj - 1000) * NANOS_PER_SECOND;</span>
+<span class="fc" id="L254">        long slsNanos = utcNanos;</span>
+<span class="fc bfc" id="L255" title="All 4 branches covered.">        if (leapAdj != 0 &amp;&amp; utcNanos &gt;= startSlsNanos) {</span>
+<span class="fc" id="L256">            slsNanos = utcNanos - leapAdj * (utcNanos - startSlsNanos) / 1000;  // apply UTC-SLS mapping</span>
         }
-<span class="fc" id="L262">        return Instant.ofEpochSecond(epochSec + slsNanos / NANOS_PER_SECOND, slsNanos % NANOS_PER_SECOND);</span>
+<span class="fc" id="L258">        return Instant.ofEpochSecond(epochSec + slsNanos / NANOS_PER_SECOND, slsNanos % NANOS_PER_SECOND);</span>
     }
 
     /**
@@ -285,16 +281,16 @@ public abstract class UtcRules {
      * @throws ArithmeticException if numeric overflow occurs
      */
     public UtcInstant convertToUtc(Instant instant) {
-<span class="fc" id="L288">        long epochDay = Math.floorDiv(instant.getEpochSecond(), SECS_PER_DAY);</span>
-<span class="fc" id="L289">        long mjd = epochDay + OFFSET_MJD_EPOCH;</span>
-<span class="fc" id="L290">        long slsNanos = Math.floorMod(instant.getEpochSecond(), SECS_PER_DAY) * NANOS_PER_SECOND + instant.getNano();</span>
-<span class="fc" id="L291">        int leapAdj = getLeapSecondAdjustment(mjd);</span>
-<span class="fc" id="L292">        long startSlsNanos = (SECS_PER_DAY + leapAdj - 1000) * NANOS_PER_SECOND;</span>
-<span class="fc" id="L293">        long utcNanos = slsNanos;</span>
-<span class="pc bpc" id="L294" title="1 of 4 branches missed.">        if (leapAdj != 0 &amp;&amp; slsNanos &gt;= startSlsNanos) {</span>
-<span class="fc" id="L295">            utcNanos = startSlsNanos + ((slsNanos - startSlsNanos) * 1000) / (1000 - leapAdj);  // apply UTC-SLS mapping</span>
+<span class="fc" id="L284">        long epochDay = Math.floorDiv(instant.getEpochSecond(), SECS_PER_DAY);</span>
+<span class="fc" id="L285">        long mjd = epochDay + OFFSET_MJD_EPOCH;</span>
+<span class="fc" id="L286">        long slsNanos = Math.floorMod(instant.getEpochSecond(), SECS_PER_DAY) * NANOS_PER_SECOND + instant.getNano();</span>
+<span class="fc" id="L287">        int leapAdj = getLeapSecondAdjustment(mjd);</span>
+<span class="fc" id="L288">        long startSlsNanos = (SECS_PER_DAY + leapAdj - 1000) * NANOS_PER_SECOND;</span>
+<span class="fc" id="L289">        long utcNanos = slsNanos;</span>
+<span class="pc bpc" id="L290" title="1 of 4 branches missed.">        if (leapAdj != 0 &amp;&amp; slsNanos &gt;= startSlsNanos) {</span>
+<span class="fc" id="L291">            utcNanos = startSlsNanos + ((slsNanos - startSlsNanos) * 1000) / (1000 - leapAdj);  // apply UTC-SLS mapping</span>
         }
-<span class="fc" id="L297">        return UtcInstant.ofModifiedJulianDay(mjd, utcNanos);</span>
+<span class="fc" id="L293">        return UtcInstant.ofModifiedJulianDay(mjd, utcNanos);</span>
     }
 
     //-------------------------------------------------------------------------
@@ -313,7 +309,7 @@ public abstract class UtcRules {
      * @throws ArithmeticException if numeric overflow occurs
      */
     public Instant convertToInstant(TaiInstant taiInstant) {
-<span class="fc" id="L316">        return convertToInstant(convertToUtc(taiInstant));</span>
+<span class="fc" id="L312">        return convertToInstant(convertToUtc(taiInstant));</span>
     }
 
     /**
@@ -331,7 +327,7 @@ public abstract class UtcRules {
      * @throws ArithmeticException if numeric overflow occurs
      */
     public TaiInstant convertToTai(Instant instant) {
-<span class="fc" id="L334">        return convertToTai(convertToUtc(instant));</span>
+<span class="fc" id="L330">        return convertToTai(convertToUtc(instant));</span>
     }
 
     //-----------------------------------------------------------------------
@@ -342,7 +338,7 @@ public abstract class UtcRules {
      */
     @Override
     public String toString() {
-<span class="fc" id="L345">        return &quot;UtcRules[&quot; + getName() + ']';</span>
+<span class="fc" id="L341">        return &quot;UtcRules[&quot; + getName() + ']';</span>
     }
 
 }

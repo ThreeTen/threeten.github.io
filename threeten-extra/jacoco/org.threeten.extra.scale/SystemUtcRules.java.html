@@ -31,24 +31,10 @@
  */
 package org.threeten.extra.scale;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.io.StreamCorruptedException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.temporal.JulianFields;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * System default UTC rules.
@@ -59,59 +45,61 @@ import java.util.stream.Collectors;
 final class SystemUtcRules extends UtcRules implements Serializable {
 
     /**
-     * The leap seconds config file.
-     */
-    private static final String LEAP_SECONDS_TXT = &quot;org/threeten/extra/scale/LeapSeconds.txt&quot;;
-    /**
-     * Leap second file format.
-     */
-<span class="fc" id="L68">    private static final Pattern LEAP_FILE_FORMAT = Pattern.compile(&quot;([0-9-]{10})[ ]+([0-9]+)&quot;);</span>
-    /**
      * Serialization version.
      */
     private static final long serialVersionUID = 7594178360693417218L;
     /**
+     * The known leap second definitions.
+     * Consists of the Modified Julian Day of the leap second and the TAI offset after that date.
+     */
+<span class="fc" id="L55">    private static final Data BUILT_IN_DATA = new Data(</span>
+            new long[]{
+                    41317, 41498, 41682, 42047, 42412, 42777, 43143, 43508, 43873, 44238,
+                    44785, 45150, 45515, 46246, 47160, 47891, 48256, 48803, 49168, 49533,
+                    50082, 50629, 51178, 53735, 54831, 56108, 57203, 57753
+            },
+            new int[]{
+                    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+                    24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
+            });
+    /**
      * Singleton.
      */
-<span class="fc" id="L76">    static final SystemUtcRules INSTANCE = new SystemUtcRules();</span>
+<span class="fc" id="L68">    static final SystemUtcRules INSTANCE = new SystemUtcRules();</span>
 
     /**
      * The table of leap second dates.
      */
-<span class="fc" id="L81">    private final AtomicReference&lt;Data&gt; dataRef = new AtomicReference&lt;&gt;(loadLeapSeconds());</span>
+<span class="fc" id="L73">    private final AtomicReference&lt;Data&gt; dataRef = new AtomicReference&lt;&gt;(BUILT_IN_DATA);</span>
 
     /** Data holder. */
     private static final class Data implements Serializable {
         /** Serialization version. */
         private static final long serialVersionUID = -3655687912882817265L;
         /** Constructor. */
-        private Data(long[] dates, int[] offsets, long[] taiSeconds) {
-<span class="fc" id="L89">            super();</span>
-<span class="fc" id="L90">            this.dates = dates;</span>
-<span class="fc" id="L91">            this.offsets = offsets;</span>
-<span class="fc" id="L92">            this.taiSeconds = taiSeconds;</span>
-<span class="fc" id="L93">        }</span>
+        private Data(long[] dates, int[] offsets) {
+<span class="fc" id="L81">            super();</span>
+<span class="fc" id="L82">            this.dates = dates;</span>
+<span class="fc" id="L83">            this.offsets = offsets;</span>
+<span class="fc" id="L84">            this.taiSeconds = new long[dates.length];</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            for (int i = 0; i &lt; dates.length; i++) {</span>
+<span class="fc" id="L86">                this.taiSeconds[i] = tai(dates[i], offsets[i]);</span>
+            }
+<span class="fc" id="L88">        }</span>
         /** The table of leap second date when the leap second occurs. */
         private final long[] dates;
         /** The table of TAI offset after the leap second. */
         private final int[] offsets;
         /** The table of TAI second when the new offset starts. */
         private final long[] taiSeconds;
-
-        /**
-         * @return The modified Julian Date of the newest leap second
-         */
-        public long getNewestDate() {
-<span class="fc" id="L105">            return dates[dates.length - 1];</span>
-        }
     }
 
     //-----------------------------------------------------------------------
     /**
      * Restricted constructor.
      */
-<span class="fc" id="L113">    private SystemUtcRules() {</span>
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L101">    private SystemUtcRules() {</span>
+<span class="fc" id="L102">    }</span>
 
     /**
      * Resolves singleton.
@@ -119,12 +107,16 @@ final class SystemUtcRules extends UtcRules implements Serializable {
      * @return the resolved instance, not null
      */
     private Object readResolve() {
-<span class="fc" id="L122">        return INSTANCE;</span>
+<span class="fc" id="L110">        return INSTANCE;</span>
     }
 
     //-----------------------------------------------------------------------
     /**
      * Adds a new leap second to these rules.
+     * &lt;p&gt;
+     * This class includes all known leap seconds.
+     * Since leap seconds are now discontinued, there is no good reason to add new leap seconds.
+     * However, this method is retained for compatibility, and for unusual use cases.
      *
      * @param mjDay  the Modified Julian Day that the leap second occurs at the end of
      * @param leapAdjustment  the leap seconds to add/remove at the end of the day, either -1 or 1
@@ -134,163 +126,77 @@ final class SystemUtcRules extends UtcRules implements Serializable {
      * @throws ConcurrentModificationException if another thread updates the rules at the same time
      */
     void register(long mjDay, int leapAdjustment) {
-<span class="fc bfc" id="L137" title="All 4 branches covered.">        if (leapAdjustment != -1 &amp;&amp; leapAdjustment != 1) {</span>
-<span class="fc" id="L138">            throw new IllegalArgumentException(&quot;Leap adjustment must be -1 or 1&quot;);</span>
+<span class="fc bfc" id="L129" title="All 4 branches covered.">        if (leapAdjustment != -1 &amp;&amp; leapAdjustment != 1) {</span>
+<span class="fc" id="L130">            throw new IllegalArgumentException(&quot;Leap adjustment must be -1 or 1&quot;);</span>
         }
-<span class="fc" id="L140">        Data data = dataRef.get();</span>
-<span class="fc" id="L141">        int pos = Arrays.binarySearch(data.dates, mjDay);</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">        int currentAdj = pos &gt; 0 ? data.offsets[pos] - data.offsets[pos - 1] : 0;</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (currentAdj == leapAdjustment) {</span>
-<span class="fc" id="L144">            return;  // matches previous definition</span>
+<span class="fc" id="L132">        Data data = dataRef.get();</span>
+<span class="fc" id="L133">        int pos = Arrays.binarySearch(data.dates, mjDay);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        int currentAdj = pos &gt; 0 ? data.offsets[pos] - data.offsets[pos - 1] : 0;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (currentAdj == leapAdjustment) {</span>
+<span class="fc" id="L136">            return;  // matches previous definition</span>
         }
-<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (mjDay &lt;= data.dates[data.dates.length - 1]) {</span>
-<span class="fc" id="L147">            throw new IllegalArgumentException(&quot;Date must be after the last configured leap second date&quot;);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (mjDay &lt;= data.dates[data.dates.length - 1]) {</span>
+<span class="fc" id="L139">            throw new IllegalArgumentException(&quot;Date must be after the last configured leap second date&quot;);</span>
         }
-<span class="fc" id="L149">        long[] dates = Arrays.copyOf(data.dates, data.dates.length + 1);</span>
-<span class="fc" id="L150">        int[] offsets = Arrays.copyOf(data.offsets, data.offsets.length + 1);</span>
-<span class="fc" id="L151">        long[] taiSeconds = Arrays.copyOf(data.taiSeconds, data.taiSeconds.length + 1);</span>
-<span class="fc" id="L152">        int offset = offsets[offsets.length - 2] + leapAdjustment;</span>
-<span class="fc" id="L153">        dates[dates.length - 1] = mjDay;</span>
-<span class="fc" id="L154">        offsets[offsets.length - 1] = offset;</span>
-<span class="fc" id="L155">        taiSeconds[taiSeconds.length - 1] = tai(mjDay, offset);</span>
-<span class="fc" id="L156">        Data newData = new Data(dates, offsets, taiSeconds);</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (!dataRef.compareAndSet(data, newData)) {</span>
-<span class="nc" id="L158">            throw new ConcurrentModificationException(&quot;Unable to update leap second rules as they have already been updated&quot;);</span>
+<span class="fc" id="L141">        long[] dates = Arrays.copyOf(data.dates, data.dates.length + 1);</span>
+<span class="fc" id="L142">        int[] offsets = Arrays.copyOf(data.offsets, data.offsets.length + 1);</span>
+<span class="fc" id="L143">        int offset = offsets[offsets.length - 2] + leapAdjustment;</span>
+<span class="fc" id="L144">        dates[dates.length - 1] = mjDay;</span>
+<span class="fc" id="L145">        offsets[offsets.length - 1] = offset;</span>
+<span class="fc" id="L146">        Data newData = new Data(dates, offsets);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (!dataRef.compareAndSet(data, newData)) {</span>
+<span class="nc" id="L148">            throw new ConcurrentModificationException(&quot;Unable to update leap second rules as they have already been updated&quot;);</span>
         }
-<span class="fc" id="L160">    }</span>
+<span class="fc" id="L150">    }</span>
 
     //-----------------------------------------------------------------------
     @Override
     public String getName() {
-<span class="fc" id="L165">        return &quot;System&quot;;</span>
+<span class="fc" id="L155">        return &quot;System&quot;;</span>
     }
 
     @Override
     public int getLeapSecondAdjustment(long mjDay) {
-<span class="fc" id="L170">        Data data = dataRef.get();</span>
-<span class="fc" id="L171">        int pos = Arrays.binarySearch(data.dates, mjDay);</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">        return pos &gt; 0 ? data.offsets[pos] - data.offsets[pos - 1] : 0;</span>
+<span class="fc" id="L160">        Data data = dataRef.get();</span>
+<span class="fc" id="L161">        int pos = Arrays.binarySearch(data.dates, mjDay);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        return pos &gt; 0 ? data.offsets[pos] - data.offsets[pos - 1] : 0;</span>
     }
 
     @Override
     public int getTaiOffset(long mjDay) {
-<span class="fc" id="L177">        Data data = dataRef.get();</span>
-<span class="fc" id="L178">        int pos = Arrays.binarySearch(data.dates, mjDay);</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">        pos = (pos &lt; 0 ? ~pos : pos);</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        return pos &gt; 0 ? data.offsets[pos - 1] : 10;</span>
+<span class="fc" id="L167">        Data data = dataRef.get();</span>
+<span class="fc" id="L168">        int pos = Arrays.binarySearch(data.dates, mjDay);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        pos = (pos &lt; 0 ? ~pos : pos);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        return pos &gt; 0 ? data.offsets[pos - 1] : 10;</span>
     }
 
     @Override
     public long[] getLeapSecondDates() {
-<span class="fc" id="L185">        Data data = dataRef.get();</span>
-<span class="fc" id="L186">        return data.dates.clone();</span>
+<span class="fc" id="L175">        Data data = dataRef.get();</span>
+<span class="fc" id="L176">        return data.dates.clone();</span>
     }
 
     //-----------------------------------------------------------------------
     @Override
     public UtcInstant convertToUtc(TaiInstant taiInstant) {
-<span class="fc" id="L192">        Data data = dataRef.get();</span>
-<span class="fc" id="L193">        long[] mjds = data.dates;</span>
-<span class="fc" id="L194">        long[] tais = data.taiSeconds;</span>
-<span class="fc" id="L195">        int pos = Arrays.binarySearch(tais, taiInstant.getTaiSeconds());</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">        pos = (pos &gt;= 0 ? pos : ~pos - 1);</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">        int taiOffset = (pos &gt;= 0 ? data.offsets[pos] : 10);</span>
-<span class="fc" id="L198">        long adjustedTaiSecs = taiInstant.getTaiSeconds() - taiOffset;</span>
-<span class="fc" id="L199">        long mjd = Math.floorDiv(adjustedTaiSecs, SECS_PER_DAY) + OFFSET_MJD_TAI;</span>
-<span class="fc" id="L200">        long nod = Math.floorMod(adjustedTaiSecs, SECS_PER_DAY) * NANOS_PER_SECOND + taiInstant.getNano();</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">        long mjdNextRegionStart = (pos + 1 &lt; mjds.length ? mjds[pos + 1] + 1 : Long.MAX_VALUE);</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">        if (mjd == mjdNextRegionStart) {  // in leap second</span>
-<span class="fc" id="L203">            mjd--;</span>
-<span class="fc" id="L204">            nod = SECS_PER_DAY * NANOS_PER_SECOND + (nod / NANOS_PER_SECOND) * NANOS_PER_SECOND + nod % NANOS_PER_SECOND;</span>
+<span class="fc" id="L182">        Data data = dataRef.get();</span>
+<span class="fc" id="L183">        long[] mjds = data.dates;</span>
+<span class="fc" id="L184">        long[] tais = data.taiSeconds;</span>
+<span class="fc" id="L185">        int pos = Arrays.binarySearch(tais, taiInstant.getTaiSeconds());</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        pos = (pos &gt;= 0 ? pos : ~pos - 1);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        int taiOffset = (pos &gt;= 0 ? data.offsets[pos] : 10);</span>
+<span class="fc" id="L188">        long adjustedTaiSecs = taiInstant.getTaiSeconds() - taiOffset;</span>
+<span class="fc" id="L189">        long mjd = Math.floorDiv(adjustedTaiSecs, SECS_PER_DAY) + OFFSET_MJD_TAI;</span>
+<span class="fc" id="L190">        long nod = Math.floorMod(adjustedTaiSecs, SECS_PER_DAY) * NANOS_PER_SECOND + taiInstant.getNano();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        long mjdNextRegionStart = (pos + 1 &lt; mjds.length ? mjds[pos + 1] + 1 : Long.MAX_VALUE);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (mjd == mjdNextRegionStart) {  // in leap second</span>
+<span class="fc" id="L193">            mjd--;</span>
+<span class="fc" id="L194">            nod = SECS_PER_DAY * NANOS_PER_SECOND + (nod / NANOS_PER_SECOND) * NANOS_PER_SECOND + nod % NANOS_PER_SECOND;</span>
         }
-<span class="fc" id="L206">        return UtcInstant.ofModifiedJulianDay(mjd, nod);</span>
+<span class="fc" id="L196">        return UtcInstant.ofModifiedJulianDay(mjd, nod);</span>
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Loads the rules from files in the class loader, often jar files.
-     *
-     * @return the list of loaded rules, not null
-     * @throws RuntimeException if an error occurs
-     */
-    private static Data loadLeapSeconds() {
-<span class="fc" id="L217">        Data bestData = null;</span>
-<span class="fc" id="L218">        URL url = null;</span>
-        try {
-            // this is the new location of the file, working on Java 8, Java 9 class path and Java 9 module path
-<span class="fc" id="L221">            Enumeration&lt;URL&gt; en = Thread.currentThread().getContextClassLoader().getResources(&quot;META-INF/&quot; + LEAP_SECONDS_TXT);</span>
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">            while (en.hasMoreElements()) {</span>
-<span class="nc" id="L223">                url = en.nextElement();</span>
-<span class="nc" id="L224">                Data candidate = loadLeapSeconds(url);</span>
-<span class="nc bnc" id="L225" title="All 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
-<span class="nc" id="L226">                    bestData = candidate;</span>
-                }
-<span class="nc" id="L228">            }</span>
-            // this location does not work on Java 9 module path because the resource is encapsulated
-<span class="fc" id="L230">            en = Thread.currentThread().getContextClassLoader().getResources(LEAP_SECONDS_TXT);</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">            while (en.hasMoreElements()) {</span>
-<span class="fc" id="L232">                url = en.nextElement();</span>
-<span class="fc" id="L233">                Data candidate = loadLeapSeconds(url);</span>
-<span class="pc bpc" id="L234" title="3 of 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
-<span class="fc" id="L235">                    bestData = candidate;</span>
-                }
-<span class="fc" id="L237">            }</span>
-            // this location is the canonical one, and class-based loading works on Java 9 module path
-<span class="fc" id="L239">            url = SystemUtcRules.class.getResource(&quot;/&quot; + LEAP_SECONDS_TXT);</span>
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">            if (url != null) {</span>
-<span class="fc" id="L241">                Data candidate = loadLeapSeconds(url);</span>
-<span class="pc bpc" id="L242" title="1 of 4 branches missed.">                if (bestData == null || candidate.getNewestDate() &gt; bestData.getNewestDate()) {</span>
-<span class="fc" id="L243">                    bestData = candidate;</span>
-                }
-            }
-<span class="nc" id="L246">        } catch (Exception ex) {</span>
-<span class="nc" id="L247">            throw new RuntimeException(&quot;Unable to load time-zone rule data: &quot; + url, ex);</span>
-<span class="fc" id="L248">        }</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        if (bestData == null) {</span>
-            // no data on classpath, but we allow manual registration of leap seconds
-            // setup basic known data - MJD 1972-01-01 is 41317L, where offset was 10
-<span class="nc" id="L252">            bestData = new Data(new long[] {41317L}, new int[] {10}, new long[] {tai(41317L, 10)});</span>
-        }
-<span class="fc" id="L254">        return bestData;</span>
-    }
-
-    /**
-     * Loads the leap second rules from a URL, often in a jar file.
-     *
-     * @param url  the jar file to load, not null
-     * @throws RuntimeException if an error occurs
-     * @throws IOException if an error occurs
-     */
-    private static Data loadLeapSeconds(URL url) throws IOException {
-        List&lt;String&gt; lines;
-<span class="fc" id="L266">        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {</span>
-<span class="fc" id="L267">            lines = reader.lines().collect(Collectors.toList());</span>
-        }
-<span class="fc" id="L269">        List&lt;Long&gt; dates = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L270">        List&lt;Integer&gt; offsets = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">        for (String line : lines) {</span>
-<span class="fc" id="L272">            line = line.trim();</span>
-<span class="pc bpc" id="L273" title="1 of 4 branches missed.">            if (line.isEmpty() || line.startsWith(&quot;#&quot;)) {</span>
-<span class="fc" id="L274">                continue;</span>
-            }
-<span class="fc" id="L276">            Matcher matcher = LEAP_FILE_FORMAT.matcher(line);</span>
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">            if (!matcher.matches()) {</span>
-<span class="nc" id="L278">                throw new StreamCorruptedException(&quot;Invalid leap second file&quot;);</span>
-            }
-<span class="fc" id="L280">            dates.add(LocalDate.parse(matcher.group(1)).getLong(JulianFields.MODIFIED_JULIAN_DAY));</span>
-<span class="fc" id="L281">            offsets.add(Integer.valueOf(matcher.group(2)));</span>
-<span class="fc" id="L282">        }</span>
-<span class="fc" id="L283">        long[] datesData = new long[dates.size()];</span>
-<span class="fc" id="L284">        int[] offsetsData = new int[dates.size()];</span>
-<span class="fc" id="L285">        long[] taiData = new long[dates.size()];</span>
-<span class="fc bfc" id="L286" title="All 2 branches covered.">        for (int i = 0; i &lt; datesData.length; i++) {</span>
-<span class="fc" id="L287">            datesData[i] = dates.get(i);</span>
-<span class="fc" id="L288">            offsetsData[i] = offsets.get(i);</span>
-<span class="fc" id="L289">            taiData[i] = tai(datesData[i], offsetsData[i]);</span>
-        }
-<span class="fc" id="L291">        return new Data(datesData, offsetsData, taiData);</span>
-    }
-
     /**
      * Gets the TAI seconds for the start of the day following the day passed in.
      *
@@ -299,8 +205,7 @@ final class SystemUtcRules extends UtcRules implements Serializable {
      * @return the TAI seconds
      */
     private static long tai(long changeMjd, int offset) {
-<span class="fc" id="L302">        return (changeMjd + 1 - OFFSET_MJD_TAI) * SECS_PER_DAY + offset;</span>
+<span class="fc" id="L208">        return (changeMjd + 1 - OFFSET_MJD_TAI) * SECS_PER_DAY + offset;</span>
     }
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
